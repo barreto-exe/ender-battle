@@ -8,8 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
                 //DEFININENDO TAMAÑO DEL FRAME
-                config.height = 500; 
-                config.width = 855;
+                config.width = 1080;
+                config.height = 720;
                 config.resizable = false;
                 //LLAMANDO AL FRAME
 		new LwjglApplication(new MainGame(), config);

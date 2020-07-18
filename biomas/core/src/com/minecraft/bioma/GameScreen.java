@@ -7,6 +7,7 @@ package com.minecraft.bioma;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import static com.minecraft.bioma.Constants.HEIGHT;
 import static com.minecraft.bioma.Constants.WIDTH;
 import com.minecraft.bioma.actores.FloorEntity;
@@ -31,6 +33,8 @@ public class GameScreen extends BaseScreen{
     //ATTRIBUTES
     private Stage stage;
     private World world;
+    private OrthographicCamera gamecam;
+    private Viewport viewport;
     private PlayerActor player;
     private List<FloorEntity> floorList = new ArrayList<>();
     
@@ -39,9 +43,11 @@ public class GameScreen extends BaseScreen{
     //BUILDER
     public GameScreen(MainGame game) {
         super(game);
-        stage = new Stage(new FitViewport(855, 500));  //INSTANCIANDO EL STAGE
+        gamecam =  new OrthographicCamera();
+        viewport = new FitViewport(1000, 500, gamecam); 
+        stage = new Stage(viewport);  //INSTANCIANDO EL STAGE
         world = new World(new Vector2(0, -10), true);  //INSTANCIANDO EL MUNDO (BOX2D)
-        
+       
         //EVALUANDO CONTACTOS ENTRE LOS BODYS DE LOS ACTORES EN EL STAGE
         world.setContactListener(new ContactListener(){
             
@@ -110,13 +116,16 @@ public class GameScreen extends BaseScreen{
     public void render(float delta) {
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
-              
+         
+        gamecam.position.set(player.getX(),player.getY(),0);
+        gamecam.update();
         stage.act();   //ACTUALIZANDO EL STAGE Y SUS ACTORES
         world.step(delta, 6, 2);   //ACTUALIZANDO EL MUNDO Y SUS INTERACCIONES
+        
         stage.draw();    //DIBUJANDO EL STAGE EN PANTALLA
     }
+        
 
-    
     
     @Override
     public void dispose() {

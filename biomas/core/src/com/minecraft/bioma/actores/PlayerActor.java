@@ -63,7 +63,7 @@ public class PlayerActor extends Actor{
         //CREANDO FIXTURE DEL JUGADOR
         /*por ahora le puse un fixture cuadrado, sin embargo hay que personalizarlo*/
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 0.5f);
+        shape.setAsBox(0.5f, 0.5f);  
         fixture = body.createFixture(shape, 3);
         fixture.setUserData("player");
         shape.dispose();
@@ -94,7 +94,7 @@ public class PlayerActor extends Actor{
     @Override
     public void act(float delta) {
         super.act(delta);
-        
+      
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
         if (isJumping){
             body.applyForceToCenter(0, IMPULSE_JUMP * -1.05f, true);
@@ -153,6 +153,6 @@ public class PlayerActor extends Actor{
     
     public void repose(){
         if (!isJumping)
-            texture = frames[3]; //ESTABLECIENDO EL FRAME DE REPOSO
+            texture = frames[3]; //ESTABLECIENDO EL FRAME DE REPOSO ERA EL 3
     }
 }
