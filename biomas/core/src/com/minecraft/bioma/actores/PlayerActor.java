@@ -110,8 +110,11 @@ public class PlayerActor extends Actor{
             walk(-1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
             walkAnimation(delta);  /*hay que arreglar el stprite cuando va al sentido opuesto*/
         } else {
-            if (!isJumping)
-                body.setLinearVelocity(0, 0);
+            if (body.getLinearVelocity().x < 0){
+                body.applyForceToCenter(8, 0, true);
+            } else if (body.getLinearVelocity().x > 0){
+                body.applyForceToCenter(-8, 0, true);
+            } 
             repose();   //SI NO PRESIONA NINGUNA TECLA, LA ANIMACIÓN SE DETIENE
         }               
     }
