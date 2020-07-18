@@ -13,4 +13,6 @@ public class Constants {
     public static final float PIXELES_IN_METTER = 50;
     public static final int WIDTH = 216;  //width de la region de "Walking"
     public static final int HEIGHT = 69;  //height de la region de "Walking"
+    public static final int IMPULSE_JUMP = 18;  //height de la region de "Walking"
+    public static final float SPEED_PLAYER = 1.6f;  //height de la region de "Walking"
 }

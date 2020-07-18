@@ -18,7 +18,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.minecraft.bioma.Constants.HEIGHT;
+import static com.minecraft.bioma.Constants.IMPULSE_JUMP;
 import static com.minecraft.bioma.Constants.PIXELES_IN_METTER;
+import static com.minecraft.bioma.Constants.SPEED_PLAYER;
 import static com.minecraft.bioma.Constants.WIDTH;
 
 /**
@@ -66,6 +68,7 @@ public class PlayerActor extends Actor{
         fixture.setUserData("player");
         shape.dispose();
         
+        isJumping = false;        
         setSize(PIXELES_IN_METTER, PIXELES_IN_METTER);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
     }
     
@@ -93,8 +96,10 @@ public class PlayerActor extends Actor{
         super.act(delta);
         
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
-        if (isJumping)
+        if (isJumping){
+            body.applyForceToCenter(0, IMPULSE_JUMP * -1.05f, true);
             jumpAnimation();
+        }
         
         if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
             jump(); //SI PRESIONA LA TECLA UP SE PRODUCE EL MOVIMIENTO DE SALTAR
@@ -105,6 +110,8 @@ public class PlayerActor extends Actor{
             walk(-1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
             walkAnimation(delta);  /*hay que arreglar el stprite cuando va al sentido opuesto*/
         } else {
+            if (!isJumping)
+                body.setLinearVelocity(0, 0);
             repose();   //SI NO PRESIONA NINGUNA TECLA, LA ANIMACIÓN SE DETIENE
         }               
     }
@@ -119,7 +126,7 @@ public class PlayerActor extends Actor{
         if (!isJumping){
             isJumping = true;
             Vector2 position = body.getPosition(); //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-            body.applyLinearImpulse(0, 16, position.x, position.y, true);   //SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
+            body.applyLinearImpulse(0, IMPULSE_JUMP, position.x, position.y, true);   //SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
         }
     }
     
@@ -130,7 +137,11 @@ public class PlayerActor extends Actor{
     
     public void walk(int direction){
         Vector2 position = body.getPosition();   //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-        body.applyForce(10 * direction , 0, position.x, position.y, true);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
+        if (!isJumping){
+            body.setLinearVelocity(direction * SPEED_PLAYER,0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
+        } else {
+            body.applyForce((IMPULSE_JUMP - 8) * direction, 0, position.x, position.y, true);
+        }
     }
     
     public void walkAnimation(float delta){
