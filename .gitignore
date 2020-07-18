@@ -144,3 +144,6 @@ Thumbs.db
 /Minecraft/core/build/
 /Minecraft/desktop/build/
 /Minecraft/servidor/build/
+biomas/core/build/
+
+biomas/.nb-gradle/
