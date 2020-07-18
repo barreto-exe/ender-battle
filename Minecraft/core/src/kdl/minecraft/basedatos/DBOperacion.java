@@ -91,7 +91,7 @@ public class DBOperacion
 
     /**
      * Realiza una consulta en la base de datos, y vacía los resultados en un <code>DBMatriz</code>
-     * @return una instancia <code>DBMatriz</code> con los resultados de la consulta,
+     * @return una instancia <code>DBMatriz</code> con los resultados de la consulta, o bien
      * <code>null</code> si hubo un error en la consulta.
      */
     public DBMatriz consultar()

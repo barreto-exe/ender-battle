@@ -67,7 +67,6 @@ project(":core") {
         api "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
         api "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
         compile group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
-        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile files('libs/jlayer.jar')
     }
 }

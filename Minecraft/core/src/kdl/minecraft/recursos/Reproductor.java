@@ -7,6 +7,7 @@ package kdl.minecraft.recursos;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 /**
@@ -21,10 +22,11 @@ public class Reproductor implements Runnable
     private boolean estaReproduciendo;
     private Player player;
     
+
     /**
-     * Objeto que reproduce un sonido en otro hilo.
-     *
-     * @param sonido Objeto sonido a reproducir.
+     * Objeto que reproduce sonido en otro hilo.
+     * 
+     * @param sonido Es el objeto sonido a reproducir.
      * @param bucle Indica si se reproduce en bucle o no.
      */
     public Reproductor(Sonido sonido, boolean bucle)
@@ -62,7 +64,7 @@ public class Reproductor implements Runnable
                 player.play();
             } while (bucle);
 
-        } catch (Exception e)
+        } catch (JavaLayerException e)
         {
             System.out.println("" + e);
         }
