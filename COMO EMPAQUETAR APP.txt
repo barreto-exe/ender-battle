@@ -1,0 +1,5 @@
+1- Abre cmd
+2- Con el comando cd ubicate en la carpeta shitty-minecraft/Minecraft
+3- Ejecuta el comando: gradlew desktop:dist
+4- El ejecutable está en Minecraft\desktop\build.
+5- Dentro de esa carpeta todo el contenido que esté dentro de la carpeta assets.
