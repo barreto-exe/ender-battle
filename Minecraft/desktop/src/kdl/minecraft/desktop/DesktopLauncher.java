@@ -36,6 +36,7 @@ public class DesktopLauncher
         
         FrmPrincipal frm = new FrmPrincipal();
         frm.setVisible(true);
+        
         new Thread(frm).start();
         
         comenzarMusica();

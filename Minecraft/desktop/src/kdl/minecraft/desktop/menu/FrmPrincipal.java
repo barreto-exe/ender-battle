@@ -66,7 +66,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         txtUsuarioIniciar = new javax.swing.JTextField();
         lblPass2 = new javax.swing.JLabel();
         txtPassIniciar = new javax.swing.JPasswordField();
-        btnIniciar = new javax.swing.JButton();
+        btnAceptarInicio = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         fondoIniciar = new javax.swing.JLabel();
         panelRegistrarse = new javax.swing.JPanel();
@@ -213,17 +213,17 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         panelIniciar.add(txtPassIniciar);
         txtPassIniciar.setBounds(260, 330, 320, 40);
 
-        btnIniciar.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
-        btnIniciar.setText("INICIAR");
-        btnIniciar.addActionListener(new java.awt.event.ActionListener()
+        btnAceptarInicio.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
+        btnAceptarInicio.setText("INICIAR");
+        btnAceptarInicio.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnIniciarActionPerformed(evt);
+                btnAceptarInicioActionPerformed(evt);
             }
         });
-        panelIniciar.add(btnIniciar);
-        btnIniciar.setBounds(670, 420, 170, 40);
+        panelIniciar.add(btnAceptarInicio);
+        btnAceptarInicio.setBounds(670, 420, 170, 40);
 
         btnVolver.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnVolver.setText("VOLVER");
@@ -436,8 +436,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         Sonido.Click();
 
         String usuario = txtUsuario.getText();
-        String correo  = txtCorreo.getText();
-        char[] pass    = txtPass.getPassword();
+        String correo = txtCorreo.getText();
+        char[] pass = txtPass.getPassword();
 
         //Verificar que las contraseñas sean iguales y que no estén vacías
         if (!Arrays.equals(txtPass.getPassword(), txtPassConfirmar.getPassword()))
@@ -459,32 +459,25 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
                 paquete.writeObject(usuarioObj);
                 socket.close();
-
-                //Deshabilitar botones para esperar respuesta del server
-                new Thread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        btnAceptarRegistro.setEnabled(false);
-                        btnVolver1.setEnabled(false);
-                    }
-                }).start();
-
+        
+                btnAceptarRegistro.setEnabled(false);
+                btnVolver1.setEnabled(false);
             } catch (UnknownHostException ex)
             {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
             } catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
             }
         }
     }//GEN-LAST:event_btnAceptarRegistroActionPerformed
 
-    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnIniciarActionPerformed
-    {//GEN-HEADEREND:event_btnIniciarActionPerformed
+    private void btnAceptarInicioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarInicioActionPerformed
+    {//GEN-HEADEREND:event_btnAceptarInicioActionPerformed
         Sonido.Click();
-        
+
         String usuario = txtUsuarioIniciar.getText();
         String pass = txtPassIniciar.getText();
 
@@ -504,26 +497,20 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 paquete.writeObject(usuarioObj);
                 socket.close();
 
-                //Deshabilitar botones para esperar respuesta del server
-                new Thread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        btnIniciar.setEnabled(false);
-                        btnVolver .setEnabled(false);
-                    }
-                }).start();
-
+                btnAceptarInicio.setEnabled(false);
+                btnVolver.setEnabled(false);
+                
             } catch (UnknownHostException ex)
             {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
             } catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
             }
         }
-    }//GEN-LAST:event_btnIniciarActionPerformed
+    }//GEN-LAST:event_btnAceptarInicioActionPerformed
 
     private void btnCambiarServidorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCambiarServidorActionPerformed
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
@@ -556,17 +543,15 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         btnAceptarRegistro.setEnabled(true);
                         btnVolver1.setEnabled(true);
 
-                        btnIniciar.setEnabled(true);
+                        btnAceptarInicio.setEnabled(true);
                         btnVolver.setEnabled(true);
                     }
                 }).start();
 
-                if(resultado == ResultadoOperacion.ERROR)
+                if (resultado == ResultadoOperacion.ERROR)
                 {
                     JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
-                }
-                
-                //Resultados de registro
+                } //Resultados de registro
                 else if (resultado == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                 {
                     JOptionPane.showMessageDialog(null, "Correo no disponible.");
@@ -577,16 +562,14 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 {
                     JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
                     btnVolver.doClick();
-                } 
-
-                //Resultados de inicio de sesión                
+                } //Resultados de inicio de sesión                
                 else if (resultado == ResultadoOperacion.CREDENCIAL_INVALIDA)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 } else if (resultado == ResultadoOperacion.INICIAR_JUEGO)
                 {
                     JOptionPane.showMessageDialog(null, ":D");
-                } 
+                }
             }
         } catch (IOException | ClassNotFoundException ex)
         {
@@ -623,12 +606,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptarInicio;
     private javax.swing.JButton btnAceptarRegistro;
     private javax.swing.JButton btnAcerca;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarServidor;
     private javax.swing.JButton btnEstadisticas;
-    private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnVolver;
