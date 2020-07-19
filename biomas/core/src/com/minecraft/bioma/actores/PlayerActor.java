@@ -98,7 +98,7 @@ public class PlayerActor extends Actor{
         
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
         if (isJumping){
-            body.applyForceToCenter(0, IMPULSE_JUMP * -1.05f, true);
+            body.applyForceToCenter(0, IMPULSE_JUMP * -0.8f, true);
             jumpAnimation();
         }
         

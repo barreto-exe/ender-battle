@@ -33,7 +33,7 @@ public class GameScreen extends BaseScreen{
     //ATTRIBUTES
     private Stage stage;
     private World world;
-    private OrthographicCamera gamecam;
+    private OrthographicCamera gameCam;
     private Viewport viewport;
     private PlayerActor player;
     private List<FloorEntity> floorList = new ArrayList<>();
@@ -43,8 +43,8 @@ public class GameScreen extends BaseScreen{
     //BUILDER
     public GameScreen(MainGame game) {
         super(game);
-        gamecam =  new OrthographicCamera();
-        viewport = new FitViewport(1000, 500, gamecam); 
+        gameCam =  new OrthographicCamera();
+        viewport = new FitViewport(855, 500, gameCam); 
         stage = new Stage(viewport);  //INSTANCIANDO EL STAGE
         world = new World(new Vector2(0, -10), true);  //INSTANCIANDO EL MUNDO (BOX2D)
        
@@ -117,8 +117,8 @@ public class GameScreen extends BaseScreen{
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
          
-        gamecam.position.set(player.getX(),player.getY(),0);
-        gamecam.update();
+        gameCam.position.set(player.getX(),player.getY(),0);
+        gameCam.update();
         stage.act();   //ACTUALIZANDO EL STAGE Y SUS ACTORES
         world.step(delta, 6, 2);   //ACTUALIZANDO EL MUNDO Y SUS INTERACCIONES
         
