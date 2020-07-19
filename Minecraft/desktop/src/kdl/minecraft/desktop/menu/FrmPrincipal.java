@@ -5,7 +5,6 @@
  */
 package kdl.minecraft.desktop.menu;
 
-import java.io.DataOutputStream;
 import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,14 +12,12 @@ import java.io.ObjectOutputStream;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
 import kdl.minecraft.recursos.Sonido;
 import kdl.minecraft.basedatos.*;
-import kdl.minecraft.basedatos.DBUsuario.*;
-import kdl.minecraft.desktop.DesktopLauncher;
 import kdl.minecraft.comunicacion.Jugador;
+import kdl.minecraft.comunicacion.PaqueteOperacion;
+import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
+import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
 import kdl.minecraft.comunicacion.Partida;
 
 /**
@@ -655,14 +652,15 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         } else
         {
             //Crear instancia de usuario para enviarla al servidor
-            DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText(), Operacion.REGISTRAR);
-
+            DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
+            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj);
+            
             try
             {
                 //Enviar solicitud al server
                 Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
-                ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
-                paquete.writeObject(usuarioObj);
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(paquete);
                 socket.close();
 
                 btnAceptarRegistro.setEnabled(false);
@@ -692,15 +690,17 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         } else
         {
             //Crear instancia de usuario para enviarla al servidor
-            DBUsuario usuarioObj = new DBUsuario(null, usuario, pass, Operacion.INICIAR_SESION);
+            DBUsuario usuarioObj = new DBUsuario(null, usuario, pass);
+            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioObj);
+            
             usuarioLogueado = usuarioObj;
 
             try
             {
                 //Enviar solicitud al server
                 Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
-                ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
-                paquete.writeObject(usuarioObj);
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(paquete);
                 socket.close();
 
                 btnAceptarInicio.setEnabled(false);
@@ -760,12 +760,14 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         Jugador creador = new Jugador(usuarioLogueado.getUsuario(), personajeSeleccionado);
         Partida partida = new Partida(nombrePartida, descripcionPartida, creador, cantJugadores);
 
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, partida);
+        
         try
         {
             //Enviar solicitud al server
             Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
-            ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
-            paquete.writeObject(partida);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
             socket.close();
             
             btnCrearPartida.setEnabled(false);
@@ -826,22 +828,27 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 if (resultado == ResultadoOperacion.ERROR)
                 {
                     JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
-                } //Resultados de registro
+                }
+                //Resultados de registro
                 else if (resultado == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                 {
                     JOptionPane.showMessageDialog(null, "Correo no disponible.");
-                } else if (resultado == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
+                }
+                else if (resultado == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario no disponible.");
-                } else if (resultado == ResultadoOperacion.USUARIO_REGISTRADO)
+                }
+                else if (resultado == ResultadoOperacion.USUARIO_REGISTRADO)
                 {
                     JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
                     btnVolver.doClick();
-                } //Resultados de inicio de sesión                
+                }
+                //Resultados de inicio de sesión                
                 else if (resultado == ResultadoOperacion.CREDENCIAL_INVALIDA)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                } else if (resultado == ResultadoOperacion.INICIAR_JUEGO)
+                } 
+                else if (resultado == ResultadoOperacion.SESION_VALIDA)
                 {
                     mostrarPanel(panelPartida);
                     limpiarTextBoxes();

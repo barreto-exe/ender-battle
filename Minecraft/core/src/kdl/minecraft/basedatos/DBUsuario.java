@@ -17,48 +17,20 @@ public final class DBUsuario implements Serializable
 {
     public static String BASE_DATOS = "192.168.2.104";
     
-    /**
-     * Indica el tipo de operacion contra la base de datos.
-     */
-    public enum Operacion
-    {
-        REGISTRAR,
-        INICIAR_SESION
-    }
-    
-    /**
-     * Indica el resultado arrojado por el servidor luego de la operación
-     * en la base de datos.
-     */
-    public enum ResultadoOperacion
-    {
-        CORREO_NO_DISPONIBLE,
-        USUARIO_NO_DISPONIBLE,
-        USUARIO_REGISTRADO,
-        ERROR,
-        
-        CREDENCIAL_INVALIDA,
-        INICIAR_JUEGO
-    }
-    
-    
     private String correo, usuario, pass;
-    private Operacion operacion;
 
     /**
      * Crea una instancia de entidad en relación a la tabla m_usuarios de la Base de Datos.
      * @param correo es el correo del usuario.
      * @param usuario es el nombre de usuario.
      * @param pass  es la constraseña ENCRIPTADA del usuario.
-     * @param operacion  es el tipo de operación que se pretende hacer con el usuario
      * en la base de datos.
      */
-    public DBUsuario(String correo, String usuario, String pass, Operacion operacion)
+    public DBUsuario(String correo, String usuario, String pass)
     {
         this.correo = correo;
         this.usuario = usuario;
         this.pass = encriptarMD5(pass);
-        this.operacion = operacion;
     }
 
     
@@ -91,18 +63,6 @@ public final class DBUsuario implements Serializable
     {
         this.pass = encriptarMD5(pass);
     }
-
-    public Operacion getOperacion()
-    {
-        return operacion;
-    }
-
-    public void setOperacion(Operacion operacion)
-    {
-        this.operacion = operacion;
-    }
-    
-    
     
 
     /**

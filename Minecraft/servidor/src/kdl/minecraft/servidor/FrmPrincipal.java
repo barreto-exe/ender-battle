@@ -10,8 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import kdl.minecraft.basedatos.DBUsuario;
-import kdl.minecraft.basedatos.DBUsuario.Operacion;
-import kdl.minecraft.basedatos.DBUsuario.ResultadoOperacion;
+import kdl.minecraft.comunicacion.PaqueteOperacion;
+import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
+import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
 import kdl.minecraft.comunicacion.Partida;
 
 /**
@@ -205,15 +206,19 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 txtPrincipal.append("Esperando socket \n");
                 Socket socket = servidor.accept();
 
-                ObjectInputStream paquete = new ObjectInputStream(socket.getInputStream());
-                Object objeto = paquete.readObject();
+                ObjectInputStream input  = new ObjectInputStream(socket.getInputStream());
+                PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
+                Operacion operacion = paquete.getTipo();
+                
+                ResultadoOperacion resultado = ResultadoOperacion.ERROR;
+                
+                String ip = socket.getInetAddress().toString().replaceAll("/", "");
 
-                if (objeto.getClass() == DBUsuario.class)
+                //Acciones si la solicitoud es de Registro/Inicio de sesión
+                //<editor-fold defaultstate="collapsed" desc="Registro/Inicio de sesión">
+                if (operacion == Operacion.INICIAR_SESION || operacion == Operacion.REGISTRAR)
                 {
-                    DBUsuario usuarioObj = (DBUsuario) objeto;
-
-                    String ip = socket.getInetAddress().toString().replaceAll("/", "");
-                    ResultadoOperacion resultado = ResultadoOperacion.ERROR;
+                    DBUsuario usuarioObj = (DBUsuario) paquete.getInformacion();
 
                     String add
                             = usuarioObj.getCorreo() + "\n"
@@ -221,9 +226,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                             + usuarioObj.getPass() + "\n"
                             + ip + "\n";
 
-                    if (Operacion.REGISTRAR == usuarioObj.getOperacion())
+                    if (operacion == Operacion.REGISTRAR)
                     {
-
                         txtRegistro.append("\n Registrar usuario: \n" + add);
 
                         //Verificar existencia de correo
@@ -231,20 +235,23 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         {
                             txtRegistro.append("Correo no disponible. \n");
                             resultado = ResultadoOperacion.CORREO_NO_DISPONIBLE;
-                        } //Verificar existencia de usuario
+                        }
+                        //Verificar existencia de usuario
                         else if (DBUsuario.idUsuario(usuarioObj.getUsuario()) != -1)
                         {
                             txtRegistro.append("Usuario no disponible. \n");
                             resultado = ResultadoOperacion.USUARIO_NO_DISPONIBLE;
 
-                        } //Si el usuario y el correo están disponibles
+                        }
+                        //Si el usuario y el correo están disponibles
                         else
                         {
                             if (DBUsuario.registrarUsuario(usuarioObj))
                             {
                                 txtRegistro.append("Usuario registrado exitosamente. \n");
                                 resultado = ResultadoOperacion.USUARIO_REGISTRADO;
-                            } else
+                            }
+                            else
                             {
                                 txtRegistro.append("Hubo un error al registrar el usuario. \n");
                                 resultado = ResultadoOperacion.ERROR;
@@ -252,7 +259,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         }
                     }
 
-                    if (Operacion.INICIAR_SESION == usuarioObj.getOperacion())
+                    if (operacion == Operacion.INICIAR_SESION)
                     {
                         txtInicioSesion.append("\n Iniciar sesión usuario: \n" + add);
 
@@ -261,25 +268,34 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         {
                             txtInicioSesion.append("Credencial de usuario inválida. \n");
                             resultado = ResultadoOperacion.CREDENCIAL_INVALIDA;
-                        } else
+                        }
+                        else
                         {
-                            //Iniciar juego aquí
-                            resultado = ResultadoOperacion.INICIAR_JUEGO;
+                            txtInicioSesion.append("Inicio de sesión válido. \n");
+                            resultado = ResultadoOperacion.SESION_VALIDA;
                         }
                     }
 
-                    //**************************************************************
-                    //Enviar respuesta al cliente
-                    socket = new Socket(ip, 27016);
-                    ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                    paqueteEnvio.writeObject(resultado);
-                    socket.close();
+
                 }
-                if (objeto.getClass() == Partida.class)
+                //</editor-fold>
+
+                //Acciones si la solicitud es de crear partida
+                //<editor-fold defaultstate="collapsed" desc="Crear Partida">
+                if (operacion == Operacion.CREAR_PARTIDA)
                 {
-                    Partida partida = (Partida) objeto;
+                    Partida partida = (Partida) paquete.getInformacion();
                     txtPartidas.append(partida.getNombre()+ "\n\n");
                 }
+                //</editor-fold>
+                
+                
+                //**************************************************************
+                //Enviar respuesta al cliente
+                socket = new Socket(ip, 27016);
+                ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                paqueteEnvio.writeObject(resultado);
+                socket.close();
             }
 
         } catch (IOException | ClassNotFoundException ex)
