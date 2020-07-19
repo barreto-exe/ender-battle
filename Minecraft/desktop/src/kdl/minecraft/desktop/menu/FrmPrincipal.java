@@ -15,10 +15,13 @@ import javax.swing.JOptionPane;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import kdl.minecraft.recursos.Sonido;
 import kdl.minecraft.basedatos.*;
 import kdl.minecraft.basedatos.DBUsuario.*;
 import kdl.minecraft.desktop.DesktopLauncher;
+import kdl.minecraft.desktop.menu.partidas.Jugador;
+import kdl.minecraft.desktop.menu.partidas.Partida;
 
 /**
  *
@@ -30,6 +33,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     public static final int ALTURA_VENTANA = 500;
     public static final int ANCHURA_VENTANA = 855;
 
+    private static DBUsuario usuarioLogueado;
+    private static int personajeSeleccionado;
+
     /**
      * Crea la ventana principal del juego.
      */
@@ -39,6 +45,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        btnComenzarPartida.setVisible(false);
+
+        personajeSeleccionado = 0;
     }
 
     /**
@@ -91,6 +101,27 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jTextArea1 = new javax.swing.JTextArea();
         logo2 = new javax.swing.JLabel();
         fondoAcerca = new javax.swing.JLabel();
+        panelPartida = new javax.swing.JPanel();
+        lblFlechaIzquierda = new javax.swing.JLabel();
+        lblFlechaDerecha = new javax.swing.JLabel();
+        lblPersonaje = new javax.swing.JLabel();
+        logo3 = new javax.swing.JLabel();
+        lblNickname = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jlCrear = new javax.swing.JLayeredPane();
+        jpCrear = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNombrePartida = new javax.swing.JTextField();
+        txtDescPartida = new javax.swing.JTextField();
+        spinCantJugadores = new javax.swing.JSpinner();
+        btnCrearPartida = new javax.swing.JButton();
+        jlUnirse = new javax.swing.JLayeredPane();
+        jpUnirse = new javax.swing.JPanel();
+        btnComenzarPartida = new javax.swing.JButton();
+        btnVolver4 = new javax.swing.JButton();
+        fondoAcerca1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
@@ -393,6 +424,180 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         jlpPrincipal.add(panelAcercaDe, "card3");
 
+        panelPartida.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelPartida.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelPartida.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelPartida.setLayout(null);
+
+        lblFlechaIzquierda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFlechaIzquierda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/flechaDer.png"))); // NOI18N
+        lblFlechaIzquierda.setToolTipText("");
+        lblFlechaIzquierda.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblFlechaIzquierda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblFlechaIzquierda.setMaximumSize(new java.awt.Dimension(190, 150));
+        lblFlechaIzquierda.setMinimumSize(new java.awt.Dimension(190, 150));
+        lblFlechaIzquierda.setPreferredSize(new java.awt.Dimension(190, 150));
+        lblFlechaIzquierda.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblFlechaIzquierdaMouseClicked(evt);
+            }
+        });
+        panelPartida.add(lblFlechaIzquierda);
+        lblFlechaIzquierda.setBounds(750, 280, 70, 70);
+
+        lblFlechaDerecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFlechaDerecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/flechaIzq.png"))); // NOI18N
+        lblFlechaDerecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblFlechaDerecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblFlechaDerecha.setMaximumSize(new java.awt.Dimension(190, 150));
+        lblFlechaDerecha.setMinimumSize(new java.awt.Dimension(190, 150));
+        lblFlechaDerecha.setPreferredSize(new java.awt.Dimension(190, 150));
+        lblFlechaDerecha.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblFlechaDerechaMouseClicked(evt);
+            }
+        });
+        panelPartida.add(lblFlechaDerecha);
+        lblFlechaDerecha.setBounds(520, 280, 80, 70);
+
+        lblPersonaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPersonaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/personaje/0.png"))); // NOI18N
+        lblPersonaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblPersonaje.setMaximumSize(new java.awt.Dimension(190, 150));
+        lblPersonaje.setMinimumSize(new java.awt.Dimension(190, 150));
+        lblPersonaje.setPreferredSize(new java.awt.Dimension(190, 150));
+        panelPartida.add(lblPersonaje);
+        lblPersonaje.setBounds(620, 250, 110, 150);
+
+        logo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo.png"))); // NOI18N
+        logo3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panelPartida.add(logo3);
+        logo3.setBounds(500, 40, 340, 150);
+
+        lblNickname.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblNickname.setForeground(new java.awt.Color(255, 255, 255));
+        lblNickname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNickname.setText("Bienvenido, barreto.exe");
+        lblNickname.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panelPartida.add(lblNickname);
+        lblNickname.setBounds(500, 210, 340, 30);
+
+        jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jLabel1.setText("Nombre de Partida");
+
+        jLabel2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jLabel2.setText("Descripción de la Partida");
+
+        jLabel3.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        jLabel3.setText("Límite de Jugadores");
+
+        txtNombrePartida.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+
+        txtDescPartida.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+
+        spinCantJugadores.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        spinCantJugadores.setModel(new javax.swing.SpinnerNumberModel(2, 2, 6, 1));
+
+        btnCrearPartida.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        btnCrearPartida.setText("CREAR");
+        btnCrearPartida.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCrearPartidaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCrearLayout = new javax.swing.GroupLayout(jpCrear);
+        jpCrear.setLayout(jpCrearLayout);
+        jpCrearLayout.setHorizontalGroup(
+            jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCrearLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCrearLayout.createSequentialGroup()
+                        .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(spinCantJugadores, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 192, Short.MAX_VALUE))
+                    .addComponent(txtDescPartida, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpCrearLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCrearPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombrePartida, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18))
+        );
+        jpCrearLayout.setVerticalGroup(
+            jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCrearLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNombrePartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDescPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spinCantJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(btnCrearPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jlCrear.add(jpCrear);
+        jpCrear.setBounds(0, 0, 470, 330);
+
+        jTabbedPane1.addTab("Crear Partida", jlCrear);
+
+        jlUnirse.add(jpUnirse);
+        jpUnirse.setBounds(0, 0, 470, 330);
+
+        jTabbedPane1.addTab("Unirse a Partida", jlUnirse);
+
+        panelPartida.add(jTabbedPane1);
+        jTabbedPane1.setBounds(10, 40, 470, 360);
+
+        btnComenzarPartida.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
+        btnComenzarPartida.setText("COMENZAR");
+        btnComenzarPartida.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnComenzarPartidaActionPerformed(evt);
+            }
+        });
+        panelPartida.add(btnComenzarPartida);
+        btnComenzarPartida.setBounds(670, 420, 170, 40);
+
+        btnVolver4.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
+        btnVolver4.setText("VOLVER");
+        btnVolver4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnVolverActionPerformed(evt);
+            }
+        });
+        panelPartida.add(btnVolver4);
+        btnVolver4.setBounds(10, 420, 170, 40);
+
+        fondoAcerca1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondos/tierra.png"))); // NOI18N
+        panelPartida.add(fondoAcerca1);
+        fondoAcerca1.setBounds(0, 0, 850, 480);
+
+        jlpPrincipal.add(panelPartida, "card3");
+
         getContentPane().add(jlpPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -459,7 +664,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
                 paquete.writeObject(usuarioObj);
                 socket.close();
-        
+
                 btnAceptarRegistro.setEnabled(false);
                 btnVolver1.setEnabled(false);
             } catch (UnknownHostException ex)
@@ -488,6 +693,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         {
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(null, usuario, pass, Operacion.INICIAR_SESION);
+            usuarioLogueado = usuarioObj;
 
             try
             {
@@ -499,7 +705,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
                 btnAceptarInicio.setEnabled(false);
                 btnVolver.setEnabled(false);
-                
+
             } catch (UnknownHostException ex)
             {
                 System.out.println(ex.getMessage());
@@ -518,6 +724,75 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         //Cambiar IP de la base de datos
         DBUsuario.BASE_DATOS = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBUsuario.BASE_DATOS);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
+
+    private void lblFlechaDerechaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaDerechaMouseClicked
+    {//GEN-HEADEREND:event_lblFlechaDerechaMouseClicked
+        Sonido.Click();
+        personajeSeleccionado--;
+        elegirImagenPersonaje();
+    }//GEN-LAST:event_lblFlechaDerechaMouseClicked
+
+    private void lblFlechaIzquierdaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaIzquierdaMouseClicked
+    {//GEN-HEADEREND:event_lblFlechaIzquierdaMouseClicked
+        Sonido.Click();
+        personajeSeleccionado++;
+        elegirImagenPersonaje();
+    }//GEN-LAST:event_lblFlechaIzquierdaMouseClicked
+
+    private void btnComenzarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnComenzarPartidaActionPerformed
+    {//GEN-HEADEREND:event_btnComenzarPartidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnComenzarPartidaActionPerformed
+
+    private void btnCrearPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCrearPartidaActionPerformed
+    {//GEN-HEADEREND:event_btnCrearPartidaActionPerformed
+        Sonido.Click();
+        String nombrePartida = txtNombrePartida.getText();
+        String descripcionPartida = txtDescPartida.getText();
+        int cantJugadores = (int) spinCantJugadores.getValue();
+
+        if (nombrePartida.equals(""))
+        {
+            JOptionPane.showConfirmDialog(null, "El nombre de la partida no puede estar en blanco.");
+            return;
+        }
+
+        Jugador creador = new Jugador(usuarioLogueado.getUsuario(), personajeSeleccionado);
+        Partida partida = new Partida(nombrePartida, descripcionPartida, creador, cantJugadores);
+
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
+            ObjectOutputStream paquete = new ObjectOutputStream(socket.getOutputStream());
+            paquete.writeObject(partida);
+            socket.close();
+            
+            btnCrearPartida.setEnabled(false);
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+        
+    }//GEN-LAST:event_btnCrearPartidaActionPerformed
+
+    private void elegirImagenPersonaje()
+    {
+        personajeSeleccionado = personajeSeleccionado % 6;
+
+        if (personajeSeleccionado < 0)
+        {
+            personajeSeleccionado = personajeSeleccionado * -1 + 4;
+        }
+
+        lblPersonaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/personaje/" + personajeSeleccionado + ".png")));
+    }
 
     @Override
     public void run()
@@ -568,7 +843,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 } else if (resultado == ResultadoOperacion.INICIAR_JUEGO)
                 {
-                    JOptionPane.showMessageDialog(null, ":D");
+                    mostrarPanel(panelPartida);
+                    limpiarTextBoxes();
+                    lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
                 }
             }
         } catch (IOException | ClassNotFoundException ex)
@@ -611,6 +888,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnAcerca;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarServidor;
+    private javax.swing.JButton btnComenzarPartida;
+    private javax.swing.JButton btnCrearPartida;
     private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistrar;
@@ -618,29 +897,48 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnVolver1;
     private javax.swing.JButton btnVolver2;
     private javax.swing.JButton btnVolver3;
+    private javax.swing.JButton btnVolver4;
     private javax.swing.JLabel fondoAcerca;
+    private javax.swing.JLabel fondoAcerca1;
     private javax.swing.JLabel fondoAyuda;
     private javax.swing.JLabel fondoBienvenida;
     private javax.swing.JLabel fondoIniciar;
     private javax.swing.JLabel fondoRegistrarse;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLayeredPane jlCrear;
+    private javax.swing.JLayeredPane jlUnirse;
     private javax.swing.JLayeredPane jlpPrincipal;
+    private javax.swing.JPanel jpCrear;
+    private javax.swing.JPanel jpUnirse;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblFlechaDerecha;
+    private javax.swing.JLabel lblFlechaIzquierda;
+    private javax.swing.JLabel lblNickname;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass1;
     private javax.swing.JLabel lblPass2;
+    private javax.swing.JLabel lblPersonaje;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JLabel lblUsuario1;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
+    private javax.swing.JLabel logo3;
     private javax.swing.JPanel panelAcercaDe;
     private javax.swing.JPanel panelAyuda;
     private javax.swing.JPanel panelBienvenida;
     private javax.swing.JPanel panelIniciar;
+    private javax.swing.JPanel panelPartida;
     private javax.swing.JPanel panelRegistrarse;
+    private javax.swing.JSpinner spinCantJugadores;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDescPartida;
+    private javax.swing.JTextField txtNombrePartida;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JPasswordField txtPassConfirmar;
     private javax.swing.JPasswordField txtPassIniciar;

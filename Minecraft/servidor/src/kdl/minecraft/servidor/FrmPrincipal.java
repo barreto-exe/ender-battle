@@ -52,6 +52,9 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jpInicioSesion = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtInicioSesion = new javax.swing.JTextArea();
+        jpPartidas = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtPartidas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +128,29 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         jtpPrincipal.addTab("Inicio de Sesión", jpInicioSesion);
 
+        txtPartidas.setColumns(20);
+        txtPartidas.setRows(5);
+        jScrollPane4.setViewportView(txtPartidas);
+
+        javax.swing.GroupLayout jpPartidasLayout = new javax.swing.GroupLayout(jpPartidas);
+        jpPartidas.setLayout(jpPartidasLayout);
+        jpPartidasLayout.setHorizontalGroup(
+            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPartidasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpPartidasLayout.setVerticalGroup(
+            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPartidasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtpPrincipal.addTab("Partidas", jpPartidas);
+
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
@@ -152,11 +178,14 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel jpInicioSesion;
+    private javax.swing.JPanel jpPartidas;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JPanel jpRegistro;
     private javax.swing.JTabbedPane jtpPrincipal;
     private javax.swing.JTextArea txtInicioSesion;
+    private javax.swing.JTextArea txtPartidas;
     private javax.swing.JTextArea txtPrincipal;
     private javax.swing.JTextArea txtRegistro;
     // End of variables declaration//GEN-END:variables
@@ -248,5 +277,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
             txtPrincipal.append(ex.getMessage() + "\n");
             new Thread(this).start();
         }
+        
+        
     }
 }
