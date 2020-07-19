@@ -90,11 +90,12 @@ public class PlayerActor extends Actor{
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
-
+    
+    private char lastPressed = '0';    
     @Override
     public void act(float delta) {
         super.act(delta);
-      
+        
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
         if (isJumping){
             body.applyForceToCenter(0, IMPULSE_JUMP * -1.05f, true);
@@ -105,8 +106,16 @@ public class PlayerActor extends Actor{
             jump(); //SI PRESIONA LA TECLA UP SE PRODUCE EL MOVIMIENTO DE SALTAR
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
             walk(1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
+            if(lastPressed == 'A'){
+                invertAnimation();
+             }
+            lastPressed = 'D';
             walkAnimation(delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
+            if(lastPressed == 'D'){
+                invertAnimation();
+             }
+            lastPressed = 'A';
             walk(-1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
             walkAnimation(delta);  /*hay que arreglar el stprite cuando va al sentido opuesto*/
         } else {
@@ -149,8 +158,8 @@ public class PlayerActor extends Actor{
     
     public void walkAnimation(float delta){
         if (!isJumping){
-            duration += delta;  
-            texture = (TextureRegion) animation.getKeyFrame(duration, true);    //ACTUALIZANDO FRAME DE LA ANIMACION DE CAMINAR EN FUNCION DEL TIEMPO
+           duration += delta;  
+            texture = (TextureRegion) animation.getKeyFrame(duration, true); //ACTUALIZANDO FRAME DE LA ANIMACION DE CAMINAR EN FUNCION DEL TIEMPO         
         }
     }
     
@@ -158,4 +167,10 @@ public class PlayerActor extends Actor{
         if (!isJumping)
             texture = frames[3]; //ESTABLECIENDO EL FRAME DE REPOSO ERA EL 3
     }
+    public void invertAnimation(){
+        for (int i=0 ; i < frames.length ; i++)
+                frames[i].flip(true, false);  //Haciendo flip a cada frame
+        animation = new Animation(0.15f, frames);    
+ }
 }
+
