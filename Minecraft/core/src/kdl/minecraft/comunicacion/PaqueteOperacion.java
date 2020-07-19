@@ -42,6 +42,9 @@ public class PaqueteOperacion<E> implements Serializable
         //Respuestas para INICIAR_SESION
         CREDENCIAL_INVALIDA,
         SESION_VALIDA,
+        
+        //Respuestas para CREAR_PARTIDA
+        PARTIDA_CREADA,
     }
 
     private Operacion tipo;

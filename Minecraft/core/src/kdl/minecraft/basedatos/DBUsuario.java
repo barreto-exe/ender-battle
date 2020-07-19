@@ -15,9 +15,14 @@ import java.io.UnsupportedEncodingException;
  */
 public final class DBUsuario implements Serializable
 {
-    public static String BASE_DATOS = "192.168.2.104";
     
     private String correo, usuario, pass;
+    
+    /**
+     * Es el número (color) del personaje seleccionado por el usuario.
+     * Va desde el 0 al 5.
+     */
+    private int personajeSeleccionado;
 
     /**
      * Crea una instancia de entidad en relación a la tabla m_usuarios de la Base de Datos.
@@ -31,6 +36,7 @@ public final class DBUsuario implements Serializable
         this.correo = correo;
         this.usuario = usuario;
         this.pass = encriptarMD5(pass);
+        this.personajeSeleccionado = 0;
     }
 
     
@@ -63,6 +69,17 @@ public final class DBUsuario implements Serializable
     {
         this.pass = encriptarMD5(pass);
     }
+
+    public int getPersonajeSeleccionado()
+    {
+        return personajeSeleccionado;
+    }
+
+    public void setPersonajeSeleccionado(int personajeSeleccionado)
+    {
+        this.personajeSeleccionado = personajeSeleccionado;
+    }
+    
     
 
     /**

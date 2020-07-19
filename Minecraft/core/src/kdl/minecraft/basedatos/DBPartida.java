@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kdl.minecraft.comunicacion;
+package kdl.minecraft.basedatos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,11 +13,12 @@ import java.util.ArrayList;
  * 
  * @author luisb
  */
-public class Partida implements Serializable
+public class DBPartida implements Serializable
 {
     private String nombre, descripcion;
-    private ArrayList<Jugador> jugadores;
+    private ArrayList<DBUsuario> jugadores;
     private int limiteJugadores;
+    private int id;
 
     /**
      * Crea un nuevo objeto de partida.
@@ -26,11 +27,11 @@ public class Partida implements Serializable
      * @param creador es el jugador que creó la partida.
      * @param limiteJugadores es la cantidad de jugadores para la partida.
      */
-    public Partida(String nombre, String descripcion, Jugador creador, int limiteJugadores)
+    public DBPartida(String nombre, String descripcion, DBUsuario creador, int limiteJugadores)
     {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.jugadores = new ArrayList<Jugador>();
+        this.jugadores = new ArrayList<DBUsuario>();
         this.jugadores.add(creador);
         this.limiteJugadores = limiteJugadores;
     }
@@ -64,6 +65,21 @@ public class Partida implements Serializable
     public void setLimiteJugadores(int limiteJugadores)
     {
         this.limiteJugadores = limiteJugadores;
+    }
+
+    public DBUsuario getCreador()
+    {
+        return (DBUsuario)jugadores.toArray()[0];
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
     
     

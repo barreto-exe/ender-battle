@@ -19,6 +19,8 @@ public class DBOperacion
 {
     //Atributos************************************************************************************/
 
+    public static String BASE_DATOS = "192.168.2.104";
+    
     /**
      * Representa la ubicación del archivo SQLite con respecto al ejecutable del programa.
      */

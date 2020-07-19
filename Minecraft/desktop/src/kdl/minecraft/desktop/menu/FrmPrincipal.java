@@ -14,11 +14,10 @@ import javax.swing.JOptionPane;
 import java.util.Arrays;
 import kdl.minecraft.recursos.Sonido;
 import kdl.minecraft.basedatos.*;
-import kdl.minecraft.comunicacion.Jugador;
 import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
-import kdl.minecraft.comunicacion.Partida;
+import kdl.minecraft.basedatos.DBPartida;
 
 /**
  *
@@ -658,7 +657,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             try
             {
                 //Enviar solicitud al server
-                Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
+                Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(paquete);
                 socket.close();
@@ -698,7 +697,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             try
             {
                 //Enviar solicitud al server
-                Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
+                Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(paquete);
                 socket.close();
@@ -722,7 +721,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
         Sonido.Click();
         //Cambiar IP de la base de datos
-        DBUsuario.BASE_DATOS = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBUsuario.BASE_DATOS);
+        DBOperacion.BASE_DATOS = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.BASE_DATOS);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
 
     private void lblFlechaDerechaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaDerechaMouseClicked
@@ -757,15 +756,15 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             return;
         }
 
-        Jugador creador = new Jugador(usuarioLogueado.getUsuario(), personajeSeleccionado);
-        Partida partida = new Partida(nombrePartida, descripcionPartida, creador, cantJugadores);
-
+        usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
+        DBPartida partida = new DBPartida(nombrePartida, descripcionPartida, usuarioLogueado, cantJugadores);
+        
         PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, partida);
         
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBUsuario.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             socket.close();
@@ -828,7 +827,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 if (resultado == ResultadoOperacion.ERROR)
                 {
                     JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
+                    btnVolver.doClick();
                 }
+
+                //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
                 //Resultados de registro
                 else if (resultado == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                 {
@@ -843,23 +845,33 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
                     btnVolver.doClick();
                 }
-                //Resultados de inicio de sesión                
+                //</editor-fold>    
+                
+                //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
+                //Resultados de inicio de sesión
                 else if (resultado == ResultadoOperacion.CREDENCIAL_INVALIDA)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                } 
+                }
                 else if (resultado == ResultadoOperacion.SESION_VALIDA)
                 {
                     mostrarPanel(panelPartida);
                     limpiarTextBoxes();
                     lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
                 }
+                //</editor-fold>
+                
+                //Resultados de crear partida
+                else if(resultado == ResultadoOperacion.PARTIDA_CREADA)
+                {
+                    JOptionPane.showMessageDialog(null, "Partida creada.");
+                }
+                
             }
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
         }
-
     }
 
     /**

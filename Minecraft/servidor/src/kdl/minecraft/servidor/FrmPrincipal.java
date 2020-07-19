@@ -13,7 +13,7 @@ import kdl.minecraft.basedatos.DBUsuario;
 import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
-import kdl.minecraft.comunicacion.Partida;
+import kdl.minecraft.basedatos.DBPartida;
 
 /**
  *
@@ -284,8 +284,18 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 //<editor-fold defaultstate="collapsed" desc="Crear Partida">
                 if (operacion == Operacion.CREAR_PARTIDA)
                 {
-                    Partida partida = (Partida) paquete.getInformacion();
-                    txtPartidas.append(partida.getNombre()+ "\n\n");
+                    DBPartida partida = (DBPartida) paquete.getInformacion();
+                    
+                    String add = 
+                            partida.getNombre() + "\n"
+                            + partida.getDescripcion() + "\n"
+                            + partida.getLimiteJugadores() + "\n"
+                            + partida.getCreador().getUsuario() + "\n"
+                            + ip + "\n";
+                    
+                    txtPartidas.append(add + "Crear partida \n");
+                    
+                    resultado = ResultadoOperacion.PARTIDA_CREADA;
                 }
                 //</editor-fold>
                 
