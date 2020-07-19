@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kdl.minecraft.desktop.menu.partidas;
+package kdl.minecraft.comunicacion;
 
+import java.io.Serializable;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author luisb
  */
-public class Jugador
+public class Jugador implements Serializable
 {
 
     private String nombre;

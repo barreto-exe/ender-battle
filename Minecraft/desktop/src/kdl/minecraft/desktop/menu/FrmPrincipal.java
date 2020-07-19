@@ -20,8 +20,8 @@ import kdl.minecraft.recursos.Sonido;
 import kdl.minecraft.basedatos.*;
 import kdl.minecraft.basedatos.DBUsuario.*;
 import kdl.minecraft.desktop.DesktopLauncher;
-import kdl.minecraft.desktop.menu.partidas.Jugador;
-import kdl.minecraft.desktop.menu.partidas.Partida;
+import kdl.minecraft.comunicacion.Jugador;
+import kdl.minecraft.comunicacion.Partida;
 
 /**
  *
@@ -776,7 +776,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
         } catch (IOException ex)
         {
-            System.out.println(ex.getMessage());
+            System.out.println(ex.toString());
             JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
         }
         

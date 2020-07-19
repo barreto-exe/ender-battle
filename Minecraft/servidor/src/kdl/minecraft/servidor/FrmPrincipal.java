@@ -12,6 +12,7 @@ import java.net.*;
 import kdl.minecraft.basedatos.DBUsuario;
 import kdl.minecraft.basedatos.DBUsuario.Operacion;
 import kdl.minecraft.basedatos.DBUsuario.ResultadoOperacion;
+import kdl.minecraft.comunicacion.Partida;
 
 /**
  *
@@ -205,79 +206,88 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 Socket socket = servidor.accept();
 
                 ObjectInputStream paquete = new ObjectInputStream(socket.getInputStream());
-                DBUsuario usuarioObj = (DBUsuario) paquete.readObject();
+                Object objeto = paquete.readObject();
 
-                String ip = socket.getInetAddress().toString().replaceAll("/", "");
-                ResultadoOperacion resultado = ResultadoOperacion.ERROR;
-
-                String add = 
-                        usuarioObj.getCorreo() + "\n"
-                        + usuarioObj.getUsuario() + "\n"
-                        + usuarioObj.getPass() + "\n"
-                        + ip + "\n";
-
-                if (Operacion.REGISTRAR == usuarioObj.getOperacion())
+                if (objeto.getClass() == DBUsuario.class)
                 {
+                    DBUsuario usuarioObj = (DBUsuario) objeto;
 
-                    txtRegistro.append("\n Registrar usuario: \n" + add);
+                    String ip = socket.getInetAddress().toString().replaceAll("/", "");
+                    ResultadoOperacion resultado = ResultadoOperacion.ERROR;
 
-                    //Verificar existencia de correo
-                    if (DBUsuario.idCorreo(usuarioObj.getCorreo()) != -1)
-                    {
-                        txtRegistro.append("Correo no disponible. \n");
-                        resultado = ResultadoOperacion.CORREO_NO_DISPONIBLE;
-                    } //Verificar existencia de usuario
-                    else if (DBUsuario.idUsuario(usuarioObj.getUsuario()) != -1)
-                    {
-                        txtRegistro.append("Usuario no disponible. \n");
-                        resultado = ResultadoOperacion.USUARIO_NO_DISPONIBLE;
+                    String add
+                            = usuarioObj.getCorreo() + "\n"
+                            + usuarioObj.getUsuario() + "\n"
+                            + usuarioObj.getPass() + "\n"
+                            + ip + "\n";
 
-                    } //Si el usuario y el correo están disponibles
-                    else
+                    if (Operacion.REGISTRAR == usuarioObj.getOperacion())
                     {
-                        if (DBUsuario.registrarUsuario(usuarioObj))
+
+                        txtRegistro.append("\n Registrar usuario: \n" + add);
+
+                        //Verificar existencia de correo
+                        if (DBUsuario.idCorreo(usuarioObj.getCorreo()) != -1)
                         {
-                            txtRegistro.append("Usuario registrado exitosamente. \n");
-                            resultado = ResultadoOperacion.USUARIO_REGISTRADO;
-                        } else
+                            txtRegistro.append("Correo no disponible. \n");
+                            resultado = ResultadoOperacion.CORREO_NO_DISPONIBLE;
+                        } //Verificar existencia de usuario
+                        else if (DBUsuario.idUsuario(usuarioObj.getUsuario()) != -1)
                         {
-                            txtRegistro.append("Hubo un error al registrar el usuario. \n");
-                            resultado = ResultadoOperacion.ERROR;
+                            txtRegistro.append("Usuario no disponible. \n");
+                            resultado = ResultadoOperacion.USUARIO_NO_DISPONIBLE;
+
+                        } //Si el usuario y el correo están disponibles
+                        else
+                        {
+                            if (DBUsuario.registrarUsuario(usuarioObj))
+                            {
+                                txtRegistro.append("Usuario registrado exitosamente. \n");
+                                resultado = ResultadoOperacion.USUARIO_REGISTRADO;
+                            } else
+                            {
+                                txtRegistro.append("Hubo un error al registrar el usuario. \n");
+                                resultado = ResultadoOperacion.ERROR;
+                            }
                         }
                     }
-                }
 
-                if (Operacion.INICIAR_SESION == usuarioObj.getOperacion())
-                {
-                    txtInicioSesion.append("\n Iniciar sesión usuario: \n" + add);
-                    
-                    //Verificar datos de usuario
-                    if (DBUsuario.consultarUsuario(usuarioObj) == -1)
+                    if (Operacion.INICIAR_SESION == usuarioObj.getOperacion())
                     {
-                        txtInicioSesion.append("Credencial de usuario inválida. \n");
-                        resultado = ResultadoOperacion.CREDENCIAL_INVALIDA;
-                    } else
-                    {
-                        //Iniciar juego aquí
-                        resultado = ResultadoOperacion.INICIAR_JUEGO;
+                        txtInicioSesion.append("\n Iniciar sesión usuario: \n" + add);
+
+                        //Verificar datos de usuario
+                        if (DBUsuario.consultarUsuario(usuarioObj) == -1)
+                        {
+                            txtInicioSesion.append("Credencial de usuario inválida. \n");
+                            resultado = ResultadoOperacion.CREDENCIAL_INVALIDA;
+                        } else
+                        {
+                            //Iniciar juego aquí
+                            resultado = ResultadoOperacion.INICIAR_JUEGO;
+                        }
                     }
+
+                    //**************************************************************
+                    //Enviar respuesta al cliente
+                    socket = new Socket(ip, 27016);
+                    ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                    paqueteEnvio.writeObject(resultado);
+                    socket.close();
                 }
-                
-                //**************************************************************
-                //Enviar respuesta al cliente
-                socket = new Socket(ip, 27016);
-                ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                paqueteEnvio.writeObject(resultado);
-                socket.close();
+                if (objeto.getClass() == Partida.class)
+                {
+                    Partida partida = (Partida) objeto;
+                    txtPartidas.append(partida.getNombre()+ "\n\n");
+                }
             }
 
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
-            txtPrincipal.append(ex.getMessage() + "\n");
+            txtPrincipal.append(ex.getStackTrace().toString() + "\n");
             new Thread(this).start();
         }
-        
-        
+
     }
 }

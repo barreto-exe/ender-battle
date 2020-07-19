@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kdl.minecraft.desktop.menu.partidas;
+package kdl.minecraft.comunicacion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * 
  * @author luisb
  */
-public class Partida
+public class Partida implements Serializable
 {
     private String nombre, descripcion;
     private ArrayList<Jugador> jugadores;
@@ -33,7 +34,37 @@ public class Partida
         this.jugadores.add(creador);
         this.limiteJugadores = limiteJugadores;
     }
+
+    public String getNombre()
+    {
+        return nombre;
+    }
+
+    public void setNombre(String nombre)
+    {
+        this.nombre = nombre;
+    }
+
     
+    public String getDescripcion()
+    {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion)
+    {
+        this.descripcion = descripcion;
+    }
+
+    public int getLimiteJugadores()
+    {
+        return limiteJugadores;
+    }
+
+    public void setLimiteJugadores(int limiteJugadores)
+    {
+        this.limiteJugadores = limiteJugadores;
+    }
     
     
 }
