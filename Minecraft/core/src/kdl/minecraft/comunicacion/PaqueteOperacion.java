@@ -24,7 +24,9 @@ public class PaqueteOperacion<E> implements Serializable
         REGISTRAR,
         INICIAR_SESION,
         CREAR_PARTIDA,
-        
+        UNIRSE_PARTIDA,
+        ACTUALIZAR_USUARIOS_PARTIDA,
+        PEDIR_PARTIDAS_ACTIVAS,
     }
 
     /**
@@ -45,6 +47,17 @@ public class PaqueteOperacion<E> implements Serializable
         
         //Respuestas para CREAR_PARTIDA
         PARTIDA_CREADA,
+        PARTIDA_YA_EXISTE,
+        
+        //Respuestas para UNIRSE_PARTIDA
+        UNIDO_EXITOSAMENTE,
+        PARTIDA_LLENA,
+        
+        //Respuesta para PEDIR_PARTIDAS_ACTIVAS
+        PARTIDAS_ACTIVAS,
+        
+        //Respuesta para PEDIR_USUARIOS_PARTIDA
+        USUARIOS_PARTIDA,
     }
 
     private Operacion tipo;

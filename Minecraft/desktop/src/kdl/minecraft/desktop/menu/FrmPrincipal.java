@@ -9,15 +9,19 @@ import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import kdl.minecraft.recursos.Sonido;
 import kdl.minecraft.basedatos.*;
 import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
 import kdl.minecraft.basedatos.DBPartida;
+import kdl.minecraft.comunicacion.PaqueteResultado;
 
 /**
  *
@@ -31,6 +35,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
     private static DBUsuario usuarioLogueado;
     private static int personajeSeleccionado;
+    private static int partida;
 
     /**
      * Crea la ventana principal del juego.
@@ -41,10 +46,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
-        btnComenzarPartida.setVisible(false);
 
-        personajeSeleccionado = 0;
+        this.limpiarCrearPartida();
     }
 
     /**
@@ -103,8 +106,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         lblPersonaje = new javax.swing.JLabel();
         logo3 = new javax.swing.JLabel();
         lblNickname = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jlCrear = new javax.swing.JLayeredPane();
+        jtPartidas = new javax.swing.JTabbedPane();
         jpCrear = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -113,8 +115,13 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         txtDescPartida = new javax.swing.JTextField();
         spinCantJugadores = new javax.swing.JSpinner();
         btnCrearPartida = new javax.swing.JButton();
-        jlUnirse = new javax.swing.JLayeredPane();
         jpUnirse = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtPartidasActivas = new javax.swing.JTable();
+        jpLobby = new javax.swing.JPanel();
+        lblNombrePartida = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtJugadores = new javax.swing.JTable();
         btnComenzarPartida = new javax.swing.JButton();
         btnVolver4 = new javax.swing.JButton();
         fondoAcerca1 = new javax.swing.JLabel();
@@ -523,7 +530,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                             .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(spinCantJugadores, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 192, Short.MAX_VALUE))
+                        .addGap(0, 187, Short.MAX_VALUE))
                     .addComponent(txtDescPartida, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpCrearLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -546,23 +553,117 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spinCantJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(btnCrearPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jlCrear.add(jpCrear);
-        jpCrear.setBounds(0, 0, 470, 330);
+        jtPartidas.addTab("Crear Partida", jpCrear);
 
-        jTabbedPane1.addTab("Crear Partida", jlCrear);
+        jtPartidasActivas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
 
-        jlUnirse.add(jpUnirse);
-        jpUnirse.setBounds(0, 0, 470, 330);
+            },
+            new String []
+            {
+                "ID", "Nombre", "Descripcion", "Estado", "Jugadores"
+            }
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false, false, false, false
+            };
 
-        jTabbedPane1.addTab("Unirse a Partida", jlUnirse);
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
 
-        panelPartida.add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 40, 470, 360);
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jtPartidasActivas);
+        if (jtPartidasActivas.getColumnModel().getColumnCount() > 0)
+        {
+            jtPartidasActivas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtPartidasActivas.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jpUnirse.add(jScrollPane3);
+
+        jtPartidas.addTab("Unirse a Partida", jpUnirse);
+
+        lblNombrePartida.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        lblNombrePartida.setText("Nombre de Partida");
+
+        jtJugadores.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        jtJugadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+
+            },
+            new String []
+            {
+                "Jugador", "Personaje Seleccionado", "IP"
+            }
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jtJugadores);
+
+        javax.swing.GroupLayout jpLobbyLayout = new javax.swing.GroupLayout(jpLobby);
+        jpLobby.setLayout(jpLobbyLayout);
+        jpLobbyLayout.setHorizontalGroup(
+            jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpLobbyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpLobbyLayout.createSequentialGroup()
+                        .addComponent(lblNombrePartida)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jpLobbyLayout.setVerticalGroup(
+            jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpLobbyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNombrePartida)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jtPartidas.addTab("Lobby", jpLobby);
+
+        panelPartida.add(jtPartidas);
+        jtPartidas.setBounds(10, 40, 470, 360);
 
         btnComenzarPartida.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnComenzarPartida.setText("COMENZAR");
@@ -630,6 +731,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         Sonido.Click();
         mostrarPanel(panelBienvenida);
         limpiarTextBoxes();
+        limpiarCrearPartida();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAceptarRegistroActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarRegistroActionPerformed
@@ -653,7 +755,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
             PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj);
-            
+
             try
             {
                 //Enviar solicitud al server
@@ -691,7 +793,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(null, usuario, pass);
             PaqueteOperacion paquete = new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioObj);
-            
+
             usuarioLogueado = usuarioObj;
 
             try
@@ -704,7 +806,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
                 btnAceptarInicio.setEnabled(false);
                 btnVolver.setEnabled(false);
-
             } catch (UnknownHostException ex)
             {
                 System.out.println(ex.getMessage());
@@ -752,15 +853,19 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         if (nombrePartida.equals(""))
         {
-            JOptionPane.showConfirmDialog(null, "El nombre de la partida no puede estar en blanco.");
+            JOptionPane.showMessageDialog(null, "El nombre de la partida no puede estar en blanco.");
             return;
         }
 
-        usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
-        DBPartida partida = new DBPartida(nombrePartida, descripcionPartida, usuarioLogueado, cantJugadores);
-        
+        //Deshabilitar botones de crear partida
+        btnCrearPartida.setEnabled(false);
+        lblFlechaIzquierda.setVisible(false);
+        lblFlechaDerecha.setVisible(false);
+
+        //Crear paquete de envío a la base de datos
+        DBPartida partida = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
         PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, partida);
-        
+
         try
         {
             //Enviar solicitud al server
@@ -768,10 +873,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             socket.close();
-            
-            btnCrearPartida.setEnabled(false);
-        } 
-        catch (UnknownHostException ex)
+        } catch (UnknownHostException ex)
         {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
@@ -780,7 +882,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             System.out.println(ex.toString());
             JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
         }
-        
     }//GEN-LAST:event_btnCrearPartidaActionPerformed
 
     private void elegirImagenPersonaje()
@@ -808,7 +909,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             {
                 Socket socket = recibir.accept();
                 ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
-                ResultadoOperacion resultado = (ResultadoOperacion) paqueteRecibido.readObject();
+                PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
 
                 //Habilitar botones de nuevo
                 new Thread(new Runnable()
@@ -824,54 +925,204 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     }
                 }).start();
 
-                if (resultado == ResultadoOperacion.ERROR)
+                if (resultado.getResultado() == ResultadoOperacion.ERROR)
                 {
                     JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
                     btnVolver.doClick();
-                }
+                } 
 
                 //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
                 //Resultados de registro
-                else if (resultado == ResultadoOperacion.CORREO_NO_DISPONIBLE)
+                else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                 {
                     JOptionPane.showMessageDialog(null, "Correo no disponible.");
-                }
-                else if (resultado == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
+                } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario no disponible.");
-                }
-                else if (resultado == ResultadoOperacion.USUARIO_REGISTRADO)
+                } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
                 {
                     JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
                     btnVolver.doClick();
-                }
-                //</editor-fold>    
+                } //</editor-fold>  
                 
                 //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
                 //Resultados de inicio de sesión
-                else if (resultado == ResultadoOperacion.CREDENCIAL_INVALIDA)
+                else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                }
-                else if (resultado == ResultadoOperacion.SESION_VALIDA)
+                } else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
                 {
                     mostrarPanel(panelPartida);
                     limpiarTextBoxes();
                     lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
+
+                    actualizarPartidasActivas();
                 }
                 //</editor-fold>
                 
+                //<editor-fold defaultstate="collapsed" desc="Resultados de Crear Partida">
                 //Resultados de crear partida
-                else if(resultado == ResultadoOperacion.PARTIDA_CREADA)
+                else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_CREADA)
                 {
-                    JOptionPane.showMessageDialog(null, "Partida creada.");
-                }
+                    //JOptionPane.showMessageDialog(null, "Partida creada.");
+                    partida = DBPartida.idUltimaPartida();
+                    entrarPartida(partida);
+
+                    //Bloquear paneles y permanecer en el LOBBY
+                    this.jtPartidas.setEnabledAt(2, true);
+                    this.jtPartidas.setSelectedIndex(2);
+                    this.jtPartidas.setEnabledAt(0, false);
+                    this.jtPartidas.setEnabledAt(1, false);
+                } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
+                {
+                    JOptionPane.showMessageDialog(null, "Ya existe una partida con el mismo nombre.");
+
+                    //Rehabilitar selección de partida y personaje
+                    this.btnCrearPartida.setEnabled(true);
+                    this.lblFlechaDerecha.setVisible(true);
+                    this.lblFlechaIzquierda.setVisible(true);
+                } //</editor-fold>
                 
+                //<editor-fold defaultstate="collapsed" desc="Resultados de Unirse a Partida">
+                //Resultados de unirse a partida
+                else if (resultado.getResultado() == ResultadoOperacion.UNIDO_EXITOSAMENTE)
+                {
+                    JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
+
+                    //Bloquear paneles y permanecer en el LOBBY
+                    this.jtPartidas.setEnabledAt(2, true);
+                    this.jtPartidas.setSelectedIndex(2);
+                    this.jtPartidas.setEnabledAt(0, false);
+                    this.jtPartidas.setEnabledAt(1, false);
+
+                    actualizarUsuariosPartida();
+
+                } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
+                {
+                    JOptionPane.showMessageDialog(null, "La partida a la que te quieres unir está llena o en curso.");
+
+                    //Rehabilitar selección de partida y personaje
+                    //*Cambiar btnCrear por habilitar click en la tabla de partidas*
+                    this.btnCrearPartida.setEnabled(true);
+                    this.lblFlechaDerecha.setVisible(true);
+                    this.lblFlechaIzquierda.setVisible(true);
+                } 
+                //</editor-fold>
+                
+                //Resultados de pedir usuarios partida
+                else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
+                {
+
+                } 
+
+                //Resultados de pedir partidas activas
+                else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
+                {
+                    ArrayList<DBPartida> partidas = (ArrayList<DBPartida>) resultado.getInformacion();
+                    DefaultTableModel tabla = (DefaultTableModel) jtPartidasActivas.getModel();
+
+                    for (DBPartida partida : partidas)
+                    {
+                        tabla.addRow(new Object[]
+                        {
+                            partida.getId(),
+                            partida.getNombre(),
+                            partida.getDescripcion(),
+                            partida.getEstado().toString(),
+                            partida.getCantidadJugadores()
+                        });
+                    }
+                }
+
             }
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private static void entrarPartida(int idPartida) throws IOException
+    {
+        //Deshabilitar botones de entrar partida
+
+        //Asignar personaje elegido al usuario
+        usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
+
+        //Asignar partida a la que se quiere unir
+        usuarioLogueado.setPartida(idPartida);
+
+        //Armar paquete para enviar al servidor
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado);
+
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
+            socket.close();
+        } catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } catch (IOException ex)
+        {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+
+    private static void actualizarPartidasActivas()
+    {
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null);
+        try
+        {
+            //Enviar solicitud al server
+            Socket s = new Socket(DBOperacion.BASE_DATOS, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeObject(paquete);
+            s.close();
+        } catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } catch (IOException ex)
+        {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
+    private static void actualizarUsuariosPartida()
+    {
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
+        try
+        {
+            //Enviar solicitud al server
+            Socket s = new Socket(DBOperacion.BASE_DATOS, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            out.writeObject(paquete);
+            s.close();
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } 
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
+    private static void salirPartida()
+    {
+        if (partida == -1)
+        {
+            return;
+        }
+
     }
 
     /**
@@ -900,6 +1151,26 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         this.txtUsuarioIniciar.setText("");
     }
 
+    /**
+     * Reinicia el estado del panel Crear Partida.
+     */
+    private void limpiarCrearPartida()
+    {
+        this.txtNombrePartida.setText("");
+        this.txtDescPartida.setText("");
+        this.spinCantJugadores.setValue(2);
+        this.btnCrearPartida.setEnabled(true);
+        this.lblFlechaDerecha.setVisible(true);
+        this.lblFlechaIzquierda.setVisible(true);
+        this.btnComenzarPartida.setVisible(false);
+        this.jtPartidas.setEnabledAt(2, false);
+        this.jtPartidas.setEnabledAt(0, true);
+        this.jtPartidas.setEnabledAt(1, true);
+        this.jtPartidas.setSelectedIndex(0);
+        this.personajeSeleccionado = 0;
+        this.elegirImagenPersonaje();
+        this.partida = -1;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarInicio;
@@ -927,17 +1198,21 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLayeredPane jlCrear;
-    private javax.swing.JLayeredPane jlUnirse;
     private javax.swing.JLayeredPane jlpPrincipal;
     private javax.swing.JPanel jpCrear;
+    private javax.swing.JPanel jpLobby;
     private javax.swing.JPanel jpUnirse;
+    private javax.swing.JTable jtJugadores;
+    private javax.swing.JTabbedPane jtPartidas;
+    private javax.swing.JTable jtPartidasActivas;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblFlechaDerecha;
     private javax.swing.JLabel lblFlechaIzquierda;
     private javax.swing.JLabel lblNickname;
+    private javax.swing.JLabel lblNombrePartida;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass1;
     private javax.swing.JLabel lblPass2;

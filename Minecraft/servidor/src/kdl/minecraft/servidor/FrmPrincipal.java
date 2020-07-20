@@ -9,11 +9,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
+import java.util.ArrayList;
+import kdl.minecraft.basedatos.DBMatriz;
+import kdl.minecraft.basedatos.DBOperacion;
 import kdl.minecraft.basedatos.DBUsuario;
 import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
+import static kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
 import kdl.minecraft.basedatos.DBPartida;
+import kdl.minecraft.basedatos.DBPartida.EstadoPartida;
+import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.*;
+import kdl.minecraft.comunicacion.PaqueteResultado;
 
 /**
  *
@@ -210,23 +217,23 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
                 Operacion operacion = paquete.getTipo();
                 
-                ResultadoOperacion resultado = ResultadoOperacion.ERROR;
+                PaqueteResultado resultado = new PaqueteResultado(ResultadoOperacion.ERROR);
                 
                 String ip = socket.getInetAddress().toString().replaceAll("/", "");
 
-                //Acciones si la solicitoud es de Registro/Inicio de sesión
+                //Instrucciones si la solicitoud es de Registro/Inicio de sesión
                 //<editor-fold defaultstate="collapsed" desc="Registro/Inicio de sesión">
-                if (operacion == Operacion.INICIAR_SESION || operacion == Operacion.REGISTRAR)
+                if (operacion == INICIAR_SESION || operacion == REGISTRAR)
                 {
                     DBUsuario usuarioObj = (DBUsuario) paquete.getInformacion();
 
-                    String add
-                            = usuarioObj.getCorreo() + "\n"
-                            + usuarioObj.getUsuario() + "\n"
-                            + usuarioObj.getPass() + "\n"
-                            + ip + "\n";
+                    String add = 
+                            "Correo:"   + usuarioObj.getCorreo()  + "\n" +
+                            "Usuario: " + usuarioObj.getUsuario() + "\n" +
+                            "Pass: "    + usuarioObj.getPass()    + "\n" +
+                            ip + "\n";
 
-                    if (operacion == Operacion.REGISTRAR)
+                    if (operacion == REGISTRAR)
                     {
                         txtRegistro.append("\n Registrar usuario: \n" + add);
 
@@ -234,13 +241,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         if (DBUsuario.idCorreo(usuarioObj.getCorreo()) != -1)
                         {
                             txtRegistro.append("Correo no disponible. \n");
-                            resultado = ResultadoOperacion.CORREO_NO_DISPONIBLE;
+                            resultado.setResultado(CORREO_NO_DISPONIBLE);
                         }
                         //Verificar existencia de usuario
                         else if (DBUsuario.idUsuario(usuarioObj.getUsuario()) != -1)
                         {
                             txtRegistro.append("Usuario no disponible. \n");
-                            resultado = ResultadoOperacion.USUARIO_NO_DISPONIBLE;
+                            resultado.setResultado(USUARIO_NO_DISPONIBLE);
 
                         }
                         //Si el usuario y el correo están disponibles
@@ -249,17 +256,17 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                             if (DBUsuario.registrarUsuario(usuarioObj))
                             {
                                 txtRegistro.append("Usuario registrado exitosamente. \n");
-                                resultado = ResultadoOperacion.USUARIO_REGISTRADO;
+                                resultado.setResultado(USUARIO_REGISTRADO);
                             }
                             else
                             {
                                 txtRegistro.append("Hubo un error al registrar el usuario. \n");
-                                resultado = ResultadoOperacion.ERROR;
+                                resultado.setResultado(ResultadoOperacion.ERROR);
                             }
                         }
                     }
 
-                    if (operacion == Operacion.INICIAR_SESION)
+                    if (operacion == INICIAR_SESION)
                     {
                         txtInicioSesion.append("\n Iniciar sesión usuario: \n" + add);
 
@@ -267,37 +274,93 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         if (DBUsuario.consultarUsuario(usuarioObj) == -1)
                         {
                             txtInicioSesion.append("Credencial de usuario inválida. \n");
-                            resultado = ResultadoOperacion.CREDENCIAL_INVALIDA;
+                            resultado.setResultado(CREDENCIAL_INVALIDA);
                         }
                         else
                         {
                             txtInicioSesion.append("Inicio de sesión válido. \n");
-                            resultado = ResultadoOperacion.SESION_VALIDA;
+                            resultado.setResultado(SESION_VALIDA);
                         }
                     }
-
-
                 }
                 //</editor-fold>
 
-                //Acciones si la solicitud es de crear partida
+                //Instrucciones si la solicitud es de crear partida
                 //<editor-fold defaultstate="collapsed" desc="Crear Partida">
-                if (operacion == Operacion.CREAR_PARTIDA)
+                if (operacion == CREAR_PARTIDA)
                 {
                     DBPartida partida = (DBPartida) paquete.getInformacion();
                     
                     String add = 
-                            partida.getNombre() + "\n"
-                            + partida.getDescripcion() + "\n"
-                            + partida.getLimiteJugadores() + "\n"
-                            + partida.getCreador().getUsuario() + "\n"
-                            + ip + "\n";
+                        "Nombre Partida: " + partida.getNombre()            + "\n" +
+                        "Descripcion:"     + partida.getDescripcion()       + "\n" +
+                        "Cantidad Jug.:"   + partida.getCantidadJugadores() + "\n" +
+                        ip + "\n";
                     
-                    txtPartidas.append(add + "Crear partida \n");
+                    txtPartidas.append(add + "Crear partida \n\n");
                     
-                    resultado = ResultadoOperacion.PARTIDA_CREADA;
+                    if(DBPartida.crearPartida(partida))
+                    {
+                        resultado.setResultado(ResultadoOperacion.PARTIDA_CREADA);
+                    }
+                    else
+                    {
+                        resultado.setResultado(ResultadoOperacion.PARTIDA_YA_EXISTE);
+                    }
                 }
                 //</editor-fold>
+                
+                //Instrucciones si la solicitud es de unirse a partida
+                //<editor-fold defaultstate="collapsed" desc="Unirse a partida">
+                if(operacion == UNIRSE_PARTIDA)
+                {
+                    DBUsuario usuario = (DBUsuario) paquete.getInformacion();
+                    
+                    String add = 
+                            "Nombre: "     + usuario.getUsuario()  + "\n" +
+                            "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
+                            "Partida: "    + usuario.getPartida() + "\n";
+                    
+                    txtPartidas.append(add + "Unirse a partida \n\n");
+                    
+                    if(DBPartida.agregarJugador(usuario, ip))
+                    {
+                        resultado.setResultado(ResultadoOperacion.UNIDO_EXITOSAMENTE);
+                        resultado.setInformacion(usuariosPartida(usuario.getPartida()));
+                    }
+                    else
+                    {
+                        resultado.setResultado(ResultadoOperacion.PARTIDA_LLENA);
+                    }
+                }
+                //</editor-fold>
+                
+                //Instrucciones si se pide enviar la lista de jugadores de la sala a todos
+                //los usuarios
+                if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
+                {
+                    int partida = (int) paquete.getInformacion();
+                    resultado.setResultado(USUARIOS_PARTIDA);
+                    
+                    ArrayList<DBUsuario> usuarios = usuariosPartida(partida);
+                    resultado.setInformacion(usuarios);
+                    
+                    for(DBUsuario usuario : usuarios)
+                    {
+                        socket = new Socket(usuario.getIp(), 27016);
+                        ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                        paqueteEnvio.writeObject(resultado);
+                        socket.close();
+                    }
+                    
+                    return;
+                }
+                
+                if(operacion == PEDIR_PARTIDAS_ACTIVAS)
+                {
+                    resultado.setResultado(PARTIDAS_ACTIVAS);
+                    resultado.setInformacion(partidasActivas());
+                }
                 
                 
                 //**************************************************************
@@ -314,6 +377,63 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
             txtPrincipal.append(ex.getStackTrace().toString() + "\n");
             new Thread(this).start();
         }
+    }
+    
+    private static ArrayList<DBUsuario> usuariosPartida(int idPartida)
+    {
+        ArrayList<DBUsuario> usuarios = new ArrayList<DBUsuario>();
+        String query = 
+                "SELECT id_jugador as id, ( SELECT u.usuario FROM m_usuarios u WHERE u.id = id_jugador ) AS usuario, ip \n" +
+                "FROM m_partidas_jugadores WHERE id_partida = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        while(resultado.leer())
+        {
+            usuarios.add(new DBUsuario((String)resultado.getValor("usuario"), (String)resultado.getValor("ip")));
+        }
+        
+        return usuarios;
+    }
+    
+    private static ArrayList<DBPartida> partidasActivas()
+    {
+        ArrayList<DBPartida> partidas = new ArrayList<DBPartida>();
+        String query = "SELECT * FROM m_partidas WHERE estado < 3";
+        DBOperacion operacion = new DBOperacion(query);
 
+        DBMatriz resultado = operacion.consultar();
+
+        String nombre, descripcion;
+        EstadoPartida estado = EstadoPartida.LOBBY;
+        int id, cantJugadores, estadoInt;
+        
+        while(resultado.leer())
+        {
+            nombre = (String) resultado.getValor("nombre");
+            descripcion = (String) resultado.getValor("descripcion");
+            estadoInt = (int) resultado.getValor("estado");
+            switch(estadoInt)
+            {
+                case 1:
+                {
+                    estado = EstadoPartida.LOBBY;
+                    break;
+                }
+                case 2:
+                {
+                    estado = EstadoPartida.JUGANDO;
+                    break;
+                }
+            }
+            id = (int) resultado.getValor("id");
+            cantJugadores = (int) resultado.getValor("cantidadJugadores");
+            
+            partidas.add(new DBPartida(nombre,descripcion,estado,cantJugadores,id));
+        }
+         
+        return partidas;
     }
 }
