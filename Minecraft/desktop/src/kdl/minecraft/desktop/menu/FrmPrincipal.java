@@ -120,6 +120,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jScrollPane3 = new javax.swing.JScrollPane();
         jtPartidasActivas = new javax.swing.JTable();
         btnUnirsePartida = new javax.swing.JButton();
+        btnActualizarPartidas = new javax.swing.JButton();
         jpLobby = new javax.swing.JPanel();
         lblNombrePartida = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -620,18 +621,31 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             }
         });
 
+        btnActualizarPartidas.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        btnActualizarPartidas.setText("ACTUALIZAR");
+        btnActualizarPartidas.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnActualizarPartidasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpUnirseLayout = new javax.swing.GroupLayout(jpUnirse);
         jpUnirse.setLayout(jpUnirseLayout);
         jpUnirseLayout.setHorizontalGroup(
             jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpUnirseLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpUnirseLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jpUnirseLayout.createSequentialGroup()
+                        .addComponent(btnActualizarPartidas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jpUnirseLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))))
         );
         jpUnirseLayout.setVerticalGroup(
             jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -639,7 +653,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizarPartidas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -971,6 +987,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         limpiarCrearPartida();
     }//GEN-LAST:event_btnCancelarPartidaActionPerformed
 
+    private void btnActualizarPartidasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnActualizarPartidasActionPerformed
+    {//GEN-HEADEREND:event_btnActualizarPartidasActionPerformed
+        actualizarPartidasActivas();
+    }//GEN-LAST:event_btnActualizarPartidasActionPerformed
+
     @Override
     public void run()
     {
@@ -1112,6 +1133,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 //Resultados de pedir partidas activas
                 else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
                 {
+                    ((DefaultTableModel)this.jtPartidasActivas.getModel()).setRowCount(0);
+                    
                     ArrayList<DBPartida> partidas = (ArrayList<DBPartida>) resultado.getInformacion();
                     DefaultTableModel tabla = (DefaultTableModel) jtPartidasActivas.getModel();
 
@@ -1315,6 +1338,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnAceptarInicio;
     private javax.swing.JButton btnAceptarRegistro;
     private javax.swing.JButton btnAcerca;
+    private javax.swing.JButton btnActualizarPartidas;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarServidor;
     private javax.swing.JButton btnCancelarPartida;
