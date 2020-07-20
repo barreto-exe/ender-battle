@@ -61,6 +61,12 @@ public class DBPartida implements Serializable
         this.id = id;
     }
 
+    public DBPartida()
+    {
+        this.nombre = "";
+        this.id = -1;
+    }
+    
     public String getNombre()
     {
         return nombre;
@@ -235,5 +241,18 @@ public class DBPartida implements Serializable
         {
             return false;
         }
+    }
+    
+    public static void sacarJugador(DBUsuario usuario)
+    {
+        String query = 
+                "DELETE FROM m_partidas_jugadores WHERE "
+                + "id_jugador = ? AND "
+                + "id_partida = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(usuario.getId());
+        operacion.pasarParametro(usuario.getPartida());
+        
+        operacion.ejecutar();
     }
 }

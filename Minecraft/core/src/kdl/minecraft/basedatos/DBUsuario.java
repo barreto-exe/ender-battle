@@ -18,6 +18,8 @@ public final class DBUsuario implements Serializable
     
     private String correo, usuario, pass, ip;
     
+    private int id;
+    
     /**
      * Es el número (color) del personaje seleccionado por el usuario.
      * Va desde el 0 al 5.
@@ -50,6 +52,26 @@ public final class DBUsuario implements Serializable
         this.personajeSeleccionado = 0;
         this.partida = -1;
     }
+
+    public DBUsuario(String usuario, String ip, int id, int personajeSeleccionado)
+    {
+        this.usuario = usuario;
+        this.ip = ip;
+        this.id = id;
+        this.personajeSeleccionado = personajeSeleccionado;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+    
+    
     
     public String getCorreo()
     {

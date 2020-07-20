@@ -212,10 +212,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
             {
                 txtPrincipal.append("Esperando socket \n");
                 Socket socket = servidor.accept();
-
+                
                 ObjectInputStream input  = new ObjectInputStream(socket.getInputStream());
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
                 Operacion operacion = paquete.getTipo();
+                
+                txtPrincipal.append("Operacion: " + operacion.toString() + "\n\n");
                 
                 PaqueteResultado resultado = new PaqueteResultado(ResultadoOperacion.ERROR);
                 
@@ -269,9 +271,10 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     if (operacion == INICIAR_SESION)
                     {
                         txtInicioSesion.append("\n Iniciar sesión usuario: \n" + add);
-
+                        int idUsuario = DBUsuario.consultarUsuario(usuarioObj);
+                        
                         //Verificar datos de usuario
-                        if (DBUsuario.consultarUsuario(usuarioObj) == -1)
+                        if (idUsuario == -1)
                         {
                             txtInicioSesion.append("Credencial de usuario inválida. \n");
                             resultado.setResultado(CREDENCIAL_INVALIDA);
@@ -280,6 +283,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         {
                             txtInicioSesion.append("Inicio de sesión válido. \n");
                             resultado.setResultado(SESION_VALIDA);
+                            resultado.setInformacion(idUsuario);
                         }
                     }
                 }
@@ -336,11 +340,26 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
+                if(operacion == SALIR_PARTIDA)
+                {
+                    DBUsuario usuario = (DBUsuario) paquete.getInformacion();
+                    
+                    String add = 
+                            "Nombre: "     + usuario.getUsuario()  + "\n" +
+                            "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
+                            "Partida: "    + usuario.getPartida() + "\n";
+                    
+                    txtPartidas.append(add + "Salir de partida \n\n");
+                    
+                    resultado.setResultado(SALIR_PARTIDA_EXITOSO);
+                    DBPartida.sacarJugador(usuario);
+                }
+                
                 //Instrucciones si se pide enviar la lista de jugadores de la sala a todos
                 //los usuarios
                 if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
                 {
-                    int partida = (int) paquete.getInformacion();
+                    int partida = ((DBPartida) paquete.getInformacion()).getId();
                     resultado.setResultado(USUARIOS_PARTIDA);
                     
                     ArrayList<DBUsuario> usuarios = usuariosPartida(partida);
@@ -348,13 +367,14 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     
                     for(DBUsuario usuario : usuarios)
                     {
-                        socket = new Socket(usuario.getIp(), 27016);
-                        ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                        paqueteEnvio.writeObject(resultado);
-                        socket.close();
+                        if(!usuario.getIp().equals(ip))
+                        {
+                            socket = new Socket(usuario.getIp(), 27016);
+                            ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                            paqueteEnvio.writeObject(resultado);
+                            socket.close();
+                        }
                     }
-                    
-                    return;
                 }
                 
                 if(operacion == PEDIR_PARTIDAS_ACTIVAS)
@@ -384,7 +404,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
     {
         ArrayList<DBUsuario> usuarios = new ArrayList<DBUsuario>();
         String query = 
-                "SELECT id_jugador as id, ( SELECT u.usuario FROM m_usuarios u WHERE u.id = id_jugador ) AS usuario, ip \n" +
+                "SELECT id_jugador as id, ( SELECT u.usuario FROM m_usuarios u WHERE u.id = id_jugador ) AS usuario, personajeSeleccionado, ip \n" +
                 "FROM m_partidas_jugadores WHERE id_partida = ?";
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(idPartida);
@@ -393,7 +413,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         
         while(resultado.leer())
         {
-            usuarios.add(new DBUsuario((String)resultado.getValor("usuario"), (String)resultado.getValor("ip")));
+            usuarios.add(new DBUsuario(
+                    (String) resultado.getValor("usuario"), 
+                    (String) resultado.getValor("ip"),
+                    (int) resultado.getValor("id"),
+                    (int) resultado.getValor("personajeSeleccionado")
+            ));
         }
         
         return usuarios;

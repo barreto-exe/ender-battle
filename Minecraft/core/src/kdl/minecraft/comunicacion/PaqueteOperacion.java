@@ -27,6 +27,7 @@ public class PaqueteOperacion<E> implements Serializable
         UNIRSE_PARTIDA,
         ACTUALIZAR_USUARIOS_PARTIDA,
         PEDIR_PARTIDAS_ACTIVAS,
+        SALIR_PARTIDA,
     }
 
     /**
@@ -58,6 +59,9 @@ public class PaqueteOperacion<E> implements Serializable
         
         //Respuesta para PEDIR_USUARIOS_PARTIDA
         USUARIOS_PARTIDA,
+        
+        //Respuesta para SALIR_PARTIDA
+        SALIR_PARTIDA_EXITOSO,
     }
 
     private Operacion tipo;

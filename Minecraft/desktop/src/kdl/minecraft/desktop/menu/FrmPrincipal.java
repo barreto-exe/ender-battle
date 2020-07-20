@@ -33,8 +33,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     public static final int ANCHURA_VENTANA = 855;
 
     private static DBUsuario usuarioLogueado;
+    private static DBPartida partida;
     private static int personajeSeleccionado;
-    private static int partida;
 
     /**
      * Crea la ventana principal del juego.
@@ -45,6 +45,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        partida = new DBPartida();
         
         this.limpiarCrearPartida();
     }
@@ -123,7 +125,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jScrollPane2 = new javax.swing.JScrollPane();
         jtJugadores = new javax.swing.JTable();
         btnComenzarPartida = new javax.swing.JButton();
-        btnVolver4 = new javax.swing.JButton();
+        btnCancelarPartida = new javax.swing.JButton();
         fondoAcerca1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -719,17 +721,17 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         panelPartida.add(btnComenzarPartida);
         btnComenzarPartida.setBounds(670, 420, 170, 40);
 
-        btnVolver4.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
-        btnVolver4.setText("VOLVER");
-        btnVolver4.addActionListener(new java.awt.event.ActionListener()
+        btnCancelarPartida.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
+        btnCancelarPartida.setText("VOLVER");
+        btnCancelarPartida.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnVolverActionPerformed(evt);
+                btnCancelarPartidaActionPerformed(evt);
             }
         });
-        panelPartida.add(btnVolver4);
-        btnVolver4.setBounds(10, 420, 170, 40);
+        panelPartida.add(btnCancelarPartida);
+        btnCancelarPartida.setBounds(10, 420, 170, 40);
 
         fondoAcerca1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondos/tierra.png"))); // NOI18N
         panelPartida.add(fondoAcerca1);
@@ -773,7 +775,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         Sonido.Click();
         mostrarPanel(panelBienvenida);
         limpiarTextBoxes();
-        limpiarCrearPartida();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAceptarRegistroActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarRegistroActionPerformed
@@ -830,7 +831,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         if ("".equals(usuario) || "".equals(pass))
         {
             JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
-        } else
+        } 
+        else
         {
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(null, usuario, pass);
@@ -904,9 +906,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         lblFlechaIzquierda.setVisible(false);
         lblFlechaDerecha.setVisible(false);
 
+        //Guardar nombre de la partida por crear
+        partida.setNombre(nombrePartida);
+        
         //Crear paquete de envío a la base de datos
-        DBPartida partida = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, partida);
+        DBPartida p = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, p);
 
         try
         {
@@ -935,11 +940,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         if(partidaRow == -1)
             return;
         
+        int idPartida  = (int) this.jtPartidasActivas.getValueAt(partidaRow, 0);
+        
+        //Guardar nombre e id de partida por unirse
+        partida.setNombre((String) this.jtPartidasActivas.getValueAt(partidaRow, 1));
+        partida.setId(idPartida);
+        
         //Deshabilitar botones de crear partida
         this.lblFlechaIzquierda.setVisible(false);
         this.lblFlechaDerecha.setVisible(false);
         
-        int idPartida  = (int) this.jtPartidasActivas.getValueAt(partidaRow, 0);
         entrarPartida(idPartida);
     }//GEN-LAST:event_btnUnirsePartidaActionPerformed
 
@@ -950,17 +960,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         this.jtPartidasActivas.getSelectionModel().addSelectionInterval(partidaRow, partidaRow);
     }//GEN-LAST:event_jtPartidasActivasMouseClicked
 
-    private void elegirImagenPersonaje()
-    {
-        personajeSeleccionado = personajeSeleccionado % 6;
-
-        if (personajeSeleccionado < 0)
-        {
-            personajeSeleccionado = personajeSeleccionado * -1 + 4;
-        }
-
-        lblPersonaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/personaje/" + personajeSeleccionado + ".png")));
-    }
+    private void btnCancelarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarPartidaActionPerformed
+    {//GEN-HEADEREND:event_btnCancelarPartidaActionPerformed
+        Sonido.Click();
+        mostrarPanel(panelBienvenida);
+        
+        salirPartida();
+        actualizarUsuariosPartida();
+        
+        limpiarCrearPartida();
+    }//GEN-LAST:event_btnCancelarPartidaActionPerformed
 
     @Override
     public void run()
@@ -1016,12 +1025,14 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
                 {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                } else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
+                } 
+                else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
                 {
                     mostrarPanel(panelPartida);
                     limpiarTextBoxes();
                     lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
-
+                    
+                    usuarioLogueado.setId((int)resultado.getInformacion());
                     actualizarPartidasActivas();
                 }
                 //</editor-fold>
@@ -1031,8 +1042,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_CREADA)
                 {
                     //JOptionPane.showMessageDialog(null, "Partida creada.");
-                    partida = (int)resultado.getInformacion();
-                    entrarPartida(partida);
+                    partida.setId((int)resultado.getInformacion());
+                    entrarPartida(partida.getId());
 
                     //Bloquear paneles y permanecer en el LOBBY
                     this.jtPartidas.setEnabledAt(2, true);
@@ -1053,13 +1064,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 //Resultados de unirse a partida
                 else if (resultado.getResultado() == ResultadoOperacion.UNIDO_EXITOSAMENTE)
                 {
-                    JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
+                    //JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
 
                     //Bloquear paneles y permanecer en el LOBBY
                     this.jtPartidas.setSelectedIndex(2);
                     this.jtPartidas.setEnabledAt(0, false);
                     this.jtPartidas.setEnabledAt(1, false);
 
+                    partida.setId(usuarioLogueado.getPartida());
+                    this.lblNombrePartida.setText(partida.getNombre());
+                        
                     actualizarUsuariosPartida();
                 } 
                 else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
@@ -1080,7 +1094,19 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 //Resultados de pedir usuarios partida
                 else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
                 {
-
+                    ((DefaultTableModel)this.jtJugadores.getModel()).setRowCount(0);
+                    
+                    ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
+                    DefaultTableModel tabla = (DefaultTableModel) jtJugadores.getModel();
+                    
+                    for(DBUsuario usuario : usuarios)
+                    {
+                        tabla.addRow(new Object[]{
+                            usuario.getUsuario(),
+                            usuario.getPersonajeSeleccionado(),
+                            usuario.getIp()
+                        });
+                    }
                 } 
 
                 //Resultados de pedir partidas activas
@@ -1102,7 +1128,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         });
                     }
                 }
-
+                
+                else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
+                {
+                    JOptionPane.showMessageDialog(null, "Has salido de la partida.");
+                }
             }
         } catch (IOException | ClassNotFoundException ex)
         {
@@ -1143,7 +1173,37 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
         }
     }
+    
+    private static void salirPartida()
+    {
+        if (partida.getId() == -1)
+        {
+            return;
+        }
 
+        //Armar paquete para enviar al servidor
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado);
+
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
+            socket.close();
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } 
+        catch (IOException ex)
+        {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
     private static void actualizarPartidasActivas()
     {
         PaqueteOperacion paquete = new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null);
@@ -1188,14 +1248,18 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         }
     }
     
-    private static void salirPartida()
+    private void elegirImagenPersonaje()
     {
-        if (partida == -1)
+        personajeSeleccionado = personajeSeleccionado % 6;
+
+        if (personajeSeleccionado < 0)
         {
-            return;
+            personajeSeleccionado = personajeSeleccionado * -1 + 4;
         }
 
+        lblPersonaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/personaje/" + personajeSeleccionado + ".png")));
     }
+
 
     /**
      * Muestra el panel correspondiente en la ventana principal
@@ -1241,8 +1305,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         this.jtPartidas.setSelectedIndex(0);
         this.personajeSeleccionado = 0;
         this.elegirImagenPersonaje();
-        this.partida = -1;
+        
+        this.partida.setId(-1);
         ((DefaultTableModel)this.jtPartidasActivas.getModel()).setRowCount(0);
+        ((DefaultTableModel)this.jtJugadores.getModel()).setRowCount(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1251,6 +1317,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnAcerca;
     private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnCambiarServidor;
+    private javax.swing.JButton btnCancelarPartida;
     private javax.swing.JButton btnComenzarPartida;
     private javax.swing.JButton btnCrearPartida;
     private javax.swing.JButton btnEstadisticas;
@@ -1261,7 +1328,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnVolver1;
     private javax.swing.JButton btnVolver2;
     private javax.swing.JButton btnVolver3;
-    private javax.swing.JButton btnVolver4;
     private javax.swing.JLabel fondoAcerca;
     private javax.swing.JLabel fondoAcerca1;
     private javax.swing.JLabel fondoAyuda;
