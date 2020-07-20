@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import kdl.minecraft.recursos.Sonido;
@@ -46,7 +48,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        
         this.limpiarCrearPartida();
     }
 
@@ -118,6 +120,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jpUnirse = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtPartidasActivas = new javax.swing.JTable();
+        btnUnirsePartida = new javax.swing.JButton();
         jpLobby = new javax.swing.JPanel();
         lblNombrePartida = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -520,23 +523,23 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         jpCrear.setLayout(jpCrearLayout);
         jpCrearLayout.setHorizontalGroup(
             jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCrearLayout.createSequentialGroup()
+            .addGroup(jpCrearLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCrearLayout.createSequentialGroup()
+                .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCrearLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCrearPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpCrearLayout.createSequentialGroup()
                         .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addGroup(jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(spinCantJugadores, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 187, Short.MAX_VALUE))
-                    .addComponent(txtDescPartida, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpCrearLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCrearPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNombrePartida, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18))
+                        .addGap(0, 195, Short.MAX_VALUE))
+                    .addComponent(txtNombrePartida)
+                    .addComponent(txtDescPartida, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jpCrearLayout.setVerticalGroup(
             jpCrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -560,6 +563,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         jtPartidas.addTab("Crear Partida", jpCrear);
 
+        jtPartidasActivas.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jtPartidasActivas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
@@ -590,6 +594,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 return canEdit [columnIndex];
             }
         });
+        jtPartidasActivas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jtPartidasActivas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jtPartidasActivas.setRowSelectionAllowed(true);
+        jtPartidasActivas.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jtPartidasActivasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtPartidasActivas);
         if (jtPartidasActivas.getColumnModel().getColumnCount() > 0)
         {
@@ -597,7 +611,38 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             jtPartidasActivas.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jpUnirse.add(jScrollPane3);
+        btnUnirsePartida.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        btnUnirsePartida.setText("UNIRSE");
+        btnUnirsePartida.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnUnirsePartidaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpUnirseLayout = new javax.swing.GroupLayout(jpUnirse);
+        jpUnirse.setLayout(jpUnirseLayout);
+        jpUnirseLayout.setHorizontalGroup(
+            jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUnirseLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpUnirseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jpUnirseLayout.setVerticalGroup(
+            jpUnirseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUnirseLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnUnirsePartida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         jtPartidas.addTab("Unirse a Partida", jpUnirse);
 
@@ -884,6 +929,30 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         }
     }//GEN-LAST:event_btnCrearPartidaActionPerformed
 
+    private void btnUnirsePartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnUnirsePartidaActionPerformed
+    {//GEN-HEADEREND:event_btnUnirsePartidaActionPerformed
+        // TODO add your handling code here:
+        int partidaRow = this.jtPartidasActivas.getSelectedRow();
+        
+        //Verificar que hay partida elegida.
+        if(partidaRow == -1)
+            return;
+        
+        //Deshabilitar botones de crear partida
+        this.lblFlechaIzquierda.setVisible(false);
+        this.lblFlechaDerecha.setVisible(false);
+        
+        int idPartida  = (int) this.jtPartidasActivas.getValueAt(partidaRow, 0);
+        entrarPartida(idPartida);
+    }//GEN-LAST:event_btnUnirsePartidaActionPerformed
+
+    private void jtPartidasActivasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtPartidasActivasMouseClicked
+    {//GEN-HEADEREND:event_jtPartidasActivasMouseClicked
+        // TODO add your handling code here:
+        int partidaRow = this.jtPartidasActivas.getSelectedRow();
+        this.jtPartidasActivas.getSelectionModel().addSelectionInterval(partidaRow, partidaRow);
+    }//GEN-LAST:event_jtPartidasActivasMouseClicked
+
     private void elegirImagenPersonaje()
     {
         personajeSeleccionado = personajeSeleccionado % 6;
@@ -990,14 +1059,13 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
 
                     //Bloquear paneles y permanecer en el LOBBY
-                    this.jtPartidas.setEnabledAt(2, true);
                     this.jtPartidas.setSelectedIndex(2);
                     this.jtPartidas.setEnabledAt(0, false);
                     this.jtPartidas.setEnabledAt(1, false);
 
                     actualizarUsuariosPartida();
-
-                } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
+                } 
+                else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                 {
                     JOptionPane.showMessageDialog(null, "La partida a la que te quieres unir está llena o en curso.");
 
@@ -1038,10 +1106,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
-    private static void entrarPartida(int idPartida) throws IOException
+    private static void entrarPartida(int idPartida)
     {
         //Deshabilitar botones de entrar partida
 
@@ -1061,11 +1130,13 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             socket.close();
-        } catch (UnknownHostException ex)
+        } 
+        catch (UnknownHostException ex)
         {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } catch (IOException ex)
+        } 
+        catch (IOException ex)
         {
             System.out.println(ex.toString());
             JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
@@ -1170,6 +1241,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         this.personajeSeleccionado = 0;
         this.elegirImagenPersonaje();
         this.partida = -1;
+        ((DefaultTableModel)this.jtPartidasActivas.getModel()).setRowCount(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1183,6 +1255,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnUnirsePartida;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton btnVolver1;
     private javax.swing.JButton btnVolver2;

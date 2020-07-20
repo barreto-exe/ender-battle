@@ -321,7 +321,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                             "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
                             "Partida: "    + usuario.getPartida() + "\n";
                     
-                    txtPartidas.append(add + "Unirse a partida \n\n");
+                    txtPartidas.append(add + "Unirse a partida \n");
                     
                     if(DBPartida.agregarJugador(usuario, ip))
                     {
