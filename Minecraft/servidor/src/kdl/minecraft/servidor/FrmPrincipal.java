@@ -294,7 +294,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     String add = 
                         "Nombre Partida: " + partida.getNombre()            + "\n" +
                         "Descripcion:"     + partida.getDescripcion()       + "\n" +
-                        "Cantidad Jug.:"   + partida.getCantidadJugadores() + "\n" +
+                        "Cantidad Jug.:"   + partida.getLimiteJugadores() + "\n" +
                         ip + "\n";
                     
                     txtPartidas.append(add + "Crear partida \n\n");
@@ -302,6 +302,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     if(DBPartida.crearPartida(partida))
                     {
                         resultado.setResultado(ResultadoOperacion.PARTIDA_CREADA);
+                        resultado.setInformacion(DBPartida.idUltimaPartida());
                     }
                     else
                     {
@@ -321,7 +322,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                             "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
                             "Partida: "    + usuario.getPartida() + "\n";
                     
-                    txtPartidas.append(add + "Unirse a partida \n");
+                    txtPartidas.append(add + "Unirse a partida \n\n");
                     
                     if(DBPartida.agregarJugador(usuario, ip))
                     {
@@ -398,6 +399,27 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         return usuarios;
     }
     
+    private static int cantidadUsuariosPartida(int idPartida)
+    {
+        String query = 
+                "SELECT COUNT(*) as cantidadJugadores \n" +
+                "FROM m_partidas_jugadores WHERE id_partida = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        if(resultado.leer())
+        {
+            return (int)resultado.getValor("cantidadJugadores");
+        }
+        else
+        {
+            return -1;
+        }
+        
+    }
+    
     private static ArrayList<DBPartida> partidasActivas()
     {
         ArrayList<DBPartida> partidas = new ArrayList<DBPartida>();
@@ -408,7 +430,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         String nombre, descripcion;
         EstadoPartida estado = EstadoPartida.LOBBY;
-        int id, cantJugadores, estadoInt;
+        int id, limiteJugadores, cantidadJugadores, estadoInt;
         
         while(resultado.leer())
         {
@@ -428,10 +450,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     break;
                 }
             }
-            id = (int) resultado.getValor("id");
-            cantJugadores = (int) resultado.getValor("cantidadJugadores");
             
-            partidas.add(new DBPartida(nombre,descripcion,estado,cantJugadores,id));
+            id = (int) resultado.getValor("id");
+            limiteJugadores = (int) resultado.getValor("limiteJugadores");
+            cantidadJugadores = cantidadUsuariosPartida(id);
+            
+            partidas.add(new DBPartida(nombre,descripcion,estado,limiteJugadores,cantidadJugadores,id));
         }
          
         return partidas;

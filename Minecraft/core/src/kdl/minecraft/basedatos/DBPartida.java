@@ -34,7 +34,7 @@ public class DBPartida implements Serializable
     
     private String nombre, descripcion;
     private EstadoPartida estado;
-    private int limiteJugadores;
+    private int limiteJugadores, cantidadJugadores;
     private int id;
 
     /**
@@ -51,15 +51,16 @@ public class DBPartida implements Serializable
         this.estado = EstadoPartida.LOBBY;
     }
 
-    public DBPartida(String nombre, String descripcion, EstadoPartida estado, int limiteJugadores, int id)
+    public DBPartida(String nombre, String descripcion, EstadoPartida estado, int limiteJugadores, int cantidadJugadores, int id)
     {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.estado = estado;
         this.limiteJugadores = limiteJugadores;
+        this.cantidadJugadores = cantidadJugadores;
         this.id = id;
     }
-    
+
     public String getNombre()
     {
         return nombre;
@@ -78,7 +79,7 @@ public class DBPartida implements Serializable
         this.descripcion = descripcion;
     }
 
-    public int getCantidadJugadores()
+    public int getLimiteJugadores()
     {
         return limiteJugadores;
     }
@@ -86,6 +87,18 @@ public class DBPartida implements Serializable
     {
         this.limiteJugadores = limiteJugadores;
     }
+
+    public int getCantidadJugadores()
+    {
+        return cantidadJugadores;
+    }
+
+    public void setCantidadJugadores(int cantidadJugadores)
+    {
+        this.cantidadJugadores = cantidadJugadores;
+    }
+    
+    
 
     public int getId()
     {
@@ -122,14 +135,14 @@ public class DBPartida implements Serializable
         }
         
         String query
-            = "INSERT INTO `m_partidas` (nombre,descripcion,estado,cantidadJugadores)"
+            = "INSERT INTO `m_partidas` (nombre,descripcion,estado,limiteJugadores)"
             + "VALUES (?,?,?,?)";
         
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(partida.getNombre());
         operacion.pasarParametro(partida.getDescripcion());
         operacion.pasarParametro(partida.getEstado().getValue());
-        operacion.pasarParametro(partida.getCantidadJugadores());
+        operacion.pasarParametro(partida.getLimiteJugadores());
 
         //Retornar la validación del registro afectado.
         return operacion.ejecutar() == 1;
@@ -192,10 +205,10 @@ public class DBPartida implements Serializable
     public static boolean agregarJugador(DBUsuario usuario, String ip)
     {
         String query = 
-                "SELECT \n" +
-                "(SELECT cantidadJugadores FROM m_partidas WHERE id = ?) - \n" +
-                "(SELECT COUNT(*) FROM m_partidas_jugadores WHERE id_partida = ?) \n" +
-                "as EspaciosDisponibles";
+                "SELECT "
+                + "(SELECT limiteJugadores FROM m_partidas WHERE id = ?) - "
+                + "(SELECT COUNT(*) FROM m_partidas_jugadores WHERE id_partida = ?) "
+                + "AS EspaciosDisponibles";
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(usuario.getPartida());
         operacion.pasarParametro(usuario.getPartida());
@@ -208,10 +221,11 @@ public class DBPartida implements Serializable
         if((int)resultado.getValor("EspaciosDisponibles") > 0)
         {
             query = 
-                    "INSERT INTO m_partidas_jugadores (id_partida,id_jugador,ip) "
-                    + "VALUES (?,?,?)";
+                    "INSERT INTO m_partidas_jugadores (id_partida,personajeSeleccionado,id_jugador,ip) "
+                    + "VALUES (?,?,?,?)";
             operacion = new DBOperacion(query);
             operacion.pasarParametro(usuario.getPartida());
+            operacion.pasarParametro(usuario.getPersonajeSeleccionado());
             operacion.pasarParametro(DBUsuario.idUsuario(usuario.getUsuario()));
             operacion.pasarParametro(ip);
             
