@@ -5,7 +5,9 @@
  */
 package com.minecraft.game.screens;
 
+import actors.Player;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
@@ -42,17 +44,18 @@ public class GameScreen extends BaseScreen{
     private OrthogonalTiledMapRenderer renderer;
     
     private World world;
+    private Player player;
     
     public GameScreen(MainGame game) {
         super(game);
         stage = new Stage();
         gameCam = new OrthographicCamera();
-        viewport = new FitViewport(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT, gameCam);
+        viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("prueba.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        gameCam.position.set(Constant.FRAME_WIDTH / 2, Constant.FRAME_HEIGHT/ 2, 0);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
+        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT/ 2 / Constant.PPM, 0);
         world = new World(new Vector2(0, -10), true);
         
         debugger = new Box2DDebugRenderer();
@@ -65,14 +68,16 @@ public class GameScreen extends BaseScreen{
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
             def.type = BodyDef.BodyType.StaticBody;
-            def.position.set(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2);
+            def.position.set((rectangle.getX() + rectangle.getWidth() / 2) / Constant.PPM, (rectangle.getY() + rectangle.getHeight() / 2) / Constant.PPM);
             body = world.createBody(def);
             
-            shape.setAsBox(rectangle.getWidth() / 2, rectangle.getHeight() / 2);
+            shape.setAsBox(rectangle.getWidth() / 2 / Constant.PPM, rectangle.getHeight() / 2 / Constant.PPM);
             fixture.shape = shape;
             body.createFixture(fixture);
         }
-               
+        
+        player = new Player(world);
+        stage.addActor(player);
     }
 
     public World getWorld() {
@@ -81,13 +86,20 @@ public class GameScreen extends BaseScreen{
     
     
     public void uptadte(float delta){
-        if (Gdx.input.isTouched())
-            gameCam.position.x += 100 * delta;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            player.getBody().applyLinearImpulse(new Vector2(0, 4f), player.getBody().getWorldCenter(), true);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.getBody().getLinearVelocity().x <= 2){
+            player.getBody().applyLinearImpulse(new Vector2(0.1f, 0), player.getBody().getWorldCenter(), true);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.getBody().getLinearVelocity().x >= -2){
+            player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
+        }
+        
           //ACTUALIZANDO EL STAGE Y SUS ACTORES
-        renderer.setView(gameCam);
         stage.act(); 
         world.step(delta, 6, 2);
+        gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
+        renderer.setView(gameCam);
         stage.draw();  
     }
 
@@ -106,6 +118,13 @@ public class GameScreen extends BaseScreen{
         
         debugger.render(world, gameCam.combined);
         renderer.render();
+    }
+
+    @Override
+    public void dispose() {
+        world.dispose();
+        map.dispose();
+        renderer.dispose();
     }
 
     
