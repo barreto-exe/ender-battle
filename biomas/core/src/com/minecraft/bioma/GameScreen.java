@@ -18,8 +18,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import static com.minecraft.bioma.Constants.HEIGHT;
-import static com.minecraft.bioma.Constants.WIDTH;
 import com.minecraft.bioma.actores.FloorEntity;
 import com.minecraft.bioma.actores.PlayerActor;
 import java.util.ArrayList;
@@ -44,11 +42,11 @@ public class GameScreen extends BaseScreen{
     public GameScreen(MainGame game) {
         super(game);
         gameCam =  new OrthographicCamera();
-        viewport = new FitViewport(855, 500, gameCam); 
+        viewport = new FitViewport(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT, gameCam); 
         stage = new Stage(viewport);  //INSTANCIANDO EL STAGE
         world = new World(new Vector2(0, -10), true);  //INSTANCIANDO EL MUNDO (BOX2D)
        
-        //EVALUANDO CONTACTOS ENTRE LOS BODYS DE LOS ACTORES EN EL STAGE
+        /*//EVALUANDO CONTACTOS ENTRE LOS BODYS DE LOS ACTORES EN EL STAGE
         world.setContactListener(new ContactListener(){
             
             //FUNCIÓN QUE INDICA SI DOS FIXTURES ESTÁN EN CONTACTO
@@ -82,13 +80,13 @@ public class GameScreen extends BaseScreen{
                 
             }
             
-        });
+        });*/
     }
 
     @Override
     public void show() {
         TextureRegion region = game.manager.findRegion("Walking");  //ASIGNANDO LA REGION DE SPRITES DEL JUGADOR
-        player = new PlayerActor(new TextureRegion(region, 0, 0, WIDTH, HEIGHT),   //INSTANCIANDO UN ACTOR JUGADOR
+        player = new PlayerActor(new TextureRegion(region, 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT),   //INSTANCIANDO UN ACTOR JUGADOR
                 world, new Vector2(1.5f, 1.5f));     //LE PASO COMO PARÁMETROS EL MUNDO DONDE SE ENCUENTRA, LA TEXTURA Y EL VECTOR POSICIÓN
         
         floorList.add(new FloorEntity(game.manager.findRegion("Dirt"), game.manager.findRegion("Grass"),
@@ -117,6 +115,7 @@ public class GameScreen extends BaseScreen{
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
          
+        player.debugger.render(world, gameCam.combined);
         gameCam.position.set(player.getX(),player.getY(),0);
         gameCam.update();
         stage.act();   //ACTUALIZANDO EL STAGE Y SUS ACTORES

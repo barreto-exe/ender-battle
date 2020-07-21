@@ -13,15 +13,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import static com.minecraft.bioma.Constants.HEIGHT;
-import static com.minecraft.bioma.Constants.IMPULSE_JUMP;
-import static com.minecraft.bioma.Constants.PIXELES_IN_METTER;
-import static com.minecraft.bioma.Constants.SPEED_PLAYER;
-import static com.minecraft.bioma.Constants.WIDTH;
+import com.minecraft.bioma.Constant;
 
 /**
  *
@@ -33,14 +30,14 @@ public class PlayerActor extends Actor{
     private TextureRegion[] frames;
     private World world;
     private Body body;
-    private Fixture fixture;
     private boolean isJumping;
     private Animation animation;
     private float duration = 0;
+    public Box2DDebugRenderer debugger; 
     
     //BUILDER
     public PlayerActor(TextureRegion texture, World world, Vector2 position) {
-        TextureRegion[][] region= texture.split(WIDTH/4, HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
+        TextureRegion[][] region= texture.split(Constant.PLAYER_WIDTH/4, Constant.PLAYER_HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new TextureRegion[region.length * region[0].length];  //CREANDO ARREGLO DE UNA DIMENSIÓN
         int index = 0;
         
@@ -55,6 +52,7 @@ public class PlayerActor extends Actor{
         this.world = world;
         
         //CREANDO BODY DINÁMICO DEL JUGAODR
+        debugger = new Box2DDebugRenderer();
         BodyDef def = new BodyDef();
         def.position.set(position);
         def.type = BodyDef.BodyType.DynamicBody;
@@ -62,14 +60,16 @@ public class PlayerActor extends Actor{
         
         //CREANDO FIXTURE DEL JUGADOR
         /*por ahora le puse un fixture cuadrado, sin embargo hay que personalizarlo*/
+        FixtureDef fixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 0.5f);  
-        fixture = body.createFixture(shape, 3);
-        fixture.setUserData("player");
+        shape.setAsBox(1.5f, 1.5f);  
+        fixture.shape = shape;
+        body.createFixture(fixture);
+        //fixture.setUserData("player");
         shape.dispose();
         
         isJumping = false;        
-        setSize(PIXELES_IN_METTER, PIXELES_IN_METTER);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
+        setSize(Constant.PIXELES_IN_METTER, Constant.PIXELES_IN_METTER);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
     }
     
     //GETTERS AND SETTERS
@@ -85,8 +85,8 @@ public class PlayerActor extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
-        setPosition((body.getPosition().x - 0.5f) * PIXELES_IN_METTER, 
-                    (body.getPosition().y - 0.5f) * PIXELES_IN_METTER);
+        setPosition((body.getPosition().x - 0.5f) * Constant.PIXELES_IN_METTER, 
+                    (body.getPosition().y - 0.5f) * Constant.PIXELES_IN_METTER);
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
@@ -98,7 +98,7 @@ public class PlayerActor extends Actor{
         
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
         if (isJumping){
-            body.applyForceToCenter(0, IMPULSE_JUMP * -0.8f, true);
+            body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.8f, true);
             jumpAnimation();
         }
         
@@ -130,7 +130,7 @@ public class PlayerActor extends Actor{
     
         
     public void delete(){
-        body.destroyFixture(fixture);   //ELIMINANDO FIXTURE
+        //body.destroyFixture(fixture);   //ELIMINANDO FIXTURE
         world.destroyBody(body);        //ELIMINANDO BODY
     }
 
@@ -138,7 +138,7 @@ public class PlayerActor extends Actor{
         if (!isJumping){
             isJumping = true;
             Vector2 position = body.getPosition(); //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-            body.applyLinearImpulse(0, IMPULSE_JUMP, position.x, position.y, true);   //SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
+            body.applyLinearImpulse(0, Constant.IMPULSE_JUMP, position.x, position.y, true);   //SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
         }
     }
     
@@ -150,9 +150,9 @@ public class PlayerActor extends Actor{
     public void walk(int direction){
         Vector2 position = body.getPosition();   //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
         if (!isJumping){
-            body.setLinearVelocity(direction * SPEED_PLAYER,0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
+            body.setLinearVelocity(direction * Constant.SPEED_PLAYER,0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
         } else {
-            body.applyForce((IMPULSE_JUMP - 8) * direction, 0, position.x, position.y, true);
+            body.applyForce((Constant.IMPULSE_JUMP - 8) * direction, 0, position.x, position.y, true);
         }
     }
     

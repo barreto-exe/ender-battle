@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import static com.minecraft.bioma.Constants.PIXELES_IN_METTER;
+import static com.minecraft.bioma.Constant.PIXELES_IN_METTER;
 
 /**
  *
