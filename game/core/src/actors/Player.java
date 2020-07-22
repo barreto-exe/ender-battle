@@ -6,6 +6,8 @@
 package actors;
 
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -21,8 +23,17 @@ import com.minecraft.game.Constant;
 public class Player extends Actor{
     private Body body;
     private World world;
+    private TextureRegion texture;
+    private TextureRegion[] frames;
+    private Animation animation;
+    private float duration = 0;    
 
-    public Player(World world) {
+    public Player(World world, TextureRegion textureColor) {
+        
+        
+        
+        
+        
         this.world = world;
         
         BodyDef bodyD= new BodyDef();

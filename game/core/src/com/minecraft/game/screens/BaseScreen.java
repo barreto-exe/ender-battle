@@ -6,6 +6,7 @@
 package com.minecraft.game.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.minecraft.game.MainGame;
 
 /**
@@ -15,14 +16,17 @@ import com.minecraft.game.MainGame;
 public abstract class BaseScreen implements Screen{
     //ATTRIBUTES
     protected MainGame game;
-    //public SpriteBatch batch;
+    private TextureAtlas atlas;
 
     //BUILDER
     public BaseScreen(MainGame game) {
-        //batch = new SpriteBatch();
+        atlas = new TextureAtlas("hojaSprites.atlas");
         this.game = game;
     }   
-    
+
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
     
     @Override
     public void show() {

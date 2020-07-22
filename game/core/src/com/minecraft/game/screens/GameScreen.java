@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.minecraft.game.Constant;
 import com.minecraft.game.MainGame;
+import com.minecraft.game.screens.worlds.BiomeAssembler;
 
 /**
  *
@@ -46,37 +47,23 @@ public class GameScreen extends BaseScreen{
     private World world;
     private Player player;
     
-    public GameScreen(MainGame game) {
+    /*CREO QUE RECIBE UN ARRAYLIST DEL SERVER CON LOS JUGADORES DE LA PARTIDA EN CURSO*/
+    public GameScreen(MainGame game, String biome) {
         super(game);
         stage = new Stage();
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("prueba.tmx");
+        map = mapLoader.load(biome);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT/ 2 / Constant.PPM, 0);
         world = new World(new Vector2(0, -10), true);
         
         debugger = new Box2DDebugRenderer();
-        BodyDef def = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixture = new FixtureDef();
-        Body body;
+        new BiomeAssembler(world, map);
         
-        for (MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
-            
-            def.type = BodyDef.BodyType.StaticBody;
-            def.position.set((rectangle.getX() + rectangle.getWidth() / 2) / Constant.PPM, (rectangle.getY() + rectangle.getHeight() / 2) / Constant.PPM);
-            body = world.createBody(def);
-            
-            shape.setAsBox(rectangle.getWidth() / 2 / Constant.PPM, rectangle.getHeight() / 2 / Constant.PPM);
-            fixture.shape = shape;
-            body.createFixture(fixture);
-        }
-        
-        player = new Player(world);
+        player = new Player(world, getAtlas().findRegion("walking"));
         stage.addActor(player);
     }
 
@@ -122,9 +109,11 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void dispose() {
-        world.dispose();
         map.dispose();
         renderer.dispose();
+        world.dispose();
+        debugger.dispose();
+        stage.dispose();
     }
 
     
