@@ -10,18 +10,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static com.badlogic.gdx.graphics.g3d.particles.ParticleChannels.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -63,7 +58,8 @@ public class GameScreen extends BaseScreen{
         debugger = new Box2DDebugRenderer();
         new BiomeAssembler(world, map);
         
-        player = new Player(world, getAtlas().findRegion("walking"));
+        //TextureRegion
+        player = new Player(world,new TextureRegion(getAtlas().findRegion("Walking") , 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT));
         stage.addActor(player);
     }
 
