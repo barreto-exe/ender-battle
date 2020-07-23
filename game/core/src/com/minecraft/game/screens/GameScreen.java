@@ -7,11 +7,9 @@ package com.minecraft.game.screens;
 
 import actors.Player;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import static com.badlogic.gdx.graphics.g3d.particles.ParticleChannels.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -81,9 +79,7 @@ public class GameScreen extends BaseScreen{
 
             @Override
             public void endContact(Contact contact) {
-                if (!inContact(contact, "player", "floor")){
-                    player.setIsJumping(true);    //SI PISO NO ESTÁ EN CONTACTO CON EL JUGADOR, ESTÁ SALTANDO
-                }
+                
             }
 
             @Override
@@ -139,7 +135,7 @@ public class GameScreen extends BaseScreen{
         stage.draw();  
         renderer.setView(gameCam);
         renderer.render();
-        debugger.render(world, gameCam.combined);
+        //debugger.render(world, gameCam.combined);
         gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
     }

@@ -57,7 +57,7 @@ public class Player extends Actor{
         
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(2f / Constant.PPM, 2f / Constant.PPM);
+        shape.setAsBox(0.2f, 0.5f);
         fixtureD.shape = shape;
         body.createFixture(fixtureD).setUserData("player");
         
@@ -77,7 +77,7 @@ public class Player extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
-        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, body.getPosition().y * Constant.PPM);
+        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, (body.getPosition().y - 0.5f)* Constant.PPM);
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
@@ -96,7 +96,7 @@ public class Player extends Actor{
             jumpAnimation();
         }
         
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)){
             jump(); //SI PRESIONA LA TECLA UP SE PRODUCE EL MOVIMIENTO DE SALTAR
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
             walk(1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
@@ -125,8 +125,7 @@ public class Player extends Actor{
     private void jump() {
         if (!isJumping){
             isJumping = true;
-            Vector2 position = body.getPosition(); //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-            body.applyLinearImpulse(0, Constant.IMPULSE_JUMP, position.x, position.y, true);   //SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
+            body.applyLinearImpulse(new Vector2(0, Constant.IMPULSE_JUMP), getBody().getWorldCenter(), true);//SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
         }
     }
     
