@@ -68,7 +68,7 @@ public class GameScreen extends BaseScreen{
         return world;
     }
     
-    public void uptadte(float delta){
+    /*public void uptadte(float delta){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             player.getBody().applyLinearImpulse(new Vector2(0, 4f), player.getBody().getWorldCenter(), true);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.getBody().getLinearVelocity().x <= 2){
@@ -76,7 +76,7 @@ public class GameScreen extends BaseScreen{
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.getBody().getLinearVelocity().x >= -2){
             player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
         }
-    }
+    }*/
 
     @Override
     public void resize(int width, int height) {
@@ -86,7 +86,7 @@ public class GameScreen extends BaseScreen{
     
     @Override
     public void render(float delta) {
-        uptadte(delta);
+        //uptadte(delta);
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
         
