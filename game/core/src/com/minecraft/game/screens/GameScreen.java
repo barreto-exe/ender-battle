@@ -59,14 +59,14 @@ public class GameScreen extends BaseScreen{
         new BiomeAssembler(world, map);
         
         //TextureRegion
-        player = new Player(world,new TextureRegion(getAtlas().findRegion("Walking") , 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT));
+        player = new Player(world,new TextureRegion(getAtlas().findRegion("Walking") , 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT), 
+                new Vector2(100 / Constant.PPM, 160 / Constant.PPM));
         stage.addActor(player);
     }
 
     public World getWorld() {
         return world;
     }
-    
     
     public void uptadte(float delta){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
@@ -76,14 +76,6 @@ public class GameScreen extends BaseScreen{
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.getBody().getLinearVelocity().x >= -2){
             player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
         }
-        
-          //ACTUALIZANDO EL STAGE Y SUS ACTORES
-        stage.act(); 
-        world.step(delta, 6, 2);
-        gameCam.position.x = player.getBody().getPosition().x;
-        gameCam.update();
-        renderer.setView(gameCam);
-        stage.draw();  
     }
 
     @Override
@@ -92,15 +84,20 @@ public class GameScreen extends BaseScreen{
     }
     
     
-    
     @Override
     public void render(float delta) {
         uptadte(delta);
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
         
-        debugger.render(world, gameCam.combined);
+        stage.act(); 
+        world.step(delta, 6, 2);
+        stage.draw();  
+        renderer.setView(gameCam);
         renderer.render();
+        debugger.render(world, gameCam.combined);
+        gameCam.position.x = player.getBody().getPosition().x;
+        gameCam.update();
     }
 
     @Override
@@ -112,7 +109,4 @@ public class GameScreen extends BaseScreen{
         stage.dispose();
     }
 
-    
-    
-    
 }

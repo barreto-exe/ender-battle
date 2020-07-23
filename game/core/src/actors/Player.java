@@ -7,7 +7,9 @@ package actors;
 
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -27,8 +29,10 @@ public class Player extends Actor{
     private TextureRegion[] frames; 
     private Animation animation;
     private float duration = 0;    
+    
+    private boolean isJumping;
 
-    public Player(World world, TextureRegion textureColor) {
+    public Player(World world, TextureRegion textureColor, Vector2 position) {
         TextureRegion[][] region= textureColor.split(Constant.PLAYER_WIDTH/4, Constant.PLAYER_HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new TextureRegion[region.length * region[0].length];  //CREANDO ARREGLO DE UNA DIMENSIÓN
         int index = 0;
@@ -44,15 +48,31 @@ public class Player extends Actor{
         this.world = world;
         
         BodyDef bodyD= new BodyDef();
-        bodyD.position.set(60 / Constant.PPM, 60 / Constant.PPM);
+        bodyD.position.set(position);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyD);
         
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(2.5f / Constant.PPM, 2.5f / Constant.PPM);
+        shape.setAsBox(2f / Constant.PPM, 2f / Constant.PPM);
         fixtureD.shape = shape;
         body.createFixture(fixtureD);
+        
+        isJumping = false;        
+        setSize(Constant.PPM, Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
+        texture = frames[3];
+    }
+    
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
+        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, body.getPosition().y * Constant.PPM);
+        //DIBUJANDO TEXTURE DEL JUGADOR
+        batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+    }
+    
+    public void delete(){
+        world.destroyBody(body);        //ELIMINANDO BODY
     }
 
     public Body getBody() {
