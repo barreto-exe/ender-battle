@@ -38,7 +38,7 @@ public class BiomeAssembler {
             
             shape.setAsBox(rectangle.getWidth() / 2 / Constant.PPM, rectangle.getHeight() / 2 / Constant.PPM);
             fixture.shape = shape;
-            body.createFixture(fixture);
+            body.createFixture(fixture).setUserData("floor");
         }
     }
     

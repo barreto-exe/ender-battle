@@ -17,6 +17,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -58,12 +62,52 @@ public class GameScreen extends BaseScreen{
         debugger = new Box2DDebugRenderer();
         new BiomeAssembler(world, map);
         
-        //TextureRegion
+        
+        world.setContactListener(new ContactListener(){
+            
+            //FUNCIÓN QUE INDICA SI DOS FIXTURES ESTÁN EN CONTACTO
+            private boolean inContact(Contact contact, Object a, Object b){
+                return (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)
+                     || contact.getFixtureA().getUserData().equals(b) && contact.getFixtureB().getUserData().equals(a));
+            }
+                    
+                    
+            @Override
+            public void beginContact(Contact contact) {
+                if (inContact(contact, "player", "floor")){
+                    player.setIsJumping(false);    //SI PISO ESTÁ EN CONTACTO CON EL JUGADOR, NO ESTÁ SALTANDO
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+                if (!inContact(contact, "player", "floor")){
+                    player.setIsJumping(true);    //SI PISO NO ESTÁ EN CONTACTO CON EL JUGADOR, ESTÁ SALTANDO
+                }
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+                
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+                
+            }
+            
+        });
+    }
+
+    @Override
+    public void show() {
         player = new Player(world,new TextureRegion(getAtlas().findRegion("Walking") , 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT), 
                 new Vector2(100 / Constant.PPM, 160 / Constant.PPM));
         stage.addActor(player);
     }
 
+    
+    
     public World getWorld() {
         return world;
     }

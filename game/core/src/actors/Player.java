@@ -59,11 +59,19 @@ public class Player extends Actor{
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(2f / Constant.PPM, 2f / Constant.PPM);
         fixtureD.shape = shape;
-        body.createFixture(fixtureD);
+        body.createFixture(fixtureD).setUserData("player");
         
         isJumping = false;        
         setSize(Constant.PPM, Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
         texture = frames[3];
+    }
+    
+    public Body getBody() {
+        return body;
+    }
+
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
     }
     
     @Override
@@ -76,10 +84,6 @@ public class Player extends Actor{
     
     public void delete(){
         world.destroyBody(body);        //ELIMINANDO BODY
-    }
-
-    public Body getBody() {
-        return body;
     }
     
     @Override
