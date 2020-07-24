@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -57,9 +58,15 @@ public class Player extends Actor{
         
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.2f, 0.5f);
+        shape.setAsBox(10 / Constant.PPM, 25 / Constant.PPM);
         fixtureD.shape = shape;
         body.createFixture(fixtureD).setUserData("player");
+        
+        EdgeShape feet = new EdgeShape();
+        feet.set(-6 / Constant.PPM, -25 / Constant.PPM, 6 / Constant.PPM, -25 / Constant.PPM);
+        fixtureD.shape = feet;
+        fixtureD.isSensor = true;
+        body.createFixture(fixtureD).setUserData("feet");
         
         isJumping = false;        
         setSize(Constant.PPM, Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
@@ -70,6 +77,10 @@ public class Player extends Actor{
         return body;
     }
 
+    public boolean getIsJumping() {
+        return isJumping;
+    }    
+    
     public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
     }
@@ -92,7 +103,7 @@ public class Player extends Actor{
         
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
         if (isJumping){
-            body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.8f, true);
+            body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             jumpAnimation();
         }
         
@@ -139,7 +150,7 @@ public class Player extends Actor{
         if (!isJumping){
             body.setLinearVelocity(direction * Constant.SPEED_PLAYER,0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
         } else {
-            body.applyForce((Constant.IMPULSE_JUMP - 8) * direction, 0, position.x, position.y, true);
+            body.applyForce(((Constant.IMPULSE_JUMP - 8) * 0.6f) * direction, 0, position.x, position.y, true);
         }
     }
     

@@ -72,14 +72,16 @@ public class GameScreen extends BaseScreen{
                     
             @Override
             public void beginContact(Contact contact) {
-                if (inContact(contact, "player", "floor")){
+                if (inContact(contact, "feet", "overfloor")){
                     player.setIsJumping(false);    //SI PISO ESTÁ EN CONTACTO CON EL JUGADOR, NO ESTÁ SALTANDO
                 }
             }
 
             @Override
             public void endContact(Contact contact) {
-                
+               if (!inContact(contact, "feet", "overfloor")){
+                    player.setIsJumping(true); 
+                }
             }
 
             @Override
@@ -130,11 +132,11 @@ public class GameScreen extends BaseScreen{
         Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
         
+        renderer.setView(gameCam);
+        renderer.render();
         stage.act(); 
         world.step(delta, 6, 2);
         stage.draw();  
-        renderer.setView(gameCam);
-        renderer.render();
         //debugger.render(world, gameCam.combined);
         gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();

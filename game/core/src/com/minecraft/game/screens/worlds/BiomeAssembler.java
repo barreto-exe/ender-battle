@@ -5,7 +5,6 @@
  */
 package com.minecraft.game.screens.worlds;
 
-import actors.Player;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.minecraft.game.Constant;
@@ -38,8 +38,9 @@ public class BiomeAssembler {
             
             shape.setAsBox(rectangle.getWidth() / 2 / Constant.PPM, rectangle.getHeight() / 2 / Constant.PPM);
             fixture.shape = shape;
-            body.createFixture(fixture).setUserData("floor");
+            body.createFixture(fixture).setUserData("overfloor");
         }
+        
     }
     
 }
