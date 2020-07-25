@@ -20,7 +20,7 @@ public abstract class BaseScreen implements Screen{
 
     //BUILDER
     public BaseScreen(MainGame game) {
-        atlas = new TextureAtlas("hojaSprites.atlas");
+        atlas = new TextureAtlas("spriteSheets.atlas");
         this.game = game;
     }   
 

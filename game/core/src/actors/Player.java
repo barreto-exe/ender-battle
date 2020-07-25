@@ -48,6 +48,7 @@ public class Player extends Actor{
                 frames[index++] = region[i][j];
         
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR 
+        setSize(2 * Constant.PPM, 2 * Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
         
         this.world = world;
         
@@ -58,18 +59,17 @@ public class Player extends Actor{
         
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10 / Constant.PPM, 25 / Constant.PPM);
+        shape.setAsBox( (getWidth()/ 2 - 35) / Constant.PPM, getHeight()/ Constant.PPM / 2);
         fixtureD.shape = shape;
         body.createFixture(fixtureD).setUserData("player");
         
         EdgeShape feet = new EdgeShape();
-        feet.set(-6 / Constant.PPM, -25 / Constant.PPM, 6 / Constant.PPM, -25 / Constant.PPM);
+        feet.set((getWidth()/ 2 - 37) / -Constant.PPM, getHeight()/ Constant.PPM / -2, (getWidth()/ 2 - 37) / Constant.PPM, getHeight()/ Constant.PPM / -2);
         fixtureD.shape = feet;
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
         
         isJumping = false;        
-        setSize(Constant.PPM, Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
         texture = frames[3];
     }
     
@@ -88,7 +88,7 @@ public class Player extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
-        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, (body.getPosition().y - 0.5f)* Constant.PPM);
+        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, (body.getPosition().y - (getHeight() / Constant.PPM) / 2) * Constant.PPM);
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }

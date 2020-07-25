@@ -99,8 +99,7 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void show() {
-        player = new Player(world,new TextureRegion(getAtlas().findRegion("Walking") , 0, 0, Constant.PLAYER_WIDTH, Constant.PLAYER_HEIGHT), 
-                new Vector2(100 / Constant.PPM, 160 / Constant.PPM));
+        player = new Player(world, getAtlas().findRegion("caminar"), new Vector2(128 / Constant.PPM, 128 / Constant.PPM));
         stage.addActor(player);
     }
 
@@ -137,7 +136,7 @@ public class GameScreen extends BaseScreen{
         stage.act(); 
         world.step(delta, 6, 2);
         stage.draw();  
-        //debugger.render(world, gameCam.combined);
+        debugger.render(world, gameCam.combined);
         gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
     }
