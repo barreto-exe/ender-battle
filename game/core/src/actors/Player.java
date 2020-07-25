@@ -5,7 +5,6 @@
  */
 package actors;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -25,149 +24,196 @@ import com.minecraft.game.Constant;
  *
  * @author Karen
  */
-public class Player extends Actor{
+public class Player extends Actor
+{
+
     private Body body;
     private World world;
     private TextureRegion texture;
-    private TextureRegion[] frames; 
+    private TextureRegion[] frames;
     private Animation animation;
-    private float duration = 0;    
-    
+    private float duration = 0;
+
     private boolean isJumping;
     private char lastPressed = '0';
 
-    public Player(World world, TextureRegion textureColor, Vector2 position) {
-        TextureRegion[][] region= textureColor.split(Constant.PLAYER_WIDTH/4, Constant.PLAYER_HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
+    public Player(World world, TextureRegion textureColor, Vector2 position)
+    {
+        TextureRegion[][] region = textureColor.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new TextureRegion[region.length * region[0].length];  //CREANDO ARREGLO DE UNA DIMENSIÓN
         int index = 0;
-        
+
         //APLANANDO ARREGLO DE TEXTURES
         /*lo hice de esta forma porque pienso estructurar los sprites de una manera no lineal*/
-        for (int i=0 ; i < region.length ; i++)
-            for (int j=0 ; j < region[i].length ; j++)
+        for (int i = 0; i < region.length; i++)
+        {
+            for (int j = 0; j < region[i].length; j++)
+            {
                 frames[index++] = region[i][j];
-        
+            }
+        }
+
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR 
         setSize(2 * Constant.PPM, 2 * Constant.PPM);   //EXTABLECIENDO TAMAÑO DE 1 * 1 METRO
-        
+
         this.world = world;
-        
-        BodyDef bodyD= new BodyDef();
+
+        BodyDef bodyD = new BodyDef();
         bodyD.position.set(position);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyD);
-        
+
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox( (getWidth()/ 2 - 35) / Constant.PPM, getHeight()/ Constant.PPM / 2);
+        shape.setAsBox((getWidth() / 2 - 35) / Constant.PPM, getHeight() / Constant.PPM / 2);
         fixtureD.shape = shape;
         body.createFixture(fixtureD).setUserData("player");
-        
+
         EdgeShape feet = new EdgeShape();
-        feet.set((getWidth()/ 2 - 37) / -Constant.PPM, getHeight()/ Constant.PPM / -2, (getWidth()/ 2 - 37) / Constant.PPM, getHeight()/ Constant.PPM / -2);
+        feet.set((getWidth() / 2 - 37) / -Constant.PPM, getHeight() / Constant.PPM / -2, (getWidth() / 2 - 37) / Constant.PPM, getHeight() / Constant.PPM / -2);
         fixtureD.shape = feet;
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
-        
-        isJumping = false;        
+
+        isJumping = false;
+
         texture = frames[3];
     }
-    
-    public Body getBody() {
+
+    public Body getBody()
+    {
         return body;
     }
 
-    public boolean getIsJumping() {
+    public boolean getIsJumping()
+    {
         return isJumping;
-    }    
-    
-    public void setIsJumping(boolean isJumping) {
+    }
+
+    public void setIsJumping(boolean isJumping)
+    {
         this.isJumping = isJumping;
     }
-    
+
+    public boolean isWalking()
+    {
+        return !isJumping;
+    }
+
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void draw(Batch batch, float parentAlpha)
+    {
         //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
         setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, (body.getPosition().y - (getHeight() / Constant.PPM) / 2) * Constant.PPM);
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
-    
-    public void delete(){
+
+    public void delete()
+    {
         world.destroyBody(body);        //ELIMINANDO BODY
     }
-    
+
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
         super.act(delta);
-        
+
         //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
-        if (isJumping){
+        if (isJumping)
+        {
             body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             jumpAnimation();
         }
-        
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)){
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
+        {
             jump(); //SI PRESIONA LA TECLA UP SE PRODUCE EL MOVIMIENTO DE SALTAR
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+        } 
+        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
+        {
             walk(1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
-            if(lastPressed == 'A'){
+            if (lastPressed == 'A')
+            {
                 invertAnimation();
-             }
+            }
             lastPressed = 'D';
             walkAnimation(delta);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
-            if(lastPressed == 'D'){
+        } 
+        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
+        {
+            if (lastPressed == 'D')
+            {
                 invertAnimation();
-             }
+            }
             lastPressed = 'A';
             walk(-1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
-            walkAnimation(delta);  /*hay que arreglar el stprite cuando va al sentido opuesto*/
-        } else {
-            if (body.getLinearVelocity().x < 0){
+            walkAnimation(delta);
+            /*hay que arreglar el stprite cuando va al sentido opuesto*/
+        } 
+        else
+        {
+            if (body.getLinearVelocity().x < 0)
+            {
                 body.applyForceToCenter(8, 0, true);
-            } else if (body.getLinearVelocity().x > 0){
+            } else if (body.getLinearVelocity().x > 0)
+            {
                 body.applyForceToCenter(-8, 0, true);
-            } 
+            }
             repose();   //SI NO PRESIONA NINGUNA TECLA, LA ANIMACIÓN SE DETIENE
-        }   
+        }
     }
-    
-    private void jump() {
-        if (!isJumping){
+
+    private void jump()
+    {
+        if (!isJumping)
+        {
             isJumping = true;
             body.applyLinearImpulse(new Vector2(0, Constant.IMPULSE_JUMP), getBody().getWorldCenter(), true);//SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
         }
     }
-    
-    public void jumpAnimation(){
+
+    public void jumpAnimation()
+    {
         texture = frames[0];   //ESTABLECIENDO EL FRAME DEL SALTO
         /*esto es temporal (CREO). Hay que arreglar bien los sprites*/
     }
-    
-    public void walk(int direction){
+
+    public void walk(int direction)
+    {
         Vector2 position = body.getPosition();   //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-        if (!isJumping){
-            body.setLinearVelocity(direction * Constant.SPEED_PLAYER,0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
-        } else {
+        if (!isJumping)
+        {
+            body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
+        } else
+        {
             body.applyForce(((Constant.IMPULSE_JUMP - 8) * 0.6f) * direction, 0, position.x, position.y, true);
         }
     }
-    
-    public void walkAnimation(float delta){
-        if (!isJumping){
-           duration += delta;  
+
+    public void walkAnimation(float delta)
+    {
+        if (!isJumping)
+        {
+            duration += delta;
             texture = (TextureRegion) animation.getKeyFrame(duration, true); //ACTUALIZANDO FRAME DE LA ANIMACION DE CAMINAR EN FUNCION DEL TIEMPO         
         }
     }
-    
-    public void repose(){
+
+    public void repose()
+    {
         if (!isJumping)
+        {
             texture = frames[3]; //ESTABLECIENDO EL FRAME DE REPOSO ERA EL 3
+        }
     }
-    public void invertAnimation(){
-        for (int i=0 ; i < frames.length ; i++)
-                frames[i].flip(true, false);  //Haciendo flip a cada frame
-        animation = new Animation(0.15f, frames);    
+
+    public void invertAnimation()
+    {
+        for (int i = 0; i < frames.length; i++)
+        {
+            frames[i].flip(true, false);  //Haciendo flip a cada frame
+        }
+        animation = new Animation(0.15f, frames);
     }
 }

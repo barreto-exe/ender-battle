@@ -31,84 +31,96 @@ import com.minecraft.game.screens.worlds.BiomeAssembler;
  *
  * @author Karen
  */
-public class GameScreen extends BaseScreen{
+public class GameScreen extends BaseScreen
+{
+
     private Stage stage;
     private OrthographicCamera gameCam;
     private Viewport viewport;
-    
+
     private Box2DDebugRenderer debugger;
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    
+
     private World world;
     private Player player;
-    
+
     /*CREO QUE RECIBE UN ARRAYLIST DEL SERVER CON LOS JUGADORES DE LA PARTIDA EN CURSO*/
-    public GameScreen(MainGame game, String biome) {
+    public GameScreen(MainGame game, String biome)
+    {
         super(game);
         stage = new Stage();
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
-        
+
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(biome);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
-        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT/ 2 / Constant.PPM, 0);
+        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         world = new World(new Vector2(0, -10), true);
-        
+
         debugger = new Box2DDebugRenderer();
         new BiomeAssembler(world, map);
-        
-        
-        world.setContactListener(new ContactListener(){
-            
+
+        world.setContactListener(new ContactListener()
+        {
+
             //FUNCIÓN QUE INDICA SI DOS FIXTURES ESTÁN EN CONTACTO
-            private boolean inContact(Contact contact, Object a, Object b){
+            private boolean inContact(Contact contact, Object a, Object b)
+            {
                 return (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)
-                     || contact.getFixtureA().getUserData().equals(b) && contact.getFixtureB().getUserData().equals(a));
+                        || contact.getFixtureA().getUserData().equals(b) && contact.getFixtureB().getUserData().equals(a));
             }
-                    
-                    
+
             @Override
-            public void beginContact(Contact contact) {
-                if (inContact(contact, "feet", "overfloor")){
-                    player.setIsJumping(false);    //SI PISO ESTÁ EN CONTACTO CON EL JUGADOR, NO ESTÁ SALTANDO
+            public void beginContact(Contact contact)
+            {
+                boolean tocandoBloque = inContact(contact, "feet", "overfloor") || inContact(contact, "player", "overfloor");
+
+                if (tocandoBloque || player.getIsJumping())
+                {
+                    player.setIsJumping(false);
                 }
             }
 
             @Override
-            public void endContact(Contact contact) {
-               if (!inContact(contact, "feet", "overfloor")){
-                    player.setIsJumping(true); 
+            public void endContact(Contact contact)
+            {
+                boolean tocandoSueloPies = inContact(contact, "feet", "overfloor");
+                boolean caminando = player.isWalking();
+
+                if (caminando && tocandoSueloPies)
+                {
+                    player.setIsJumping(true);
                 }
             }
 
             @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-                
+            public void preSolve(Contact contact, Manifold oldManifold)
+            {
             }
 
             @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-                
+            public void postSolve(Contact contact, ContactImpulse impulse)
+            {
             }
-            
+
         });
     }
 
     @Override
-    public void show() {
+    public void show()
+    {
         player = new Player(world, getAtlas().findRegion("caminar"), new Vector2(128 / Constant.PPM, 128 / Constant.PPM));
         stage.addActor(player);
     }
 
-    
-    
-    public World getWorld() {
+    public World getWorld()
+    {
         return world;
     }
-    
+
     /*public void uptadte(float delta){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             player.getBody().applyLinearImpulse(new Vector2(0, 4f), player.getBody().getWorldCenter(), true);
@@ -118,31 +130,32 @@ public class GameScreen extends BaseScreen{
             player.getBody().applyLinearImpulse(new Vector2(-0.1f, 0), player.getBody().getWorldCenter(), true);
         }
     }*/
-
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height)
+    {
         viewport.update(width, height);
     }
-    
-    
+
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
         //uptadte(delta);
-        Gdx.gl.glClearColor(0.4f, 0.5f , 0.8f, 0.8f);  //COLOREA EL CIELO
+        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
-        
+
         renderer.setView(gameCam);
         renderer.render();
-        stage.act(); 
+        stage.act();
         world.step(delta, 6, 2);
-        stage.draw();  
+        stage.draw();
         debugger.render(world, gameCam.combined);
         gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
         map.dispose();
         renderer.dispose();
         world.dispose();
