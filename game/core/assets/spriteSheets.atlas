@@ -11,6 +11,13 @@ caminar
   orig: 512, 128
   offset: 0, 0
   index: -1
+chicken
+  rotate: false
+  xy: 772, 228
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
 golpear
   rotate: false
   xy: 2, 132

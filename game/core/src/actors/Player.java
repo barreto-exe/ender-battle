@@ -65,12 +65,14 @@ public class Player extends Actor
 
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth() / 2 - 35) / Constant.PPM, getHeight() / Constant.PPM / 2);
+        shape.setAsBox((getWidth() / 2 - 42) / Constant.PPM, getHeight() / Constant.PPM / 2);
         fixtureD.shape = shape;
+        fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT;
         body.createFixture(fixtureD).setUserData("player");
 
         EdgeShape feet = new EdgeShape();
-        feet.set((getWidth() / 2 - 37) / -Constant.PPM, getHeight() / Constant.PPM / -2, (getWidth() / 2 - 37) / Constant.PPM, getHeight() / Constant.PPM / -2);
+        feet.set((getWidth() / 2 - 45) / -Constant.PPM, getHeight() / Constant.PPM / -2, (getWidth() / 2 - 45) / Constant.PPM, getHeight() / Constant.PPM / -2);
         fixtureD.shape = feet;
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
@@ -104,7 +106,8 @@ public class Player extends Actor
     public void draw(Batch batch, float parentAlpha)
     {
         //ACTUALIZANDO POSICION DEL PLAYER A LA POSICIÓN DEL BODY
-        setPosition(Constant.FRAME_WIDTH / 2 - getWidth() / 2, (body.getPosition().y - (getHeight() / Constant.PPM) / 2) * Constant.PPM);
+        setPosition((body.getPosition().x - (getWidth() / Constant.PPM) / 2) * Constant.PPM,
+                    (body.getPosition().y - (getHeight() / Constant.PPM) / 2) * Constant.PPM);
         //DIBUJANDO TEXTURE DEL JUGADOR
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }

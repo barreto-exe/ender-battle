@@ -6,6 +6,7 @@
 package com.minecraft.game.screens;
 
 import actors.Player;
+import actors.mobs.Chicken;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -45,6 +46,7 @@ public class GameScreen extends BaseScreen
 
     private World world;
     private Player player;
+    private Chicken chicken;
 
     /*CREO QUE RECIBE UN ARRAYLIST DEL SERVER CON LOS JUGADORES DE LA PARTIDA EN CURSO*/
     public GameScreen(MainGame game, String biome)
@@ -61,7 +63,7 @@ public class GameScreen extends BaseScreen
         world = new World(new Vector2(0, -10), true);
 
         debugger = new Box2DDebugRenderer();
-        new BiomeAssembler(world, map);
+        new BiomeAssembler(this);
 
         world.setContactListener(new ContactListener()
         {
@@ -112,6 +114,9 @@ public class GameScreen extends BaseScreen
     @Override
     public void show()
     {
+        chicken = new Chicken(world, getAtlas().findRegion("chicken"), 4, 2);
+        stage.addActor(chicken);
+        
         player = new Player(world, getAtlas().findRegion("caminar"), new Vector2(128 / Constant.PPM, 128 / Constant.PPM));
         stage.addActor(player);
     }
@@ -120,6 +125,11 @@ public class GameScreen extends BaseScreen
     {
         return world;
     }
+
+    public TiledMap getMap() {
+        return map;
+    }
+    
 
     /*public void uptadte(float delta){
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
@@ -146,10 +156,10 @@ public class GameScreen extends BaseScreen
         renderer.setView(gameCam);
         renderer.render();
         stage.act();
-        world.step(delta, 6, 2);
         stage.draw();
+        world.step(delta, 6, 2);
         debugger.render(world, gameCam.combined);
-        gameCam.position.x = player.getBody().getPosition().x;
+        //gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
     }
 
