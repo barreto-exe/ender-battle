@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.minecraft.game.Constant;
+import tools.Constant;
 
 /**
  *
@@ -33,7 +33,7 @@ public class Chicken extends PacificMob{
         for (int i = 0; i < 3; i++)
             frames[index++] = region[0][i];
 
-        animation = new Animation(0.4f, frames);    //CREANDO ANIMACION DE CAMINAR          
+        animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR          
         cantAlimento = 15; //por ejemplo
     }
 

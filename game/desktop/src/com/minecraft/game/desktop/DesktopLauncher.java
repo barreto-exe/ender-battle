@@ -2,7 +2,7 @@ package com.minecraft.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.minecraft.game.Constant;
+import tools.Constant;
 import com.minecraft.game.MainGame;
 
 public class DesktopLauncher {

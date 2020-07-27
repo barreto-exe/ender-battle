@@ -6,7 +6,6 @@
 package actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,7 +17,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.minecraft.game.Constant;
+import tools.Constant;
+import tools.HandleInput;
+import tools.VirtualController;
 
 /**
  *
@@ -35,7 +36,10 @@ public class Player extends Actor
     private float duration = 0;
 
     private boolean isJumping;
-    private char lastPressed = '0';
+    private VirtualController controller;
+    private HandleInput processor;
+    
+    private Constant.state lastKeyPressed;
 
     public Player(World world, TextureRegion textureColor, Vector2 position)
     {
@@ -78,8 +82,13 @@ public class Player extends Actor
         body.createFixture(fixtureD).setUserData("feet");
 
         isJumping = false;
+        lastKeyPressed = Constant.state.DEFAULT;
 
         texture = frames[3];
+        
+        controller = new VirtualController();
+        processor = new HandleInput(controller);
+        Gdx.input.setInputProcessor(processor);
     }
 
     public Body getBody()
@@ -87,9 +96,13 @@ public class Player extends Actor
         return body;
     }
 
-    public boolean getIsJumping()
+    public boolean isJumping()
     {
         return isJumping;
+    }
+    
+    public VirtualController getController() {
+        return controller;
     }
 
     public void setIsJumping(boolean isJumping)
@@ -121,41 +134,29 @@ public class Player extends Actor
     public void act(float delta)
     {
         super.act(delta);
-
-        //SI ESTÁ SALTANDO SE REFLEJA LA ANIMACION
+        
+        /******************************************************************************************************************************************/
         if (isJumping)
         {
             body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             jumpAnimation();
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W))
-        {
-            jump(); //SI PRESIONA LA TECLA UP SE PRODUCE EL MOVIMIENTO DE SALTAR
-        } 
-        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
-        {
-            walk(1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
-            if (lastPressed == 'A')
-            {
+        
+        if (controller.isUp()){
+            jump();
+        } else if (controller.isRight()){
+            if (lastKeyPressed == Constant.state.WALK_LEFT)
                 invertAnimation();
-            }
-            lastPressed = 'D';
+            lastKeyPressed = Constant.state.WALK_RIGHT;
+            walk(1);
             walkAnimation(delta);
-        } 
-        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
-        {
-            if (lastPressed == 'D')
-            {
+        } else if (controller.isLeft()){
+            if (lastKeyPressed == Constant.state.WALK_RIGHT)
                 invertAnimation();
-            }
-            lastPressed = 'A';
-            walk(-1);  //SI PRESIONA LA TECLA RIGHT SE PRODUCE EL MOVIMIENTO LINEAL Y SE REFLEJA LA ANIMACIÓN
+            lastKeyPressed = Constant.state.WALK_LEFT;
+            walk(-1);
             walkAnimation(delta);
-            /*hay que arreglar el stprite cuando va al sentido opuesto*/
-        } 
-        else
-        {
+        } else {
             if (body.getLinearVelocity().x < 0)
             {
                 body.applyForceToCenter(8, 0, true);
@@ -165,6 +166,9 @@ public class Player extends Actor
             }
             repose();   //SI NO PRESIONA NINGUNA TECLA, LA ANIMACIÓN SE DETIENE
         }
+        
+        /******************************************************************************************************************************************/
+      
     }
 
     private void jump()
@@ -172,7 +176,7 @@ public class Player extends Actor
         if (!isJumping)
         {
             isJumping = true;
-            body.applyLinearImpulse(new Vector2(0, Constant.IMPULSE_JUMP), getBody().getWorldCenter(), true);//SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
+            body.applyLinearImpulse(0, Constant.IMPULSE_JUMP, getBody().getWorldCenter().x, getBody().getWorldCenter().y, true);//SE APLICA IMPULSO VERTICAL QUE GENERA EL SALTO
         }
     }
 
