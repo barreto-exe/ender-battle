@@ -30,7 +30,6 @@ import tools.WorldContactListener;
  */
 public class GameScreen extends BaseScreen
 {
-
     private Stage stage;
     private OrthographicCamera gameCam;
     private Viewport viewport;
@@ -49,13 +48,13 @@ public class GameScreen extends BaseScreen
     {
         super(game);
         gameCam = new OrthographicCamera();
+        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
-        stage = new Stage(/*viewport*/);
+        stage = new Stage(viewport, game.getBatch());
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(biome);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
-        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         world = new World(new Vector2(0, -10), true);
 
         debugger = new Box2DDebugRenderer();
@@ -95,14 +94,15 @@ public class GameScreen extends BaseScreen
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);  //COLOREA EL CIELO
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
         
-        renderer.setView(gameCam);
+        renderer.setView((OrthographicCamera) viewport.getCamera());
         renderer.render();
         stage.act();
         world.step(delta, 6, 2);
+        game.getBatch().setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
         debugger.render(world, gameCam.combined);
-        if (player.getX() > 500 && player.getController().isRight())
-            gameCam.position.x += 10 / Constant.PPM;
+        if (player.getBody().getPosition().x > (500 / Constant.PPM) && player.getController().isRight())
+            gameCam.position.x += Constant.SPEED_PLAYER / Constant.PPM;
         gameCam.update();
     }
 

@@ -4,13 +4,19 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
-        <file>file:/C:/Users/Karen/Documents/ender-battle/game/desktop/src/com/minecraft/game/desktop/DesktopLauncher.java</file>
-      </group>
+      <group/>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/tools/Constant.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/com/minecraft/game/MainGame.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/com/minecraft/game/screens/worlds/BiomeAssembler.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/com/minecraft/game/screens/GameScreen.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/actors/Player.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/actors/mobs/Chicken.java</file>
+        <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/com/minecraft/game/screens/BaseScreen.java</file>
+      </group>
     </open-files>
   </auxiliary>
 </gradle-project-properties>
