@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package actors.mobs;
+package sprites;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
  *
  * @author Karen
  */
-public abstract class Mob extends Actor{
+public abstract class Mob extends Sprite{
     protected World world;
     protected Body body;
-    
-    public Mob(World world) {
+
+    public Mob(World world, TextureRegion region) {
+        super(region);
         this.world = world;
     }
     
-    protected abstract void defineMob(int x, int y);
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.minecraft.game.MainGame;
 import com.minecraft.game.screens.worlds.BiomeAssembler;
+import sprites.Chicken;
 import sprites.Player;
 import tools.Constant;
 import tools.WorldContactListener;
@@ -36,6 +37,7 @@ public class GameScreen extends BaseScreen{
     private Box2DDebugRenderer debugger;
     private World world;
     private Player player;
+    private Chicken chicken;
     
     private String color;
     
@@ -67,6 +69,7 @@ public class GameScreen extends BaseScreen{
     @Override
     public void show() {
         player = new Player(this, 2, 2, color);
+        chicken = new Chicken(this, 4, 2);
         world.setContactListener(new WorldContactListener(player));
     }
     
@@ -80,6 +83,7 @@ public class GameScreen extends BaseScreen{
     @Override
     public void render(float delta) {
         player.act(delta);
+        chicken.act(delta);
         world.step(delta, 6, 2);
         if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM) && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM)
             gameCam.position.x = player.getBody().getPosition().x;
@@ -93,6 +97,7 @@ public class GameScreen extends BaseScreen{
         game.getBatch().setProjectionMatrix(gameCam.combined);
         game.getBatch().begin();
         player.draw(game.getBatch());
+        chicken.draw(game.getBatch());
         game.getBatch().end();
         
     }
