@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.minecraft.game.screens;
+package game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,8 +15,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.minecraft.game.MainGame;
-import com.minecraft.game.screens.worlds.BiomeAssembler;
+import game.MainGame;
+import game.screens.worlds.BiomeAssembler;
 import sprites.Chicken;
 import sprites.Player;
 import tools.Constant;

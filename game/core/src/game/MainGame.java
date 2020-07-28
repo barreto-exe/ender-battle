@@ -1,8 +1,8 @@
-package com.minecraft.game;
+package game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.minecraft.game.screens.GameScreen;
+import game.screens.GameScreen;
 
 public class MainGame extends Game {
     private SpriteBatch batch;

@@ -19,7 +19,7 @@ public class Constant {
     public static final int FRAME_WIDTH = 855;  //width del frame 
     public static final int FRAME_HEIGHT = 500;  //height del frame  
     
-    public enum state{JUMPING, ATTCAK, WALK_RIGHT, WALK_LEFT, FALLING, DEFAULT} ;
+    public enum State{JUMPING, ATTCAK, WALK_RIGHT, WALK_LEFT, FALLING, DEFAULT} ;
     public static final float SPEED_MOBS = 1f;
     
     public static final short GROUND_BIT = 1;

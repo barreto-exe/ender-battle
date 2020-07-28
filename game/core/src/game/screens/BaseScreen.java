@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.minecraft.game.screens;
+package game.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.minecraft.game.MainGame;
+import game.MainGame;
 
 /**
  *

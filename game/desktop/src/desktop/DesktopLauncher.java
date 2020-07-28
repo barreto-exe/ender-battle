@@ -1,9 +1,9 @@
-package com.minecraft.game.desktop; 
+package desktop; 
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import tools.Constant;
-import com.minecraft.game.MainGame;
+import game.MainGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
