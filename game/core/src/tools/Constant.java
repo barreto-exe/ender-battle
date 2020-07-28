@@ -10,15 +10,16 @@ package tools;
  * @author Karen
  */
 public class Constant {
-    public static final float PPM = 75;
+    public static final float PPM = 50;
+    public static final int MAX_MAP = 4480;
     public static final int PLAYER_WIDTH = 512;  //width de la region de "Walking"
     public static final int PLAYER_HEIGHT = 128;  //height de la region de "Walking"
-    public static final int IMPULSE_JUMP = 10;  //height de la region de "Walking"
-    public static final float SPEED_PLAYER = 2.6f;  //height de la region de "Walking"
+    public static final int IMPULSE_JUMP = 14;  //height de la region de "Walking"
+    public static final float SPEED_PLAYER = 3.8f;  //height de la region de "Walking"
     public static final int FRAME_WIDTH = 855;  //width del frame 
     public static final int FRAME_HEIGHT = 500;  //height del frame  
     
-    public static enum state{JUMPING, ATTCAK, WALK_RIGHT, WALK_LEFT, FALLING, DEFAULT;}
+    public enum state{JUMPING, ATTCAK, WALK_RIGHT, WALK_LEFT, FALLING, DEFAULT} ;
     
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;

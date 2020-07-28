@@ -6,7 +6,6 @@
 package sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.minecraft.game.screens.PlayScreen;
+import com.minecraft.game.screens.GameScreen;
 import tools.Constant;
 import tools.HandleInput;
 import tools.VirtualController;
@@ -35,14 +34,14 @@ public class Player extends Sprite{
     
     private boolean isJumping;
     private Constant.state lastKeyPressed;
-    private Constant.state currentState;
     
-    private TextureRegion standing;
-    private TextureRegion jumping;
-    private Animation walking;
+    private TextureRegion[] frames;
+    private Animation animation;
+    private Animation walkingRight;
+    private Animation walkingLeft;
     private float duration;
 
-    public Player(PlayScreen screen, int x, int y, String color) {
+    public Player(GameScreen screen, int x, int y, String color) {
         super(screen.getAtlas().findRegion(color));
         world = screen.getWorld();
         
@@ -50,7 +49,7 @@ public class Player extends Sprite{
         
         TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
         TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
-        TextureRegion[] frames = new TextureRegion[region.length * region[0].length];int index = 0;
+        frames = new TextureRegion[region.length * region[0].length];int index = 0;
 
         //APLANANDO ARREGLO DE TEXTURES
         /*lo hice de esta forma porque pienso estructurar los sprites de una manera no lineal*/
@@ -61,12 +60,18 @@ public class Player extends Sprite{
                 frames[index++] = region[i][j];
             }
         }
-        walking = new Animation(0.15f, frames);
-        standing = frames[3]; 
-        jumping = frames[0];
+        walkingRight = new Animation(0.15f, frames);
+        
+        for (int i = 0; i < frames.length; i++)
+        {
+            frames[i].flip(true, false);  //Haciendo flip a cada frame
+        }
+        walkingLeft = new Animation(0.15f, frames);
+        
+        invertAnimation(Constant.state.WALK_LEFT);
         
         setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
-        setRegion(standing);
+        setRegion(frames[3]);
         
         
         /********************************************************************************************************************************************/
@@ -78,14 +83,14 @@ public class Player extends Sprite{
 
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2 - 0.5f, getHeight() / 2);
+        shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT;
         body.createFixture(fixtureD).setUserData("player");
 
         EdgeShape feet = new EdgeShape();
-        feet.set(getWidth() / -2 + 0.8f, getHeight() / -2, getWidth() / 2 - 0.8f, getHeight() / -2);
+        feet.set(getWidth() / -2 + 0.9f, getHeight() / -2, getWidth() / 2 - 0.9f, getHeight() / -2);
         fixtureD.shape = feet;
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
@@ -125,41 +130,25 @@ public class Player extends Sprite{
     }
     
     
-    /**********************************IGNORAR**********************************/
-
-    public Constant.state getState() {
-        if (body.getLinearVelocity().y > 0)
-            return Constant.state.JUMPING;
-        if (body.getLinearVelocity().y < 0)
-            return Constant.state.FALLING;
-        if (body.getLinearVelocity().x > 0)
-            return Constant.state.WALK_RIGHT;
-        if (body.getLinearVelocity().x < 0)
-            return Constant.state.WALK_LEFT;
-        return Constant.state.DEFAULT;
-    }
-    
-    /***************************************************************************/
-    
     public void act(float delta){
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         if (isJumping)
         {
             body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
-            setRegion(jumping);
+            setRegion(frames[0]);
         }
         
         if (controller.isUp()){
             jump();
         } else if (controller.isRight()){
-            //if (lastKeyPressed == Constant.state.WALK_LEFT)
-                //invertAnimation();
+            if (lastKeyPressed == Constant.state.WALK_LEFT)
+                invertAnimation(Constant.state.WALK_RIGHT);
             lastKeyPressed = Constant.state.WALK_RIGHT;
             walk(1);
             walkAnimation(delta);
         } else if (controller.isLeft()){
-            //if (lastKeyPressed == Constant.state.WALK_RIGHT)
-               // invertAnimation();
+            if (lastKeyPressed == Constant.state.WALK_RIGHT)
+                invertAnimation(Constant.state.WALK_LEFT);
             lastKeyPressed = Constant.state.WALK_LEFT;
             walk(-1);
             walkAnimation(delta);
@@ -193,7 +182,7 @@ public class Player extends Sprite{
             body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
         } else
         {
-            body.applyForce(((Constant.IMPULSE_JUMP - 8) * 0.6f) * direction, 0, position.x, position.y, true);
+            body.applyForce(((Constant.IMPULSE_JUMP - 12) * 0.6f) * direction, 0, position.x, position.y, true);
         }
     }
     
@@ -202,7 +191,7 @@ public class Player extends Sprite{
         if (!isJumping)
         {
             duration += delta;
-            setRegion((TextureRegion) walking.getKeyFrame(duration, true));
+            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
         }
     }
     
@@ -210,8 +199,19 @@ public class Player extends Sprite{
     {
         if (!isJumping)
         {
-            setRegion(standing);
+            setRegion(frames[3]);
         }
     }
 
+    public void invertAnimation(Constant.state flip)
+    {
+        for (int i = 0; i < frames.length; i++)
+        {
+            frames[i].flip(true, false);  //Haciendo flip a cada frame
+        }
+        if (flip == Constant.state.WALK_LEFT)
+            animation = walkingRight;
+        if (flip == Constant.state.WALK_RIGHT)
+            animation = walkingLeft;
+    }
 }
