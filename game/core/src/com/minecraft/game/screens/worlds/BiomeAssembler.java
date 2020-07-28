@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import tools.Constant;
-import com.minecraft.game.screens.GameScreen;
+import com.minecraft.game.screens.PlayScreen;
 
 /**
  *
@@ -21,7 +21,7 @@ import com.minecraft.game.screens.GameScreen;
  */
 public class BiomeAssembler {
 
-    public BiomeAssembler(GameScreen screen) {
+    public BiomeAssembler(PlayScreen screen) {
         BodyDef def = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixture = new FixtureDef();

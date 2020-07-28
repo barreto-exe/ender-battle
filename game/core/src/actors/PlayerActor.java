@@ -25,7 +25,7 @@ import tools.VirtualController;
  *
  * @author Karen
  */
-public class Player extends Actor
+public class PlayerActor extends Actor
 {
 
     private Body body;
@@ -41,7 +41,7 @@ public class Player extends Actor
     
     private Constant.state lastKeyPressed;
 
-    public Player(World world, TextureRegion textureColor, Vector2 position)
+    public PlayerActor(World world, TextureRegion textureColor, Vector2 position)
     {
         TextureRegion[][] region = textureColor.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new TextureRegion[region.length * region[0].length];  //CREANDO ARREGLO DE UNA DIMENSIÓN

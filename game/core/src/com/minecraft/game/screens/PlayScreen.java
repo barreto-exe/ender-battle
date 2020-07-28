@@ -5,8 +5,6 @@
  */
 package com.minecraft.game.screens;
 
-import actors.PlayerActor;
-import actors.mobs.Chicken;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,104 +14,95 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import tools.Constant;
 import com.minecraft.game.MainGame;
 import com.minecraft.game.screens.worlds.BiomeAssembler;
+import sprites.Player;
+import tools.Constant;
 import tools.WorldContactListener;
 
 /**
  *
  * @author Karen
  */
-public class GameScreen extends BaseScreen
-{
-    private Stage stage;
+public class PlayScreen extends BaseScreen{
     private OrthographicCamera gameCam;
-    private Viewport viewport;
-
-    private Box2DDebugRenderer debugger;
+    private FitViewport viewport;
+    
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-
+    
+    private Box2DDebugRenderer debugger;
     private World world;
-    private PlayerActor player;
-    private Chicken chicken;
-
-    /*CREO QUE RECIBE UN ARRAYLIST DEL SERVER CON LOS JUGADORES DE LA PARTIDA EN CURSO*/
-    public GameScreen(MainGame game, String biome)
-    {
+    private Player player;
+    
+    
+    public PlayScreen(MainGame game, String biome, String color) {
         super(game);
         gameCam = new OrthographicCamera();
-        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
-        stage = new Stage(/*viewport, game.getBatch()*/);
-
+        
+        gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(biome);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
+        
         world = new World(new Vector2(0, -10), true);
-
         debugger = new Box2DDebugRenderer();
-        //new BiomeAssembler(this);
-    }
-
-    @Override
-    public void show()
-    {
-        chicken = new Chicken(world, getAtlas().findRegion("chicken"), 4, 2);
-        stage.addActor(chicken);
+        new BiomeAssembler(this);
+        player = new Player(this, 2, 2, color);
         
-        player = new PlayerActor(world, getAtlas().findRegion("caminar"), new Vector2(128 / Constant.PPM, 128 / Constant.PPM));
-        stage.addActor(player);
         
-       // world.setContactListener(new WorldContactListener(player));
-    }
-
-    public World getWorld()
-    {
-        return world;
     }
 
     public TiledMap getMap() {
         return map;
     }
-    
+
+    public World getWorld() {
+        return world;
+    }
+
     @Override
-    public void resize(int width, int height)
-    {
+    public void show() {
+        world.setContactListener(new WorldContactListener(player));
+    }
+    
+    
+
+    @Override
+    public void resize(int width, int height) {
         viewport.update(width, height);
     }
-
+    
     @Override
-    public void render(float delta)
-    {
-        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);  //COLOREA EL CIELO
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER
-        
-        renderer.setView((OrthographicCamera) viewport.getCamera());
-        renderer.render();
-        stage.act();
+    public void render(float delta) {
+        player.act(delta);
         world.step(delta, 6, 2);
-        game.getBatch().setProjectionMatrix(stage.getCamera().combined);
-        stage.draw();
-        debugger.render(world, gameCam.combined);
-        if (player.getBody().getPosition().x > (500 / Constant.PPM) && player.getController().isRight())
-            gameCam.position.x += Constant.SPEED_PLAYER / Constant.PPM;
+        gameCam.position.x = player.getBody().getPosition().x;
         gameCam.update();
+        renderer.setView(gameCam);
+        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);  //COLOREA EL CIELO
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     //LIMPIA EL BUFFER 
+        renderer.render();
+        debugger.render(world, gameCam.combined);
+        
+        game.getBatch().setProjectionMatrix(gameCam.combined);
+        game.getBatch().begin();
+        player.draw(game.getBatch());
+        game.getBatch().end();
+        
     }
 
     @Override
-    public void dispose()
-    {
+    public void dispose() {
         map.dispose();
         renderer.dispose();
         world.dispose();
         debugger.dispose();
-        stage.dispose();
     }
-
+    
+    
+    
 }
