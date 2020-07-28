@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sprites;
+package actors;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,17 +14,19 @@ import tools.Constant;
  *
  * @author Karen
  */
-public abstract class PacificMob extends Mob{
+public abstract class PacificMob extends Mob
+{
     protected int cantAlimento;
     protected float duration;
     protected TextureRegion[] frames;
     protected Animation animation;
     protected float speed;
-    
-    public PacificMob(World world, TextureRegion region) {
+
+    public PacificMob(World world, TextureRegion region)
+    {
         super(world, region);
         duration = 0;
         speed = Constant.SPEED_MOBS;
     }
-    
+
 }

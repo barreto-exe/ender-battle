@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sprites;
+package actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -28,7 +29,6 @@ import tools.VirtualController;
  */
 public class Player extends Sprite
 {
-
     //Atributos de Box2d
     private World world;
     private Body body;
@@ -58,7 +58,7 @@ public class Player extends Sprite
         super(screen.getAtlas().findRegion(color));
         world = screen.getWorld();
 
-        //<editor-fold defaultstate="collapsed" desc="Inicializar Textura">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
         TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
         frames = new TextureRegion[region.length * region[0].length];
@@ -205,6 +205,13 @@ public class Player extends Sprite
         }
     }
 
+    @Override
+    public void draw(Batch batch)
+    {
+        super.draw(batch); 
+    }
+    
+    
     private void jump()
     {
         if (!isJumping)
