@@ -6,7 +6,6 @@
 package tools;
 
 /**
- *
  * @author Karen
  */
 public class VirtualController
@@ -15,6 +14,7 @@ public class VirtualController
     private boolean left;
     private boolean right;
     private boolean up;
+    private boolean hitting;
 
     public boolean isLeft()
     {
@@ -46,4 +46,13 @@ public class VirtualController
         this.up = up;
     }
 
+    public boolean isHitting()
+    {
+        return hitting;
+    }
+
+    public void setHitting(boolean hitting)
+    {
+        this.hitting = hitting;
+    }
 }

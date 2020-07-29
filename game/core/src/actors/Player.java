@@ -39,7 +39,7 @@ public class Player extends Sprite implements Actor
     private HandleInput processor;
     private boolean isJumping;
     private State lastKeyPressed;
-    private int toquesSuelo = 0;
+    private int toquesSuelo;
     
     //Atributos de Textura
     private TextureRegion[] frames;
@@ -65,22 +65,21 @@ public class Player extends Sprite implements Actor
         TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
         TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
         frames = new TextureRegion[region.length * region[0].length];
-        int index = 0;
 
+        int index = 0;
         //APLANANDO ARREGLO DE TEXTURES
-        /*lo hice de esta forma porque pienso estructurar los sprites de una manera no lineal*/
-        for (int i = 0; i < region.length; i++)
+        for (TextureRegion[] regionFil : region)
         {
-            for (int j = 0; j < region[i].length; j++)
+            for (TextureRegion regionCol : regionFil)
             {
-                frames[index++] = region[i][j];
+                frames[index++] = regionCol;
             }
         }
         walkingRight = new Animation(0.15f, frames);
 
-        for (int i = 0; i < frames.length; i++)
+        for (TextureRegion frame : frames)
         {
-            frames[i].flip(true, false);  //Haciendo flip a cada frame
+            frame.flip(true, false); //Haciendo flip a cada frame
         }
         walkingLeft = new Animation(0.15f, frames);
 
@@ -125,8 +124,9 @@ public class Player extends Sprite implements Actor
         //</editor-fold>
 
         isJumping = false;
-        lastKeyPressed = State.DEFAULT;
+        lastKeyPressed = State.WALK_RIGHT;
         duration = 0;
+        toquesSuelo = 0;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -181,21 +181,21 @@ public class Player extends Sprite implements Actor
         } 
         else if (controller.isRight())
         {
-            if (lastKeyPressed == Constant.State.WALK_LEFT)
+            if (lastKeyPressed == State.WALK_LEFT)
             {
-                invertAnimation(Constant.State.WALK_RIGHT);
+                invertAnimation(State.WALK_RIGHT);
             }
-            lastKeyPressed = Constant.State.WALK_RIGHT;
+            lastKeyPressed = State.WALK_RIGHT;
             walk(1);
             walkAnimation(delta);
         } 
         else if (controller.isLeft())
         {
-            if (lastKeyPressed == Constant.State.WALK_RIGHT)
+            if (lastKeyPressed == State.WALK_RIGHT)
             {
-                invertAnimation(Constant.State.WALK_LEFT);
+                invertAnimation(State.WALK_LEFT);
             }
-            lastKeyPressed = Constant.State.WALK_LEFT;
+            lastKeyPressed = State.WALK_LEFT;
             walk(-1);
             walkAnimation(delta);
         }
@@ -253,15 +253,15 @@ public class Player extends Sprite implements Actor
 
     public void invertAnimation(State flip)
     {
-        for (int i = 0; i < frames.length; i++)
+        for (TextureRegion frame : frames)
         {
-            frames[i].flip(true, false);  //Haciendo flip a cada frame
+            frame.flip(true, false); 
         }
-        if (flip == Constant.State.WALK_LEFT)
+        if (flip == State.WALK_LEFT)
         {
             animation = walkingRight;
         }
-        if (flip == Constant.State.WALK_RIGHT)
+        if (flip == State.WALK_RIGHT)
         {
             animation = walkingLeft;
         }
