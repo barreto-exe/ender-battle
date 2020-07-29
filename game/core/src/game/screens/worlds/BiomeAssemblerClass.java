@@ -16,12 +16,15 @@ import tools.Constant;
 import game.screens.GameScreen;
 
 /**
- *
  * @author Karen
  */
-public class BiomeAssembler {
-
-    public BiomeAssembler(GameScreen screen) {
+public class BiomeAssemblerClass {
+    
+    /**
+     * Se encarga de ensamblar el bioma en la bantalla.
+     * @param screen la pantalla en la que se construirá el bioma.
+     */
+    public static void BiomeAssembler(GameScreen screen) {
         BodyDef def = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixture = new FixtureDef();
@@ -39,7 +42,8 @@ public class BiomeAssembler {
             fixture.filter.categoryBits = Constant.GROUND_BIT;
             body.createFixture(fixture).setUserData("overfloor");
         }
-        
     }
     
+    //La clase no es instanciable, sólo se usa para contener al método BiomeAssembler.
+    private BiomeAssemblerClass(){};
 }

@@ -5,9 +5,9 @@
  */
 package actors;
 
+import actors.groups.Actor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -27,24 +27,27 @@ import tools.VirtualController;
  *
  * @author Karen
  */
-public class Player extends Sprite
+public class Player extends Sprite implements Actor
 {
+    //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2d
     private World world;
     private Body body;
-
+    
     //Atributos de Controladores
     private VirtualController controller;
     private HandleInput processor;
     private boolean isJumping;
     private State lastKeyPressed;
-
+    private int toquesSuelo = 0;
+    
     //Atributos de Textura
     private TextureRegion[] frames;
     private Animation animation;
     private Animation walkingRight;
     private Animation walkingLeft;
     private float duration;
+    //</editor-fold>
 
     /**
      * Objeto que controla y dibuja al protagonista del juego en pantalla.
@@ -145,6 +148,15 @@ public class Player extends Sprite
     public void setIsJumping(boolean isJumping)
     {
         this.isJumping = isJumping;
+        
+        if(!isJumping)
+        {
+            toquesSuelo++;
+            if(toquesSuelo>2)
+            {
+                toquesSuelo = 2;
+            }
+        }
     }
     
     public boolean isWalking()
@@ -152,13 +164,8 @@ public class Player extends Sprite
         return !isJumping;
     }
     //</editor-fold>
-    
-    /**
-     * Es un método que se debe llamar en cada render de la pantalla en la que
-     * se encuentra el player.
-     * @param delta tiempo transcurrido desde la última vez que se ejecutó
-     * la función.
-     */
+
+    @Override
     public void act(float delta)
     {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -204,18 +211,12 @@ public class Player extends Sprite
             repose();
         }
     }
-
-    @Override
-    public void draw(Batch batch)
-    {
-        super.draw(batch); 
-    }
-    
     
     private void jump()
     {
-        if (!isJumping)
+        if (!isJumping && toquesSuelo == 2)
         {
+            toquesSuelo = 0;
             isJumping = true;
             body.applyLinearImpulse(0, Constant.IMPULSE_JUMP, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }

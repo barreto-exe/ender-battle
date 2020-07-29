@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package actors;
+package actors.pacific;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,7 +17,7 @@ import tools.Constant;
  *
  * @author Karen
  */
-public class Chicken extends PacificMob
+public class Chicken extends PacificMob 
 {
 
     public Chicken(GameScreen screen, int x, int y)
@@ -62,6 +62,7 @@ public class Chicken extends PacificMob
         cantAlimento = 15; //por ejemplo
     }
 
+    @Override
     public void act(float delta)
     {
         body.setLinearVelocity(speed, 0);

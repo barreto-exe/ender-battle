@@ -10,57 +10,59 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import game.MainGame;
 
 /**
- *
  * @author Karen
  */
-public abstract class BaseScreen implements Screen{
+public abstract class BaseScreen implements Screen
+{
     //ATTRIBUTES
     protected MainGame game;
     private TextureAtlas atlas;
 
     //BUILDER
-    public BaseScreen(MainGame game) {
+    public BaseScreen(MainGame game)
+    {
         atlas = new TextureAtlas("spriteSheets.atlas");
         this.game = game;
-    }   
+    }
 
-    public TextureAtlas getAtlas() {
+    public TextureAtlas getAtlas()
+    {
         return atlas;
     }
-    
+
     @Override
-    public void show() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void show()
+    {
     }
 
     @Override
-    public void render(float delta) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void render(float delta)
+    {
     }
 
     @Override
-    public void resize(int width, int height) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void resize(int width, int height)
+    {
     }
 
     @Override
-    public void pause() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void pause()
+    {
     }
 
     @Override
-    public void resume() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void resume()
+    {
     }
 
     @Override
-    public void hide() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void hide()
+    {
     }
 
     @Override
-    public void dispose() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void dispose()
+    {
     }
-    
+
 }
