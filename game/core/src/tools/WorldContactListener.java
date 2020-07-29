@@ -36,24 +36,16 @@ public class WorldContactListener implements ContactListener
     @Override
     public void beginContact(Contact contact)
     {
-        boolean tocandoBloque = inContact(contact, "feet", "overfloor") || inContact(contact, "player", "overfloor");
-
-        if (tocandoBloque || player.isJumping())
-        {
-            player.setIsJumping(false);
-        }
+       if (inContact(contact, "feet", "overfloor"))
+       {
+           player.setIsJumping(false);
+       }
     }
 
     @Override
     public void endContact(Contact contact)
     {
-        boolean tocandoSueloPies = inContact(contact, "feet", "overfloor");
-        boolean caminando = player.isWalking();
-
-        if (caminando && tocandoSueloPies)
-        {
-            player.setIsJumping(true);
-        }
+        
     }
 
     @Override

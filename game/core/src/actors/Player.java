@@ -37,9 +37,9 @@ public class Player extends Sprite implements Actor
     //Atributos de Controladores
     private VirtualController controller;
     private HandleInput processor;
+    private State previousState;
+    private State currentState;
     private boolean isJumping;
-    private State lastKeyPressed;
-    private int toquesSuelo = 0;
     
     //Atributos de Textura
     private TextureRegion[] frames;
@@ -84,7 +84,7 @@ public class Player extends Sprite implements Actor
         }
         walkingLeft = new Animation(0.15f, frames);
 
-        invertAnimation(State.WALK_LEFT);
+        invertAnimation(State.WALKING_LEFT);
         //</editor-fold>
 
         //Colocar posición
@@ -125,7 +125,7 @@ public class Player extends Sprite implements Actor
         //</editor-fold>
 
         isJumping = false;
-        lastKeyPressed = State.DEFAULT;
+        previousState = State.WALKING_RIGHT;
         duration = 0;
     }
 
@@ -135,69 +135,102 @@ public class Player extends Sprite implements Actor
         return body;
     }
     
-    public boolean isJumping()
-    {
-        return isJumping;
-    }
-    
     public VirtualController getController()
     {
         return controller;
     }
     
-    public void setIsJumping(boolean isJumping)
-    {
-        this.isJumping = isJumping;
-        
-        if(!isJumping)
+    public State getState() {
+        if (body.getLinearVelocity().y >= 0.02f)
         {
-            toquesSuelo++;
-            if(toquesSuelo>2)
-            {
-                toquesSuelo = 2;
-            }
+            return State.JUMPING;
+        }
+        else if (body.getLinearVelocity().y <= -0.02f)
+        {
+            return State.FALLING;
+        }
+        else if (controller.isHitting())
+        {
+            return State.HITTING;
+        }
+        else if (body.getLinearVelocity().x >= 1 && controller.isRight())
+        {
+            return State.WALKING_RIGHT;
+        }
+        else if (body.getLinearVelocity().x <= -1 && controller.isLeft())
+        {
+            return State.WALKING_LEFT;
+        } 
+        else 
+        {
+            return State.STANDING;
         }
     }
     
-    public boolean isWalking()
-    {
-        return !isJumping;
+    public TextureRegion getFrame(float delta){
+        TextureRegion frame = frames[3];
+        duration +=delta;
+        
+        if (null != currentState)
+            switch (currentState) 
+            {
+                case JUMPING:
+                case FALLING:
+                    frame = frames[0];
+                    break;
+                case HITTING:
+                    break;
+                case WALKING_RIGHT:
+                    if (previousState == Constant.State.WALKING_LEFT)
+                    {
+                        invertAnimation(Constant.State.WALKING_RIGHT);
+                    }   
+                    previousState = Constant.State.WALKING_RIGHT;
+                    frame = (TextureRegion) animation.getKeyFrame(duration, true);
+                    break;
+                case WALKING_LEFT:
+                    if (previousState == Constant.State.WALKING_RIGHT)
+                    {
+                        invertAnimation(Constant.State.WALKING_LEFT);
+                    }   
+                    previousState = Constant.State.WALKING_LEFT;
+                    frame = (TextureRegion) animation.getKeyFrame(duration, true);
+                    break;
+                default:
+                    frame = frames[3];
+                    break;
+            }
+        
+        return frame;
     }
-    //</editor-fold>
 
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
+    }
+    
+    //</editor-fold>
+    
     @Override
     public void act(float delta)
     {
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        if (isJumping)
+        currentState = getState();
+        
+        if (currentState == State.FALLING || currentState == State.JUMPING)
         {
             body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
-            setRegion(frames[0]);
         }
 
-        if (controller.isUp())
+        if (controller.isUp() && !isJumping)
         {
             jump();
         } 
         else if (controller.isRight())
         {
-            if (lastKeyPressed == Constant.State.WALK_LEFT)
-            {
-                invertAnimation(Constant.State.WALK_RIGHT);
-            }
-            lastKeyPressed = Constant.State.WALK_RIGHT;
             walk(1);
-            walkAnimation(delta);
         } 
         else if (controller.isLeft())
         {
-            if (lastKeyPressed == Constant.State.WALK_RIGHT)
-            {
-                invertAnimation(Constant.State.WALK_LEFT);
-            }
-            lastKeyPressed = Constant.State.WALK_LEFT;
             walk(-1);
-            walkAnimation(delta);
         }
         else
         {
@@ -208,15 +241,16 @@ public class Player extends Sprite implements Actor
             {
                 body.applyForceToCenter(-8, 0, true);
             }
-            repose();
         }
+        
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setRegion(getFrame(delta));
     }
     
     private void jump()
     {
-        if (!isJumping && toquesSuelo == 2)
+        if (!(currentState == State.FALLING || currentState == State.JUMPING))
         {
-            toquesSuelo = 0;
             isJumping = true;
             body.applyLinearImpulse(0, Constant.IMPULSE_JUMP, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
@@ -224,30 +258,12 @@ public class Player extends Sprite implements Actor
 
     public void walk(int direction)
     {
-        Vector2 position = body.getPosition();   //SE ACTUALIZA EL VECTOR POSICION A LA POSICION ACTUAL DEL BODY
-        if (!isJumping)
+        if (!(currentState == State.FALLING || currentState == State.JUMPING))
         {
             body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);   //SE APLICA FUERZA HORIZONTAL QUE GENERA EL MOVIMIENTO DE CAMINAR
         } else
         {
-            body.applyForce(((Constant.IMPULSE_JUMP - 12) * 0.6f) * direction, 0, position.x, position.y, true);
-        }
-    }
-
-    public void walkAnimation(float delta)
-    {
-        if (!isJumping)
-        {
-            duration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
-        }
-    }
-
-    public void repose()
-    {
-        if (!isJumping)
-        {
-            setRegion(frames[3]);
+            body.applyForce(((Constant.IMPULSE_JUMP - 12) * 0.6f) * direction, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 
@@ -257,11 +273,11 @@ public class Player extends Sprite implements Actor
         {
             frames[i].flip(true, false);  //Haciendo flip a cada frame
         }
-        if (flip == Constant.State.WALK_LEFT)
+        if (flip == Constant.State.WALKING_LEFT)
         {
             animation = walkingRight;
         }
-        if (flip == Constant.State.WALK_RIGHT)
+        if (flip == Constant.State.WALKING_RIGHT)
         {
             animation = walkingLeft;
         }
