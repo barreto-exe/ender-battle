@@ -85,6 +85,11 @@ public class HandleInput extends InputAdapter
                 controller.setUp(false);
                 return true;
             }
+            case (Input.Keys.J):
+            {
+                controller.setHitting(false);
+                return true;
+            }
             default:
             {
                 return false;

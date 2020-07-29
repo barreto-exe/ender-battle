@@ -38,14 +38,19 @@ public class Player extends Sprite implements Actor
     private VirtualController controller;
     private HandleInput processor;
     private boolean isJumping;
+    private boolean isHitting;
     private State lastKeyPressed;
     private int toquesSuelo;
     
     //Atributos de Textura
     private TextureRegion[] frames;
+    private TextureRegion[] framesPunch;
     private Animation animation;
+    private Animation animationHit;
     private Animation walkingRight;
+    private Animation hitRight;
     private Animation walkingLeft;
+    private Animation hitLeft;
     private float duration;
     //</editor-fold>
 
@@ -61,7 +66,7 @@ public class Player extends Sprite implements Actor
         super(screen.getAtlas().findRegion(color));
         world = screen.getWorld();
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación Caminar">
         TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
         TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
         frames = new TextureRegion[region.length * region[0].length];
@@ -79,13 +84,35 @@ public class Player extends Sprite implements Actor
 
         for (TextureRegion frame : frames)
         {
-            frame.flip(true, false); //Haciendo flip a cada frame
+            frame.flip(true, false); 
         }
         walkingLeft = new Animation(0.15f, frames);
-
-        invertAnimation(State.WALK_LEFT);
         //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación Puño">
+        TextureRegion sheetPunch = screen.getAtlas().findRegion("golpear");
+        region = sheetPunch.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
+        framesPunch = new TextureRegion[region.length * region[0].length];
+        index = 0;
+        //APLANANDO ARREGLO DE TEXTURES
+        for (TextureRegion[] regionFil : region)
+        {
+            for (TextureRegion regionCol : regionFil)
+            {
+                framesPunch[index++] = regionCol;
+            }
+        }
+        hitRight = new Animation(0.08f, framesPunch);
 
+        for (TextureRegion frame : framesPunch)
+        {
+            frame.flip(true, false);
+        }
+        hitLeft = new Animation(0.08f, framesPunch);
+        //</editor-fold>
+        
+        invertAnimation(State.WALK_LEFT);
+        
         //Colocar posición
         setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
         
@@ -123,6 +150,7 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
+        
         isJumping = false;
         lastKeyPressed = State.WALK_RIGHT;
         duration = 0;
@@ -163,6 +191,12 @@ public class Player extends Sprite implements Actor
     {
         return !isJumping;
     }
+
+    public boolean isPunching()
+    {
+        return isHitting;
+    }
+    
     //</editor-fold>
 
     @Override
@@ -175,6 +209,11 @@ public class Player extends Sprite implements Actor
             setRegion(frames[0]);
         }
 
+        if(controller.isHitting())
+        {
+            hit();
+        }
+        
         if (controller.isUp())
         {
             jump();
@@ -208,7 +247,7 @@ public class Player extends Sprite implements Actor
             {
                 body.applyForceToCenter(-8, 0, true);
             }
-            repose();
+            repose(delta);
         }
     }
     
@@ -234,36 +273,85 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    private float deltaHit = -1;
+    private final float DURACION_HIT = 0.08f * 4;
+    
+    private final boolean animatingHit()
+    {
+        boolean result = deltaHit >= 0 && deltaHit <= DURACION_HIT;
+        //if(result) System.out.println(deltaHit);
+        return result;
+    }
+    
+    public void hit()
+    {
+        if(!animatingHit())
+        {
+            this.isHitting = true;
+            deltaHit = 0;
+        }
+    }
+    
+    public void hitAnimation(float delta)
+    {
+        isHitting = false;
+        deltaHit += delta;
+        System.out.println(deltaHit);
+        setRegion((TextureRegion) animationHit.getKeyFrame(deltaHit, true));
+
+        if(deltaHit > DURACION_HIT)
+        {
+            deltaHit = -1;
+            //walkAnimation(delta);
+        }
+    }
+    public void repose(float delta)
+    {
+        if (!isJumping)
+        {
+            setRegion(frames[3]);
+            
+            if(animatingHit())
+            {
+                hitAnimation(delta);
+            }
+        }
+    }
+    
     public void walkAnimation(float delta)
     {
         if (!isJumping)
         {
             duration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
-        }
-    }
-
-    public void repose()
-    {
-        if (!isJumping)
-        {
-            setRegion(frames[3]);
+            
+            if(!animatingHit())
+            {
+                setRegion((TextureRegion) animation.getKeyFrame(duration, true));
+            }
+            else 
+            {
+                hitAnimation(delta);
+            }
         }
     }
 
     public void invertAnimation(State flip)
     {
-        for (TextureRegion frame : frames)
+        for(int i = 0; i < frames.length; i++)
         {
-            frame.flip(true, false); 
+            frames[i].flip(true, false); 
+            framesPunch[i].flip(true, false); 
         }
+        
         if (flip == State.WALK_LEFT)
         {
             animation = walkingRight;
+            animationHit = hitRight;
         }
         if (flip == State.WALK_RIGHT)
         {
             animation = walkingLeft;
+            animationHit = hitLeft;
         }
     }
 }
