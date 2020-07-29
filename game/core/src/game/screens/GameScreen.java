@@ -96,7 +96,7 @@ public class GameScreen extends BaseScreen
     {
         //Instanciar actores del mundo
         player = new Player(this, 2, 2, color);
-        chicken = new Chicken(this, 4, 2);
+        chicken = new Chicken(this, 14, 4);
 
         //Añadir actores al grupo
         actors = new Group();

@@ -20,13 +20,13 @@ public class Constant {
     public static final int FRAME_HEIGHT = 500;  //height del frame  
     
     public enum State{JUMPING, HITTING, WALKING_RIGHT, WALKING_LEFT, FALLING, STANDING} ;
-    public static final float SPEED_MOBS = 1f;
     
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short ESMERALD_BIT = 4;
     public static final short FRUIT_BIT = 8;
-    public static final short DESTRYED_BIT = 16;
+    public static final short MOB_FEET_BIT = 16;
     public static final short MOB_BIT = 32;
-    //public static final short DESTRYED_BIT = 64;
+    public static final short PLAYER_FEET_BIT = 64;
+    public static final short MOB_SENSOR_BIT = 128;
 }

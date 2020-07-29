@@ -10,7 +10,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
@@ -44,8 +43,6 @@ public class Player extends Sprite implements Actor
     //Atributos de Textura
     private TextureRegion[] frames;
     private Animation animation;
-    private Animation walkingRight;
-    private Animation walkingLeft;
     private float duration;
     //</editor-fold>
 
@@ -76,15 +73,7 @@ public class Player extends Sprite implements Actor
                 frames[index++] = region[i][j];
             }
         }
-        walkingRight = new Animation(0.15f, frames);
-
-        for (int i = 0; i < frames.length; i++)
-        {
-            frames[i].flip(true, false);  //Haciendo flip a cada frame
-        }
-        walkingLeft = new Animation(0.15f, frames);
-
-        invertAnimation(State.WALKING_LEFT);
+        animation = new Animation(0.15f, frames);
         //</editor-fold>
 
         //Colocar posición
@@ -106,7 +95,7 @@ public class Player extends Sprite implements Actor
         shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT | Constant.MOB_BIT;
         body.createFixture(fixtureD).setUserData("player");
         //</editor-fold>
 
@@ -114,6 +103,8 @@ public class Player extends Sprite implements Actor
         EdgeShape feet = new EdgeShape();
         feet.set(getWidth() / -2 + 0.9f, getHeight() / -2, getWidth() / 2 - 0.9f, getHeight() / -2);
         fixtureD.shape = feet;
+        fixtureD.filter.categoryBits = Constant.PLAYER_FEET_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT;        
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
         //</editor-fold>
@@ -183,7 +174,7 @@ public class Player extends Sprite implements Actor
                 case WALKING_RIGHT:
                     if (previousState == Constant.State.WALKING_LEFT)
                     {
-                        invertAnimation(Constant.State.WALKING_RIGHT);
+                        invertAnimation();
                     }   
                     previousState = Constant.State.WALKING_RIGHT;
                     frame = (TextureRegion) animation.getKeyFrame(duration, true);
@@ -191,13 +182,10 @@ public class Player extends Sprite implements Actor
                 case WALKING_LEFT:
                     if (previousState == Constant.State.WALKING_RIGHT)
                     {
-                        invertAnimation(Constant.State.WALKING_LEFT);
+                        invertAnimation();
                     }   
                     previousState = Constant.State.WALKING_LEFT;
                     frame = (TextureRegion) animation.getKeyFrame(duration, true);
-                    break;
-                default:
-                    frame = frames[3];
                     break;
             }
         
@@ -267,19 +255,11 @@ public class Player extends Sprite implements Actor
         }
     }
 
-    public void invertAnimation(State flip)
+    public void invertAnimation()
     {
         for (int i = 0; i < frames.length; i++)
         {
             frames[i].flip(true, false);  //Haciendo flip a cada frame
-        }
-        if (flip == Constant.State.WALKING_LEFT)
-        {
-            animation = walkingRight;
-        }
-        if (flip == Constant.State.WALKING_RIGHT)
-        {
-            animation = walkingLeft;
         }
     }
 }

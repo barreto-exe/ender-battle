@@ -40,6 +40,7 @@ public class BiomeAssemblerClass {
             shape.setAsBox(rectangle.getWidth() / 2 / Constant.PPM, rectangle.getHeight() / 2 / Constant.PPM);
             fixture.shape = shape;
             fixture.filter.categoryBits = Constant.GROUND_BIT;
+            fixture.filter.maskBits = Constant.PLAYER_BIT | Constant.PLAYER_FEET_BIT | Constant.MOB_BIT | Constant.MOB_SENSOR_BIT;
             body.createFixture(fixture).setUserData("overfloor");
         }
     }

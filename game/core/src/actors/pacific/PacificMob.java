@@ -8,7 +8,6 @@ package actors.pacific;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
-import tools.Constant;
 
 /**
  *
@@ -22,11 +21,19 @@ public abstract class PacificMob extends Mob
     protected Animation animation;
     protected float speed;
 
-    public PacificMob(World world, TextureRegion region)
+    public PacificMob(World world, TextureRegion region, float speed)
     {
         super(world, region);
         duration = 0;
-        speed = Constant.SPEED_MOBS;
+        this.speed = speed;
     }
 
+    public void changeDirection(){
+        speed = speed * -1;
+        
+        for (int i = 0; i < 3; i++)
+        {
+            frames[i].flip(true, false);  //Haciendo flip a cada frame
+        }
+    }
 }
