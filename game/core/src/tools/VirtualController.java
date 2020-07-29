@@ -9,33 +9,41 @@ package tools;
  *
  * @author Karen
  */
-public class VirtualController {
+public class VirtualController
+{
+
     private boolean left;
     private boolean right;
     private boolean up;
 
-    public boolean isLeft() {
+    public boolean isLeft()
+    {
         return left;
     }
 
-    public void setLeft(boolean left) {
+    public void setLeft(boolean left)
+    {
         this.left = left;
     }
 
-    public boolean isRight() {
+    public boolean isRight()
+    {
         return right;
     }
 
-    public void setRight(boolean right) {
+    public void setRight(boolean right)
+    {
         this.right = right;
     }
 
-    public boolean isUp() {
+    public boolean isUp()
+    {
         return up;
     }
 
-    public void setUp(boolean up) {
+    public void setUp(boolean up)
+    {
         this.up = up;
     }
-    
+
 }
