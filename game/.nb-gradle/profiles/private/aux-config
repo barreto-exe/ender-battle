@@ -5,12 +5,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/C:/Users/Karen/Documents/ender-battle/game/desktop/src/desktop/DesktopLauncher.java</file>
-      </group>
-    </open-files>
-    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
         <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/tools/Constant.java</file>
         <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/actors/pacific/PacificMob.java</file>
         <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/actors/pacific/Chicken.java</file>
@@ -20,6 +14,10 @@
         <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/tools/WorldContactListener.java</file>
         <file>file:/C:/Users/Karen/Documents/ender-battle/game/core/src/actors/pacific/Mob.java</file>
       </group>
+    </open-files>
+    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+      <group/>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

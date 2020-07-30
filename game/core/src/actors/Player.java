@@ -29,11 +29,12 @@ import tools.VirtualController;
  */
 public class Player extends Sprite implements Actor
 {
+
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2d
     private World world;
     private Body body;
-    
+
     //Atributos de Controladores
     private VirtualController controller;
     private HandleInput processor;
@@ -41,7 +42,7 @@ public class Player extends Sprite implements Actor
     private State currentState;
     private boolean isJumping;
     private boolean isHitting;
-    
+
     //Atributos de Textura
     private Array<TextureRegion> walkFrames;
     private Array<TextureRegion> punchFrames;
@@ -53,6 +54,7 @@ public class Player extends Sprite implements Actor
 
     /**
      * Objeto que controla y dibuja al protagonista del juego en pantalla.
+     *
      * @param screen la pantalla en la que se está mostrando el jugador.
      * @param x posición horizontal de inicio.
      * @param y posición vertial de inicio.
@@ -60,11 +62,11 @@ public class Player extends Sprite implements Actor
      */
     public Player(GameScreen screen, int x, int y, String color)
     {
-        super(screen.getAtlas().findRegion(color));
+        super(screen.getAtlas().findRegion(color+"_caminar"));
         world = screen.getWorld();
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
-        TextureRegion spriteSheet = screen.getAtlas().findRegion(color);
+        TextureRegion spriteSheet = screen.getAtlas().findRegion(color+"_caminar");
         TextureRegion[][] region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
         walkFrames = new Array<>();
 
@@ -76,15 +78,15 @@ public class Player extends Sprite implements Actor
                 walkFrames.add(regionC);
             }
         }
-       
+
         walkAnimation = new Animation(0.15f, walkFrames);
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Golpear"">
-        spriteSheet = screen.getAtlas().findRegion("golpear");
-        region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
+        spriteSheet = screen.getAtlas().findRegion(color+"_golpear");
+        region = spriteSheet.split(768 / 6, Constant.PLAYER_HEIGHT);
         punchFrames = new Array<>();
-        
+
         //APLANANDO ARREGLO DE TEXTURES
         for (TextureRegion[] regionF : region)
         {
@@ -93,13 +95,13 @@ public class Player extends Sprite implements Actor
                 punchFrames.add(regionC);
             }
         }
-        
-        punchAnimation = new Animation(0.08f, punchFrames);
+
+        punchAnimation = new Animation(0.06f, punchFrames);
         //</editor-fold>
 
         //Colocar posición
         setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
-        
+
         //Colocar frame en reposo
         setRegion(walkFrames.get(3));
 
@@ -125,7 +127,7 @@ public class Player extends Sprite implements Actor
         feet.set(getWidth() / -2 + 0.9f, getHeight() / -2, getWidth() / 2 - 0.9f, getHeight() / -2);
         fixtureD.shape = feet;
         fixtureD.filter.categoryBits = Constant.PLAYER_FEET_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT;        
+        fixtureD.filter.maskBits = Constant.GROUND_BIT;
         fixtureD.isSensor = true;
         body.createFixture(fixtureD).setUserData("feet");
         //</editor-fold>
@@ -136,7 +138,6 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
-        
         isJumping = isHitting = false;
         previousState = State.WALKING_RIGHT;
         deltaFrame = 0;
@@ -147,34 +148,36 @@ public class Player extends Sprite implements Actor
     {
         return body;
     }
-    
+
     public VirtualController getController()
     {
         return controller;
     }
-    
-    public TextureRegion getHitFrame(float delta){
+
+    public TextureRegion getHitFrame(float delta)
+    {
         deltaHit += delta;
-        
-        if (deltaHit > (0.08f * 4))
+
+        if (deltaHit > (0.06f * 6))
         {
             isHitting = false;
         }
-        
+
         return (TextureRegion) punchAnimation.getKeyFrame(deltaHit, true);
     }
-    
-    public State getState() {
+
+    public State getState()
+    {
         if (controller.isHitting() && !isHitting)
         {
             isHitting = true;
             deltaHit = 0;
         }
-        
+
         if (isHitting)
         {
             return State.HITTING;
-        }
+        } 
         else if (body.getLinearVelocity().y >= 0.02f)
         {
             return State.JUMPING;
@@ -186,23 +189,25 @@ public class Player extends Sprite implements Actor
         else if (body.getLinearVelocity().x >= 1 && controller.isRight())
         {
             return State.WALKING_RIGHT;
-        }
+        } 
         else if (body.getLinearVelocity().x <= -1 && controller.isLeft())
         {
             return State.WALKING_LEFT;
         } 
-        else 
+        else
         {
             return State.STANDING;
         }
     }
-    
-    public TextureRegion getFrame(float delta){
+
+    public TextureRegion getFrame(float delta)
+    {
         TextureRegion frame = walkFrames.get(3);
-        deltaFrame +=delta;
-        
+        deltaFrame += delta;
+
         if (null != currentState)
-            switch (currentState) 
+        {
+            switch (currentState)
             {
                 case JUMPING:
                 case FALLING:
@@ -215,7 +220,7 @@ public class Player extends Sprite implements Actor
                     if (previousState == Constant.State.WALKING_LEFT)
                     {
                         invertAnimation();
-                    }   
+                    }
                     previousState = Constant.State.WALKING_RIGHT;
                     frame = (TextureRegion) walkAnimation.getKeyFrame(deltaFrame, true);
                     break;
@@ -223,26 +228,27 @@ public class Player extends Sprite implements Actor
                     if (previousState == Constant.State.WALKING_RIGHT)
                     {
                         invertAnimation();
-                    }   
+                    }
                     previousState = Constant.State.WALKING_LEFT;
                     frame = (TextureRegion) walkAnimation.getKeyFrame(deltaFrame, true);
                     break;
             }
-        
+        }
+
         return frame;
     }
 
-    public void setIsJumping(boolean isJumping) {
+    public void setIsJumping(boolean isJumping)
+    {
         this.isJumping = isJumping;
     }
-    
+
     //</editor-fold>
-    
     @Override
     public void act(float delta)
     {
         currentState = getState();
-        
+
         if (currentState == State.FALLING || currentState == State.JUMPING)
         {
             body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
@@ -259,22 +265,23 @@ public class Player extends Sprite implements Actor
         else if (controller.isLeft())
         {
             walk(-1);
-        }
+        } 
         else
         {
             if (body.getLinearVelocity().x < 0)
             {
                 body.applyForceToCenter(8, 0, true);
-            } else if (body.getLinearVelocity().x > 0)
+            } 
+            else if (body.getLinearVelocity().x > 0)
             {
                 body.applyForceToCenter(-8, 0, true);
             }
         }
-        
+
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
     }
-    
+
     private void jump()
     {
         if (!(currentState == State.FALLING || currentState == State.JUMPING))
@@ -301,7 +308,7 @@ public class Player extends Sprite implements Actor
         {
             frame.flip(true, false);
         }
-        
+
         for (TextureRegion frame : punchFrames)
         {
             frame.flip(true, false);

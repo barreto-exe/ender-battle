@@ -14,7 +14,7 @@ public class MainGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new GameScreen(this, "bioma1.tmx", "caminar"));          //MOSTRANDO LA PANTALLA DE JUEGO
+        setScreen(new GameScreen(this, "bioma1.tmx", "normal"));          //MOSTRANDO LA PANTALLA DE JUEGO
     }  
 
     @Override
