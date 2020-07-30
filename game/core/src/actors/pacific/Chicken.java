@@ -27,7 +27,7 @@ public class Chicken extends PacificMob
         super(screen.getWorld(), screen.getAtlas().findRegion("chicken"), 1.2f);
         
         //Colocar posición
-        setBounds(0, 0, 128 / 3 / Constant.PPM, 32 / Constant.PPM);
+        setBounds(0, 0, 96 / 3 / Constant.PPM, 25 / Constant.PPM);
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
@@ -63,7 +63,7 @@ public class Chicken extends PacificMob
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion texture = screen.getAtlas().findRegion("chicken");
-        TextureRegion[][] region = texture.split(128 / 3, 32);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
+        TextureRegion[][] region = texture.split(96 / 3, 25);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new Array<>();
 
         //APLANANDO ARREGLO DE TEXTURES

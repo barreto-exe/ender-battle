@@ -40,11 +40,15 @@ public class Player extends Sprite implements Actor
     private State previousState;
     private State currentState;
     private boolean isJumping;
+    private boolean isHitting;
     
     //Atributos de Textura
-    private Array<TextureRegion> frames;
-    private Animation animation;
-    private float duration;
+    private Array<TextureRegion> walkFrames;
+    private Array<TextureRegion> punchFrames;
+    private Animation walkAnimation;
+    private Animation punchAnimation;
+    private float deltaFrame;
+    private float deltaHit;
     //</editor-fold>
 
     /**
@@ -60,28 +64,44 @@ public class Player extends Sprite implements Actor
         world = screen.getWorld();
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
-        TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
-        TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
-        frames = new Array<>();
-        //int i = 0;
+        TextureRegion spriteSheet = screen.getAtlas().findRegion(color);
+        TextureRegion[][] region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
+        walkFrames = new Array<>();
 
         //APLANANDO ARREGLO DE TEXTURES
         for (TextureRegion[] regionF : region)
         {
             for (TextureRegion regionC : regionF)
             {
-                frames.add(regionC);
+                walkFrames.add(regionC);
             }
         }
        
-        animation = new Animation(0.15f, frames);
+        walkAnimation = new Animation(0.15f, walkFrames);
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Golpear"">
+        spriteSheet = screen.getAtlas().findRegion("golpear");
+        region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
+        punchFrames = new Array<>();
+        
+        //APLANANDO ARREGLO DE TEXTURES
+        for (TextureRegion[] regionF : region)
+        {
+            for (TextureRegion regionC : regionF)
+            {
+                punchFrames.add(regionC);
+            }
+        }
+        
+        punchAnimation = new Animation(0.08f, punchFrames);
         //</editor-fold>
 
         //Colocar posición
         setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
         
         //Colocar frame en reposo
-        setRegion(frames.get(3));
+        setRegion(walkFrames.get(3));
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
@@ -117,10 +137,9 @@ public class Player extends Sprite implements Actor
         //</editor-fold>
 
         
-        isJumping = false;
+        isJumping = isHitting = false;
         previousState = State.WALKING_RIGHT;
-        duration = 0;
-        toquesSuelo = 0;
+        deltaFrame = 0;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -134,18 +153,35 @@ public class Player extends Sprite implements Actor
         return controller;
     }
     
+    public TextureRegion getHitFrame(float delta){
+        deltaHit += delta;
+        
+        if (deltaHit > (0.08f * 4))
+        {
+            isHitting = false;
+        }
+        
+        return (TextureRegion) punchAnimation.getKeyFrame(deltaHit, true);
+    }
+    
     public State getState() {
-        if (body.getLinearVelocity().y >= 0.02f)
+        if (controller.isHitting() && !isHitting)
+        {
+            isHitting = true;
+            deltaHit = 0;
+        }
+        
+        if (isHitting)
+        {
+            return State.HITTING;
+        }
+        else if (body.getLinearVelocity().y >= 0.02f)
         {
             return State.JUMPING;
         }
         else if (body.getLinearVelocity().y <= -0.02f)
         {
             return State.FALLING;
-        }
-        else if (controller.isHitting())
-        {
-            return State.HITTING;
         }
         else if (body.getLinearVelocity().x >= 1 && controller.isRight())
         {
@@ -162,17 +198,18 @@ public class Player extends Sprite implements Actor
     }
     
     public TextureRegion getFrame(float delta){
-        TextureRegion frame = frames.get(3);
-        duration +=delta;
+        TextureRegion frame = walkFrames.get(3);
+        deltaFrame +=delta;
         
         if (null != currentState)
             switch (currentState) 
             {
                 case JUMPING:
                 case FALLING:
-                    frame = frames.get(0);
+                    frame = walkFrames.get(0);
                     break;
                 case HITTING:
+                    frame = getHitFrame(delta);
                     break;
                 case WALKING_RIGHT:
                     if (previousState == Constant.State.WALKING_LEFT)
@@ -180,7 +217,7 @@ public class Player extends Sprite implements Actor
                         invertAnimation();
                     }   
                     previousState = Constant.State.WALKING_RIGHT;
-                    frame = (TextureRegion) animation.getKeyFrame(duration, true);
+                    frame = (TextureRegion) walkAnimation.getKeyFrame(deltaFrame, true);
                     break;
                 case WALKING_LEFT:
                     if (previousState == Constant.State.WALKING_RIGHT)
@@ -188,7 +225,7 @@ public class Player extends Sprite implements Actor
                         invertAnimation();
                     }   
                     previousState = Constant.State.WALKING_LEFT;
-                    frame = (TextureRegion) animation.getKeyFrame(duration, true);
+                    frame = (TextureRegion) walkAnimation.getKeyFrame(deltaFrame, true);
                     break;
             }
         
@@ -260,7 +297,12 @@ public class Player extends Sprite implements Actor
 
     public void invertAnimation()
     {
-        for (TextureRegion frame : frames)
+        for (TextureRegion frame : walkFrames)
+        {
+            frame.flip(true, false);
+        }
+        
+        for (TextureRegion frame : punchFrames)
         {
             frame.flip(true, false);
         }
