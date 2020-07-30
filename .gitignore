@@ -147,3 +147,5 @@ Thumbs.db
 biomas/core/build/
 
 biomas/.nb-gradle/
+
+game/.nb-gradle/
