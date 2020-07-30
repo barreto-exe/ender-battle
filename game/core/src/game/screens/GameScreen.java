@@ -54,12 +54,12 @@ public class GameScreen extends BaseScreen
      * Es la pantalla del juego principal.
      * @param game instancia del juego GDX.
      * @param biome es el identificador del bioma en la que se encuentra el jugador.
-     * @param color nombre del color de personaje elegido por el jugador.
+     * @param player es el jugador que se encuentra en el bioma
      */
-    public GameScreen(MainGame game, String biome, String color)
+    public GameScreen(MainGame game, String biome, Player player)
     {
         super(game);
-        this.color = color;
+        this.player = player;
         
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
@@ -77,6 +77,8 @@ public class GameScreen extends BaseScreen
 
         BiomeAssembler(this);
         //</editor-fold>
+        
+        this.player.create(this);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -95,7 +97,6 @@ public class GameScreen extends BaseScreen
     public void show()
     {
         //Instanciar actores del mundo
-        player = new Player(this, 2, 2, color);
         chicken = new Chicken(this, 14, 4);
 
         //Añadir actores al grupo

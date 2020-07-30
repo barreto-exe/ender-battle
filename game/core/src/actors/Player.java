@@ -50,19 +50,27 @@ public class Player extends Sprite implements Actor
     private Animation punchAnimation;
     private float deltaFrame;
     private float deltaHit;
+    
+    //Atributos de Información
+    private String color;
     //</editor-fold>
 
     /**
-     * Objeto que controla y dibuja al protagonista del juego en pantalla.
+     * Instaciando al player con el color de ropa.
+     *
+     * @param color representa el ropa elegido por el jugador antes de iniciar partida.
+     */    
+    public Player(String color) {
+        this.color = color;
+    }
+    
+    /**
+     * Método que controla y dibuja al protagonista del juego en pantalla.
      *
      * @param screen la pantalla en la que se está mostrando el jugador.
-     * @param x posición horizontal de inicio.
-     * @param y posición vertial de inicio.
-     * @param color representa el sprite elegido por el jugador.
-     */
-    public Player(GameScreen screen, int x, int y, String color)
-    {
-        super(screen.getAtlas().findRegion(color+"_caminar"));
+     */ 
+    public void create(GameScreen screen){
+        setRegion(screen.getAtlas().findRegion(color+"_caminar"));
         world = screen.getWorld();
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
@@ -107,7 +115,7 @@ public class Player extends Sprite implements Actor
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
+        bodyD.position.set(3, 2);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
         //</editor-fold>
@@ -142,7 +150,7 @@ public class Player extends Sprite implements Actor
         previousState = State.WALKING_RIGHT;
         deltaFrame = 0;
     }
-
+    
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Body getBody()
     {
@@ -242,8 +250,8 @@ public class Player extends Sprite implements Actor
     {
         this.isJumping = isJumping;
     }
-
     //</editor-fold>
+    
     @Override
     public void act(float delta)
     {
