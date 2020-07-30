@@ -6,7 +6,6 @@
 package tools;
 
 /**
- *
  * @author Karen
  */
 public class VirtualController

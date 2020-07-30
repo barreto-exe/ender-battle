@@ -116,9 +116,11 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
+        
         isJumping = false;
         previousState = State.WALKING_RIGHT;
         duration = 0;
+        toquesSuelo = 0;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">

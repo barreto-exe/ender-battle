@@ -14,11 +14,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import game.MainGame;
 import actors.pacific.Chicken;
 import actors.Player;
 import actors.groups.Group;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
@@ -32,7 +32,7 @@ public class GameScreen extends BaseScreen
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de la cámara
     private OrthographicCamera gameCam;
-    private FitViewport viewport;
+    private FillViewport viewport;
     
     //Atributos de objetos del bioma
     private TmxMapLoader mapLoader;
@@ -63,7 +63,7 @@ public class GameScreen extends BaseScreen
         
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
-        viewport = new FitViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
+        viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         //</editor-fold>
         
