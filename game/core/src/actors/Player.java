@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import tools.Constant;
 import tools.Constant.*;
@@ -41,7 +42,7 @@ public class Player extends Sprite implements Actor
     private boolean isJumping;
     
     //Atributos de Textura
-    private TextureRegion[] frames;
+    private Array<TextureRegion> frames;
     private Animation animation;
     private float duration;
     //</editor-fold>
@@ -58,21 +59,21 @@ public class Player extends Sprite implements Actor
         super(screen.getAtlas().findRegion(color));
         world = screen.getWorld();
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
         TextureRegion sheetPlayer = screen.getAtlas().findRegion(color);
         TextureRegion[][] region = sheetPlayer.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
-        frames = new TextureRegion[region.length * region[0].length];
-        int index = 0;
+        frames = new Array<>();
+        //int i = 0;
 
         //APLANANDO ARREGLO DE TEXTURES
-        /*lo hice de esta forma porque pienso estructurar los sprites de una manera no lineal*/
-        for (int i = 0; i < region.length; i++)
+        for (TextureRegion[] regionF : region)
         {
-            for (int j = 0; j < region[i].length; j++)
+            for (TextureRegion regionC : regionF)
             {
-                frames[index++] = region[i][j];
+                frames.add(regionC);
             }
         }
+       
         animation = new Animation(0.15f, frames);
         //</editor-fold>
 
@@ -80,7 +81,7 @@ public class Player extends Sprite implements Actor
         setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
         
         //Colocar frame en reposo
-        setRegion(frames[3]);
+        setRegion(frames.get(3));
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
@@ -159,7 +160,7 @@ public class Player extends Sprite implements Actor
     }
     
     public TextureRegion getFrame(float delta){
-        TextureRegion frame = frames[3];
+        TextureRegion frame = frames.get(3);
         duration +=delta;
         
         if (null != currentState)
@@ -167,7 +168,7 @@ public class Player extends Sprite implements Actor
             {
                 case JUMPING:
                 case FALLING:
-                    frame = frames[0];
+                    frame = frames.get(0);
                     break;
                 case HITTING:
                     break;
@@ -257,9 +258,9 @@ public class Player extends Sprite implements Actor
 
     public void invertAnimation()
     {
-        for (int i = 0; i < frames.length; i++)
+        for (TextureRegion frame : frames)
         {
-            frames[i].flip(true, false);  //Haciendo flip a cada frame
+            frame.flip(true, false);
         }
     }
 }

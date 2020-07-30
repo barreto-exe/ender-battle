@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import tools.Constant;
 
@@ -63,14 +64,17 @@ public class Chicken extends PacificMob
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion texture = screen.getAtlas().findRegion("chicken");
         TextureRegion[][] region = texture.split(128 / 3, 32);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
-        frames = new TextureRegion[3];  //CREANDO ARREGLO DE UNA DIMENSIÓN
-        int index = 0;
+        frames = new Array<>();
 
         //APLANANDO ARREGLO DE TEXTURES
-        for (int i = 0; i < 3; i++)
+        for (TextureRegion[] regionF : region)
         {
-            frames[index++] = region[0][i];
+            for (TextureRegion regionC : regionF)
+            {
+                frames.add(regionC);
+            }
         }
+        
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR
                 
         //</editor-fold>

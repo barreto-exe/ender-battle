@@ -8,6 +8,7 @@ package actors.pacific;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -17,7 +18,7 @@ public abstract class PacificMob extends Mob
 {
     protected int cantAlimento;
     protected float duration;
-    protected TextureRegion[] frames;
+    protected Array<TextureRegion> frames;
     protected Animation animation;
     protected float speed;
 
@@ -31,9 +32,9 @@ public abstract class PacificMob extends Mob
     public void changeDirection(){
         speed = speed * -1;
         
-        for (int i = 0; i < 3; i++)
+        for (TextureRegion frame : frames)
         {
-            frames[i].flip(true, false);  //Haciendo flip a cada frame
+            frame.flip(true, false);
         }
     }
 }
