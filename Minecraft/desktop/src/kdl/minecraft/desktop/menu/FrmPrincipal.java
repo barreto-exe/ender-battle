@@ -813,7 +813,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
         Sonido.Click();
         //Cambiar IP de la base de datos
-        DBOperacion.BASE_DATOS = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.BASE_DATOS);
+        DBOperacion.SERVIDOR = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
 
     private void lblFlechaDerechaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaDerechaMouseClicked
@@ -1106,7 +1106,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
             try
             {
                 //Enviar solicitud al server
-                Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+                Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(paquete);
                 recibirRespuestaServer(socket, this);
@@ -1146,7 +1146,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
             try
             {
                 //Enviar solicitud al server
-                Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+                Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(paquete);
                 recibirRespuestaServer(socket, this);
@@ -1194,7 +1194,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             recibirRespuestaServer(socket, this);
@@ -1227,7 +1227,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             
@@ -1287,7 +1287,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             recibirRespuestaServer(socket, this);
@@ -1310,7 +1310,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             recibirRespuestaServer(socket, this);
@@ -1333,7 +1333,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         try
         {
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             socket.close();

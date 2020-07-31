@@ -10,8 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kdl.minecraft.basedatos.DBMatriz;
 import kdl.minecraft.basedatos.DBOperacion;
 import kdl.minecraft.basedatos.DBUsuario;
