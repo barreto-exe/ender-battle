@@ -24,7 +24,7 @@ public class Chicken extends PacificMob
 
     public Chicken(GameScreen screen, int x, int y)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("chicken"), 1.2f);
+        super(screen.getWorld(), screen.getAtlas().findRegion("chicken"), 1.2f, 5);
         
         //Colocar posición
         setBounds(0, 0, 96 / 3 / Constant.PPM, 25 / Constant.PPM);

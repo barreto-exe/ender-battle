@@ -37,6 +37,7 @@ public class Protection extends BattleObject{
                 protection = 2f;
                 return true;
             default:
+                protection = 0;
                 return false;
         }
     }

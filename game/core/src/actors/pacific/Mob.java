@@ -17,12 +17,29 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public abstract class Mob extends Sprite implements Actor
 {
+    //Atributos de Box2D
     protected World world;
     protected Body body;
+    
+    //Atributos de propiedades del MOB
+    protected float life;
+    
 
-    public Mob(World world, TextureRegion region)
+    public Mob(World world, TextureRegion region, float life)
     {
         super(region);
         this.world = world;
+        this.life = life;
+    }
+    
+    public void toRecibeAttack(float hit)
+    {
+        life -= hit;
+        
+        if (life < 0)
+        {
+            life = 0;
+            System.out.println("el mob ha muerto");
+        }
     }
 }

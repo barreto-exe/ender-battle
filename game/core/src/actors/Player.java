@@ -6,6 +6,7 @@
 package actors;
 
 import actors.groups.Actor;
+import actors.pacific.Mob;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
+import inventario.BattleObject;
 import inventario.Inventory;
 import tools.Constant;
 import tools.Constant.*;
@@ -57,6 +59,7 @@ public class Player extends Sprite implements Actor
     
     //Atributos inventario
     private Inventory inventory;
+    private BattleObject[] portedObjects;
     //</editor-fold>
 
     /**
@@ -65,8 +68,16 @@ public class Player extends Sprite implements Actor
      * @param color representa el ropa elegido por el jugador antes de iniciar partida.
      */    
     public Player(String color) {
+        //informacion del jugador
         this.color = color;
+        
+        //instanciando inventario vacío
         inventory = new Inventory();
+        portedObjects = new BattleObject[5];
+        for (int i = 0; i < 5; i++)
+        {
+            portedObjects[i] = null;
+        }
     }
     
     /**
@@ -330,5 +341,56 @@ public class Player extends Sprite implements Actor
         {
             frame.flip(true, false);
         }
+    }
+    
+    public void portarObjeto(BattleObject object)
+    {
+        int index = 0;
+        
+        switch (object.getDescription()){
+            case ("espada"):
+            case ("hacha"):
+            case ("pico"):
+            case ("pala"):
+                index = 0;
+                break;
+            case ("casco"):
+                index = 1;
+                break;
+            case ("pecho"):
+                index = 2;
+                break;
+            case ("pantalon"):
+                index = 3;
+                break;
+            case ("botas"):
+                index = 4;
+                break;
+        }
+        
+        if (portedObjects[index] != null)
+        {
+            portedObjects[index].setIsPorted(false);
+        }
+        
+        object.setIsPorted(true);
+        portedObjects[index] = object;
+    }
+    
+    public float calculateDamage()
+    {
+        if (portedObjects[0] != null)
+        {
+            return portedObjects[0].getFactorObject();
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    
+    public void toHurt(Mob mob)
+    {
+        mob.toRecibeAttack(calculateDamage());
     }
 }

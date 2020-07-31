@@ -41,6 +41,10 @@ public abstract class BattleObject {
     public Material getMaterial() {
         return material;
     }
+
+    public float getFactorObject() {
+        return factorObject;
+    }
     
     protected abstract boolean setBattleObject(String object);
     

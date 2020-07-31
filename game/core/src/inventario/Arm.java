@@ -37,6 +37,7 @@ public class Arm extends BattleObject{
                 attack = 2f;
                 return true;
             default:
+                attack = 0;
                 return false;
         }
     }

@@ -22,9 +22,9 @@ public abstract class PacificMob extends Mob
     protected Animation animation;
     protected float speed;
 
-    public PacificMob(World world, TextureRegion region, float speed)
+    public PacificMob(World world, TextureRegion region, float speed, float life)
     {
-        super(world, region);
+        super(world, region, life);
         duration = 0;
         this.speed = speed;
     }
