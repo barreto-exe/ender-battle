@@ -262,4 +262,9 @@ public final class DBUsuario implements Serializable
         }
         return null;
     }
+
+    public boolean equals(DBUsuario obj)
+    {
+        return this.usuario.equals(obj.usuario);
+    }
 }

@@ -26,7 +26,7 @@ import kdl.minecraft.comunicacion.PaqueteResultado;
  *
  * @author luisb
  */
-public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
+public final class FrmPrincipal extends javax.swing.JFrame
 {
 
     public static final int ALTURA_VENTANA = 500;
@@ -821,7 +821,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 Socket socket = new Socket(DBOperacion.BASE_DATOS, 27015);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(paquete);
-                socket.close();
+                //socket.close();
+                recibirRespuestaServer(socket);
 
                 btnAceptarRegistro.setEnabled(false);
                 btnVolver1.setEnabled(false);
@@ -992,178 +993,197 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
         actualizarPartidasActivas();
     }//GEN-LAST:event_btnActualizarPartidasActionPerformed
 
-    @Override
-    public void run()
+    public void recibirRespuestaServer(final Socket socket)
     {
-        System.out.println("Esperando...");
-
-        try
+        new Thread(new Runnable()
         {
-            //Esperar posibles respuestas del servidor
-            ServerSocket recibir = new ServerSocket(27016);
-            while (true)
+            @Override
+            public void run()
             {
-                Socket socket = recibir.accept();
-                ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
-                PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
+                System.out.println("Esperando...");
 
-                //Habilitar botones de nuevo
-                new Thread(new Runnable()
+                try
                 {
-                    @Override
-                    public void run()
+                    //Esperar posibles respuestas del servidor
+                    //ServerSocket recibir = new ServerSocket(27016);
+
+                    //Socket socket = recibir.accept();
+                    ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
+                    PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
+
+                    //Habilitar botones de nuevo
+                    new Thread(new Runnable()
                     {
-                        btnAceptarRegistro.setEnabled(true);
-                        btnVolver1.setEnabled(true);
-
-                        btnAceptarInicio.setEnabled(true);
-                        btnVolver.setEnabled(true);
-                    }
-                }).start();
-
-                if (resultado.getResultado() == ResultadoOperacion.ERROR)
-                {
-                    JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
-                    btnVolver.doClick();
-                } 
-
-                //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
-                //Resultados de registro
-                else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
-                {
-                    JOptionPane.showMessageDialog(null, "Correo no disponible.");
-                } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
-                {
-                    JOptionPane.showMessageDialog(null, "Usuario no disponible.");
-                } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
-                {
-                    JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
-                    btnVolver.doClick();
-                } //</editor-fold>  
-                
-                //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
-                //Resultados de inicio de sesión
-                else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
-                {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                } 
-                else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
-                {
-                    mostrarPanel(panelPartida);
-                    limpiarTextBoxes();
-                    lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
-                    
-                    usuarioLogueado.setId((int)resultado.getInformacion());
-                    actualizarPartidasActivas();
-                }
-                //</editor-fold>
-                
-                //<editor-fold defaultstate="collapsed" desc="Resultados de Crear Partida">
-                //Resultados de crear partida
-                else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_CREADA)
-                {
-                    //JOptionPane.showMessageDialog(null, "Partida creada.");
-                    partida.setId((int)resultado.getInformacion());
-                    entrarPartida(partida.getId());
-
-                    //Bloquear paneles y permanecer en el LOBBY
-                    this.jtPartidas.setEnabledAt(2, true);
-                    this.jtPartidas.setSelectedIndex(2);
-                    this.jtPartidas.setEnabledAt(0, false);
-                    this.jtPartidas.setEnabledAt(1, false);
-                } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
-                {
-                    JOptionPane.showMessageDialog(null, "Ya existe una partida con el mismo nombre.");
-
-                    //Rehabilitar selección de partida y personaje
-                    this.btnCrearPartida.setEnabled(true);
-                    this.lblFlechaDerecha.setVisible(true);
-                    this.lblFlechaIzquierda.setVisible(true);
-                } //</editor-fold>
-                
-                //<editor-fold defaultstate="collapsed" desc="Resultados de Unirse a Partida">
-                //Resultados de unirse a partida
-                else if (resultado.getResultado() == ResultadoOperacion.UNIDO_EXITOSAMENTE)
-                {
-                    //JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
-
-                    //Bloquear paneles y permanecer en el LOBBY
-                    this.jtPartidas.setSelectedIndex(2);
-                    this.jtPartidas.setEnabledAt(0, false);
-                    this.jtPartidas.setEnabledAt(1, false);
-
-                    partida.setId(usuarioLogueado.getPartida());
-                    this.lblNombrePartida.setText(partida.getNombre());
-                        
-                    actualizarUsuariosPartida();
-                } 
-                else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
-                {
-                    JOptionPane.showMessageDialog(null, "La partida a la que te quieres unir está llena o en curso.");
-
-                    //Rehabilitar selección de partida y personaje
-                    this.jtPartidas.setEnabledAt(0, true);
-                    this.jtPartidas.setEnabledAt(1, true);
-                    this.jtPartidas.setEnabledAt(2, false);
-                    this.jtPartidas.setSelectedIndex(1);
-                    
-                    this.lblFlechaDerecha.setVisible(true);
-                    this.lblFlechaIzquierda.setVisible(true);
-                } 
-                //</editor-fold>
-                
-                //Resultados de pedir usuarios partida
-                else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
-                {
-                    ((DefaultTableModel)this.jtJugadores.getModel()).setRowCount(0);
-                    
-                    ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
-                    DefaultTableModel tabla = (DefaultTableModel) jtJugadores.getModel();
-                    
-                    for(DBUsuario usuario : usuarios)
-                    {
-                        tabla.addRow(new Object[]{
-                            usuario.getUsuario(),
-                            usuario.getPersonajeSeleccionado(),
-                            usuario.getIp()
-                        });
-                    }
-                } 
-
-                //Resultados de pedir partidas activas
-                else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
-                {
-                    ((DefaultTableModel)this.jtPartidasActivas.getModel()).setRowCount(0);
-                    
-                    ArrayList<DBPartida> partidas = (ArrayList<DBPartida>) resultado.getInformacion();
-                    DefaultTableModel tabla = (DefaultTableModel) jtPartidasActivas.getModel();
-
-                    for (DBPartida partida : partidas)
-                    {
-                        tabla.addRow(new Object[]
+                        @Override
+                        public void run()
                         {
-                            partida.getId(),
-                            partida.getNombre(),
-                            partida.getDescripcion(),
-                            partida.getEstado().toString(),
-                            partida.getCantidadJugadores(),
-                            partida.getLimiteJugadores(),
-                        });
+                            btnAceptarRegistro.setEnabled(true);
+                            btnVolver1.setEnabled(true);
+
+                            btnAceptarInicio.setEnabled(true);
+                            btnVolver.setEnabled(true);
+                        }
+                    }).start();
+
+                    if (resultado.getResultado() == ResultadoOperacion.ERROR)
+                    {
+                        JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
+                        btnVolver.doClick();                       
+                    } 
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
+                    //Resultados de registro
+                    else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
+                    {
+                        JOptionPane.showMessageDialog(null, "Correo no disponible.");
+                    } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
+                    {
+                        JOptionPane.showMessageDialog(null, "Usuario no disponible.");
+                    } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
+                    {
+                        JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
+                        btnVolver.doClick();
+                    } //</editor-fold>  
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
+                    //Resultados de inicio de sesión
+                    else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
+                    {
+                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+                    } 
+                    else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
+                    {
+                        mostrarPanel(panelPartida);
+                        limpiarTextBoxes();
+                        lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
+
+                        usuarioLogueado.setId((int)resultado.getInformacion());
+                        actualizarPartidasActivas();
                     }
-                }
-                
-                else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
+                    //</editor-fold>
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de Crear Partida">
+                    //Resultados de crear partida
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_CREADA)
+                    {
+                        //JOptionPane.showMessageDialog(null, "Partida creada.");
+                        partida.setId((int)resultado.getInformacion());
+                        entrarPartida(partida.getId());
+
+                        //Bloquear paneles y permanecer en el LOBBY
+                        jtPartidas.setEnabledAt(2, true);
+                        jtPartidas.setSelectedIndex(2);
+                        jtPartidas.setEnabledAt(0, false);
+                        jtPartidas.setEnabledAt(1, false);
+                    } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
+                    {
+                        JOptionPane.showMessageDialog(null, "Ya existe una partida con el mismo nombre.");
+
+                        //Rehabilitar selección de partida y personaje
+                        btnCrearPartida.setEnabled(true);
+                        lblFlechaDerecha.setVisible(true);
+                        lblFlechaIzquierda.setVisible(true);
+                    } //</editor-fold>
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de Unirse a Partida">
+                    //Resultados de unirse a partida
+                    else if (resultado.getResultado() == ResultadoOperacion.UNIDO_EXITOSAMENTE)
+                    {
+                        //JOptionPane.showMessageDialog(null, "Unido exitosamente a la partida.");
+
+                        //Bloquear paneles y permanecer en el LOBBY
+                        jtPartidas.setSelectedIndex(2);
+                        jtPartidas.setEnabledAt(0, false);
+                        jtPartidas.setEnabledAt(1, false);
+
+                        partida.setId(usuarioLogueado.getPartida());
+                        lblNombrePartida.setText(partida.getNombre());
+
+                        actualizarUsuariosPartida();
+                    } 
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
+                    {
+                        JOptionPane.showMessageDialog(null, "La partida a la que te quieres unir está llena o en curso.");
+
+                        //Rehabilitar selección de partida y personaje
+                        jtPartidas.setEnabledAt(0, true);
+                        jtPartidas.setEnabledAt(1, true);
+                        jtPartidas.setEnabledAt(2, false);
+                        jtPartidas.setSelectedIndex(1);
+
+                        lblFlechaDerecha.setVisible(true);
+                        lblFlechaIzquierda.setVisible(true);
+                    } 
+                    //</editor-fold>
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de Pedir Usuarios Partida">
+                    else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
+                    {
+                        ((DefaultTableModel)jtJugadores.getModel()).setRowCount(0);
+
+                        ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
+                        DefaultTableModel tabla = (DefaultTableModel) jtJugadores.getModel();
+
+                        int cantJugadores = 0;
+                        for(DBUsuario usuario : usuarios)
+                        {
+                            cantJugadores++;
+
+                            tabla.addRow(new Object[]{
+                                usuario.getUsuario(),
+                                usuario.getPersonajeSeleccionado(),
+                                usuario.getIp()
+                            });
+                        }
+
+                        //Verificar si hay más de un jugador y que el jugador sea el creador de la partida
+                        if(cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
+                        {
+                            btnComenzarPartida.setVisible(true);
+                        }
+                        else if(cantJugadores <= 1)
+                        {
+                            btnComenzarPartida.setVisible(false);
+                        }
+                    }
+                    //</editor-fold>
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de pedir partidas activas">
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
+                    {
+                        ((DefaultTableModel)jtPartidasActivas.getModel()).setRowCount(0);
+
+                        ArrayList<DBPartida> partidas = (ArrayList<DBPartida>) resultado.getInformacion();
+                        DefaultTableModel tabla = (DefaultTableModel) jtPartidasActivas.getModel();
+
+                        for (DBPartida partida : partidas)
+                        {
+                            tabla.addRow(new Object[]
+                            {
+                                partida.getId(),
+                                partida.getNombre(),
+                                partida.getDescripcion(),
+                                partida.getEstado().toString(),
+                                partida.getCantidadJugadores(),
+                                partida.getLimiteJugadores(),
+                            });
+                        }
+                    }
+                    //</editor-fold>
+
+                    else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
+                    {
+                        JOptionPane.showMessageDialog(null, "Has salido de la partida.");
+                    }
+                } catch (IOException | ClassNotFoundException ex)
                 {
-                    JOptionPane.showMessageDialog(null, "Has salido de la partida.");
+                    System.out.println(ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
-        } catch (IOException | ClassNotFoundException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
+        }).start();
     }
-
+    
     private static void entrarPartida(int idPartida)
     {
         //Asignar personaje elegido al usuario

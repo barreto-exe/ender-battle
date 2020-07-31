@@ -226,7 +226,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 
                 String ip = socket.getInetAddress().toString().replaceAll("/", "");
 
-                //Instrucciones si la solicitoud es de Registro/Inicio de sesión
+                //Si la solicitoud es de Registro/Inicio de sesión
                 //<editor-fold defaultstate="collapsed" desc="Registro/Inicio de sesión">
                 if (operacion == INICIAR_SESION || operacion == REGISTRAR)
                 {
@@ -292,7 +292,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
 
-                //Instrucciones si la solicitud es de crear partida
+                //Si la solicitud es de crear partida
                 //<editor-fold defaultstate="collapsed" desc="Crear Partida">
                 if (operacion == CREAR_PARTIDA)
                 {
@@ -318,7 +318,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //Instrucciones si la solicitud es de unirse a partida
+                //Si la solicitud es de unirse a partida
                 //<editor-fold defaultstate="collapsed" desc="Unirse a partida">
                 if(operacion == UNIRSE_PARTIDA)
                 {
@@ -343,31 +343,34 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
+                //Si el usuario se salió de la partida
+                //<editor-fold defaultstate="collapsed" desc="Salir de Partida">
                 if(operacion == SALIR_PARTIDA)
                 {
                     DBUsuario usuario = (DBUsuario) paquete.getInformacion();
-                    
-                    String add = 
+
+                    String add =
                             "Nombre: "     + usuario.getUsuario()  + "\n" +
                             "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
                             "Partida: "    + usuario.getPartida() + "\n";
-                    
+
                     txtPartidas.append(add + "Salir de partida \n\n");
-                    
+
                     resultado.setResultado(SALIR_PARTIDA_EXITOSO);
                     DBPartida.sacarJugador(usuario);
                 }
+                //</editor-fold>
                 
-                //Instrucciones si se pide enviar la lista de jugadores de la sala a todos
-                //los usuarios
+                //Si se pide enviar la lista de jugadores de la sala a todos los usuarios
+                //<editor-fold defaultstate="collapsed" desc="Actualizar datos partida">
                 if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
                 {
                     int partida = ((DBPartida) paquete.getInformacion()).getId();
                     resultado.setResultado(USUARIOS_PARTIDA);
-                    
+
                     ArrayList<DBUsuario> usuarios = usuariosPartida(partida);
                     resultado.setInformacion(usuarios);
-                    
+
                     for(DBUsuario usuario : usuarios)
                     {
                         if(!usuario.getIp().equals(ip))
@@ -379,6 +382,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         }
                     }
                 }
+                //</editor-fold>
                 
                 if(operacion == PEDIR_PARTIDAS_ACTIVAS)
                 {
@@ -389,7 +393,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 
                 //**************************************************************
                 //Enviar respuesta al cliente
-                socket = new Socket(ip, 27016);
+                //socket = new Socket(ip, 27016);
                 ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
                 paqueteEnvio.writeObject(resultado);
             }
