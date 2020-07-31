@@ -1166,8 +1166,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
     private static void entrarPartida(int idPartida)
     {
-        //Deshabilitar botones de entrar partida
-
         //Asignar personaje elegido al usuario
         usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
 

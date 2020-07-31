@@ -395,7 +395,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
-            txtPrincipal.append(ex.getStackTrace().toString() + "\n");
+            txtPrincipal.append(ex.getMessage() + "\n" + ex.getLocalizedMessage() + "\n" );
             new Thread(this).start();
         }
     }
