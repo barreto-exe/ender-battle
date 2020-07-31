@@ -210,11 +210,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         try
         {
             ServerSocket servidor = new ServerSocket(27015);
+            boolean responderResultado;
             
             while (true)
             {
                 txtPrincipal.append("Esperando socket \n");
                 socket = servidor.accept();
+                responderResultado = true;
                 
                 ObjectInputStream input  = new ObjectInputStream(socket.getInputStream());
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
@@ -373,14 +375,14 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
                     for(DBUsuario usuario : usuarios)
                     {
-                        if(!usuario.getIp().equals(ip))
-                        {
-                            socket = new Socket(usuario.getIp(), 27016);
-                            ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                            paqueteEnvio.writeObject(resultado);
-                            socket.close();
-                        }
+                        txtPrincipal.append("User: " + usuario.getUsuario() +", "+ usuario.getIp() +"\n");
+                        socket = new Socket(usuario.getIp(), 27016);
+                        ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                        paqueteEnvio.writeObject(resultado);
+                        socket.close();
                     }
+                    
+                    responderResultado = false;
                 }
                 //</editor-fold>
                 
@@ -393,23 +395,23 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 
                 //**************************************************************
                 //Enviar respuesta al cliente
-                //socket = new Socket(ip, 27016);
-                ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                paqueteEnvio.writeObject(resultado);
+                if(responderResultado)
+                {
+                    ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                    paqueteEnvio.writeObject(resultado);
+                    socket.close();
+                }
             }
 
-        } catch (IOException | ClassNotFoundException ex)
+        } 
+        catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
             txtPrincipal.append(ex.getMessage() + "\n");
-        }
-        finally
-        {
             try
             {
                 socket.close();
-            } 
-            catch (IOException ex)
+            } catch (IOException ex1)
             {
                 System.out.println(ex.getMessage());
                 txtPrincipal.append(ex.getMessage() + "\n");
