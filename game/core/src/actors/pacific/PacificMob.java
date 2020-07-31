@@ -37,4 +37,19 @@ public abstract class PacificMob extends Mob
             frame.flip(true, false);
         }
     }
+    
+    @Override
+    public void act(float delta)
+    {
+        body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        
+        if (body.getLinearVelocity().y < 0)
+        {
+            body.applyForceToCenter(0, -10, true);
+        }
+        
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        duration += delta;
+        setRegion((TextureRegion) animation.getKeyFrame(duration, true));
+    }
 }

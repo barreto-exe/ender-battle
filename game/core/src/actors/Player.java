@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
+import inventario.Inventory;
 import tools.Constant;
 import tools.Constant.*;
 import tools.HandleInput;
@@ -52,7 +53,10 @@ public class Player extends Sprite implements Actor
     private float deltaHit;
     
     //Atributos de Información
-    private String color;
+    private final String color;
+    
+    //Atributos inventario
+    private Inventory inventory;
     //</editor-fold>
 
     /**
@@ -62,6 +66,7 @@ public class Player extends Sprite implements Actor
      */    
     public Player(String color) {
         this.color = color;
+        inventory = new Inventory();
     }
     
     /**
@@ -157,6 +162,10 @@ public class Player extends Sprite implements Actor
         return body;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+    
     public VirtualController getController()
     {
         return controller;
