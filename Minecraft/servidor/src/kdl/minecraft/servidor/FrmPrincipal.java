@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kdl.minecraft.basedatos.DBMatriz;
 import kdl.minecraft.basedatos.DBOperacion;
 import kdl.minecraft.basedatos.DBUsuario;
@@ -203,15 +205,16 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
     public void run()
     {
         System.out.println("Corriendo hilo server");
+        Socket socket = null;
 
         try
         {
             ServerSocket servidor = new ServerSocket(27015);
-
+            
             while (true)
             {
                 txtPrincipal.append("Esperando socket \n");
-                Socket socket = servidor.accept();
+                socket = servidor.accept();
                 
                 ObjectInputStream input  = new ObjectInputStream(socket.getInputStream());
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
@@ -389,13 +392,24 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 socket = new Socket(ip, 27016);
                 ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
                 paqueteEnvio.writeObject(resultado);
-                socket.close();
             }
 
         } catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
-            txtPrincipal.append(ex.getMessage() + "\n" + ex.getLocalizedMessage() + "\n" );
+            txtPrincipal.append(ex.getMessage() + "\n");
+        }
+        finally
+        {
+            try
+            {
+                socket.close();
+            } 
+            catch (IOException ex)
+            {
+                System.out.println(ex.getMessage());
+                txtPrincipal.append(ex.getMessage() + "\n");
+            }
             new Thread(this).start();
         }
     }
