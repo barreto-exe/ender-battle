@@ -149,3 +149,5 @@ biomas/core/build/
 biomas/.nb-gradle/
 
 game/.nb-gradle/
+
+Minecraft/core/assets/db.db

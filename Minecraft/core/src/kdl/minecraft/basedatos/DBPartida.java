@@ -250,20 +250,21 @@ public class DBPartida implements Serializable
      */
     public static void sacarJugador(DBUsuario usuario)
     {
-        //Elimino al jugador
-        String query = 
-                //Eliminar jugador
+        //Eliminar al jugador
+        String query =
                 "DELETE FROM m_partidas_jugadores WHERE "
                 + "id_jugador = ? AND "
-                + "id_partida = ?; "
-                //Eliminar partidas vacías
-                + "DELETE FROM m_partidas WHERE "
-                + "(SELECT COUNT(*) FROM m_partidas_jugadores j WHERE j.id_partida = m_partidas.id) = 0";
-        
+                + "id_partida = ?; ";
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(usuario.getId());
         operacion.pasarParametro(usuario.getPartida());
+        operacion.ejecutar();
         
+        //Eliminar partidas vacías
+        query =
+                "DELETE FROM m_partidas WHERE "
+                + "(SELECT COUNT(*) FROM m_partidas_jugadores j WHERE j.id_partida = m_partidas.id) = 0";
+        operacion = new DBOperacion(query);
         operacion.ejecutar();
     }
 }
