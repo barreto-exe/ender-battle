@@ -133,6 +133,41 @@ public final class DBUsuario implements Serializable
         this.ip = ip;
     }
     
+    public String getPersonajeSeleccionadoString()
+    {
+        switch(personajeSeleccionado)
+        {
+            case 0:
+            {
+                return "NORMAL";
+            }
+            case 1:
+            {
+                return "ROJO";
+            }
+            case 2:
+            {
+                return "VERDE";
+            }
+            case 3:
+            {
+                return "AMARILLO";
+            }
+            case 4:
+            {
+                return "MORADO";
+            }
+            case 5:
+            {
+                return "GRIS";
+            }
+            default:
+            {
+                return "";
+            }
+        }
+    }
+    
 
     /**
      * Consulta disponibilidad de correo.

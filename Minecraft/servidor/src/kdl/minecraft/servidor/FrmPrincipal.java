@@ -216,16 +216,16 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 socket = servidor.accept();
                 responderResultado = true;
                 
+                String ip = socket.getInetAddress().toString().replaceAll("/", "");
+                
                 ObjectInputStream input  = new ObjectInputStream(socket.getInputStream());
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
                 Operacion operacion = paquete.getTipo();
                 
-                txtPrincipal.append("Operacion: " + operacion.toString() + "\n\n");
+                txtPrincipal.append("Operacion: " + operacion.toString() + "|"+ ip +"\n\n");
                 
                 PaqueteResultado resultado = new PaqueteResultado(ResultadoOperacion.ERROR);
                 
-                String ip = socket.getInetAddress().toString().replaceAll("/", "");
-
                 //Si la solicitoud es de Registro/Inicio de sesión
                 //<editor-fold defaultstate="collapsed" desc="Registro/Inicio de sesión">
                 if (operacion == INICIAR_SESION || operacion == REGISTRAR)

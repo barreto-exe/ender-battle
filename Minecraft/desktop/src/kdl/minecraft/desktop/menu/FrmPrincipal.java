@@ -252,6 +252,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         txtPassIniciar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         panelIniciar.add(txtPassIniciar);
         txtPassIniciar.setBounds(260, 330, 320, 40);
+        txtPassIniciar.setNextFocusableComponent(btnAceptarInicio);
 
         btnAceptarInicio.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnAceptarInicio.setText("INICIAR");
@@ -331,6 +332,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         txtPassConfirmar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         panelRegistrarse.add(txtPassConfirmar);
         txtPassConfirmar.setBounds(260, 370, 320, 40);
+        txtPassConfirmar.setNextFocusableComponent(btnAceptarRegistro);
 
         btnAceptarRegistro.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnAceptarRegistro.setText("REGISTRARSE");
@@ -1023,7 +1025,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
 
                             tabla.addRow(new Object[]{
                                 usuario.getUsuario(),
-                                usuario.getPersonajeSeleccionado(),
+                                usuario.getPersonajeSeleccionadoString(),
                                 usuario.getIp()
                             });
                         }
