@@ -1010,7 +1010,10 @@ public final class FrmPrincipal extends javax.swing.JFrame
                     } 
                     else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                     {
-                        JOptionPane.showMessageDialog(null, "La partida a la que te quieres unir está llena o en curso.");
+                        JOptionPane.showMessageDialog(
+                                null, 
+                                "La partida a la que te quieres unir está llena, en curso o no existe."
+                        );
 
                         //Rehabilitar selección de partida y personaje
                         formulario.jtPartidas.setEnabledAt(0, true);

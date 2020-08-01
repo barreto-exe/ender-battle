@@ -208,7 +208,7 @@ public class DBPartida implements Serializable
     }
     
     
-    public static boolean agregarJugador(DBUsuario usuario, String ip)
+    public static boolean agregarJugador(DBUsuario usuario, String ip) 
     {
         String query = 
                 "SELECT "
@@ -223,24 +223,33 @@ public class DBPartida implements Serializable
 
         resultado.leer();
 
-        //Si hay espacios disponibles en la partida, se registra al jugador
-        if((int)resultado.getValor("EspaciosDisponibles") > 0)
+        try
         {
-            query = 
-                    "INSERT INTO m_partidas_jugadores (id_partida,personajeSeleccionado,id_jugador,ip) "
-                    + "VALUES (?,?,?,?)";
-            operacion = new DBOperacion(query);
-            operacion.pasarParametro(usuario.getPartida());
-            operacion.pasarParametro(usuario.getPersonajeSeleccionado());
-            operacion.pasarParametro(DBUsuario.idUsuario(usuario.getUsuario()));
-            operacion.pasarParametro(ip);
-            
-            return operacion.ejecutar() == 1;
+            //Si hay espacios disponibles en la partida, se registra al jugador
+            if((int)resultado.getValor("EspaciosDisponibles") > 0)
+            {
+                query = 
+                        "INSERT INTO m_partidas_jugadores (id_partida,personajeSeleccionado,id_jugador,ip) "
+                        + "VALUES (?,?,?,?)";
+                operacion = new DBOperacion(query);
+                operacion.pasarParametro(usuario.getPartida());
+                operacion.pasarParametro(usuario.getPersonajeSeleccionado());
+                operacion.pasarParametro(DBUsuario.idUsuario(usuario.getUsuario()));
+                operacion.pasarParametro(ip);
+
+                return operacion.ejecutar() == 1;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
+        catch(Exception ex)
         {
+            System.out.println(ex.getMessage());
             return false;
         }
+
     }
     
     /**
