@@ -22,6 +22,7 @@ import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
 import kdl.minecraft.basedatos.DBPartida;
+import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.ACTUALIZAR_USUARIOS_PARTIDA;
 import kdl.minecraft.comunicacion.PaqueteResultado;
 
 /**
@@ -1241,14 +1242,29 @@ public final class FrmPrincipal extends javax.swing.JFrame
                 {
                     try
                     {
-                        ServerSocket recibir = new ServerSocket(27016);
+                        Socket socket;
+                        ObjectOutputStream out;
+                        
+                        //Armar paquete para enviar al servidor
+                        PaqueteOperacion paquete = 
+                                new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
+
                         while(true)
                         {
-                            Socket socket = recibir.accept();
+                            //While true enviar peticion actualizar usuarios
+                            //con un thread sleep
+                            
+                            Thread.sleep(1000);
+                            
+                            //Enviar solicitud al server
+                            socket = new Socket(DBOperacion.SERVIDOR, 27015);
+                            out = new ObjectOutputStream(socket.getOutputStream());
+                            out.writeObject(paquete);
+                            
                             recibirRespuestaServer(socket, formularioActual);
                         }
                     } 
-                    catch (IOException ex)
+                    catch (IOException|InterruptedException ex)
                     {
                         System.out.println(ex.getMessage());
                     }

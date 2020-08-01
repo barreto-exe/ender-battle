@@ -16,11 +16,11 @@ import kdl.minecraft.basedatos.DBUsuario;
 import kdl.minecraft.comunicacion.PaqueteOperacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
 import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
-import static kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
 import kdl.minecraft.basedatos.DBPartida;
 import kdl.minecraft.basedatos.DBPartida.EstadoPartida;
-import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.*;
 import kdl.minecraft.comunicacion.PaqueteResultado;
+import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.*;
+import static kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
 
 /**
  *
@@ -370,17 +370,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
                     ArrayList<DBUsuario> usuarios = usuariosPartida(partida);
                     resultado.setInformacion(usuarios);
-
-                    for(DBUsuario usuario : usuarios)
-                    {
-                        txtPrincipal.append("User: " + usuario.getUsuario() +", "+ usuario.getIp() +"\n");
-                        socket = new Socket(usuario.getIp(), 27016);
-                        ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                        paqueteEnvio.writeObject(resultado);
-                        socket.close();
-                    }
-                    
-                    responderResultado = false;
                 }
                 //</editor-fold>
                 
