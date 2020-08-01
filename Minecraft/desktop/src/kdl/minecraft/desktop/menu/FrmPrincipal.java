@@ -136,6 +136,13 @@ public final class FrmPrincipal extends javax.swing.JFrame
         setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
         setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
         setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+        });
 
         jlpPrincipal.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
         jlpPrincipal.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
@@ -886,6 +893,12 @@ public final class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btnActualizarPartidasActionPerformed
         actualizarPartidasActivas();
     }//GEN-LAST:event_btnActualizarPartidasActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {//GEN-HEADEREND:event_formWindowClosing
+        salirPartida();
+        System.exit(1);
+    }//GEN-LAST:event_formWindowClosing
 
     
     
