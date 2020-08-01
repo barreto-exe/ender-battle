@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import actors.Player;
+import actors.pacific.Mob;
 import actors.pacific.PacificMob;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -48,6 +49,17 @@ public class WorldContactListener implements ContactListener
                 {
                     ((PacificMob) b.getUserData()).changeDirection();
                 }
+                break;
+            case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:
+                if (a.getFilterData().categoryBits == Constant.MOB_SENSOR_BIT)
+                {
+                    player.setEnemy((Mob)a.getUserData());
+                }
+                else 
+                {
+                    player.setEnemy((Mob)b.getUserData());
+                }
+                player.canAttack(true);
                 break;
         }
     }

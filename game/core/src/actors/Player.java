@@ -45,6 +45,8 @@ public class Player extends Sprite implements Actor
     private State currentState;
     private boolean isJumping;
     private boolean isHitting;
+    private boolean canAttack;
+    private Mob enemy;
 
     //Atributos de Textura
     private Array<TextureRegion> walkFrames;
@@ -57,7 +59,7 @@ public class Player extends Sprite implements Actor
     //Atributos de Información
     private final String color;
     
-    //Atributos inventario
+    //Atributos de Inventario
     private Inventory inventory;
     private BattleObject[] portedObjects;
     //</editor-fold>
@@ -142,7 +144,7 @@ public class Player extends Sprite implements Actor
         shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT | Constant.MOB_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT | Constant.MOB_BIT | Constant.MOB_SENSOR_BIT;
         body.createFixture(fixtureD).setUserData("player");
         //</editor-fold>
 
@@ -162,9 +164,10 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
-        isJumping = isHitting = false;
+        isJumping = isHitting = canAttack = false;
         previousState = State.WALKING_RIGHT;
         deltaFrame = 0;
+        enemy = null;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -185,10 +188,15 @@ public class Player extends Sprite implements Actor
     public TextureRegion getHitFrame(float delta)
     {
         deltaHit += delta;
-
         if (deltaHit > (0.06f * 6))
         {
             isHitting = false;
+        }
+        
+        if (canAttack)
+        {
+            toHurt(enemy);
+            canAttack = false;
         }
 
         return (TextureRegion) punchAnimation.getKeyFrame(deltaHit, true);
@@ -199,6 +207,7 @@ public class Player extends Sprite implements Actor
         if (controller.isHitting() && !isHitting)
         {
             isHitting = true;
+            canAttack = true;
             deltaHit = 0;
         }
 
@@ -270,6 +279,15 @@ public class Player extends Sprite implements Actor
     {
         this.isJumping = isJumping;
     }
+
+    public void canAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public void setEnemy(Mob enemy) {
+        this.enemy = enemy;
+    }
+    
     //</editor-fold>
     
     @Override
@@ -377,7 +395,7 @@ public class Player extends Sprite implements Actor
         portedObjects[index] = object;
     }
     
-    public float calculateDamage()
+    private float calculateDamage()
     {
         if (portedObjects[0] != null)
         {

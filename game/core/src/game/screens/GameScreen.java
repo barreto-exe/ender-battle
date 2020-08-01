@@ -97,8 +97,8 @@ public class GameScreen extends BaseScreen
     public void show()
     {
         BiomeAssembler(this);
-        player.getInventory().addArm("pico", "made  dwra");
-        player.getInventory().removeBattleObject("pico", "madera");
+        //player.getInventory().addArm("pico", "madera");
+        //player.getInventory().removeBattleObject("pico", "madera");
         
         //Instanciar actores del mundo
         this.player.create(this);

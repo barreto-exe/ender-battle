@@ -16,19 +16,22 @@ import com.badlogic.gdx.utils.Array;
  */
 public abstract class PacificMob extends Mob
 {
-    protected int cantAlimento;
+    //Atributos de animacion
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
+    
+    //Propiedades del MOB
+    protected int cantAlimento;
     protected float speed;
 
     public PacificMob(World world, TextureRegion region, float speed, float life)
     {
         super(world, region, life);
-        duration = 0;
         this.speed = speed;
+        duration = 0;
     }
-
+    
     public void changeDirection(){
         speed = speed * -1;
         

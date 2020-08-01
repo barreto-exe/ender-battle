@@ -21,7 +21,7 @@ public abstract class Mob extends Sprite implements Actor
     protected World world;
     protected Body body;
     
-    //Atributos de propiedades del MOB
+    //Propiedades del MOB
     protected float life;
     
 
@@ -36,7 +36,7 @@ public abstract class Mob extends Sprite implements Actor
     {
         life -= hit;
         
-        if (life < 0)
+        if (life <= 0)
         {
             life = 0;
             System.out.println("el mob ha muerto");
