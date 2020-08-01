@@ -36,10 +36,15 @@ public class Inventory {
         cascos = new Array<>();
     }
 
-    public boolean addArm(String name, String material)
+    public boolean addBattleObject(BattleObject object)
     {
+        if (object.getDescription().equals(""))
+        {
+            return false;
+        }
+        
         Array <BattleObject> array;
-        switch (name){
+        switch (object.getDescription()){
             case ("espada"):
                 array = espadas;
                 break;
@@ -52,31 +57,7 @@ public class Inventory {
             case ("pala"):
                 array = palas;
                 break;
-            default:
-                return false;
-        }
-        
-        if (findBattleObject(array, material) != null)
-        {
-            return false;
-        }
-        
-        Arm newItem = new Arm(name, material);
-        if (newItem.getMaterial().getMaterial().equals(""))
-        {
-            System.out.println("material no encontrado");
-            return false;  //este material no está disponible
-        }
-        
-        array.add(newItem);
-        return true;
-    }
-    
-    public boolean addProtection(String name, String material)
-    {
-        Array <BattleObject> array;
-        switch (name){
-            case ("botas"):
+                case ("botas"):
                 array = botas;
                 break;
             case ("pecho"):
@@ -92,18 +73,12 @@ public class Inventory {
                 return false;
         }
         
-        if (findBattleObject(array, material) != null)
+        if (findBattleObject(array, object.getMaterial().getMaterial()) != null)
         {
-            return false;  //ya existe este objeto en el inventario
+            return false;
         }
         
-        Protection newItem = new Protection(name, material);
-        if (newItem.getDescription().equals(""))
-        {
-            return false;  //este material no está disponible
-        }
-        
-        array.add(newItem);  //Añadiendo elemento al inventario 
+        array.add(object);
         return true;
     }
     
@@ -118,10 +93,10 @@ public class Inventory {
         return null;
     }
     
-    public boolean removeBattleObject(String name, String material)
+    public boolean removeBattleObject(BattleObject object)
     {
         Array <BattleObject> array;
-        switch (name){
+        switch (object.getDescription()){
             case ("espada"):
                 array = espadas;
                 break;
@@ -150,7 +125,7 @@ public class Inventory {
                 return false;
         }
         
-        BattleObject item = findBattleObject(array, material);
+        BattleObject item = findBattleObject(array, object.getMaterial().getMaterial());
         
         if (item != null)
         {

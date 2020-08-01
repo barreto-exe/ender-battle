@@ -8,6 +8,7 @@ package actors;
 import actors.groups.Actor;
 import actors.pacific.Mob;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -195,6 +196,12 @@ public class Player extends Sprite implements Actor
         
         if (canAttack)
         {
+            if (deltaHit < (0.06f * 4))
+            {
+            enemy.setColor(Color.RED);
+            } else{
+                    enemy.setColor(Color.WHITE); 
+            }
             toHurt(enemy);
             canAttack = false;
         }

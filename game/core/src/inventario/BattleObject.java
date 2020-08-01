@@ -27,8 +27,12 @@ public abstract class BattleObject {
             this.description = description;
             this.material = new Material(material);
         }
-        description = "";
-        this.material = new Material("");
+        else
+        {
+            this.description = "";
+            this.material = new Material("");
+        }
+        
         isPorted = false;
         setFactorObject();
         
