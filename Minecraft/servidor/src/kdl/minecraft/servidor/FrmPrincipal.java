@@ -67,6 +67,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane1.setAutoscrolls(true);
+
         txtPrincipal.setColumns(20);
         txtPrincipal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         txtPrincipal.setRows(5);
@@ -91,6 +93,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         jtpPrincipal.addTab("Principal", jpPrincipal);
 
+        jScrollPane2.setAutoscrolls(true);
+
         txtRegistro.setColumns(20);
         txtRegistro.setRows(5);
         jScrollPane2.setViewportView(txtRegistro);
@@ -114,6 +118,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
         jtpPrincipal.addTab("Registro de Usuarios", jpRegistro);
 
+        jScrollPane3.setAutoscrolls(true);
+
         txtInicioSesion.setColumns(20);
         txtInicioSesion.setRows(5);
         jScrollPane3.setViewportView(txtInicioSesion);
@@ -136,6 +142,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         );
 
         jtpPrincipal.addTab("Inicio de Sesión", jpInicioSesion);
+
+        jScrollPane4.setAutoscrolls(true);
 
         txtPartidas.setColumns(20);
         txtPartidas.setRows(5);
