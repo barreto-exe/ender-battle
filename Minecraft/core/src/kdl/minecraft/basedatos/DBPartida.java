@@ -243,12 +243,23 @@ public class DBPartida implements Serializable
         }
     }
     
+    /**
+     * Eliminar a un jugador de su partida. En caso de que la partida quede vacía, la
+     * elimina.
+     * @param usuario es el usuario que dejará de pertenecer a su partida.
+     */
     public static void sacarJugador(DBUsuario usuario)
     {
+        //Elimino al jugador
         String query = 
+                //Eliminar jugador
                 "DELETE FROM m_partidas_jugadores WHERE "
                 + "id_jugador = ? AND "
-                + "id_partida = ?";
+                + "id_partida = ?; "
+                //Eliminar partidas vacías
+                + "DELETE FROM m_partidas WHERE "
+                + "(SELECT COUNT(*) FROM m_partidas_jugadores j WHERE j.id_partida = m_partidas.id) = 0";
+        
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(usuario.getId());
         operacion.pasarParametro(usuario.getPartida());

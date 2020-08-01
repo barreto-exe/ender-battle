@@ -226,7 +226,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 
                 PaqueteResultado resultado = new PaqueteResultado(ResultadoOperacion.ERROR);
                 
-                //Si la solicitoud es de Registro/Inicio de sesión
                 //<editor-fold defaultstate="collapsed" desc="Registro/Inicio de sesión">
                 if (operacion == INICIAR_SESION || operacion == REGISTRAR)
                 {
@@ -292,7 +291,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
 
-                //Si la solicitud es de crear partida
                 //<editor-fold defaultstate="collapsed" desc="Crear Partida">
                 if (operacion == CREAR_PARTIDA)
                 {
@@ -318,7 +316,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //Si la solicitud es de unirse a partida
                 //<editor-fold defaultstate="collapsed" desc="Unirse a partida">
                 if(operacion == UNIRSE_PARTIDA)
                 {
@@ -343,7 +340,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //Si el usuario se salió de la partida
                 //<editor-fold defaultstate="collapsed" desc="Salir de Partida">
                 if(operacion == SALIR_PARTIDA)
                 {
@@ -351,7 +347,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
 
                     String add =
                             "Nombre: "     + usuario.getUsuario()  + "\n" +
-                            "Personaje: "  + usuario.getPersonajeSeleccionado() + "\n" +
+                            "Personaje: "  + usuario.getPersonajeSeleccionadoString() + "\n" +
                             "Partida: "    + usuario.getPartida() + "\n";
 
                     txtPartidas.append(add + "Salir de partida \n\n");
@@ -361,8 +357,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //Si se pide enviar la lista de jugadores de la sala a todos los usuarios
                 //<editor-fold defaultstate="collapsed" desc="Actualizar datos partida">
+                //Si se pide enviar la lista de jugadores
                 if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
                 {
                     int partida = ((DBPartida) paquete.getInformacion()).getId();
@@ -373,12 +369,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
+                //<editor-fold defaultstate="collapsed" desc="Actualizar partidas activas">
                 if(operacion == PEDIR_PARTIDAS_ACTIVAS)
                 {
                     resultado.setResultado(PARTIDAS_ACTIVAS);
                     resultado.setInformacion(partidasActivas());
                 }
-                
+                //</editor-fold>
                 
                 //**************************************************************
                 //Enviar respuesta al cliente
