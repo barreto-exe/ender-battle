@@ -22,6 +22,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
+import inventario.Arm;
+import inventario.BattleObject;
+import inventario.Protection;
 
 /**
  *
@@ -67,18 +70,15 @@ public class GameScreen extends BaseScreen
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         //</editor-fold>
         
-        //<editor-fold defaultstate="collapsed" desc="Construir bioma y set Box2d">
+        //<editor-fold defaultstate="collapsed" desc="Construir bioma">
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(biome);
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
 
         world = new World(new Vector2(0, -10), true);
         debugger = new Box2DDebugRenderer();
-
-        BiomeAssembler(this);
         //</editor-fold>
         
-        this.player.create(this);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -96,7 +96,13 @@ public class GameScreen extends BaseScreen
     @Override
     public void show()
     {
+        BiomeAssembler(this);
+        Arm objeto = new Arm("pic o", "madera");
+        player.getInventory().addBattleObject(objeto);
+        player.getInventory().removeBattleObject(objeto);
+        
         //Instanciar actores del mundo
+        this.player.create(this);
         chicken = new Chicken(this, 14, 4);
 
         //Añadir actores al grupo

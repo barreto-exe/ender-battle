@@ -11,7 +11,7 @@ public class DesktopLauncher {
                 //DEFININENDO TAMAÑO DEL FRAME
                 config.height = Constant.FRAME_HEIGHT;
                 config.width = Constant.FRAME_WIDTH;
-//                config.resizable = false;
+                config.resizable = false;
                 //LLAMANDO AL FRAME
 		new LwjglApplication(new MainGame(), config);
 	} 

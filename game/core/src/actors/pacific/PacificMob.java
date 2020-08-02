@@ -16,19 +16,22 @@ import com.badlogic.gdx.utils.Array;
  */
 public abstract class PacificMob extends Mob
 {
-    protected int cantAlimento;
+    //Atributos de animacion
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
+    
+    //Propiedades del MOB
+    protected int food;
     protected float speed;
 
-    public PacificMob(World world, TextureRegion region, float speed)
+    public PacificMob(World world, TextureRegion region, float speed, float life)
     {
-        super(world, region);
-        duration = 0;
+        super(world, region, life);
         this.speed = speed;
+        duration = 0;
     }
-
+    
     public void changeDirection(){
         speed = speed * -1;
         
@@ -36,5 +39,24 @@ public abstract class PacificMob extends Mob
         {
             frame.flip(true, false);
         }
+    }
+
+    public int getFood() {
+        return food;
+    }
+        
+    @Override
+    public void act(float delta)
+    {
+        body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        
+        if (body.getLinearVelocity().y < 0)
+        {
+            body.applyForceToCenter(0, -10, true);
+        }
+        
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        duration += delta;
+        setRegion((TextureRegion) animation.getKeyFrame(duration, true));
     }
 }

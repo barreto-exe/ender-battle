@@ -6,7 +6,9 @@
 package actors;
 
 import actors.groups.Actor;
+import actors.pacific.Mob;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
+import inventario.BattleObject;
+import inventario.Inventory;
 import tools.Constant;
 import tools.Constant.*;
 import tools.HandleInput;
@@ -42,6 +46,8 @@ public class Player extends Sprite implements Actor
     private State currentState;
     private boolean isJumping;
     private boolean isHitting;
+    private boolean canAttack;
+    private Mob enemy;
 
     //Atributos de Textura
     private Array<TextureRegion> walkFrames;
@@ -52,7 +58,12 @@ public class Player extends Sprite implements Actor
     private float deltaHit;
     
     //Atributos de Información
-    private String color;
+    private final String color;
+    private float life;
+    
+    //Atributos de Inventario
+    private Inventory inventory;
+    private BattleObject[] portedObjects;
     //</editor-fold>
 
     /**
@@ -61,7 +72,16 @@ public class Player extends Sprite implements Actor
      * @param color representa el ropa elegido por el jugador antes de iniciar partida.
      */    
     public Player(String color) {
+        //informacion del jugador
         this.color = color;
+        
+        //instanciando inventario vacío
+        inventory = new Inventory();
+        portedObjects = new BattleObject[5];
+        for (int i = 0; i < 5; i++)
+        {
+            portedObjects[i] = null;
+        }
     }
     
     /**
@@ -126,7 +146,7 @@ public class Player extends Sprite implements Actor
         shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT | Constant.MOB_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FRUIT_BIT | Constant.MOB_BIT | Constant.MOB_SENSOR_BIT;
         body.createFixture(fixtureD).setUserData("player");
         //</editor-fold>
 
@@ -146,9 +166,10 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
-        isJumping = isHitting = false;
+        isJumping = isHitting = canAttack = false;
         previousState = State.WALKING_RIGHT;
         deltaFrame = 0;
+        enemy = null;
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -157,18 +178,35 @@ public class Player extends Sprite implements Actor
         return body;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+    
     public VirtualController getController()
     {
         return controller;
     }
 
+    public float getLife() {
+        return life;
+    }
+
+    public void setLife(float life) {
+        this.life = life;
+    }
+    
     public TextureRegion getHitFrame(float delta)
     {
         deltaHit += delta;
-
         if (deltaHit > (0.06f * 6))
         {
             isHitting = false;
+        }
+        
+        if (canAttack && enemy != null)
+        {
+            toHurt(enemy);
+            canAttack = false;
         }
 
         return (TextureRegion) punchAnimation.getKeyFrame(deltaHit, true);
@@ -179,6 +217,7 @@ public class Player extends Sprite implements Actor
         if (controller.isHitting() && !isHitting)
         {
             isHitting = true;
+            canAttack = true;
             deltaHit = 0;
         }
 
@@ -250,6 +289,15 @@ public class Player extends Sprite implements Actor
     {
         this.isJumping = isJumping;
     }
+
+    public void canAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public void setEnemy(Mob enemy) {
+        this.enemy = enemy;
+    }
+    
     //</editor-fold>
     
     @Override
@@ -321,5 +369,60 @@ public class Player extends Sprite implements Actor
         {
             frame.flip(true, false);
         }
+    }
+    
+    public void portarObjeto(BattleObject object)
+    {
+        int index = 0;
+        
+        switch (object.getDescription()){
+            case ("espada"):
+            case ("hacha"):
+            case ("pico"):
+            case ("pala"):
+                index = 0;
+                break;
+            case ("casco"):
+                index = 1;
+                break;
+            case ("pecho"):
+                index = 2;
+                break;
+            case ("pantalon"):
+                index = 3;
+                break;
+            case ("botas"):
+                index = 4;
+                break;
+        }
+        
+        if (portedObjects[index] != null)
+        {
+            portedObjects[index].setIsPorted(false);
+        }
+        
+        object.setIsPorted(true);
+        portedObjects[index] = object;
+    }
+    
+    private float calculateDamage()
+    {
+        if (portedObjects[0] != null)
+        {
+            return portedObjects[0].getFactorObject();
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    
+    public void toHurt(Mob mob)
+    {
+        if (mob != null)
+        {
+            mob.toRecibeAttack(this, calculateDamage());
+        }
+        
     }
 }

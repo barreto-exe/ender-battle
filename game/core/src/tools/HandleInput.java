@@ -29,19 +29,13 @@ public class HandleInput extends InputAdapter
             case (Input.Keys.RIGHT):
             case (Input.Keys.D):
             {
-                if (!controller.isLeft())
-                {
-                    controller.setRight(true);
-                }
+                controller.setRight(true);
                 return true;
             }
             case (Input.Keys.LEFT):
             case (Input.Keys.A):
             {
-                if (!controller.isRight())
-                {
-                    controller.setLeft(true);
-                }
+                controller.setLeft(true);
                 return true;
             }
             case (Input.Keys.W):

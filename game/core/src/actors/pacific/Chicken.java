@@ -24,7 +24,7 @@ public class Chicken extends PacificMob
 
     public Chicken(GameScreen screen, int x, int y)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("chicken"), 1.2f);
+        super(screen.getWorld(), screen.getAtlas().findRegion("chicken"), 1.2f, 5);
         
         //Colocar posición
         setBounds(0, 0, 96 / 3 / Constant.PPM, 25 / Constant.PPM);
@@ -78,21 +78,8 @@ public class Chicken extends PacificMob
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR
                 
         //</editor-fold>
-        cantAlimento = 15; //por ejemplo
+        food = 15; //por ejemplo
     }
 
-    @Override
-    public void act(float delta)
-    {
-        body.setLinearVelocity(speed, body.getLinearVelocity().y);
-        
-        if (body.getLinearVelocity().y < 0)
-        {
-            body.applyForceToCenter(0, -10, true);
-        }
-        
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        duration += delta;
-        setRegion((TextureRegion) animation.getKeyFrame(duration, true));
-    }
+    
 }
