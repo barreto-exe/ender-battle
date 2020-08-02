@@ -1,4 +1,4 @@
-package kdl.minecraft.recursos;
+package minecraft.recursos;
 
 /**
  *

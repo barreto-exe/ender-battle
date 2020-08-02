@@ -1,10 +1,10 @@
-package kdl.minecraft.desktop;
+package desktop;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import kdl.minecraft.desktop.menu.FrmPrincipal;
-import kdl.minecraft.recursos.Reproductor;
-import kdl.minecraft.recursos.Sonido;
+import desktop.menu.FrmPrincipal;
+import minecraft.recursos.Reproductor;
+import minecraft.recursos.Sonido;
 
 
 public class DesktopLauncher

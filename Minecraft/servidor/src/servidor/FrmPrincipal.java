@@ -3,24 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kdl.minecraft.servidor;
+package servidor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
-import kdl.minecraft.basedatos.DBMatriz;
-import kdl.minecraft.basedatos.DBOperacion;
-import kdl.minecraft.basedatos.DBUsuario;
-import kdl.minecraft.comunicacion.PaqueteOperacion;
-import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
-import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
-import kdl.minecraft.basedatos.DBPartida;
-import kdl.minecraft.basedatos.DBPartida.EstadoPartida;
-import kdl.minecraft.comunicacion.PaqueteResultado;
-import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.*;
-import static kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
+import minecraft.basedatos.*;
+import minecraft.basedatos.DBPartida.EstadoPartida;
+import minecraft.comunicacion.*;
+import minecraft.comunicacion.PaqueteOperacion.*;
+import static minecraft.comunicacion.PaqueteOperacion.Operacion.*;
+import static minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
 
 /**
  *
@@ -377,7 +372,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //<editor-fold defaultstate="collapsed" desc="Actualizar datos partida">
+                //<editor-fold defaultstate="collapsed" desc="Actualizar usuarios partida">
                 //Si se pide enviar la lista de jugadores
                 if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
                 {
@@ -411,7 +406,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         catch (IOException | ClassNotFoundException ex)
         {
             System.out.println(ex.getMessage());
-            txtPrincipal.append(ex.getMessage() + "\n");
+            txtPrincipal.append(ex.getMessage() + "\n" + ex.getStackTrace().toString() + "\n");
             try
             {
                 socket.close();

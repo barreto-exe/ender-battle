@@ -1,4 +1,4 @@
-package kdl.minecraft.basedatos;
+package minecraft.basedatos;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

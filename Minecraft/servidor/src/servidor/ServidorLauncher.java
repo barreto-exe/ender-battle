@@ -1,4 +1,4 @@
-package kdl.minecraft.servidor;
+package servidor;
 
 public class ServidorLauncher
 {

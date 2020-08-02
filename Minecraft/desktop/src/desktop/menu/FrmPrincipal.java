@@ -3,27 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kdl.minecraft.desktop.menu;
+package desktop.menu;
 
 import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import kdl.minecraft.recursos.Sonido;
-import kdl.minecraft.basedatos.*;
-import kdl.minecraft.comunicacion.PaqueteOperacion;
-import kdl.minecraft.comunicacion.PaqueteOperacion.Operacion;
-import kdl.minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
-import kdl.minecraft.basedatos.DBPartida;
-import static kdl.minecraft.comunicacion.PaqueteOperacion.Operacion.ACTUALIZAR_USUARIOS_PARTIDA;
-import kdl.minecraft.comunicacion.PaqueteResultado;
+import minecraft.recursos.*;
+import minecraft.basedatos.*;
+import minecraft.comunicacion.*;
+import minecraft.comunicacion.PaqueteResultado;
+import minecraft.comunicacion.PaqueteOperacion.Operacion;
+import minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
 
 /**
  *
@@ -31,13 +28,36 @@ import kdl.minecraft.comunicacion.PaqueteResultado;
  */
 public final class FrmPrincipal extends javax.swing.JFrame
 {
-
     public static final int ALTURA_VENTANA = 500;
     public static final int ANCHURA_VENTANA = 855;
 
+    /**
+     * Objeto que contiene los datos del usuario que ha iniciado sesión.
+     */
     private DBUsuario usuarioLogueado;
+    
+    /**
+     * Objeto que contiene los datos de la partida a la que se ha unido
+     * el jugador.
+     */
     private DBPartida partida;
+    
+    /**
+     * El color de personaje que seleccionó el jugador.
+     *  || 0 - NORMAL 
+     *  || 1 - ROJO
+     *  || 2 - VERDE
+     *  || 3 - AMARILLO
+     *  || 4 - MORADO
+     *  || 5 - GRIS
+     *  ||
+     */
     private int personajeSeleccionado;
+    
+    /**
+     * Hilo en donde se consulta en bucle al servidor sobre el estado de la partida
+     */
+    Thread hiloPartida;
 
     /**
      * Crea la ventana principal del juego.
@@ -133,9 +153,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         fondoAcerca1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
         setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -788,14 +806,14 @@ public final class FrmPrincipal extends javax.swing.JFrame
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         Sonido.Click();
-        mostrarPanel(panelRegistrarse);
         txtCorreo.requestFocus();
+        mostrarPanel(panelRegistrarse);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         Sonido.Click();
-        mostrarPanel(panelIniciar);
         txtUsuarioIniciar.requestFocus();
+        mostrarPanel(panelIniciar);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVolverActionPerformed
@@ -822,6 +840,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
     private void btnCambiarServidorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCambiarServidorActionPerformed
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
         Sonido.Click();
+        
         //Cambiar IP de la base de datos
         DBOperacion.SERVIDOR = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
@@ -842,7 +861,9 @@ public final class FrmPrincipal extends javax.swing.JFrame
 
     private void btnComenzarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnComenzarPartidaActionPerformed
     {//GEN-HEADEREND:event_btnComenzarPartidaActionPerformed
-        // TODO add your handling code here:
+        Sonido.Click();
+        
+        
     }//GEN-LAST:event_btnComenzarPartidaActionPerformed
 
     private void btnCrearPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCrearPartidaActionPerformed
@@ -900,10 +921,272 @@ public final class FrmPrincipal extends javax.swing.JFrame
         System.exit(1);
     }//GEN-LAST:event_formWindowClosing
 
+    /*************************************************************************************************/
     
+    /**
+     * Solicita al servidor que registre al usuario con los datos proveídos.
+     */
+    private void registrarUsuario()
+    {
+        String usuario = txtUsuario.getText();
+        String correo = txtCorreo.getText();
+        char[] pass = txtPass.getPassword();
+
+        //Verificar que las contraseñas sean iguales y que no estén vacías
+        if (!Arrays.equals(txtPass.getPassword(), txtPassConfirmar.getPassword()))
+        {
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+        } 
+        //Verificar que no haya campos vacíoss
+        else if ("".equals(correo) || "".equals(usuario) || pass.length == 0)
+        {
+            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
+        } 
+        else
+        {
+            //Crear instancia de usuario para enviarla al servidor
+            DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
+            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj);
+
+            try
+            {
+                //Enviar solicitud al server
+                Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(paquete);
+                recibirRespuestaServer(socket, this);
+
+                //Bloquear botones
+                btnAceptarRegistro.setEnabled(false);
+                btnVolver1.setEnabled(false);
+            } 
+            catch (UnknownHostException ex)
+            {
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+            } 
+            catch (IOException ex)
+            {
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+    }
     
+    /**
+     * Envía al servidor la solicitud de inicio de sesión con los datos
+     * proveídos.
+     */
+    private void iniciarSesion()
+    {
+        String usuario = txtUsuarioIniciar.getText();
+        String pass = txtPassIniciar.getText();
+
+        if ("".equals(usuario) || "".equals(pass))
+        {
+            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
+        } 
+        else
+        {
+            //Crear instancia de usuario para enviarla al servidor
+            usuarioLogueado = new DBUsuario(null, usuario, pass);
+            enviarPaquete(new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioLogueado));
+            
+            //Bloquear botones
+            btnAceptarInicio.setEnabled(false);
+            btnVolver.setEnabled(false);
+        }
+    }
     
+    /**
+     * Envía al servidor la solicitud de crear una partida.
+     */
+    private void crearPartida()
+    {
+        String nombrePartida = txtNombrePartida.getText();
+        String descripcionPartida = txtDescPartida.getText();
+        int cantJugadores = (int) spinCantJugadores.getValue();
+
+        if (nombrePartida.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "El nombre de la partida no puede estar en blanco.");
+            return;
+        }
+
+        //Deshabilitar botones de crear partida
+        btnCrearPartida.setEnabled(false);
+        lblFlechaIzquierda.setVisible(false);
+        lblFlechaDerecha.setVisible(false);
+
+        //Guardar nombre de la partida por crear
+        partida.setNombre(nombrePartida);
+        
+        //Crear paquete de envío a la base de datos
+        DBPartida part = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
+        enviarPaquete(new PaqueteOperacion(Operacion.CREAR_PARTIDA, part));
+    }
     
+    /**
+     * Envía al servidor la solicitud de unirse a la partida.
+     * @param idPartida es el id de la partida a unirse.
+     */
+    private void entrarPartida(int idPartida)
+    {
+        //Asignar personaje elegido al usuario
+        usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
+
+        //Asignar partida a la que se quiere unir
+        usuarioLogueado.setPartida(idPartida);
+
+        //Armar paquete para enviar al servidor
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado);
+
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
+            
+            final FrmPrincipal formularioActual = this;
+            
+            //Crear hilo para estar a la escucha de usuarios en la partida
+            hiloPartida = new Thread(new Runnable(){
+                
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        Socket socket;
+                        ObjectOutputStream out;
+                        
+                        //Armar paquete para enviar al servidor
+                        PaqueteOperacion paquete = 
+                                new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
+
+                        while(true)
+                        {
+                            //While true enviar peticion actualizar usuarios
+                            //con un thread sleep
+                            
+                            Thread.sleep(1000);
+                            
+                            //Enviar solicitud al server
+                            socket = new Socket(DBOperacion.SERVIDOR, 27015);
+                            out = new ObjectOutputStream(socket.getOutputStream());
+                            out.writeObject(paquete);
+                            
+                            recibirRespuestaServer(socket, formularioActual);
+                        }
+                    } 
+                    catch (IOException|InterruptedException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+                
+            });
+            hiloPartida.start();
+            
+            recibirRespuestaServer(socket, formularioActual);
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } 
+        catch (IOException ex)
+        {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
+    /**
+     * Envía al servidor la solicitud de salirse de la partida.
+     */
+    private void salirPartida()
+    {
+        if (partida.getId() == -1)
+        {
+            return;
+        }
+        
+        //Dejar de escuchar los usuarios nuevos
+        hiloPartida.interrupt();
+
+        //Armar paquete para enviar al servidor
+        enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado));
+    }
+    
+    /**
+     * Envía al servidor la petición de las partidas que hay activas actualmente.
+     */
+    private void actualizarPartidasActivas()
+    {
+        enviarPaquete(new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null));
+    }
+    
+    /**
+     * Envía al servidor la petición de los usuarios activos de la partida en curso.
+     */
+    private void actualizarUsuariosPartida()
+    {
+        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
+            socket.close();
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } 
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
+    /**
+     * Envía información al servidor.
+     * @param paquete es objeto que encapsula la información enviada.
+     */
+    private void enviarPaquete(PaqueteOperacion paquete)
+    {
+        try
+        {
+            //Enviar solicitud al server
+            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(paquete);
+            recibirRespuestaServer(socket, this);
+        } 
+        catch (UnknownHostException ex)
+        {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        } 
+        catch (IOException ex)
+        {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+    
+    /**
+     * Método que se debe llamar siempre que se envíe información al servidor y luego se
+     * desee consultar su respuesta.
+     * @param socket es el socket utilizado para enviar la información al servidor, a través de él
+     * mismo se recibirá la respuesta. El socket es cerrado dentro del método.
+     * @param formulario es el objeto formulario que contiene a los controles de la vista a modificar.
+     */
     public void recibirRespuestaServer(final Socket socket, final FrmPrincipal formulario)
     {
         new Thread(new Runnable()
@@ -911,10 +1194,11 @@ public final class FrmPrincipal extends javax.swing.JFrame
             @Override
             public void run()
             {
-                System.out.println("Esperando...");
+                System.out.println("Esperando respuesta server...");
 
                 try
                 {
+                    //Leer respuesta del servidor
                     ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
                     PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
 
@@ -1085,7 +1369,6 @@ public final class FrmPrincipal extends javax.swing.JFrame
                     else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
                     {
                         JOptionPane.showMessageDialog(null, "Has salido de la partida.");
-                        actualizarUsuariosPartida();
                     }
                     //</editor-fold>
                     
@@ -1100,292 +1383,9 @@ public final class FrmPrincipal extends javax.swing.JFrame
         }).start();
     }
     
-    private void registrarUsuario()
-    {
-        String usuario = txtUsuario.getText();
-        String correo = txtCorreo.getText();
-        char[] pass = txtPass.getPassword();
-
-        //Verificar que las contraseñas sean iguales y que no estén vacías
-        if (!Arrays.equals(txtPass.getPassword(), txtPassConfirmar.getPassword()))
-        {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
-        } 
-        //Verificar que no haya campos vacíoss
-        else if ("".equals(correo) || "".equals(usuario) || pass.length == 0)
-        {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
-        } 
-        else
-        {
-            //Crear instancia de usuario para enviarla al servidor
-            DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
-            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj);
-
-            try
-            {
-                //Enviar solicitud al server
-                Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                out.writeObject(paquete);
-                recibirRespuestaServer(socket, this);
-
-                btnAceptarRegistro.setEnabled(false);
-                btnVolver1.setEnabled(false);
-            } 
-            catch (UnknownHostException ex)
-            {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-            } 
-            catch (IOException ex)
-            {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-            }
-        }
-    }
-    
-    private void iniciarSesion()
-    {
-        String usuario = txtUsuarioIniciar.getText();
-        String pass = txtPassIniciar.getText();
-
-        if ("".equals(usuario) || "".equals(pass))
-        {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
-        } 
-        else
-        {
-            //Crear instancia de usuario para enviarla al servidor
-            DBUsuario usuarioObj = new DBUsuario(null, usuario, pass);
-            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioObj);
-            usuarioLogueado = usuarioObj;
-
-            try
-            {
-                //Enviar solicitud al server
-                Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                out.writeObject(paquete);
-                recibirRespuestaServer(socket, this);
-
-                btnAceptarInicio.setEnabled(false);
-                btnVolver.setEnabled(false);
-            } 
-            catch (UnknownHostException ex)
-            {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-            } 
-            catch (IOException ex)
-            {
-                System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-            }
-        }
-    }
-    
-    private void crearPartida()
-    {
-        String nombrePartida = txtNombrePartida.getText();
-        String descripcionPartida = txtDescPartida.getText();
-        int cantJugadores = (int) spinCantJugadores.getValue();
-
-        if (nombrePartida.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "El nombre de la partida no puede estar en blanco.");
-            return;
-        }
-
-        //Deshabilitar botones de crear partida
-        btnCrearPartida.setEnabled(false);
-        lblFlechaIzquierda.setVisible(false);
-        lblFlechaDerecha.setVisible(false);
-
-        //Guardar nombre de la partida por crear
-        partida.setNombre(nombrePartida);
-        
-        //Crear paquete de envío a la base de datos
-        DBPartida p = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.CREAR_PARTIDA, p);
-
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            recibirRespuestaServer(socket, this);
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
-    }
-    
-    Thread hiloUsuariosPartida;
-    
-    private void entrarPartida(int idPartida)
-    {
-        //Asignar personaje elegido al usuario
-        usuarioLogueado.setPersonajeSeleccionado(personajeSeleccionado);
-
-        //Asignar partida a la que se quiere unir
-        usuarioLogueado.setPartida(idPartida);
-
-        //Armar paquete para enviar al servidor
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado);
-
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            
-            final FrmPrincipal formularioActual = this;
-            
-            //Crear hilo para estar a la escucha de usuarios en la partida
-            hiloUsuariosPartida = new Thread(new Runnable(){
-                
-                @Override
-                public void run()
-                {
-                    try
-                    {
-                        Socket socket;
-                        ObjectOutputStream out;
-                        
-                        //Armar paquete para enviar al servidor
-                        PaqueteOperacion paquete = 
-                                new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
-
-                        while(true)
-                        {
-                            //While true enviar peticion actualizar usuarios
-                            //con un thread sleep
-                            
-                            Thread.sleep(1000);
-                            
-                            //Enviar solicitud al server
-                            socket = new Socket(DBOperacion.SERVIDOR, 27015);
-                            out = new ObjectOutputStream(socket.getOutputStream());
-                            out.writeObject(paquete);
-                            
-                            recibirRespuestaServer(socket, formularioActual);
-                        }
-                    } 
-                    catch (IOException|InterruptedException ex)
-                    {
-                        System.out.println(ex.getMessage());
-                    }
-                }
-                
-            });
-            hiloUsuariosPartida.start();
-            
-            recibirRespuestaServer(socket, formularioActual);
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
-    }
-    
-    private void salirPartida()
-    {
-        if (partida.getId() == -1)
-        {
-            return;
-        }
-        
-        //Dejar de escuchar los usuarios nuevos
-        hiloUsuariosPartida.interrupt();
-
-        //Armar paquete para enviar al servidor
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado);
-
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            recibirRespuestaServer(socket, this);
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
-    }
-    
-    private void actualizarPartidasActivas()
-    {
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null);
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            recibirRespuestaServer(socket, this);
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.toString());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
-    }
-    
-    private void actualizarUsuariosPartida()
-    {
-        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.ACTUALIZAR_USUARIOS_PARTIDA, partida);
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            socket.close();
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
-    }
-    
-    
-    
+    /**
+     * Rota los sprites de los personajes dependiendo del número seleccionado.
+     */
     private void elegirImagenPersonaje()
     {
         personajeSeleccionado = personajeSeleccionado % 6;
@@ -1405,7 +1405,6 @@ public final class FrmPrincipal extends javax.swing.JFrame
      */
     private void mostrarPanel(JPanel panel)
     {
-        //Colocar panel de bienvenida
         jlpPrincipal.removeAll();
         jlpPrincipal.add(panel);
         jlpPrincipal.revalidate();

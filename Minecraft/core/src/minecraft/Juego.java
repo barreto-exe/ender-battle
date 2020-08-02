@@ -1,4 +1,4 @@
-package kdl.minecraft;
+package minecraft;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
