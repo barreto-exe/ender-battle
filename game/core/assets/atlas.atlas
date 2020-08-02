@@ -6,120 +6,190 @@ filter: Nearest,Nearest
 repeat: none
 amarillo_caminar
   rotate: false
-  xy: 2, 346
+  xy: 2, 478
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 amarillo_golpear
   rotate: false
-  xy: 2, 996
+  xy: 2, 1128
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
+bayas
+  rotate: false
+  xy: 388, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 cerdo
   rotate: false
-  xy: 2, 68
+  xy: 2, 200
   size: 384, 64
   orig: 384, 64
   offset: 0, 0
   index: -1
 chicken
   rotate: false
-  xy: 516, 969
+  xy: 923, 1881
   size: 96, 25
   orig: 96, 25
   offset: 0, 0
   index: -1
 conejo
   rotate: false
-  xy: 772, 1742
+  xy: 772, 1874
   size: 149, 32
   orig: 149, 32
   offset: 0, 0
   index: -1
+conejo_carne
+  rotate: false
+  xy: 271, 134
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+ganado_carne
+  rotate: false
+  xy: 582, 1062
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 gris_caminar
   rotate: false
-  xy: 2, 216
+  xy: 2, 348
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 gris_golpear
   rotate: false
-  xy: 2, 1646
+  xy: 2, 1778
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
+manzana
+  rotate: false
+  xy: 516, 1062
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 morado_caminar
   rotate: false
-  xy: 2, 866
+  xy: 2, 998
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 morado_golpear
   rotate: false
-  xy: 2, 1516
+  xy: 2, 1648
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 normal_caminar
   rotate: false
-  xy: 2, 606
+  xy: 2, 738
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 normal_golpear
   rotate: false
-  xy: 2, 1256
+  xy: 2, 1388
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 oveja
   rotate: false
-  xy: 2, 2
+  xy: 2, 134
   size: 267, 64
   orig: 267, 64
   offset: 0, 0
   index: -1
+papa
+  rotate: false
+  xy: 516, 996
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pera
+  rotate: false
+  xy: 454, 200
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pescado_carne
+  rotate: false
+  xy: 2, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pollo_carne
+  rotate: false
+  xy: 772, 1808
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 rojo_caminar
   rotate: false
-  xy: 2, 476
+  xy: 2, 608
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 rojo_golpear
   rotate: false
-  xy: 2, 1126
+  xy: 2, 1258
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
+sandia
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 vaca
   rotate: false
-  xy: 2, 134
+  xy: 2, 266
   size: 546, 80
   orig: 546, 80
   offset: 0, 0
   index: -1
 verde_caminar
   rotate: false
-  xy: 2, 736
+  xy: 2, 868
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 verde_golpear
   rotate: false
-  xy: 2, 1386
+  xy: 2, 1518
   size: 768, 128
   orig: 768, 128
+  offset: 0, 0
+  index: -1
+zanahoria
+  rotate: false
+  xy: 68, 68
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
