@@ -194,12 +194,13 @@ public class Player extends Sprite implements Actor
             isHitting = false;
         }
         
-        if (canAttack)
+        if (canAttack && enemy != null)
         {
-            if (deltaHit < (0.06f * 4))
+            if (deltaHit < (0.06f * 6))
             {
-            enemy.setColor(Color.RED);
-            } else{
+            enemy.setColor(Color.CORAL);
+            } else
+            {
                     enemy.setColor(Color.WHITE); 
             }
             toHurt(enemy);
@@ -416,6 +417,10 @@ public class Player extends Sprite implements Actor
     
     public void toHurt(Mob mob)
     {
-        mob.toRecibeAttack(calculateDamage());
+        if (mob != null)
+        {
+            mob.toRecibeAttack(calculateDamage());
+        }
+        
     }
 }

@@ -42,7 +42,4 @@ public class Protection extends BattleObject{
         }
     }
     
-    
-
-    
 }

@@ -35,7 +35,6 @@ public abstract class BattleObject {
         
         isPorted = false;
         setFactorObject();
-        
     }
 
     public String getDescription() {

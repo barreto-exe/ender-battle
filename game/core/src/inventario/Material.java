@@ -17,11 +17,7 @@ public class Material {
     //</editor-fold>
 
     public Material(String name) {
-        if (!setFactor(name))
-        {
-            this.name = "";
-            factor = 0;
-        }
+        setFactor(name);
     }
 
     public String getMaterial() {
@@ -51,6 +47,8 @@ public class Material {
                 factor = 5;
                 return true;
             default:
+                this.name = "";
+                factor = 0;
                 return false;
         }
     }
