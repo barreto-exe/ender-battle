@@ -37,6 +37,33 @@ public abstract class Mob extends Sprite implements Actor
     {
         life -= hit;
         
+        //El mob que será herido
+        final Mob mob = this;
+        
+        //Cantidad de segudos que permanece coloreado de rojo
+        final float segundos = 1;
+        
+        //Colorear de rojo por haber sido herido
+        mob.setColor(Color.CORAL);
+        
+        //Lanzar thread que espera un segundo y lo colorea a la normalidad
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(((long) (segundos)) * 1000);
+                    mob.setColor(Color.WHITE);
+                } 
+                catch (InterruptedException ex)
+                {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }).start();
+        
         if (life <= 0)
         {
             life = 0;

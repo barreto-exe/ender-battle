@@ -196,13 +196,6 @@ public class Player extends Sprite implements Actor
         
         if (canAttack && enemy != null)
         {
-            if (deltaHit < (0.06f * 6))
-            {
-            enemy.setColor(Color.CORAL);
-            } else
-            {
-                    enemy.setColor(Color.WHITE); 
-            }
             toHurt(enemy);
             canAttack = false;
         }
