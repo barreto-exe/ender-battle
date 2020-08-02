@@ -5,8 +5,8 @@
  */
 package actors.pacific;
 
+import actors.Player;
 import actors.groups.Actor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -32,8 +32,12 @@ public abstract class Mob extends Sprite implements Actor
         this.world = world;
         this.life = life;
     }
+
+    public float getLife() {
+        return life;
+    }
     
-    public void toRecibeAttack(float hit)
+    public void toRecibeAttack(Player player, float hit)
     {
         life -= hit;
         

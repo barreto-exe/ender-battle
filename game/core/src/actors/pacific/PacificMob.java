@@ -22,7 +22,7 @@ public abstract class PacificMob extends Mob
     protected Animation animation;
     
     //Propiedades del MOB
-    protected int cantAlimento;
+    protected int food;
     protected float speed;
 
     public PacificMob(World world, TextureRegion region, float speed, float life)
@@ -40,7 +40,11 @@ public abstract class PacificMob extends Mob
             frame.flip(true, false);
         }
     }
-    
+
+    public int getFood() {
+        return food;
+    }
+        
     @Override
     public void act(float delta)
     {

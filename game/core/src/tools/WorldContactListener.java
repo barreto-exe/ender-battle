@@ -59,7 +59,7 @@ public class WorldContactListener implements ContactListener
                 {
                     player.setEnemy((Mob)b.getUserData());
                 }
-                player.canAttack(true);
+                player.canAttack(true);    
                 break;
         }
     }
@@ -67,6 +67,17 @@ public class WorldContactListener implements ContactListener
     @Override
     public void endContact(Contact contact)
     {
+        Fixture a = contact.getFixtureA();
+        Fixture b = contact.getFixtureB();
+        
+        int colision = a.getFilterData().categoryBits | b.getFilterData().categoryBits;
+        
+        switch (colision)
+        {
+            case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:   
+                player.setEnemy(null);
+                break;
+        }
     }
 
     @Override
