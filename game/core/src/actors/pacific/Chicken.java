@@ -78,7 +78,7 @@ public class Chicken extends PacificMob
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR
                 
         //</editor-fold>
-        cantAlimento = 15; //por ejemplo
+        food = 15; //por ejemplo
     }
 
     

@@ -59,6 +59,7 @@ public class Player extends Sprite implements Actor
     
     //Atributos de Información
     private final String color;
+    private float life;
     
     //Atributos de Inventario
     private Inventory inventory;
@@ -186,6 +187,14 @@ public class Player extends Sprite implements Actor
         return controller;
     }
 
+    public float getLife() {
+        return life;
+    }
+
+    public void setLife(float life) {
+        this.life = life;
+    }
+    
     public TextureRegion getHitFrame(float delta)
     {
         deltaHit += delta;
@@ -412,7 +421,7 @@ public class Player extends Sprite implements Actor
     {
         if (mob != null)
         {
-            mob.toRecibeAttack(calculateDamage());
+            mob.toRecibeAttack(this, calculateDamage());
         }
         
     }
