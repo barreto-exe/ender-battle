@@ -10,13 +10,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
-import minecraft.basedatos.*;
-import minecraft.basedatos.DBPartida.*;
-import static minecraft.basedatos.DBPartida.obtenerEstadoPartida;
-import minecraft.comunicacion.*;
-import minecraft.comunicacion.PaqueteOperacion.*;
-import static minecraft.comunicacion.PaqueteOperacion.Operacion.*;
-import static minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion.*;
+import basedatos.*;
+import basedatos.DBPartida.*;
+import static basedatos.DBPartida.obtenerEstadoPartida;
+import comunicacion.*;
+import comunicacion.PaqueteOperacion.*;
+import static comunicacion.PaqueteOperacion.Operacion.*;
+import static comunicacion.PaqueteOperacion.ResultadoOperacion.*;
 
 /**
  *
