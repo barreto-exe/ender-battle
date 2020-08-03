@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minecraft.basedatos;
+package basedatos;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -17,21 +17,39 @@ public final class DBUsuario implements Serializable
 {
     
     private String correo, usuario, pass, ip;
-    
+    /**
+     * Es el id del usuario en la base de datos.
+     */
     private int id;
     
     /**
-     * Es el número (color) del personaje seleccionado por el usuario.
-     * Va desde el 0 al 5.
+     * El color de personaje que seleccionó el jugador.
+     *  || 0 - NORMAL 
+     *  || 1 - ROJO
+     *  || 2 - VERDE
+     *  || 3 - AMARILLO
+     *  || 4 - MORADO
+     *  || 5 - GRIS
+     *  ||
      */
     private int personajeSeleccionado;
+    
+    /**
+     * Es el id de la partida a la que pertenece el usuario.
+     */
     private int partida;
+    
+    /**
+     * La posición que ocupa el jugador en la tabla de participantes.
+     * Este atributo es usado para saber en qué número de bioma inicia.
+     */
+    private int numeroJugador;
 
     /**
      * Crea una instancia de entidad en relación a la tabla m_usuarios de la Base de Datos.
      * @param correo es el correo del usuario.
      * @param usuario es el nombre de usuario.
-     * @param pass  es la constraseña ENCRIPTADA del usuario.
+     * @param pass es la constraseña ENCRIPTADA del usuario.
      * en la base de datos.
      */
     public DBUsuario(String correo, String usuario, String pass)
@@ -41,8 +59,14 @@ public final class DBUsuario implements Serializable
         this.pass = encriptarMD5(pass);
         this.personajeSeleccionado = 0;
         this.partida = -1;
+        this.numeroJugador = 0;
     }
 
+    /**
+     * Relaciona un usuario con su nombre y su ip dentro del Lobby de una partida.
+     * @param usuario es el nombre de usuario.
+     * @param ip es la dirección ip del usuario.
+     */
     public DBUsuario(String usuario, String ip)
     {
         this.usuario = usuario;
@@ -51,83 +75,94 @@ public final class DBUsuario implements Serializable
         this.pass = "";
         this.personajeSeleccionado = 0;
         this.partida = -1;
+        this.numeroJugador = 0;
     }
 
+    /**
+     * Relaciona el nombre de un usuario en partida con su ip, su id y el personaje que seleccionó.
+     * @param usuario es el nombre de usuario.
+     * @param ip es la dirección ip del usuario.
+     * @param id es el id del usuario en la base de datos.
+     * @param personajeSeleccionado es el número del personaje seleccionado por el usuario.
+     */
     public DBUsuario(String usuario, String ip, int id, int personajeSeleccionado)
     {
         this.usuario = usuario;
         this.ip = ip;
         this.id = id;
         this.personajeSeleccionado = personajeSeleccionado;
+        this.numeroJugador = 0;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public int getNumeroJugador()
+    {
+        return numeroJugador;
+    }
+    public void setNumeroJugador(int numeroJugador)
+    {
+        this.numeroJugador = numeroJugador;
+    }
+    
     public int getId()
     {
         return id;
     }
-
     public void setId(int id)
     {
         this.id = id;
     }
     
-    
-    
     public String getCorreo()
     {
         return correo;
     }
-
     public void setCorreo(String correo)
     {
         this.correo = correo;
     }
-
+    
     public String getUsuario()
     {
         return usuario;
     }
-
     public void setUsuario(String usuario)
     {
         this.usuario = usuario;
     }
-
+    
     public String getPass()
     {
         return pass;
     }
-
     public void setPass(String pass)
     {
         this.pass = encriptarMD5(pass);
     }
-
+    
     public int getPersonajeSeleccionado()
     {
         return personajeSeleccionado;
     }
-
     public void setPersonajeSeleccionado(int personajeSeleccionado)
     {
         this.personajeSeleccionado = personajeSeleccionado;
     }
-
+    
     public int getPartida()
     {
         return partida;
     }
-
     public void setPartida(int partida)
     {
         this.partida = partida;
     }
-
+    
     public String getIp()
     {
         return ip;
     }
-
     public void setIp(String ip)
     {
         this.ip = ip;
@@ -167,7 +202,7 @@ public final class DBUsuario implements Serializable
             }
         }
     }
-    
+    //</editor-fold>
 
     /**
      * Consulta disponibilidad de correo.

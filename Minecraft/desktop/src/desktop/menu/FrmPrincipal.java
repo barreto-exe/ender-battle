@@ -5,6 +5,12 @@
  */
 package desktop.menu;
 
+import recursos.Sonido;
+import comunicacion.PaqueteOperacion;
+import basedatos.DBUsuario;
+import basedatos.DBPartida;
+import basedatos.DBOperacion;
+import desktop.GameLauncher;
 import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,12 +20,9 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import minecraft.recursos.*;
-import minecraft.basedatos.*;
-import minecraft.comunicacion.*;
-import minecraft.comunicacion.PaqueteResultado;
-import minecraft.comunicacion.PaqueteOperacion.Operacion;
-import minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
+import comunicacion.PaqueteResultado;
+import comunicacion.PaqueteOperacion.Operacion;
+import comunicacion.PaqueteOperacion.ResultadoOperacion;
 
 /**
  *
@@ -56,7 +59,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
     /**
      * Hilo en donde se consulta en bucle al servidor sobre el estado de la partida
      */
-    Thread hiloPartida;
+    Thread hiloEstadoPartida;
 
     /**
      * Crea la ventana principal del juego.
@@ -1032,7 +1035,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         }
         
         //Dejar de escuchar los usuarios nuevos
-        hiloPartida.interrupt();
+        hiloEstadoPartida.interrupt();
 
         enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado));
     }
@@ -1188,7 +1191,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
                         formulario.lblNombrePartida.setText(partida.getNombre());
                         
                         //Crear hilo para estar a la escucha del estado de la partida
-                        hiloPartida = new Thread(new Runnable(){
+                        hiloEstadoPartida = new Thread(new Runnable(){
                             @Override
                             public void run()
                             {
@@ -1219,7 +1222,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
                                 }
                             }
                         });
-                        hiloPartida.start();
+                        hiloEstadoPartida.start();
                     } 
                     else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                     {
@@ -1240,47 +1243,53 @@ public final class FrmPrincipal extends javax.swing.JFrame
                     //</editor-fold>
 
                     //<editor-fold defaultstate="collapsed" desc="Resultados de Pedir Datos Partida">
-                    
-                    //<editor-fold defaultstate="collapsed" desc="Usuarios">
-                    else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
-                    {
-                        ((DefaultTableModel)formulario.jtJugadores.getModel()).setRowCount(0);
-                        
-                        ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
-                        DefaultTableModel tabla = (DefaultTableModel) formulario.jtJugadores.getModel();
-                        
-                        int cantJugadores = 0;
-                        for(DBUsuario usuario : usuarios)
-                        {
-                            cantJugadores++;
-                            
-                            tabla.addRow(new Object[]{
-                                usuario.getUsuario(),
-                                usuario.getPersonajeSeleccionadoString(),
-                                usuario.getIp()
-                            });
-                        }
-                        
-                        //Verificar si hay más de un jugador y que el jugador sea el creador de la partida
-                        if(cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
-                        {
-                            formulario.btnComenzarPartida.setVisible(true);
-                        }
-                        else if(cantJugadores <= 1)
-                        {
-                            formulario.btnComenzarPartida.setVisible(false);
-                        }
-                    }
-                    //</editor-fold>
 
-                    //<editor-fold defaultstate="collapsed" desc="Partida Iniciada">
-                    else if(resultado.getResultado() == ResultadoOperacion.PARTIDA_INICIADA)
-                    {
-                        hiloPartida.interrupt();
-                        JOptionPane.showMessageDialog(null, "La partida comenzó");
-                    }
-                    //</editor-fold>
-                    
+                        //<editor-fold defaultstate="collapsed" desc="Usuarios">
+                        else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
+                        {
+                            ((DefaultTableModel)formulario.jtJugadores.getModel()).setRowCount(0);
+
+                            ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
+                            DefaultTableModel tabla = (DefaultTableModel) formulario.jtJugadores.getModel();
+
+                            int cantJugadores = 0;
+                            for(DBUsuario usuario : usuarios)
+                            {
+                                cantJugadores++;
+
+                                //Obtener el número de jugador
+                                if(usuario.getUsuario().equals(usuarioLogueado.getUsuario()))
+                                {
+                                    usuario.setNumeroJugador(cantJugadores);
+                                }
+                                
+                                tabla.addRow(new Object[]{
+                                    usuario.getUsuario(),
+                                    usuario.getPersonajeSeleccionadoString(),
+                                    usuario.getIp()
+                                });
+                            }
+
+                            //Verificar si hay más de un jugador y que el jugador sea el creador de la partida
+                            if(cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
+                            {
+                                formulario.btnComenzarPartida.setVisible(true);
+                            }
+                            else if(cantJugadores <= 1)
+                            {
+                                formulario.btnComenzarPartida.setVisible(false);
+                            }
+                        }
+                        //</editor-fold>
+
+                        //<editor-fold defaultstate="collapsed" desc="Partida Iniciada">
+                        else if(resultado.getResultado() == ResultadoOperacion.PARTIDA_INICIADA)
+                        {
+                            hiloEstadoPartida.interrupt();
+                            new GameLauncher(usuarioLogueado);
+                        }
+                        //</editor-fold>
+                        
                     //</editor-fold>
                     
                     //<editor-fold defaultstate="collapsed" desc="Resultados de pedir partidas activas">
@@ -1389,6 +1398,7 @@ public final class FrmPrincipal extends javax.swing.JFrame
         ((DefaultTableModel)this.jtJugadores.getModel()).setRowCount(0);
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarInicio;
     private javax.swing.JButton btnAceptarRegistro;

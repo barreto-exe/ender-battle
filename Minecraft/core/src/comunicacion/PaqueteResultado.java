@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minecraft.comunicacion;
+package comunicacion;
 
 import java.io.Serializable;
-import minecraft.comunicacion.PaqueteOperacion.ResultadoOperacion;
+import comunicacion.PaqueteOperacion.ResultadoOperacion;
 
 /**
  *

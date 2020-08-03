@@ -1,4 +1,4 @@
-package minecraft.comunicacion;
+package comunicacion;
 
 import java.io.Serializable;
 

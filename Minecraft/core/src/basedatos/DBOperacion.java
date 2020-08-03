@@ -1,4 +1,4 @@
-package minecraft.basedatos;
+package basedatos;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

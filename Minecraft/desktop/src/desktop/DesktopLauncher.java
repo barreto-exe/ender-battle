@@ -3,8 +3,8 @@ package desktop;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import desktop.menu.FrmPrincipal;
-import minecraft.recursos.Reproductor;
-import minecraft.recursos.Sonido;
+import recursos.Reproductor;
+import recursos.Sonido;
 
 
 public class DesktopLauncher

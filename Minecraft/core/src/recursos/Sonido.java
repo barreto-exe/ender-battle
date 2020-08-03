@@ -1,4 +1,4 @@
-package minecraft.recursos;
+package recursos;
 
 /**
  *
