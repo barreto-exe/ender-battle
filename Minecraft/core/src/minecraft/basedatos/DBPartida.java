@@ -6,7 +6,6 @@
 package minecraft.basedatos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  *Es una partida que un jugador puede hostear o a la que se puede unir.
@@ -275,5 +274,40 @@ public class DBPartida implements Serializable
                 + "(SELECT COUNT(*) FROM m_partidas_jugadores j WHERE j.id_partida = m_partidas.id) = 0";
         operacion = new DBOperacion(query);
         operacion.ejecutar();
+    }
+    
+    public static boolean comenzarPartida(int idPartida)
+    {
+        String query =
+                "UPDATE m_partidas SET estado = 2  WHERE id = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        return operacion.ejecutar() > 0;
+    }
+    
+    public static EstadoPartida obtenerEstadoPartida(int idPartida)
+    {
+        String query = 
+                "SELECT estado FROM m_partidas WHERE id = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        if(resultado.leer())
+        {
+            int estado = (int)resultado.getValor("estado");
+            switch(estado)
+            {
+                case 1:
+                    return EstadoPartida.LOBBY;
+                case 2:
+                    return EstadoPartida.JUGANDO;
+                case 3:
+                    return EstadoPartida.TERMINADA;
+            }
+        }
+        return EstadoPartida.TERMINADA;
     }
 }

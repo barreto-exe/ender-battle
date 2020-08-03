@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package minecraft.comunicacion;
 
 import java.io.Serializable;
@@ -25,9 +20,10 @@ public class PaqueteOperacion<E> implements Serializable
         INICIAR_SESION,
         CREAR_PARTIDA,
         UNIRSE_PARTIDA,
-        ACTUALIZAR_USUARIOS_PARTIDA,
+        PEDIR_ESTADO_PARTIDA,
         PEDIR_PARTIDAS_ACTIVAS,
         SALIR_PARTIDA,
+        COMENZAR_PARTIDA,
     }
 
     /**
@@ -57,8 +53,10 @@ public class PaqueteOperacion<E> implements Serializable
         //Respuesta para PEDIR_PARTIDAS_ACTIVAS
         PARTIDAS_ACTIVAS,
         
-        //Respuesta para PEDIR_USUARIOS_PARTIDA
+        //Respuesta para USUARIOS_ESTADO_PARTIDA
         USUARIOS_PARTIDA,
+        PARTIDA_INICIADA,
+        PARTIDA_TERMINADA,
         
         //Respuesta para SALIR_PARTIDA
         SALIR_PARTIDA_EXITOSO,

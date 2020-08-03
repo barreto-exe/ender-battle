@@ -11,7 +11,8 @@ import java.io.ObjectOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 import minecraft.basedatos.*;
-import minecraft.basedatos.DBPartida.EstadoPartida;
+import minecraft.basedatos.DBPartida.*;
+import static minecraft.basedatos.DBPartida.obtenerEstadoPartida;
 import minecraft.comunicacion.*;
 import minecraft.comunicacion.PaqueteOperacion.*;
 import static minecraft.comunicacion.PaqueteOperacion.Operacion.*;
@@ -372,15 +373,32 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
-                //<editor-fold defaultstate="collapsed" desc="Actualizar usuarios partida">
+                //<editor-fold defaultstate="collapsed" desc="Actualizar usuarios y estado de partida">
                 //Si se pide enviar la lista de jugadores
-                if(operacion == ACTUALIZAR_USUARIOS_PARTIDA)
+                if(operacion == PEDIR_ESTADO_PARTIDA)
                 {
                     int partida = ((DBPartida) paquete.getInformacion()).getId();
-                    resultado.setResultado(USUARIOS_PARTIDA);
-
-                    ArrayList<DBUsuario> usuarios = usuariosPartida(partida);
-                    resultado.setInformacion(usuarios);
+                    EstadoPartida estado = obtenerEstadoPartida(partida);
+                    
+                    switch (estado)
+                    {
+                        case LOBBY:
+                        {
+                            resultado.setResultado(USUARIOS_PARTIDA);
+                            resultado.setInformacion(usuariosPartida(partida));
+                            break;
+                        }
+                        case JUGANDO:
+                        {
+                            resultado.setResultado(PARTIDA_INICIADA);
+                            break;
+                        }
+                        case TERMINADA:
+                        {
+                            resultado.setResultado(PARTIDA_TERMINADA);
+                            break;
+                        }
+                    }
                 }
                 //</editor-fold>
                 
@@ -391,6 +409,14 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     resultado.setInformacion(partidasActivas());
                 }
                 //</editor-fold>
+                
+                if(operacion == COMENZAR_PARTIDA)
+                {
+                    int partida = ((DBPartida) paquete.getInformacion()).getId();
+                    
+                    DBPartida.comenzarPartida(partida);
+                    resultado.setResultado(PARTIDA_INICIADA);
+                }
                 
                 //**************************************************************
                 //Enviar respuesta al cliente
