@@ -19,12 +19,11 @@ import actors.pacific.Chicken;
 import actors.Player;
 import actors.groups.Group;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import comunicacion.Closer;
 import tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
 import inventario.Arm;
-import inventario.BattleObject;
-import inventario.Protection;
 
 /**
  *
@@ -51,6 +50,8 @@ public class GameScreen extends BaseScreen
     private Group actors;
     private Player player;
     private Chicken chicken;
+    
+    
     //</editor-fold>
 
     /**
@@ -78,10 +79,9 @@ public class GameScreen extends BaseScreen
         world = new World(new Vector2(0, -10), true);
         debugger = new Box2DDebugRenderer();
         //</editor-fold>
-        
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">    
     public TiledMap getMap()
     {
         return map;

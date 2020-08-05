@@ -39,14 +39,6 @@ public class MainGame extends Game
             + " || FPS: " + Gdx.graphics.getFramesPerSecond()
         );
     }
-
-    @Override
-    public void dispose()
-    {
-        super.dispose();
-        ventanaOrigen.cerrarPartida();
-    }
-
     
     public DBUsuario getUsuario()
     {

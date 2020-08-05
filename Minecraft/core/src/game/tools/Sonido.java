@@ -1,4 +1,4 @@
-package recursos;
+package game.tools;
 
 /**
  *

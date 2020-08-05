@@ -27,6 +27,7 @@ public class GameLauncher
         config.height = Constant.FRAME_HEIGHT;
         config.width = Constant.FRAME_WIDTH;
         config.resizable = true;
+        config.fullscreen = true;
         
         MainGame juego = new MainGame();
         juego.setUsuario(usuario);

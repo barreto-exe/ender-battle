@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools;
+package game.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import game.screens.GameScreen;
 
 /**
  *
@@ -50,6 +52,11 @@ public class HandleInput extends InputAdapter
                 controller.setHitting(true); 
                 return true; 
             } 
+            case(Input.Keys.ESCAPE):
+            {
+                GameScreen.getGame().getVentanaOrigen().cerrarPartida();
+                Gdx.app.exit();
+            }
             default:
             {
                 return false;

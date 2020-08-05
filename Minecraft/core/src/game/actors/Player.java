@@ -8,7 +8,6 @@ package actors;
 import actors.groups.Actor;
 import actors.pacific.Mob;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,8 +23,8 @@ import inventario.BattleObject;
 import inventario.Inventory;
 import tools.Constant;
 import tools.Constant.*;
-import tools.HandleInput;
-import tools.VirtualController;
+import game.tools.HandleInput;
+import game.tools.VirtualController;
 
 /**
  *

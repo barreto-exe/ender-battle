@@ -5,7 +5,7 @@
  */
 package desktop.menu;
 
-import recursos.Sonido;
+import game.tools.Sonido;
 import comunicacion.PaqueteOperacion;
 import basedatos.DBUsuario;
 import basedatos.DBPartida;

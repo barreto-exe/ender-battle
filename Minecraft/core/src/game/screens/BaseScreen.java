@@ -15,7 +15,7 @@ import game.MainGame;
 public abstract class BaseScreen implements Screen
 {
     //ATTRIBUTES
-    protected MainGame game;
+    protected static MainGame game;
     private TextureAtlas atlas;
 
     //BUILDER
@@ -30,6 +30,12 @@ public abstract class BaseScreen implements Screen
         return atlas;
     }
 
+    public static MainGame getGame()
+    {
+        return game;
+    }
+
+    
     @Override
     public void show()
     {
