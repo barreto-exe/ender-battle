@@ -1,14 +1,21 @@
 package desktop;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import desktop.menu.FrmPrincipal;
+import game.MainGame;
 import recursos.Reproductor;
 import recursos.Sonido;
-
+import tools.Constant;
+import basedatos.DBUsuario;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 public class DesktopLauncher
 {
+
     /**
      * Identificador del hilo donde se reproduce la música.
      */
@@ -20,24 +27,33 @@ public class DesktopLauncher
 
     public static void main(String[] arg)
     {
-        try
-        {
-            //Adaptar interfaz de usuario al sistema operativo.
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } 
-        catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex)
-        {
-            //Informar error 
-            System.out.println("No se puede establecer el aspecto" + ex);
-        }
-        
-        //LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        //new LwjglApplication(new Juego(), config);
-        
+        colocarInterfaz();
+        comenzarMusica();
+
         FrmPrincipal frm = new FrmPrincipal();
         frm.setVisible(true);
-        
-        comenzarMusica();
+    }
+
+    public static int comenzarJuego(DBUsuario usuario, FrmPrincipal ventanaOrigen)
+    {
+        GameLauncher.setUsuario(usuario);
+        GameLauncher.setVentanaOrigen(ventanaOrigen);
+
+        String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+        String classpath = System.getProperty("java.class.path");
+        String className = (GameLauncher.class).getCanonicalName();
+        ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
+        try
+        {
+            Process process = builder.start();
+            process.waitFor();
+            return process.exitValue();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return 1;
+        }
     }
 
     /**
@@ -59,4 +75,17 @@ public class DesktopLauncher
         reproductorTemaPrincipal.detenerReproduccion();
     }
 
+    public static void colocarInterfaz()
+    {
+        try
+        {
+            //Adaptar interfaz de usuario al sistema operativo.
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex)
+        {
+            //Informar error 
+            System.out.println("No se puede establecer el aspecto" + ex);
+        }
+
+    }
 }

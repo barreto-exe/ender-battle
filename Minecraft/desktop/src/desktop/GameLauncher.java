@@ -3,6 +3,7 @@ package desktop;
 import basedatos.DBUsuario;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import desktop.menu.FrmPrincipal;
 import game.MainGame;
 import tools.Constant;
 
@@ -12,29 +13,47 @@ import tools.Constant;
  */
 public class GameLauncher
 {
-    private DBUsuario usuario;
+    private static DBUsuario usuario;
+    private static FrmPrincipal ventanaOrigen;
 
-    public GameLauncher(DBUsuario usuario)
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
     {
-        this.usuario = usuario;
-        
-        
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        
         //DEFININENDO TAMAÑO DEL FRAME
         config.height = Constant.FRAME_HEIGHT;
         config.width = Constant.FRAME_WIDTH;
         config.resizable = true;
+        
+        MainGame juego = new MainGame();
+        juego.setUsuario(usuario);
+        juego.setVentanaOrigen(ventanaOrigen);
+        
         //LLAMANDO AL FRAME
-		new LwjglApplication(new MainGame(), config);
+		new LwjglApplication(juego, config);
     }
 
-    public DBUsuario getUsuario()
+    public static DBUsuario getUsuario()
     {
         return usuario;
     }
 
-    public void setUsuario(DBUsuario usuario)
+    public static void setUsuario(DBUsuario usuario)
     {
-        this.usuario = usuario;
+        GameLauncher.usuario = usuario;
     }
+
+    public static FrmPrincipal getVentanaOrigen()
+    {
+        return ventanaOrigen;
+    }
+
+    public static void setVentanaOrigen(FrmPrincipal ventanaOrigen)
+    {
+        GameLauncher.ventanaOrigen = ventanaOrigen;
+    }
+    
 }

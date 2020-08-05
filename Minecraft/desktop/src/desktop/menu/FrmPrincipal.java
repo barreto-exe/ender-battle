@@ -10,7 +10,7 @@ import comunicacion.PaqueteOperacion;
 import basedatos.DBUsuario;
 import basedatos.DBPartida;
 import basedatos.DBOperacion;
-import desktop.GameLauncher;
+import comunicacion.Closer;
 import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,12 +23,13 @@ import javax.swing.table.DefaultTableModel;
 import comunicacion.PaqueteResultado;
 import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
+import desktop.DesktopLauncher;
 
 /**
  *
  * @author luisb
  */
-public final class FrmPrincipal extends javax.swing.JFrame
+public final class FrmPrincipal extends javax.swing.JFrame implements Closer
 {
     public static final int ALTURA_VENTANA = 470;
     public static final int ANCHURA_VENTANA = 840;
@@ -919,10 +920,16 @@ public final class FrmPrincipal extends javax.swing.JFrame
 
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
-        salirPartida();
+        btnCancelarPartida.doClick();
         System.exit(1);
     }//GEN-LAST:event_formWindowClosing
 
+    @Override
+    public void cerrarPartida()
+    {
+        btnVolver.doClick();
+    }
+    
     /*************************************************************************************************/
     
     /**
@@ -1027,15 +1034,18 @@ public final class FrmPrincipal extends javax.swing.JFrame
     /**
      * Envía al servidor la solicitud de salirse de la partida.
      */
-    private void salirPartida()
+    public void salirPartida()
     {
         if (partida.getId() == -1)
         {
             return;
         }
         
-        //Dejar de escuchar los usuarios nuevos
-        hiloEstadoPartida.interrupt();
+        if(hiloEstadoPartida.isAlive())
+        {
+            //Dejar de escuchar los usuarios nuevos
+            hiloEstadoPartida.interrupt();
+        }
 
         enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado));
     }
@@ -1286,7 +1296,8 @@ public final class FrmPrincipal extends javax.swing.JFrame
                         else if(resultado.getResultado() == ResultadoOperacion.PARTIDA_INICIADA)
                         {
                             hiloEstadoPartida.interrupt();
-                            new GameLauncher(usuarioLogueado);
+                            
+                            DesktopLauncher.comenzarJuego(usuarioLogueado, formulario);
                         }
                         //</editor-fold>
                         
