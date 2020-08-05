@@ -19,7 +19,6 @@ import actors.pacific.Chicken;
 import actors.Player;
 import actors.groups.Group;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import comunicacion.Closer;
 import tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
@@ -97,7 +96,7 @@ public class GameScreen extends BaseScreen
     public void show()
     {
         BiomeAssembler(this);
-        Arm objeto = new Arm("pic o", "madera");
+        Arm objeto = new Arm("pico", "madera");
         player.getInventory().addBattleObject(objeto);
         player.getInventory().removeBattleObject(objeto);
         
@@ -159,5 +158,4 @@ public class GameScreen extends BaseScreen
         
         //group.dispose!!!!!!!!!!!!!!!!!!!!
     }
-
 }

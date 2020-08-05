@@ -8,6 +8,10 @@ package game.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import comunicacion.MetodosSocket;
+import comunicacion.PaqueteOperacion;
+import game.MainGame;
+import game.screens.BaseScreen;
 import game.screens.GameScreen;
 
 /**
@@ -54,7 +58,10 @@ public class HandleInput extends InputAdapter
             } 
             case(Input.Keys.ESCAPE):
             {
-                GameScreen.getGame().getVentanaOrigen().cerrarPartida();
+                PaqueteOperacion paquete = 
+                        new PaqueteOperacion(PaqueteOperacion.Operacion.SALIR_PARTIDA, MainGame.getUsuario());
+                
+                MetodosSocket.enviarPaquete(paquete, BaseScreen.getGame());
                 Gdx.app.exit();
             }
             default:

@@ -34,11 +34,11 @@ public class DesktopLauncher
         frm.setVisible(true);
     }
 
-    public static int comenzarJuego(DBUsuario usuario, FrmPrincipal ventanaOrigen)
+    public static int comenzarJuego(DBUsuario usuario)
     {
         GameLauncher.setUsuario(usuario);
-        GameLauncher.setVentanaOrigen(ventanaOrigen);
 
+        //<editor-fold defaultstate="collapsed" desc="Lanzar GameLauncher">
         String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
         String classpath = System.getProperty("java.class.path");
         String className = (GameLauncher.class).getCanonicalName();
@@ -54,6 +54,7 @@ public class DesktopLauncher
             JOptionPane.showMessageDialog(null, e.getMessage());
             return 1;
         }
+        //</editor-fold>
     }
 
     /**

@@ -10,7 +10,6 @@ import comunicacion.PaqueteOperacion;
 import basedatos.DBUsuario;
 import basedatos.DBPartida;
 import basedatos.DBOperacion;
-import comunicacion.Closer;
 import java.net.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,7 +19,9 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import comunicacion.PaqueteResultado;
+import comunicacion.*;
+import comunicacion.MetodosSocket;
+import comunicacion.MetodosSocket.UsesSocket;
 import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
 import desktop.DesktopLauncher;
@@ -29,7 +30,7 @@ import desktop.DesktopLauncher;
  *
  * @author luisb
  */
-public final class FrmPrincipal extends javax.swing.JFrame implements Closer
+public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 {
     public static final int ALTURA_VENTANA = 470;
     public static final int ANCHURA_VENTANA = 840;
@@ -924,12 +925,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         System.exit(1);
     }//GEN-LAST:event_formWindowClosing
 
-    @Override
-    public void cerrarPartida()
-    {
-        btnVolver.doClick();
-    }
-    
     /*************************************************************************************************/
     
     /**
@@ -955,7 +950,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         {
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
-            enviarPaquete(new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj));
+            MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj), this);
             
             //Bloquear botones
             btnAceptarRegistro.setEnabled(false);
@@ -980,7 +975,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         {
             //Crear instancia de usuario para enviarla al servidor
             usuarioLogueado = new DBUsuario(null, usuario, pass);
-            enviarPaquete(new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioLogueado));
+            MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioLogueado),this);
             
             //Bloquear botones
             btnAceptarInicio.setEnabled(false);
@@ -1013,7 +1008,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         
         //Crear paquete de envío a la base de datos
         DBPartida part = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
-        enviarPaquete(new PaqueteOperacion(Operacion.CREAR_PARTIDA, part));
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.CREAR_PARTIDA, part), this);
     }
     
     /**
@@ -1028,7 +1023,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         //Asignar partida a la que se quiere unir
         usuarioLogueado.setPartida(idPartida);
 
-        enviarPaquete(new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado));
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado), this);
     }
     
     /**
@@ -1047,7 +1042,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
             hiloEstadoPartida.interrupt();
         }
 
-        enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado));
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado), this);
     }
     
     private void comenzarPartida()
@@ -1055,7 +1050,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
         //Deshabilitar botón
         btnComenzarPartida.setEnabled(false);
         
-        enviarPaquete(new PaqueteOperacion(Operacion.COMENZAR_PARTIDA, partida));
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.COMENZAR_PARTIDA, partida), this);
     }
     
     /**
@@ -1063,33 +1058,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
      */
     private void actualizarPartidasActivas()
     {
-        enviarPaquete(new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null));
-    }
-    
-    /**
-     * Envía información al servidor.
-     * @param paquete es objeto que encapsula la información enviada.
-     */
-    private void enviarPaquete(PaqueteOperacion paquete)
-    {
-        try
-        {
-            //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(paquete);
-            recibirRespuestaServer(socket, this);
-        } 
-        catch (UnknownHostException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Host desconocido.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        } 
-        catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "No hubo conexión con el servidor.", "Error", JOptionPane.ERROR_MESSAGE, null);
-        }
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null), this);
     }
     
     /**
@@ -1097,9 +1066,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
      * desee consultar su respuesta.
      * @param socket es el socket utilizado para enviar la información al servidor, a través de él
      * mismo se recibirá la respuesta. El socket es cerrado dentro del método.
-     * @param formulario es el objeto formulario que contiene a los controles de la vista a modificar.
+     * @param ventanaOrigen es el objeto formulario que contiene a los controles de la vista a modificar.
      */
-    public void recibirRespuestaServer(final Socket socket, final FrmPrincipal formulario)
+    @Override
+    public void recibirRespuestaServer(final Socket socket, final UsesSocket ventanaOrigen)
     {
         new Thread(new Runnable()
         {
@@ -1114,6 +1084,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
                     ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
                     PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
 
+                    final FrmPrincipal formulario = (FrmPrincipal) ventanaOrigen;
                     //Habilitar botones de nuevo
                     new Thread(new Runnable()
                     {
@@ -1297,7 +1268,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements Closer
                         {
                             hiloEstadoPartida.interrupt();
                             
-                            DesktopLauncher.comenzarJuego(usuarioLogueado, formulario);
+                            DesktopLauncher.comenzarJuego(usuarioLogueado);
                         }
                         //</editor-fold>
                         
