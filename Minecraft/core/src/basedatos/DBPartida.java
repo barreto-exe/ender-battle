@@ -213,8 +213,10 @@ public class DBPartida implements Serializable
                 "SELECT "
                 + "(SELECT limiteJugadores FROM m_partidas WHERE id = ?) - "
                 + "(SELECT COUNT(*) FROM m_partidas_jugadores WHERE id_partida = ?) "
-                + "AS EspaciosDisponibles";
+                + "AS EspaciosDisponibles,"
+                + "(SELECT estado FROM m_partidas WHERE id = ?) as Estado";
         DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(usuario.getPartida());
         operacion.pasarParametro(usuario.getPartida());
         operacion.pasarParametro(usuario.getPartida());
         
@@ -225,7 +227,7 @@ public class DBPartida implements Serializable
         try
         {
             //Si hay espacios disponibles en la partida, se registra al jugador
-            if((int)resultado.getValor("EspaciosDisponibles") > 0)
+            if((int)resultado.getValor("EspaciosDisponibles") > 0 && (int)resultado.getValor("Estado") == 1)
             {
                 query = 
                         "INSERT INTO m_partidas_jugadores (id_partida,personajeSeleccionado,id_jugador,ip) "
