@@ -46,6 +46,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      */
     private DBPartida partida;
     
+    private FrmGame ventanaJuego;
+    
     /**
      * El color de personaje que seleccionó el jugador.
      *  || 0 - NORMAL 
@@ -908,6 +910,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         
         salirPartida();
         
+        if(ventanaJuego != null && ventanaJuego.isEnabled())
+        {
+            ventanaJuego.dispose();
+        }
+        
         limpiarPanelPartidas();
     }//GEN-LAST:event_btnCancelarPartidaActionPerformed
 
@@ -1269,7 +1276,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         {
                             hiloEstadoPartida.interrupt();
                             
-                            new FrmGame(usuarioLogueado).setVisible(true);
+                            ventanaJuego = new FrmGame(usuarioLogueado);
+                            ventanaJuego.setVisible(true);
                         }
                         //</editor-fold>
                         
