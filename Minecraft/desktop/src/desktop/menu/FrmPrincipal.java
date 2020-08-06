@@ -566,7 +566,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelAcercaDe.add(btnVolver3);
         btnVolver3.setBounds(10, 420, 170, 40);
 
-        btnCambiarServidor.setText("Servidor");
+        btnCambiarServidor.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        btnCambiarServidor.setText("SERVIDOR");
         btnCambiarServidor.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -575,18 +576,21 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         });
         panelAcercaDe.add(btnCambiarServidor);
-        btnCambiarServidor.setBounds(570, 430, 80, 23);
+        btnCambiarServidor.setBounds(670, 420, 170, 40);
 
+        jScrollPane9.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        txtAcercaDe.setEditable(false);
         jScrollPane9.setViewportView(txtAcercaDe);
 
         panelAcercaDe.add(jScrollPane9);
-        jScrollPane9.setBounds(198, 230, 460, 230);
+        jScrollPane9.setBounds(198, 200, 460, 260);
 
         logo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kdlteam.png"))); // NOI18N
         logo2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         panelAcercaDe.add(logo2);
-        logo2.setBounds(250, 30, 340, 190);
+        logo2.setBounds(250, 10, 340, 190);
 
         fondoAcerca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondos/tierra.png"))); // NOI18N
         panelAcercaDe.add(fondoAcerca);
