@@ -22,7 +22,8 @@ public class MetodosSocket
      * Envía información al servidor.
      * @param paquete es objeto que encapsula la información enviada.
      * @param ventanaOrigen es la ventana desde donde fue enviado el paquete
-     * y que a su vez recibirá el paquete.
+     * y que a su vez recibirá el paquete. Si es null, entonces no se recibirá una
+     * respuesta del paquete.
      */
     public static void enviarPaquete(PaqueteOperacion paquete, UsesSocket ventanaOrigen)
     {

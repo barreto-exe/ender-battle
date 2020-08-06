@@ -21,8 +21,8 @@ import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import inventario.BattleObject;
 import inventario.Inventory;
-import tools.Constant;
-import tools.Constant.*;
+import game.tools.Constant;
+import game.tools.Constant.*;
 import game.tools.HandleInput;
 import game.tools.VirtualController;
 

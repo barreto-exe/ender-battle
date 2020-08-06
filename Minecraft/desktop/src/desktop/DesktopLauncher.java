@@ -1,17 +1,10 @@
 package desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import desktop.menu.FrmPrincipal;
-import game.MainGame;
 import game.tools.Reproductor;
 import game.tools.Sonido;
-import tools.Constant;
-import basedatos.DBUsuario;
-import java.io.File;
-import javax.swing.JOptionPane;
 
 public class DesktopLauncher
 {
@@ -25,43 +18,13 @@ public class DesktopLauncher
      */
     private static Reproductor reproductorTemaPrincipal;
 
-    private static boolean juegoIniciado;
-
     public static void main(String[] arg)
     {
         colocarInterfaz();
         comenzarMusica();
-        juegoIniciado = false;
 
         FrmPrincipal frm = new FrmPrincipal();
         frm.setVisible(true);
-    }
-
-    public static void comenzarJuego(DBUsuario usuario)
-    {
-        if (juegoIniciado)
-        {
-            return;
-        }
-
-        GameLauncher.setUsuario(usuario);
-        juegoIniciado = true;
-
-        //<editor-fold defaultstate="collapsed" desc="Lanzar GameLauncher">
-        String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-        String classpath = System.getProperty("java.class.path");
-        String className = (GameLauncher.class).getCanonicalName();
-        ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
-        try
-        {
-            Process process = builder.start();
-            process.waitFor();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        //</editor-fold>
     }
 
     /**

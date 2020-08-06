@@ -415,7 +415,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                     int partida = ((DBPartida) paquete.getInformacion()).getId();
                     
                     DBPartida.comenzarPartida(partida);
-                    resultado.setResultado(PARTIDA_INICIADA);
+                    
+                    responderResultado = false;
                 }
                 
                 //**************************************************************
@@ -432,8 +433,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                         System.out.println(ex.getMessage());
                         txtPrincipal.append(ex.getMessage() + "\n" + ex.getStackTrace().toString() + "\n");
                     }
-                    socket.close();
                 }
+                socket.close();
             }
 
         } 

@@ -58,11 +58,6 @@ public class HandleInput extends InputAdapter
             } 
             case(Input.Keys.ESCAPE):
             {
-                PaqueteOperacion paquete = 
-                        new PaqueteOperacion(PaqueteOperacion.Operacion.SALIR_PARTIDA, MainGame.getUsuario());
-                
-                MetodosSocket.enviarPaquete(paquete, BaseScreen.getGame());
-                Gdx.app.exit();
             }
             default:
             {

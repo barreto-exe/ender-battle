@@ -19,7 +19,7 @@ import actors.pacific.Chicken;
 import actors.Player;
 import actors.groups.Group;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import tools.Constant;
+import game.tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
 import inventario.Arm;

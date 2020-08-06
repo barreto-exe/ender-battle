@@ -25,6 +25,8 @@ import comunicacion.MetodosSocket.UsesSocket;
 import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
 import desktop.DesktopLauncher;
+import desktop.game.FrmGame;
+import game.tools.Constant;
 
 /**
  *
@@ -32,8 +34,6 @@ import desktop.DesktopLauncher;
  */
 public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 {
-    public static final int ALTURA_VENTANA = 470;
-    public static final int ANCHURA_VENTANA = 840;
 
     /**
      * Objeto que contiene los datos del usuario que ha iniciado sesión.
@@ -157,7 +157,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         fondoAcerca1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         addWindowListener(new java.awt.event.WindowAdapter()
         {
             public void windowClosing(java.awt.event.WindowEvent evt)
@@ -166,14 +167,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         });
 
-        jlpPrincipal.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        jlpPrincipal.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        jlpPrincipal.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        jlpPrincipal.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        jlpPrincipal.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         jlpPrincipal.setLayout(new java.awt.CardLayout());
 
-        panelBienvenida.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelBienvenida.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelBienvenida.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelBienvenida.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelBienvenida.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelBienvenida.setLayout(null);
 
         btnIniciarSesion.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
@@ -249,9 +248,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelBienvenida, "card2");
 
-        panelIniciar.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelIniciar.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelIniciar.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelIniciar.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelIniciar.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelIniciar.setLayout(null);
 
         logo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -313,9 +311,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelIniciar, "card3");
 
-        panelRegistrarse.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelRegistrarse.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelRegistrarse.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelRegistrarse.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelRegistrarse.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelRegistrarse.setLayout(null);
 
         lblCorreo.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
@@ -393,9 +390,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelRegistrarse, "card3");
 
-        panelAyuda.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelAyuda.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelAyuda.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelAyuda.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelAyuda.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelAyuda.setLayout(null);
 
         btnVolver2.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
@@ -416,9 +412,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelAyuda, "card3");
 
-        panelAcercaDe.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelAcercaDe.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelAcercaDe.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelAcercaDe.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelAcercaDe.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelAcercaDe.setLayout(null);
 
         btnVolver3.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
@@ -464,9 +459,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelAcercaDe, "card3");
 
-        panelPartida.setMaximumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelPartida.setMinimumSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
-        panelPartida.setPreferredSize(new java.awt.Dimension(ANCHURA_VENTANA, ALTURA_VENTANA));
+        panelPartida.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelPartida.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelPartida.setLayout(null);
 
         lblFlechaIzquierda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -793,7 +787,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    /*************************************************************************************************/
 
+    //<editor-fold defaultstate="collapsed" desc="Eventos">
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
         Sonido.Click();
         mostrarPanel(panelAyuda);
@@ -924,6 +921,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         btnCancelarPartida.doClick();
         System.exit(1);
     }//GEN-LAST:event_formWindowClosing
+    //</editor-fold>
 
     /*************************************************************************************************/
     
@@ -1050,7 +1048,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         //Deshabilitar botón
         btnComenzarPartida.setEnabled(false);
         
-        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.COMENZAR_PARTIDA, partida), this);
+        MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.COMENZAR_PARTIDA, partida), null);
     }
     
     /**
@@ -1068,6 +1066,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      * mismo se recibirá la respuesta. El socket es cerrado dentro del método.
      * @param ventanaOrigen es el objeto formulario que contiene a los controles de la vista a modificar.
      */
+    
+    
+    
     @Override
     public void recibirRespuestaServer(final Socket socket, final UsesSocket ventanaOrigen)
     {
@@ -1268,7 +1269,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         {
                             hiloEstadoPartida.interrupt();
                             
-                            DesktopLauncher.comenzarJuego(usuarioLogueado);
+                            new FrmGame(usuarioLogueado).setVisible(true);
                         }
                         //</editor-fold>
                         
@@ -1300,7 +1301,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     //<editor-fold defaultstate="collapsed" desc="Resultados de salir de partida">
                     else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
                     {
-                        JOptionPane.showMessageDialog(null, "Has salido de la partida.");
+                        JOptionPane.showMessageDialog(null, "Has salido de la sala.");
                     }
                     //</editor-fold>
                     
