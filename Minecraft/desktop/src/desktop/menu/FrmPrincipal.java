@@ -80,6 +80,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         cargarRTF(txtManualCrearUsuario, "CrearUsuario");
         cargarRTF(txtManualCrearPartida, "CrearPartida");
         cargarRTF(txtManualUnirsePartida, "UnirsePartida");
+        cargarRTF(txtAcercaDe, "AcercaDe");
 
         this.limpiarPanelPartidas();
     }
@@ -146,8 +147,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelAcercaDe = new javax.swing.JPanel();
         btnVolver3 = new javax.swing.JButton();
         btnCambiarServidor = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        txtAcercaDe = new javax.swing.JEditorPane();
         logo2 = new javax.swing.JLabel();
         fondoAcerca = new javax.swing.JLabel();
         panelPartida = new javax.swing.JPanel();
@@ -576,13 +577,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelAcercaDe.add(btnCambiarServidor);
         btnCambiarServidor.setBounds(570, 430, 80, 23);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Aquí va la info");
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane9.setViewportView(txtAcercaDe);
 
-        panelAcercaDe.add(jScrollPane1);
-        jScrollPane1.setBounds(200, 230, 460, 230);
+        panelAcercaDe.add(jScrollPane9);
+        jScrollPane9.setBounds(198, 230, 460, 230);
 
         logo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kdlteam.png"))); // NOI18N
@@ -1572,7 +1570,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1580,8 +1577,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JList<String> jlListaManualesJuego;
     private javax.swing.JLayeredPane jlpPrincipal;
     private javax.swing.JPanel jpCrear;
@@ -1613,6 +1610,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JPanel panelPartida;
     private javax.swing.JPanel panelRegistrarse;
     private javax.swing.JSpinner spinCantJugadores;
+    private javax.swing.JEditorPane txtAcercaDe;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDescPartida;
     private javax.swing.JEditorPane txtManualCrearPartida;
