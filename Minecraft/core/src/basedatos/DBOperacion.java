@@ -19,7 +19,7 @@ public class DBOperacion
 {
     //Atributos************************************************************************************/
 
-    public static String SERVIDOR = "192.168.2.101";
+    public static String SERVIDOR = "java-server.brazilsouth.cloudapp.azure.com";
     
     /**
      * Representa la ubicación del archivo SQLite con respecto al ejecutable del programa.
