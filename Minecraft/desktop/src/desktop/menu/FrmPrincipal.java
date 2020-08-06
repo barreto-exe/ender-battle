@@ -24,9 +24,13 @@ import comunicacion.MetodosSocket;
 import comunicacion.MetodosSocket.UsesSocket;
 import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
-import desktop.DesktopLauncher;
 import desktop.game.FrmGame;
 import game.tools.Constant;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javax.swing.JEditorPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.rtf.RTFEditorKit;
 
 /**
  *
@@ -39,29 +43,24 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      * Objeto que contiene los datos del usuario que ha iniciado sesión.
      */
     private DBUsuario usuarioLogueado;
-    
+
     /**
-     * Objeto que contiene los datos de la partida a la que se ha unido
-     * el jugador.
+     * Objeto que contiene los datos de la partida a la que se ha unido el
+     * jugador.
      */
     private DBPartida partida;
-    
+
     private FrmGame ventanaJuego;
-    
+
     /**
-     * El color de personaje que seleccionó el jugador.
-     *  || 0 - NORMAL 
-     *  || 1 - ROJO
-     *  || 2 - VERDE
-     *  || 3 - AMARILLO
-     *  || 4 - MORADO
-     *  || 5 - GRIS
-     *  ||
+     * El color de personaje que seleccionó el jugador. 
+     * || 0 - NORMAL || 1 - ROJO || 2 - VERDE || 3 - AMARILLO || 4 - MORADO || 5 - GRIS ||
      */
     private int personajeSeleccionado;
-    
+
     /**
-     * Hilo en donde se consulta en bucle al servidor sobre el estado de la partida
+     * Hilo en donde se consulta en bucle al servidor sobre el estado de la
+     * partida
      */
     Thread hiloEstadoPartida;
 
@@ -74,11 +73,17 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+
         partida = new DBPartida();
-        
+
+        //Cargar manuales
+        cargarRTF(txtManualCrearUsuario, "CrearUsuario");
+        cargarRTF(txtManualCrearPartida, "CrearPartida");
+        cargarRTF(txtManualUnirsePartida, "UnirsePartida");
+
         this.limpiarPanelPartidas();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,6 +126,21 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         btnVolver1 = new javax.swing.JButton();
         fondoRegistrarse = new javax.swing.JLabel();
         panelAyuda = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jpCrearUsuario = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtManualCrearUsuario = new javax.swing.JEditorPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtManualCrearPartida = new javax.swing.JEditorPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        txtManualUnirsePartida = new javax.swing.JEditorPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jlListaManualesJuego = new javax.swing.JList<>();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtManualJuego = new javax.swing.JEditorPane();
         btnVolver2 = new javax.swing.JButton();
         fondoAyuda = new javax.swing.JLabel();
         panelAcercaDe = new javax.swing.JPanel();
@@ -395,6 +415,121 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelAyuda.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelAyuda.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelAyuda.setLayout(null);
+
+        txtManualCrearUsuario.setEditable(false);
+        txtManualCrearUsuario.setToolTipText("CrearUsuario");
+        jScrollPane5.setViewportView(txtManualCrearUsuario);
+
+        javax.swing.GroupLayout jpCrearUsuarioLayout = new javax.swing.GroupLayout(jpCrearUsuario);
+        jpCrearUsuario.setLayout(jpCrearUsuarioLayout);
+        jpCrearUsuarioLayout.setHorizontalGroup(
+            jpCrearUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCrearUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpCrearUsuarioLayout.setVerticalGroup(
+            jpCrearUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCrearUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Crear Usuario", jpCrearUsuario);
+
+        txtManualCrearPartida.setEditable(false);
+        txtManualCrearPartida.setToolTipText("CrearPartida");
+        jScrollPane7.setViewportView(txtManualCrearPartida);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Crear Partida", jPanel1);
+
+        txtManualUnirsePartida.setEditable(false);
+        txtManualUnirsePartida.setToolTipText("UnirsePartida");
+        jScrollPane8.setViewportView(txtManualUnirsePartida);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Unirse a Partida", jPanel2);
+
+        jlListaManualesJuego.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jlListaManualesJuego.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "Movimiento", "Inventario" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jlListaManualesJuego.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlListaManualesJuego.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                jlListaManualesJuegoValueChanged(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jlListaManualesJuego);
+
+        txtManualJuego.setEditable(false);
+        jScrollPane6.setViewportView(txtManualJuego);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane6)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Juego", jPanel3);
+
+        panelAyuda.add(jTabbedPane1);
+        jTabbedPane1.setBounds(10, 30, 830, 380);
 
         btnVolver2.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnVolver2.setText("VOLVER");
@@ -789,9 +924,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    /*************************************************************************************************/
 
+    /**
+     * **********************************************************************************************
+     */
     //<editor-fold defaultstate="collapsed" desc="Eventos">
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
         Sonido.Click();
@@ -843,7 +979,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private void btnCambiarServidorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCambiarServidorActionPerformed
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
         Sonido.Click();
-        
+
         //Cambiar IP de la base de datos
         DBOperacion.SERVIDOR = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
@@ -865,7 +1001,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private void btnComenzarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnComenzarPartidaActionPerformed
     {//GEN-HEADEREND:event_btnComenzarPartidaActionPerformed
         Sonido.Click();
-        
+
         comenzarPartida();
     }//GEN-LAST:event_btnComenzarPartidaActionPerformed
 
@@ -878,21 +1014,23 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private void btnUnirsePartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnUnirsePartidaActionPerformed
     {//GEN-HEADEREND:event_btnUnirsePartidaActionPerformed
         int partidaRow = this.jtPartidasActivas.getSelectedRow();
-        
+
         //Verificar que hay partida elegida.
-        if(partidaRow == -1)
+        if (partidaRow == -1)
+        {
             return;
-        
-        int idPartida  = (int) this.jtPartidasActivas.getValueAt(partidaRow, 0);
-        
+        }
+
+        int idPartida = (int) this.jtPartidasActivas.getValueAt(partidaRow, 0);
+
         //Guardar nombre e id de partida por unirse
         partida.setNombre((String) this.jtPartidasActivas.getValueAt(partidaRow, 1));
         partida.setId(idPartida);
-        
+
         //Deshabilitar botones de crear partida
         this.lblFlechaIzquierda.setVisible(false);
         this.lblFlechaDerecha.setVisible(false);
-        
+
         entrarPartida(idPartida);
     }//GEN-LAST:event_btnUnirsePartidaActionPerformed
 
@@ -907,14 +1045,14 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     {//GEN-HEADEREND:event_btnCancelarPartidaActionPerformed
         Sonido.Click();
         mostrarPanel(panelBienvenida);
-        
+
         salirPartida();
-        
-        if(ventanaJuego != null && ventanaJuego.isEnabled())
+
+        if (ventanaJuego != null && ventanaJuego.isEnabled())
         {
             ventanaJuego.dispose();
         }
-        
+
         limpiarPanelPartidas();
     }//GEN-LAST:event_btnCancelarPartidaActionPerformed
 
@@ -928,10 +1066,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         btnCancelarPartida.doClick();
         System.exit(1);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jlListaManualesJuegoValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_jlListaManualesJuegoValueChanged
+    {//GEN-HEADEREND:event_jlListaManualesJuegoValueChanged
+        cargarRTF(txtManualJuego, jlListaManualesJuego.getSelectedValue());
+    }//GEN-LAST:event_jlListaManualesJuegoValueChanged
     //</editor-fold>
 
-    /*************************************************************************************************/
-    
+    /**
+     * **********************************************************************************************
+     */
     /**
      * Solicita al servidor que registre al usuario con los datos proveídos.
      */
@@ -945,24 +1089,22 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         if (!Arrays.equals(txtPass.getPassword(), txtPassConfirmar.getPassword()))
         {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
-        } 
-        //Verificar que no haya campos vacíoss
+        } //Verificar que no haya campos vacíoss
         else if ("".equals(correo) || "".equals(usuario) || pass.length == 0)
         {
             JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
-        } 
-        else
+        } else
         {
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
             MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.REGISTRAR, usuarioObj), this);
-            
+
             //Bloquear botones
             btnAceptarRegistro.setEnabled(false);
             btnVolver1.setEnabled(false);
         }
     }
-    
+
     /**
      * Envía al servidor la solicitud de inicio de sesión con los datos
      * proveídos.
@@ -975,19 +1117,18 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         if ("".equals(usuario) || "".equals(pass))
         {
             JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
-        } 
-        else
+        } else
         {
             //Crear instancia de usuario para enviarla al servidor
             usuarioLogueado = new DBUsuario(null, usuario, pass);
-            MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioLogueado),this);
-            
+            MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.INICIAR_SESION, usuarioLogueado), this);
+
             //Bloquear botones
             btnAceptarInicio.setEnabled(false);
             btnVolver.setEnabled(false);
         }
     }
-    
+
     /**
      * Envía al servidor la solicitud de crear una partida.
      */
@@ -1010,14 +1151,15 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         //Guardar nombre de la partida por crear
         partida.setNombre(nombrePartida);
-        
+
         //Crear paquete de envío a la base de datos
         DBPartida part = new DBPartida(nombrePartida, descripcionPartida, cantJugadores);
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.CREAR_PARTIDA, part), this);
     }
-    
+
     /**
      * Envía al servidor la solicitud de unirse a la partida.
+     *
      * @param idPartida es el id de la partida a unirse.
      */
     private void entrarPartida(int idPartida)
@@ -1030,7 +1172,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.UNIRSE_PARTIDA, usuarioLogueado), this);
     }
-    
+
     /**
      * Envía al servidor la solicitud de salirse de la partida.
      */
@@ -1040,8 +1182,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         {
             return;
         }
-        
-        if(hiloEstadoPartida.isAlive())
+
+        if (hiloEstadoPartida.isAlive())
         {
             //Dejar de escuchar los usuarios nuevos
             hiloEstadoPartida.interrupt();
@@ -1049,33 +1191,34 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado), this);
     }
-    
+
     private void comenzarPartida()
     {
         //Deshabilitar botón
         btnComenzarPartida.setEnabled(false);
-        
+
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.COMENZAR_PARTIDA, partida), null);
     }
-    
+
     /**
-     * Envía al servidor la petición de las partidas que hay activas actualmente.
+     * Envía al servidor la petición de las partidas que hay activas
+     * actualmente.
      */
     private void actualizarPartidasActivas()
     {
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.PEDIR_PARTIDAS_ACTIVAS, null), this);
     }
-    
+
     /**
-     * Método que se debe llamar siempre que se envíe información al servidor y luego se
-     * desee consultar su respuesta.
-     * @param socket es el socket utilizado para enviar la información al servidor, a través de él
-     * mismo se recibirá la respuesta. El socket es cerrado dentro del método.
-     * @param ventanaOrigen es el objeto formulario que contiene a los controles de la vista a modificar.
+     * Método que se debe llamar siempre que se envíe información al servidor y
+     * luego se desee consultar su respuesta.
+     *
+     * @param socket es el socket utilizado para enviar la información al
+     * servidor, a través de él mismo se recibirá la respuesta. El socket es
+     * cerrado dentro del método.
+     * @param ventanaOrigen es el objeto formulario que contiene a los controles
+     * de la vista a modificar.
      */
-    
-    
-    
     @Override
     public void recibirRespuestaServer(final Socket socket, final UsesSocket ventanaOrigen)
     {
@@ -1110,10 +1253,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     if (resultado.getResultado() == ResultadoOperacion.ERROR)
                     {
                         JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
-                        formulario.btnVolver.doClick();                       
-                    } 
-
-                    //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
+                        formulario.btnVolver.doClick();
+                    } //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
                     //Resultados de registro
                     else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                     {
@@ -1126,30 +1267,26 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
                         formulario.btnVolver.doClick();
                     } //</editor-fold>  
-
                     //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
                     //Resultados de inicio de sesión
                     else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
                     {
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-                    } 
-                    else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
+                    } else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
                     {
                         formulario.mostrarPanel(formulario.panelPartida);
                         formulario.limpiarTextBoxes();
                         formulario.lblNickname.setText("Bienvenido, " + usuarioLogueado.getUsuario());
 
-                        usuarioLogueado.setId((int)resultado.getInformacion());
+                        usuarioLogueado.setId((int) resultado.getInformacion());
                         actualizarPartidasActivas();
-                    }
-                    //</editor-fold>
-
+                    } //</editor-fold>
                     //<editor-fold defaultstate="collapsed" desc="Resultados de Crear Partida">
                     //Resultados de crear partida
                     else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_CREADA)
                     {
                         //JOptionPane.showMessageDialog(null, "Partida creada.");
-                        partida.setId((int)resultado.getInformacion());
+                        partida.setId((int) resultado.getInformacion());
                         entrarPartida(partida.getId());
 
                         //Bloquear paneles y permanecer en el LOBBY
@@ -1166,7 +1303,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         formulario.lblFlechaDerecha.setVisible(true);
                         formulario.lblFlechaIzquierda.setVisible(true);
                     } //</editor-fold>
-
                     //<editor-fold defaultstate="collapsed" desc="Resultados de Unirse a Partida">
                     //Resultados de unirse a partida
                     else if (resultado.getResultado() == ResultadoOperacion.UNIDO_EXITOSAMENTE)
@@ -1178,9 +1314,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                         partida.setId(usuarioLogueado.getPartida());
                         formulario.lblNombrePartida.setText(partida.getNombre());
-                        
+
                         //Crear hilo para estar a la escucha del estado de la partida
-                        hiloEstadoPartida = new Thread(new Runnable(){
+                        hiloEstadoPartida = new Thread(new Runnable()
+                        {
                             @Override
                             public void run()
                             {
@@ -1190,10 +1327,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                                     ObjectOutputStream out;
 
                                     //Armar paquete para enviar al servidor
-                                    PaqueteOperacion paquete = 
-                                            new PaqueteOperacion(Operacion.PEDIR_ESTADO_PARTIDA, partida);
+                                    PaqueteOperacion paquete
+                                            = new PaqueteOperacion(Operacion.PEDIR_ESTADO_PARTIDA, partida);
 
-                                    while(true)
+                                    while (true)
                                     {
                                         Thread.sleep(1000);
 
@@ -1204,22 +1341,20 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                                         recibirRespuestaServer(socket, formulario);
                                     }
-                                } 
-                                catch (IOException|InterruptedException ex)
+                                } catch (IOException | InterruptedException ex)
                                 {
                                     System.out.println(ex.getMessage());
                                 }
                             }
                         });
                         hiloEstadoPartida.start();
-                    } 
-                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
+                    } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                     {
                         JOptionPane.showMessageDialog(
-                                null, 
+                                null,
                                 "La partida a la que te quieres unir está llena, en curso o no existe."
                         );
-                        
+
                         //Rehabilitar selección de partida y personaje
                         formulario.jtPartidas.setEnabledAt(0, true);
                         formulario.jtPartidas.setEnabledAt(1, true);
@@ -1228,65 +1363,57 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                         formulario.lblFlechaDerecha.setVisible(true);
                         formulario.lblFlechaIzquierda.setVisible(true);
-                    } 
-                    //</editor-fold>
-
+                    } //</editor-fold>
                     //<editor-fold defaultstate="collapsed" desc="Resultados de Pedir Datos Partida">
+                    //<editor-fold defaultstate="collapsed" desc="Usuarios">
+                    else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
+                    {
+                        ((DefaultTableModel) formulario.jtJugadores.getModel()).setRowCount(0);
 
-                        //<editor-fold defaultstate="collapsed" desc="Usuarios">
-                        else if (resultado.getResultado() == ResultadoOperacion.USUARIOS_PARTIDA)
+                        ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
+                        DefaultTableModel tabla = (DefaultTableModel) formulario.jtJugadores.getModel();
+
+                        int cantJugadores = 0;
+                        for (DBUsuario usuario : usuarios)
                         {
-                            ((DefaultTableModel)formulario.jtJugadores.getModel()).setRowCount(0);
+                            cantJugadores++;
 
-                            ArrayList<DBUsuario> usuarios = (ArrayList<DBUsuario>) resultado.getInformacion();
-                            DefaultTableModel tabla = (DefaultTableModel) formulario.jtJugadores.getModel();
-
-                            int cantJugadores = 0;
-                            for(DBUsuario usuario : usuarios)
+                            //Obtener el número de jugador
+                            if (usuario.getUsuario().equals(usuarioLogueado.getUsuario()))
                             {
-                                cantJugadores++;
-
-                                //Obtener el número de jugador
-                                if(usuario.getUsuario().equals(usuarioLogueado.getUsuario()))
-                                {
-                                    usuario.setNumeroJugador(cantJugadores);
-                                }
-                                
-                                tabla.addRow(new Object[]{
-                                    usuario.getUsuario(),
-                                    usuario.getPersonajeSeleccionadoString(),
-                                    usuario.getIp()
-                                });
+                                usuario.setNumeroJugador(cantJugadores);
                             }
 
-                            //Verificar si hay más de un jugador y que el jugador sea el creador de la partida
-                            if(cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
+                            tabla.addRow(new Object[]
                             {
-                                formulario.btnComenzarPartida.setVisible(true);
-                            }
-                            else if(cantJugadores <= 1)
-                            {
-                                formulario.btnComenzarPartida.setVisible(false);
-                            }
+                                usuario.getUsuario(),
+                                usuario.getPersonajeSeleccionadoString(),
+                                usuario.getIp()
+                            });
                         }
-                        //</editor-fold>
 
-                        //<editor-fold defaultstate="collapsed" desc="Partida Iniciada">
-                        else if(resultado.getResultado() == ResultadoOperacion.PARTIDA_INICIADA)
+                        //Verificar si hay más de un jugador y que el jugador sea el creador de la partida
+                        if (cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
                         {
-                            hiloEstadoPartida.interrupt();
-                            
-                            ventanaJuego = new FrmGame(usuarioLogueado);
-                            ventanaJuego.setVisible(true);
+                            formulario.btnComenzarPartida.setVisible(true);
+                        } else if (cantJugadores <= 1)
+                        {
+                            formulario.btnComenzarPartida.setVisible(false);
                         }
-                        //</editor-fold>
-                        
+                    } //</editor-fold>
+                    //<editor-fold defaultstate="collapsed" desc="Partida Iniciada">
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_INICIADA)
+                    {
+                        hiloEstadoPartida.interrupt();
+
+                        ventanaJuego = new FrmGame(usuarioLogueado);
+                        ventanaJuego.setVisible(true);
+                    } //</editor-fold>
                     //</editor-fold>
-                    
                     //<editor-fold defaultstate="collapsed" desc="Resultados de pedir partidas activas">
                     else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
                     {
-                        ((DefaultTableModel)formulario.jtPartidasActivas.getModel()).setRowCount(0);
+                        ((DefaultTableModel) formulario.jtPartidasActivas.getModel()).setRowCount(0);
 
                         ArrayList<DBPartida> partidas = (ArrayList<DBPartida>) resultado.getInformacion();
                         DefaultTableModel tabla = (DefaultTableModel) formulario.jtPartidasActivas.getModel();
@@ -1303,19 +1430,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                                 partida.getLimiteJugadores(),
                             });
                         }
-                    }
-                    //</editor-fold>
-
+                    } //</editor-fold>
                     //<editor-fold defaultstate="collapsed" desc="Resultados de salir de partida">
-                    else if(resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
+                    else if (resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
                     {
                         JOptionPane.showMessageDialog(null, "Has salido de la sala.");
                     }
                     //</editor-fold>
-                    
+
                     socket.close();
-                } 
-                catch (IOException | ClassNotFoundException ex)
+                } catch (IOException | ClassNotFoundException ex)
                 {
                     System.out.println(ex.getMessage());
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -1323,7 +1447,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         }).start();
     }
-    
+
     /**
      * Rota los sprites de los personajes dependiendo del número seleccionado.
      */
@@ -1383,13 +1507,41 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         this.jtPartidas.setSelectedIndex(0);
         this.personajeSeleccionado = 0;
         this.elegirImagenPersonaje();
-        
+
         this.partida.setId(-1);
-        ((DefaultTableModel)this.jtPartidasActivas.getModel()).setRowCount(0);
-        ((DefaultTableModel)this.jtJugadores.getModel()).setRowCount(0);
+        ((DefaultTableModel) this.jtPartidasActivas.getModel()).setRowCount(0);
+        ((DefaultTableModel) this.jtJugadores.getModel()).setRowCount(0);
     }
 
-    
+    /**
+     * Carga un archivo de texto enriquecido en EditorPane. El nombre del archivo
+     * a cargar debe ser igual al ToolTipText del EditorPane.
+     * @param panel es el pane donde se mostrará el archivo
+     * @param manual es el nombre del archivo RTF que se va a cargar
+     */
+    private void cargarRTF(JEditorPane panel, String manual)
+    {        
+        RTFEditorKit rtf = new RTFEditorKit();
+        panel.setEditorKit(rtf);
+
+        try
+        {
+            FileInputStream fi = new FileInputStream("manuales/"+manual+".rtf");
+            rtf.read(fi, panel.getDocument(), 0);
+        } 
+        catch (FileNotFoundException e)
+        {
+            System.out.println("File not found");
+        } 
+        catch (IOException e)
+        {
+            System.out.println("I/O error");
+        } 
+        catch (BadLocationException e)
+        {
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarInicio;
     private javax.swing.JButton btnAceptarRegistro;
@@ -1417,12 +1569,23 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JList<String> jlListaManualesJuego;
     private javax.swing.JLayeredPane jlpPrincipal;
     private javax.swing.JPanel jpCrear;
+    private javax.swing.JPanel jpCrearUsuario;
     private javax.swing.JPanel jpLobby;
     private javax.swing.JPanel jpUnirse;
     private javax.swing.JTable jtJugadores;
@@ -1452,6 +1615,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JSpinner spinCantJugadores;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDescPartida;
+    private javax.swing.JEditorPane txtManualCrearPartida;
+    private javax.swing.JEditorPane txtManualCrearUsuario;
+    private javax.swing.JEditorPane txtManualJuego;
+    private javax.swing.JEditorPane txtManualUnirsePartida;
     private javax.swing.JTextField txtNombrePartida;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JPasswordField txtPassConfirmar;
