@@ -1187,7 +1187,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                                     while(true)
                                     {
-                                        Thread.sleep(500);
+                                        Thread.sleep(1000);
 
                                         //Enviar solicitud al server
                                         socket = new Socket(DBOperacion.SERVIDOR, 27015);

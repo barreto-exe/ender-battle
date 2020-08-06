@@ -25,18 +25,27 @@ public class DesktopLauncher
      */
     private static Reproductor reproductorTemaPrincipal;
 
+    private static boolean juegoIniciado;
+
     public static void main(String[] arg)
     {
         colocarInterfaz();
         comenzarMusica();
+        juegoIniciado = false;
 
         FrmPrincipal frm = new FrmPrincipal();
         frm.setVisible(true);
     }
 
-    public static int comenzarJuego(DBUsuario usuario)
+    public static void comenzarJuego(DBUsuario usuario)
     {
+        if (juegoIniciado)
+        {
+            return;
+        }
+
         GameLauncher.setUsuario(usuario);
+        juegoIniciado = true;
 
         //<editor-fold defaultstate="collapsed" desc="Lanzar GameLauncher">
         String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
@@ -47,12 +56,10 @@ public class DesktopLauncher
         {
             Process process = builder.start();
             process.waitFor();
-            return process.exitValue();
         } catch (Exception e)
         {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
-            return 1;
         }
         //</editor-fold>
     }

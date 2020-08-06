@@ -23,8 +23,6 @@ import tools.Constant;
 import tools.WorldContactListener;
 import static game.screens.worlds.BiomeAssemblerClass.BiomeAssembler;
 import inventario.Arm;
-import inventario.BattleObject;
-import inventario.Protection;
 
 /**
  *

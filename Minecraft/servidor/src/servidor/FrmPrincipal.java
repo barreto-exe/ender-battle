@@ -422,8 +422,16 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 //Enviar respuesta al cliente
                 if(responderResultado)
                 {
-                    ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
-                    paqueteEnvio.writeObject(resultado);
+                    try
+                    {
+                        ObjectOutputStream paqueteEnvio = new ObjectOutputStream(socket.getOutputStream());
+                        paqueteEnvio.writeObject(resultado);
+                    }
+                    catch(IOException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                        txtPrincipal.append(ex.getMessage() + "\n" + ex.getStackTrace().toString() + "\n");
+                    }
                     socket.close();
                 }
             }
@@ -433,15 +441,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         {
             System.out.println(ex.getMessage());
             txtPrincipal.append(ex.getMessage() + "\n" + ex.getStackTrace().toString() + "\n");
-            try
-            {
-                socket.close();
-            } catch (IOException ex1)
-            {
-                System.out.println(ex.getMessage());
-                txtPrincipal.append(ex.getMessage() + "\n");
-            }
-            new Thread(this).start();
         }
     }
     
