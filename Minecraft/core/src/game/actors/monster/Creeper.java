@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -34,6 +35,7 @@ public class Creeper extends MonsterMob{
          setBounds(0, 0, (55 / Constant.PPM)*2, (128/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
+         this.prize = new Arm("hacha","diamante");
         }else{
             setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
         }

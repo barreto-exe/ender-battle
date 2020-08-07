@@ -35,6 +35,10 @@ public class Constant
         POISONED,
     }
     
+    public enum Protection{
+        HELMET,CHESTPLATE,LEGGING,BOOTS 
+    }
+    
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short ESMERALD_BIT = 4;

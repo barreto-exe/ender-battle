@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.BattleObject;
 
 /**
  *
@@ -34,7 +35,9 @@ public abstract class MonsterMob extends Mob
     protected int attackPoints;
     protected String attackDescription;
     protected float speed;
-
+    protected BattleObject prize; 
+    protected TextureRegion prizeTexture;
+    
     public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss)
     {
         super(world, region, life);
@@ -122,4 +125,6 @@ public abstract class MonsterMob extends Mob
     }
 
     public abstract void specialAttack(Player player);
+    
+
 }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -32,6 +33,7 @@ public class Enderman extends MonsterMob
          setBounds(0, 0, (81 / Constant.PPM)*2, (192/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
+         this.prize = new Arm("espada","diamante");
         }else{
             setBounds(0, 0, 81 / Constant.PPM, 192/ Constant.PPM);
         }
