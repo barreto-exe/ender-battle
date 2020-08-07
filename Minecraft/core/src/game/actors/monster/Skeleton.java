@@ -23,16 +23,20 @@ import game.tools.Constant;
  */
 public class Skeleton extends MonsterMob
 {
-
-    private EdgeShape arrow;
-    private int direction;
-
-    public Skeleton(GameScreen screen, int x, int y)
+    
+    float direction;
+    public Skeleton(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10);
-
-        setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
-
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10,isBoss);
+        
+        if(isBoss){
+         setBounds(0, 0, (70 / Constant.PPM)*2, (128/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+        }else{
+            setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
+        }
+        
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
@@ -60,7 +64,7 @@ public class Skeleton extends MonsterMob
         sensor.set(getWidth() / -2, getHeight() / -2 + 0.5f, getWidth() / -2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
 
-        arrow = new EdgeShape();
+        EdgeShape arrow = new EdgeShape();
         fixtureD.shape = arrow;
         fixtureD.isSensor = true;
         fixtureD.filter.categoryBits = Constant.ARROW_SENSOR_BIT;

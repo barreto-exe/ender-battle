@@ -129,7 +129,7 @@ public class GameScreen extends BaseScreen
         
         //Monstruos de prueba   
         //actors.addActor(new Skeleton(this,20,5));
-        actors.addActor(new Zombie(this,17,5));
+        actors.addActor(new Zombie(this,17,5,true));
         //actors.addActor(new Pigman(this,15,5));
         //actors.addActor(new Creeper(this,13,5));
         

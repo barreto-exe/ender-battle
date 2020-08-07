@@ -24,11 +24,18 @@ import game.tools.Constant;
 public class Enderman extends MonsterMob
 {
 
-    public Enderman(GameScreen screen, int x, int y)
+    public Enderman(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20);
-
-        setBounds(0, 0, 81 / Constant.PPM, 192 / Constant.PPM);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20,isBoss);
+        
+         if(isBoss){
+         setBounds(0, 0, (81 / Constant.PPM)*2, (192/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+        }else{
+            setBounds(0, 0, 81 / Constant.PPM, 192/ Constant.PPM);
+        }
+         
 
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);

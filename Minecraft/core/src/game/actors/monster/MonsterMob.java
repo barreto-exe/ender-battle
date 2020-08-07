@@ -35,11 +35,12 @@ public abstract class MonsterMob extends Mob
     protected String attackDescription;
     protected float speed;
 
-    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints)
+    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss)
     {
         super(world, region, life);
         this.speed = speed;
         this.attackPoints = attackPoints;
+        this.isBoss = isBoss;
         duration = 0;
         
         

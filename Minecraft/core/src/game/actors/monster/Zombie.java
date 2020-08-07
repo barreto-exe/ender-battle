@@ -24,11 +24,17 @@ import game.tools.Constant.PlayerCondition;
 public class Zombie extends MonsterMob
 {
 
-    public Zombie(GameScreen screen, int x, int y)
+    public Zombie(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10);
-
-        setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
+        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10,isBoss);
+        if(isBoss){
+            setBounds(0, 0, (128 / Constant.PPM)*2, (128 / Constant.PPM)*2);
+            this.attackPoints *=2;
+            this.life *=2;
+        }else{
+            setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
+        }
+        
 
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);

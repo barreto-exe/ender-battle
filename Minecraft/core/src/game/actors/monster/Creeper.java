@@ -27,10 +27,16 @@ public class Creeper extends MonsterMob{
     private Array<TextureRegion> explosionFrames;
     private Animation explosionAnimation;
     
-    public Creeper(GameScreen screen, int x, int y) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20);
- 
-        setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
+    public Creeper(GameScreen screen, int x, int y,boolean isBoss) {
+        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20,isBoss);
+         
+        if(isBoss){
+         setBounds(0, 0, (55 / Constant.PPM)*2, (128/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+        }else{
+            setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
+        }
         
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);

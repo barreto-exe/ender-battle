@@ -24,13 +24,19 @@ import game.tools.Constant.PlayerCondition;
 public class Spider extends MonsterMob
 {
 
-    public Spider(GameScreen screen, int x, int y)
+    public Spider(GameScreen screen, int x, int y,boolean isBoss)
     {
 
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10);
-
-        //Colocar posición
-        setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
+        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10,isBoss);
+        
+        if(isBoss){
+            setBounds(0, 0, (60 / Constant.PPM)*2, (60 / Constant.PPM)*2);
+            this.attackPoints *=2;
+            this.life *=2;
+        }else{
+            setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
+        }
+        
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();

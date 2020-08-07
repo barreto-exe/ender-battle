@@ -23,11 +23,17 @@ import game.tools.Constant.PlayerCondition;
  */
 public class Pigman extends MonsterMob{
 
-     public Pigman(GameScreen screen, int x, int y) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20);
- 
-        setBounds(0, 0, 64 / Constant.PPM, 128 / Constant.PPM);
+     public Pigman(GameScreen screen, int x, int y,boolean isBoss) {
+        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20,isBoss);
         
+        if(isBoss){
+         setBounds(0, 0, (64 / Constant.PPM)*2, (128/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+        }else{
+            setBounds(0, 0, 64 / Constant.PPM, 128 / Constant.PPM);
+        }
+
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
