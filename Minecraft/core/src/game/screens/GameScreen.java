@@ -75,6 +75,8 @@ public class GameScreen extends BaseScreen
         gameCam = new OrthographicCamera();
         viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
+        gameCam.zoom += 0.2f;
+        gameCam.translate(new Vector2(0,0.2f));
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Construir bioma">

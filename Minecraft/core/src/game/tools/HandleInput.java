@@ -45,12 +45,16 @@ public class HandleInput extends InputAdapter
                 controller.setHitting(true); 
                 return true; 
             } 
-            case (Input.Keys.E):
+            case (Input.Keys.Q):
             case (Input.Keys.ENTER):
             { 
                 controller.setPickingUp(true); 
                 return true; 
             } 
+            case (Input.Keys.E):
+            {
+                //Abrir inventario
+            }
             default:
             {
                 return false;
