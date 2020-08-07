@@ -6,15 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import game.screens.GameScreen;
 import basedatos.DBUsuario;
 import com.badlogic.gdx.Gdx;
-import comunicacion.MetodosSocket;
-import comunicacion.MetodosSocket.UsesSocket;
-import comunicacion.PaqueteOperacion;
-import comunicacion.PaqueteResultado;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.Socket;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 public class MainGame extends Game
 {
@@ -56,12 +48,20 @@ public class MainGame extends Game
     @Override
     public void render()
     {
+        String nombreUser = "";
+        
+        if(usuario != null)
+        {
+            
+            nombreUser = " || " + usuario.getUsuario();
+        }
+        
         super.render();
         ventanaOrigen.setTitle
         (
             "Minecraft: La Batalla del Ender"
             + " || FPS: " + Gdx.graphics.getFramesPerSecond()
-            + " || " + usuario.getUsuario()
+            + nombreUser
         );
     }    
     

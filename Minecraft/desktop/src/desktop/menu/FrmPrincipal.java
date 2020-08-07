@@ -53,8 +53,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private FrmGame ventanaJuego;
 
     /**
-     * El color de personaje que seleccionó el jugador. 
-     * || 0 - NORMAL || 1 - ROJO || 2 - VERDE || 3 - AMARILLO || 4 - MORADO || 5 - GRIS ||
+     * El color de personaje que seleccionó el jugador. || 0 - NORMAL || 1 -
+     * ROJO || 2 - VERDE || 3 - AMARILLO || 4 - MORADO || 5 - GRIS ||
      */
     private int personajeSeleccionado;
 
@@ -84,7 +84,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         this.limpiarPanelPartidas();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,6 +97,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal = new javax.swing.JLayeredPane();
         panelBienvenida = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         btnIniciarSesion = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         btnEstadisticas = new javax.swing.JButton();
@@ -197,6 +197,18 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelBienvenida.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelBienvenida.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelBienvenida.setLayout(null);
+
+        jButton1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jButton1.setText("DEBUG");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panelBienvenida.add(jButton1);
+        jButton1.setBounds(590, 10, 100, 40);
 
         btnIniciarSesion.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnIniciarSesion.setText("INICIAR SESIÓN");
@@ -1073,6 +1085,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     {//GEN-HEADEREND:event_jlListaManualesJuegoValueChanged
         cargarRTF(txtManualJuego, jlListaManualesJuego.getSelectedValue());
     }//GEN-LAST:event_jlListaManualesJuegoValueChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new FrmGame(null).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
     //</editor-fold>
 
     /**
@@ -1256,7 +1274,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     {
                         JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
                         formulario.btnVolver.doClick();
-                    } //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
+                    } 
+
+                    //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
                     //Resultados de registro
                     else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                     {
@@ -1410,7 +1430,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                         ventanaJuego = new FrmGame(usuarioLogueado);
                         ventanaJuego.setVisible(true);
-                    } //</editor-fold>
+                    } 
+                    //</editor-fold>
                     //</editor-fold>
                     //<editor-fold defaultstate="collapsed" desc="Resultados de pedir partidas activas">
                     else if (resultado.getResultado() == ResultadoOperacion.PARTIDAS_ACTIVAS)
@@ -1516,30 +1537,28 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     }
 
     /**
-     * Carga un archivo de texto enriquecido en EditorPane. El nombre del archivo
-     * a cargar debe ser igual al ToolTipText del EditorPane.
+     * Carga un archivo de texto enriquecido en EditorPane. El nombre del
+     * archivo a cargar debe ser igual al ToolTipText del EditorPane.
+     *
      * @param panel es el pane donde se mostrará el archivo
      * @param manual es el nombre del archivo RTF que se va a cargar
      */
     private void cargarRTF(JEditorPane panel, String manual)
-    {        
+    {
         RTFEditorKit rtf = new RTFEditorKit();
         panel.setEditorKit(rtf);
 
         try
         {
-            FileInputStream fi = new FileInputStream("manuales/"+manual+".rtf");
+            FileInputStream fi = new FileInputStream("manuales/" + manual + ".rtf");
             rtf.read(fi, panel.getDocument(), 0);
-        } 
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             System.out.println("File not found");
-        } 
-        catch (IOException e)
+        } catch (IOException e)
         {
             System.out.println("I/O error");
-        } 
-        catch (BadLocationException e)
+        } catch (BadLocationException e)
         {
         }
     }
@@ -1568,6 +1587,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JLabel fondoBienvenida;
     private javax.swing.JLabel fondoIniciar;
     private javax.swing.JLabel fondoRegistrarse;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
