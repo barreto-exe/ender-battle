@@ -10,6 +10,7 @@ public class VirtualController
     private boolean right;
     private boolean up;
     private boolean hitting; 
+    private boolean pickingUp;
 
     public boolean isLeft()
     {
@@ -50,4 +51,12 @@ public class VirtualController
     { 
         this.hitting = hitting; 
     } 
+
+    public boolean isPickingUp() {
+        return pickingUp;
+    }
+
+    public void setPickingUp(boolean pickingUp) {
+        this.pickingUp = pickingUp;
+    }
 }

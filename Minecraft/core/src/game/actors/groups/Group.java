@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package actors.groups;
+package game.actors.groups;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import java.util.ArrayList;
@@ -38,6 +33,15 @@ public class Group implements Actor
         actors.add(actor);
     }
     
+    /**
+     * Elimina un actor del grupo.
+     * @param actor es el objeto a remover.
+     */
+    public void removeActor(Actor actor)
+    {
+        actors.remove(actor);
+    }
+    
     
     /**
      * Ejecuta los métodos act de todos los Actores o Grupos dentro del grupo.
@@ -45,9 +49,9 @@ public class Group implements Actor
     @Override
     public void act(float delta)
     {
-        for(Actor actor : actors)
+        for(int i = 0; i < actors.toArray().length; i++)
         {
-            actor.act(delta);
+            ((Actor)(actors.toArray()[i])).act(delta);
         }
     }
 
@@ -57,9 +61,9 @@ public class Group implements Actor
     @Override
     public void draw(Batch batch)
     {
-        for(Actor actor : actors)
+        for(int i = 0; i < actors.toArray().length; i++)
         {
-            actor.draw(batch);
+            ((Actor)(actors.toArray()[i])).draw(batch);
         }
     }
     

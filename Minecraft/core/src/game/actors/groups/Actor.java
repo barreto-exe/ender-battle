@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package actors.groups;
+package game.actors.groups;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -26,7 +21,7 @@ public interface Actor
      * de la entrada del usuario o de los sucesos ocurridos en el Box2d.
      * Es un método que se debe llamar en cada render de la pantalla en la que
      * se encuentra el player. 
-     * @param delta tiempo transcurrido desde la última vez que se ejecutó
+     * @param delta tiempo en segundos transcurrido desde la última vez que se ejecutó
      * la función.
      */
     public void act(float delta);

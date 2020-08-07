@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.screens;
 
 import com.badlogic.gdx.Screen;
@@ -15,14 +10,16 @@ import game.MainGame;
 public abstract class BaseScreen implements Screen
 {
     //ATTRIBUTES
-    protected static MainGame game;
+    protected MainGame game;
     private TextureAtlas atlas;
+    private TextureAtlas plantas;
 
     //BUILDER
     public BaseScreen(MainGame game)
     {
         atlas = new TextureAtlas("atlas.atlas");
-        BaseScreen.game = game;
+        plantas = new TextureAtlas("plantas.atlas");
+        this.game = game;
     }
 
     public TextureAtlas getAtlas()
@@ -30,12 +27,10 @@ public abstract class BaseScreen implements Screen
         return atlas;
     }
 
-    public static MainGame getGame()
-    {
-        return game;
+    public TextureAtlas getPlantas() {
+        return plantas;
     }
 
-    
     @Override
     public void show()
     {

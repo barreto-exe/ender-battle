@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import comunicacion.MetodosSocket;
-import comunicacion.PaqueteOperacion;
-import game.MainGame;
-import game.screens.BaseScreen;
-import game.screens.GameScreen;
 
 /**
  *
@@ -56,9 +45,12 @@ public class HandleInput extends InputAdapter
                 controller.setHitting(true); 
                 return true; 
             } 
-            case(Input.Keys.ESCAPE):
-            {
-            }
+            case (Input.Keys.E):
+            case (Input.Keys.ENTER):
+            { 
+                controller.setPickingUp(true); 
+                return true; 
+            } 
             default:
             {
                 return false;
@@ -93,6 +85,12 @@ public class HandleInput extends InputAdapter
             case (Input.Keys.SPACE):
             { 
                 controller.setHitting(false); 
+                return true; 
+            } 
+            case (Input.Keys.E):
+            case (Input.Keys.ENTER):
+            { 
+                controller.setPickingUp(false); 
                 return true; 
             } 
             default:

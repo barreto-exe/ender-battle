@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tools;
+package game.tools;
 
-import game.tools.Constant;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import actors.Player;
-import actors.pacific.Mob;
-import actors.pacific.PacificMob;
+import game.actors.Player;
+import game.actors.Mob;
+import game.actors.pacific.PacificMob;
+import game.actors.monster.MonsterMob;
+import game.actors.monster.Skeleton;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import game.actors.farming.meats.ObjectCollectible;
+import game.actors.farming.plants.Plant;
 
 /**
  *
@@ -21,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  */
 public class WorldContactListener implements ContactListener
 {
+
     private final Player player;
 
     public WorldContactListener(Player player)
@@ -33,9 +32,9 @@ public class WorldContactListener implements ContactListener
     {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
-        
+
         int colision = a.getFilterData().categoryBits | b.getFilterData().categoryBits;
-        
+
         switch (colision)
         {
             case Constant.PLAYER_FEET_BIT | Constant.GROUND_BIT:
@@ -44,24 +43,67 @@ public class WorldContactListener implements ContactListener
             case Constant.MOB_SENSOR_BIT | Constant.GROUND_BIT:
                 if (a.getFilterData().categoryBits == Constant.MOB_SENSOR_BIT)
                 {
-                    ((PacificMob) a.getUserData()).changeDirection();
-                }
-                else 
+                    ((Mob) a.getUserData()).changeDirection();
+                } 
+                else
                 {
-                    ((PacificMob) b.getUserData()).changeDirection();
+                    ((Mob) b.getUserData()).changeDirection();
                 }
                 break;
             case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:
                 if (a.getFilterData().categoryBits == Constant.MOB_SENSOR_BIT)
                 {
-                    player.setEnemy((Mob)a.getUserData());
+                    player.setEnemy((Mob) a.getUserData());
+                } 
+                else
+                {
+                    player.setEnemy((Mob) b.getUserData());
+                }
+                if (player.getEnemy() instanceof MonsterMob)
+                {
+                    MonsterMob monsterMob = (MonsterMob) player.getEnemy();
+                    monsterMob.attackPlayer(player);
+                }
+                player.canAttack(true);
+                break;
+            case Constant.PLAYER_BIT | Constant.FOOD_BIT:
+                if (a.getFilterData().categoryBits == Constant.FOOD_BIT)
+                {
+                    player.setFood((ObjectCollectible)a.getUserData());
                 }
                 else 
                 {
-                    player.setEnemy((Mob)b.getUserData());
-                }
-                player.canAttack(true);    
+                    player.setFood((ObjectCollectible)b.getUserData());
+                }   
                 break;
+            case Constant.MOB_BIT | Constant.MOB_BIT:
+                ((Mob) a.getUserData()).changeDirection();
+                ((Mob) b.getUserData()).changeDirection();
+                break;
+            case Constant.PLAYER_BIT | Constant.TREE_BIT:
+                if (a.getFilterData().categoryBits == Constant.TREE_BIT)
+                {
+                    player.setPlant((Plant)a.getUserData());
+                }
+                else 
+                {
+                    player.setPlant((Plant)b.getUserData());
+                }
+                player.canAttack(true); 
+                break;
+            case Constant.PLAYER_BIT | Constant.ARROW_SENSOR_BIT:
+                if (a.getFilterData().categoryBits == Constant.ARROW_SENSOR_BIT)
+                {
+                    Skeleton skeleton = ((Skeleton)a.getUserData());
+                    skeleton.specialAttack(player);
+                } 
+                else
+                {
+                    Skeleton skeleton = ((Skeleton)b.getUserData());
+                    skeleton.specialAttack(player);
+                }
+                break;
+                
         }
     }
 
@@ -70,13 +112,19 @@ public class WorldContactListener implements ContactListener
     {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
-        
+
         int colision = a.getFilterData().categoryBits | b.getFilterData().categoryBits;
-        
+
         switch (colision)
         {
-            case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:   
+            case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:
                 player.setEnemy(null);
+                break;
+            case Constant.PLAYER_BIT | Constant.FOOD_BIT:   
+                player.setFood(null);
+                break;
+            case Constant.PLAYER_BIT | Constant.TREE_BIT:
+                System.out.println("dejó de tocar un arbol");
                 break;
         }
     }

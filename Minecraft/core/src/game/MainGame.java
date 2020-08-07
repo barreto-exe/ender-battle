@@ -1,6 +1,6 @@
 package game;
 
-import actors.Player;
+import game.actors.Player;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import game.screens.GameScreen;
@@ -50,7 +50,7 @@ public class MainGame extends Game
     {
         batch = new SpriteBatch();
         player = new Player("normal");
-        setScreen(new GameScreen(this, "bioma1.tmx", player));          
+        setScreen(new GameScreen(this, "bioma_01.tmx", player));          
     }
 
     @Override
