@@ -21,7 +21,6 @@ public class Cow extends PacificMob
         super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80);
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
         
-        
         speed = 1.2f;
         type = Constant.Farming.BEEF;
     }
@@ -31,10 +30,10 @@ public class Cow extends PacificMob
     protected Vector2[] getVerticesTop() 
     {
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-66, 42).scl(1 / Constant.PPM);
-        vertice[1] = new Vector2(66, 42).scl(1 / Constant.PPM);
-        vertice[2] = new Vector2(-66, 10).scl(1 / Constant.PPM);
-        vertice[3] = new Vector2(66, 10).scl(1 / Constant.PPM);
+        vertice[0] = new Vector2(-64, 42).scl(1 / Constant.PPM);
+        vertice[1] = new Vector2(64, 42).scl(1 / Constant.PPM);
+        vertice[2] = new Vector2(-64, 10).scl(1 / Constant.PPM);
+        vertice[3] = new Vector2(64, 10).scl(1 / Constant.PPM);
         return vertice;
     }
     //</editor-fold>  

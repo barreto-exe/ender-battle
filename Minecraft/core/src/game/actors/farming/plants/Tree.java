@@ -20,7 +20,6 @@ public class Tree extends Plant
         super(screen, type, x, y);
         
         int random = (int) (Math.random() * 3) + 1;
-        System.out.println(random);
         
         if (setFrame(type, random))
         {

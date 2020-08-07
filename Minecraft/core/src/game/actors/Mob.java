@@ -49,6 +49,7 @@ public abstract class Mob extends Sprite implements Actor
     {
 
         life -= hit;
+        System.out.println("vida del mob: " + life);
         
         //El mob que será herido
         final Mob mob = this;
@@ -78,7 +79,7 @@ public abstract class Mob extends Sprite implements Actor
         }).start();
 
         //Saltar por el golpe
-        body.applyLinearImpulse(0, 8f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        //body.applyLinearImpulse(0, 8f, body.getWorldCenter().x, body.getWorldCenter().y, true);
 
         if (life <= 0)
         {

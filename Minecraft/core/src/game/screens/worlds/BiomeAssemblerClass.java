@@ -43,7 +43,6 @@ public class BiomeAssemblerClass
         //Creando fixtures bioma [1]
         for (MapObject object : screen.getMap().getLayers().get(1).getObjects().getByType(RectangleMapObject.class))
         {
-            System.out.println("Imprime tierra");
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
             def.type = BodyDef.BodyType.StaticBody;
@@ -64,7 +63,6 @@ public class BiomeAssemblerClass
         //Ubicando mobs pacíficos pequeños [2]
         for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class))
         {
-            System.out.println("Imprime pequeños mobs");
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
             mob = getLittleMob(screen, rectangle.getX(), rectangle.getY());
@@ -78,7 +76,6 @@ public class BiomeAssemblerClass
         //Ubicando mobs pacíficos grandes [3]
         for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class))
         {
-            System.out.println("Imprime grandes mobs");
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
             mob = getBigMob(screen, rectangle.getX(), rectangle.getY());
@@ -96,7 +93,6 @@ public class BiomeAssemblerClass
         //Ubicando arboles [4]
         for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class))
         {
-            System.out.println("Imprime arboles");
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
             plant = getTree(screen, rectangle.getX(), rectangle.getY());
@@ -110,7 +106,6 @@ public class BiomeAssemblerClass
         //Ubicando arbustos [5]
         for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class))
         {
-            System.out.println("Imprime arbustos");
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
             plant = getBush(screen, rectangle.getX(), rectangle.getY());

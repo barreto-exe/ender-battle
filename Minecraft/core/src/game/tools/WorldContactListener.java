@@ -124,7 +124,7 @@ public class WorldContactListener implements ContactListener
                 player.setFood(null);
                 break;
             case Constant.PLAYER_BIT | Constant.TREE_BIT:
-                System.out.println("dejó de tocar un arbol");
+                player.setPlant(null);
                 break;
         }
     }
