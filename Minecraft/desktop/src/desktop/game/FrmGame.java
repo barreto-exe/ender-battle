@@ -100,11 +100,12 @@ public final class FrmGame extends JFrame implements UsesSocket
     //Sale de la partida al cerrar el juego
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
-        MetodosSocket.enviarPaquete
-        (
-            new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuario),
-            this
-        );
+        if(usuario !=null) 
+            MetodosSocket.enviarPaquete
+            (
+                new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuario),
+                this
+            );
     }//GEN-LAST:event_formWindowClosing
 
     
