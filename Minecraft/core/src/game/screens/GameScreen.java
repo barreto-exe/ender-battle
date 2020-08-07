@@ -76,7 +76,7 @@ public class GameScreen extends BaseScreen
         viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         gameCam.zoom += 0.2f;
-        gameCam.translate(new Vector2(0,0.2f));
+        gameCam.translate(new Vector2(2,0.3f));
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Construir bioma">
@@ -158,9 +158,10 @@ public class GameScreen extends BaseScreen
         world.step(delta, 6, 2);
 
         //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
-        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM) && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM)
+        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM) 
+                && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4)
         {
-            gameCam.position.x = player.getBody().getPosition().x;
+            gameCam.position.x = player.getBody().getPosition().x + 2;
         }
         gameCam.update();
         renderer.setView(gameCam);
