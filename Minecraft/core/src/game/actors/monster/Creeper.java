@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Mob;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
-import game.inventario.Arm;
+import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Sonido;
@@ -31,20 +23,21 @@ public class Creeper extends MonsterMob
 
     public Creeper(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_creeper"),x,y, 1.5f, 8, 20, isBoss, Sonido.CREEPER);
-
-        if (isBoss)
-        {
-            setBounds(0, 0, (55 / Constant.PPM) * 2, (128 / Constant.PPM) * 2);
-            this.attackPoints *= 2;
-            this.life *= 2;
-            this.prize = new Arm(Constant.BattleObject.AX, Constant.Material.DIAMOND);
-        }
-        else
-        {
-            setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
-        }
-
+        super
+        (
+            screen.getWorld(), 
+            screen.getAtlas().findRegion("caminar_creeper"),
+            x, 
+            y, 
+            55,     //Ancho
+            128,    //Alto
+            1.5f,   //Velocidad
+            8,      //Vida
+            20,     //Puntos de ataque
+            isBoss, 
+            new Protection(Constant.BattleObject.AX, Constant.Material.DIAMOND), 
+            Sonido.CREEPER
+        );
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;

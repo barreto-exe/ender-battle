@@ -22,7 +22,7 @@ public abstract class MonsterMob extends Mob
 {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de animacion
-    protected float duration;
+    protected float animationDuration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
     
@@ -45,19 +45,37 @@ public abstract class MonsterMob extends Mob
      * @param region es el sprite del mob que está en el atlas.
      * @param x ubicación horizonal en el mapa.
      * @param y ubicación vertical en el mapa.
+     * @param width ancho del mob en pixeles.
+     * @param height alto del mob en pixeles.
      * @param speed la velocidad del mob.
      * @param life la vida del mob.
      * @param attackPoints puntos que restan al atacar.
-     * @param isBoss si es jefe o no.
+     * @param isBoss si es jefe o no. Si es true, se duplican los putos de ataque,
+     * la vida y se divide entre 3 la velocidad.
+     * @param prize es el premio que arroja si el mob es jefe.
      * @param sonido es el sonido que hace al recibir ataques.
      */
-    public MonsterMob(World world, TextureRegion region, float x, float y, float speed, float life, int attackPoints,boolean isBoss, Sonido sonido)
+    public MonsterMob(World world, TextureRegion region, float x, float y, float width, float height, float speed, float life, int attackPoints, boolean isBoss, BattleObject prize, Sonido sonido)
     {
         super(world, region, life, sonido);
         this.speed = speed;
         this.attackPoints = attackPoints;
         this.isBoss = isBoss;
-        duration = 0;
+        this.prize = prize;
+        animationDuration = 0;
+        
+        if (isBoss)
+        {
+            this.attackPoints *= 2;
+            this.life *= 2;
+            this.speed /= 3;
+            setBounds(0, 0, (width / Constant.PPM) * 2, (height / Constant.PPM) * 2);
+        }
+        else
+        {
+            setBounds(0, 0, width / Constant.PPM, height / Constant.PPM);
+        }
+        
 
         //<editor-fold defaultstate="collapsed" desc="Definición del body">
         BodyDef bodyD = new BodyDef();
@@ -76,7 +94,7 @@ public abstract class MonsterMob extends Mob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
     }
-
+    
     @Override
     public void changeDirection()
     {
@@ -106,8 +124,8 @@ public abstract class MonsterMob extends Mob
             }
 
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            duration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
+            animationDuration += delta;
+            setRegion((TextureRegion) animation.getKeyFrame(animationDuration, true));
         }
     }
         

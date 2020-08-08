@@ -3,10 +3,7 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.Protection;
 import game.screens.GameScreen;
@@ -24,19 +21,21 @@ public class Skeleton extends MonsterMob
 
     public Skeleton(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"),x,y, 1, 8, 10, isBoss, Sonido.SKELETON);
-
-        if (isBoss)
-        {
-            setBounds(0, 0, (70 / Constant.PPM) * 2, (128 / Constant.PPM) * 2);
-            this.attackPoints *= 2;
-            this.life *= 2;
-            this.prize = new Protection(Constant.BattleObject.LEGGING, Constant.Material.DIAMOND);
-        }
-        else
-        {
-            setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
-        }
+        super
+        (
+            screen.getWorld(), 
+            screen.getAtlas().findRegion("caminar_esqueleto"),
+            x, 
+            y, 
+            70,     //Ancho
+            128,    //Alto
+            1,      //Velocidad
+            8,      //Vida
+            10,     //Puntos de ataque
+            isBoss, 
+            new Protection(Constant.BattleObject.LEGGING, Constant.Material.DIAMOND), 
+            Sonido.SKELETON
+        );
 
         //<editor-fold defaultstate="collapsed" desc="Definición Sensores">
         EdgeShape sensor = new EdgeShape();

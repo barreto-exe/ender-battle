@@ -3,10 +3,7 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.Protection;
 import game.screens.GameScreen;
@@ -23,20 +20,21 @@ public class Spider extends MonsterMob
 
     public Spider(GameScreen screen, int x, int y, boolean isBoss)
     {
-
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"),x,y, 1.1f, 8, 10, isBoss, Sonido.SPIDER);
-
-        if (isBoss)
-        {
-            setBounds(0, 0, (60 / Constant.PPM) * 2, (60 / Constant.PPM) * 2);
-            this.attackPoints *= 2;
-            this.life *= 2;
-            this.prize = new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND);
-        }
-        else
-        {
-            setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
-        }
+        super
+        (
+            screen.getWorld(), 
+            screen.getAtlas().findRegion("spider"),
+            x, 
+            y, 
+            60,     //Ancho
+            40,     //Alto
+            1.1f,   //velocidad
+            8,      //Vida
+            10,     //Puntos de ataque
+            isBoss, 
+            new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND), 
+            Sonido.SPIDER
+        );
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         //SENSORES DEL MOB

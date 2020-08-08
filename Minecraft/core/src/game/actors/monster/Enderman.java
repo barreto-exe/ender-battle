@@ -8,12 +8,9 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
-import game.inventario.Arm;
+import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Sonido;
@@ -27,19 +24,21 @@ public class Enderman extends MonsterMob
 
     public Enderman(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"),x,y, 1, 10, 20, isBoss, Sonido.ENDERMAN);
-
-        if (isBoss)
-        {
-            setBounds(0, 0, (81 / Constant.PPM) * 2, (192 / Constant.PPM) * 2);
-            this.attackPoints *= 2;
-            this.life *= 2;
-            this.prize = new Arm(Constant.BattleObject.SWORD, Constant.Material.DIAMOND);
-        }
-        else
-        {
-            setBounds(0, 0, 81 / Constant.PPM, 192 / Constant.PPM);
-        }
+        super
+        (
+            screen.getWorld(), 
+            screen.getAtlas().findRegion("caminar_enderman"),
+            x, 
+            y, 
+            81,     //Ancho
+            192,    //Alto
+            1,      //Velocidad
+            10,     //Vida
+            20,     //Puntos de ataque
+            isBoss, 
+            new Protection(Constant.BattleObject.SWORD, Constant.Material.DIAMOND), 
+            Sonido.ENDERMAN
+        );
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
