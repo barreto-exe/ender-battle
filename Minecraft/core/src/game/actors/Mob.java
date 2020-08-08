@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import game.tools.Constant;
-import game.tools.Reproductor;
 import game.tools.Sonido;
 
 public abstract class Mob extends Sprite implements Actor
