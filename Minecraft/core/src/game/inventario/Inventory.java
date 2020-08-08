@@ -32,15 +32,21 @@ public class Inventory {
         cascos = new Array<>();
         
         food = new Food[9];
-        food[0] = new Food(Farming.CARROT, 2);
-        food[1] = new Food(Farming.POTATO, 2);
-        food[2] = new Food(Farming.APPLE, 2);
-        food[3] = new Food(Farming.PEAR, 2);
-        food[4] = new Food(Farming.WATERMELON, 3);
-        food[5] = new Food(Farming.BERRY, 1);
-        food[6] = new Food(Farming.CHICKEN, 4);
-        food[7] = new Food(Farming.BEEF, 5);
-        food[8] = new Food(Farming.RABBIT, 3);
+        
+        //Curan 1/4 de corazón
+        food[2] = new Food(Farming.APPLE, 2.5f);
+        food[3] = new Food(Farming.PEAR, 2.5f);
+        food[0] = new Food(Farming.CARROT, 2.5f);
+        
+        //Curan 1/2 corazón
+        food[5] = new Food(Farming.BERRY, 5);
+        food[1] = new Food(Farming.POTATO, 5);
+        food[4] = new Food(Farming.WATERMELON, 5);
+        
+        //Curan 1 corazón
+        food[8] = new Food(Farming.RABBIT, 10);
+        food[6] = new Food(Farming.CHICKEN, 10);
+        food[7] = new Food(Farming.BEEF, 10);
     }
 
     public Food[] getFood()
@@ -48,7 +54,7 @@ public class Inventory {
         return food;
     }
     
-    private int getIndex(Farming type)
+    public static int getIndex(Farming type)
     {
         switch (type)
         {

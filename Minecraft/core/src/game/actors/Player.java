@@ -208,6 +208,20 @@ public class Player extends Sprite implements Actor
         this.life = life;
     }
 
+    public void addLife(float lifeAdded)
+    {
+        System.out.println("tenía de vida: " + life);
+        
+        life += lifeAdded;
+        
+        if(life > 100)
+        {
+            life = 100;
+        }
+        
+        System.out.println("ahora tiene de vida: " + life);
+    }
+    
     public TextureRegion getHitFrame(float delta)
     {
         deltaHit += delta;

@@ -29,4 +29,10 @@ public class Food {
     public int getCant() {
         return cant;
     }
+
+    public float getFood()
+    {
+        return food;
+    }
+    
 }

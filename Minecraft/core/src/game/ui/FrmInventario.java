@@ -1,6 +1,7 @@
 package game.ui;
 
 import game.actors.Player;
+import game.inventario.Inventory;
 import game.inventario.food.Food;
 import game.tools.Constant.Farming;
 import java.util.HashMap;
@@ -345,6 +346,17 @@ public final class FrmInventario extends javax.swing.JFrame
         //Alimento que se decidió comer
         Farming alimento = Farming.getEnumByDesc(origen.getToolTipText());
         
+        //Obtener la cantidad de vida a curar
+        int index = Inventory.getIndex(alimento);
+        Food food = player.getInventory().getFood()[index];
+        
+        //Añadir vida al jugador
+        player.addLife(food.getFood());
+        
+        //Sacar el alimento
+        player.getInventory().removeFood(alimento);
+        
+        actualizarVista();
     }//GEN-LAST:event_alimentoClicked
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowLostFocus
