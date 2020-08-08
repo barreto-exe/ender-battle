@@ -24,7 +24,7 @@ public class Skeleton extends MonsterMob
 
     public Skeleton(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10, isBoss, Sonido.SKELETON);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"),x,y, 1, 8, 10, isBoss, Sonido.SKELETON);
 
         if (isBoss)
         {
@@ -38,13 +38,6 @@ public class Skeleton extends MonsterMob
             setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición del body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -55,7 +48,7 @@ public class Skeleton extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición del sensor">
+        //<editor-fold defaultstate="collapsed" desc="Definición Sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;
@@ -71,7 +64,7 @@ public class Skeleton extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de flecha">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Flecha">
         EdgeShape arrow = new EdgeShape();
         fixtureD.shape = arrow;
         fixtureD.isSensor = true;

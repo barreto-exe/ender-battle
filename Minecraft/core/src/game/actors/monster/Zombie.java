@@ -22,7 +22,7 @@ public class Zombie extends MonsterMob
 {
     public Zombie(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10, isBoss, Sonido.ZOMBIE);
+        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"),x,y, 1, 8, 10, isBoss, Sonido.ZOMBIE);
  
         if (isBoss)
         {
@@ -36,13 +36,6 @@ public class Zombie extends MonsterMob
             setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -53,7 +46,7 @@ public class Zombie extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Sesores">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;

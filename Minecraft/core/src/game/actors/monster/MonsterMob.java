@@ -5,6 +5,7 @@ import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.BattleObject;
@@ -36,19 +37,28 @@ public abstract class MonsterMob extends Mob
      * Representa a un monstruo del juego.
      * @param world es el mundo en el que se encuentra.
      * @param region es el sprite del mob que está en el atlas.
+     * @param x ubicación horizonal en el mapa.
+     * @param y ubicación vertical en el mapa.
      * @param speed la velocidad del mob.
      * @param life la vida del mob.
      * @param attackPoints puntos que restan al atacar.
      * @param isBoss si es jefe o no.
      * @param sonido es el sonido que hace al recibir ataques.
      */
-    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss, Sonido sonido)
+    public MonsterMob(World world, TextureRegion region, float x, float y, float speed, float life, int attackPoints,boolean isBoss, Sonido sonido)
     {
         super(world, region, life, sonido);
         this.speed = speed;
         this.attackPoints = attackPoints;
         this.isBoss = isBoss;
         duration = 0;
+
+        //<editor-fold defaultstate="collapsed" desc="Definición del body">
+        BodyDef bodyD = new BodyDef();
+        bodyD.position.set(x, y);
+        bodyD.type = BodyDef.BodyType.DynamicBody;
+        body = this.world.createBody(bodyD);
+        //</editor-fold>
     }
 
     @Override

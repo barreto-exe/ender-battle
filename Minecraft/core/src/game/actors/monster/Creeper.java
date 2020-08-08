@@ -31,7 +31,7 @@ public class Creeper extends MonsterMob
 
     public Creeper(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20, isBoss, Sonido.CREEPER);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_creeper"),x,y, 1.5f, 8, 20, isBoss, Sonido.CREEPER);
 
         if (isBoss)
         {
@@ -45,13 +45,6 @@ public class Creeper extends MonsterMob
             setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -62,7 +55,7 @@ public class Creeper extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Sensor">
+        //<editor-fold defaultstate="collapsed" desc="Definición de SensoresS">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;

@@ -23,7 +23,7 @@ public class Pigman extends MonsterMob
 
     public Pigman(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20, isBoss, Sonido.PIGMAN);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_pigman"),x,y, 0.8f, 10, 20, isBoss, Sonido.PIGMAN);
 
         if (isBoss)
         {
@@ -37,13 +37,6 @@ public class Pigman extends MonsterMob
             setBounds(0, 0, 64 / Constant.PPM, 128 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -54,7 +47,7 @@ public class Pigman extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de sensores">
+        //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;

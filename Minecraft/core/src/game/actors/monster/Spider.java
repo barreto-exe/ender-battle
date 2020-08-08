@@ -24,7 +24,7 @@ public class Spider extends MonsterMob
     public Spider(GameScreen screen, int x, int y, boolean isBoss)
     {
 
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10, isBoss, Sonido.SPIDER);
+        super(screen.getWorld(), screen.getAtlas().findRegion("spider"),x,y, 1.1f, 8, 10, isBoss, Sonido.SPIDER);
 
         if (isBoss)
         {
@@ -38,13 +38,6 @@ public class Spider extends MonsterMob
             setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -54,6 +47,9 @@ public class Spider extends MonsterMob
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         //SENSORES DEL MOB
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;

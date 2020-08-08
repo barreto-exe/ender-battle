@@ -27,7 +27,7 @@ public class Enderman extends MonsterMob
 
     public Enderman(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20, isBoss, Sonido.ENDERMAN);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"),x,y, 1, 10, 20, isBoss, Sonido.ENDERMAN);
 
         if (isBoss)
         {
@@ -40,13 +40,6 @@ public class Enderman extends MonsterMob
         {
             setBounds(0, 0, 81 / Constant.PPM, 192 / Constant.PPM);
         }
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x, y);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
