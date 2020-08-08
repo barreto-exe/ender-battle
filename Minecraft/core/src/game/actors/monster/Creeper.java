@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Creeper extends MonsterMob{
     private Animation explosionAnimation;
     
     public Creeper(GameScreen screen, int x, int y,boolean isBoss) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20,isBoss);
+        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20,isBoss,Sonido.CREEPER);
          
         if(isBoss){
          setBounds(0, 0, (55 / Constant.PPM)*2, (128/ Constant.PPM)*2);

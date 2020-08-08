@@ -17,6 +17,7 @@ import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
+import game.tools.Sonido;
 
 /**
  *
@@ -25,7 +26,7 @@ import game.tools.Constant.PlayerCondition;
 public class Pigman extends MonsterMob{
 
      public Pigman(GameScreen screen, int x, int y,boolean isBoss) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20,isBoss);
+        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20,isBoss, Sonido.PIGMAN);
         
         if(isBoss){
          setBounds(0, 0, (64 / Constant.PPM)*2, (128/ Constant.PPM)*2);

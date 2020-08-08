@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -17,7 +18,7 @@ import game.tools.Constant;
 public class Sheep extends PacificMob
 {
     public Sheep(GameScreen screen, float x, float y) {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("oveja"), 7, x, y, 267 / 3, 64);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("oveja"), 7, x, y, 267 / 3, 64, Sonido.SHEEP);
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
         
         speed = 1.2f;

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import game.tools.Constant;
+import game.tools.Reproductor;
 import game.tools.Sonido;
 
 public abstract class Mob extends Sprite implements Actor
@@ -27,11 +28,14 @@ public abstract class Mob extends Sprite implements Actor
     protected float speed;
     //</editor-fold>
 
-    public Mob(World world, TextureRegion region, float life)
+    public Mob(World world, TextureRegion region, float life, Sonido sonido)
     {
         super(region);
         this.world = world;
         this.life = life;
+        
+        this.sonido = sonido;
+        
         isDead = setToDie = false;
     }
 
@@ -45,13 +49,15 @@ public abstract class Mob extends Sprite implements Actor
         return body;
     }
 
-    private boolean sonando = false;
+    private final Sonido sonido;
     
     public void toRecibeAttack(Player player, float hit)
     {
 
         life -= hit;
         System.out.println("vida del mob: " + life);
+        
+        sonido.reproducir();
         
         //El mob que será herido
         final Mob mob = this;
@@ -70,16 +76,8 @@ public abstract class Mob extends Sprite implements Actor
             {
                 try
                 {
-                    if(!sonando)
-                    {
-                        Sonido.Click();
-                        sonando = true;
-                    }
-                    
                     Thread.sleep(((long) (segundos)) * 1000);
                     mob.setColor(Color.WHITE);
-                    
-                    sonando = false;
                 } catch (InterruptedException ex)
                 {
                     System.out.println(ex.getMessage());

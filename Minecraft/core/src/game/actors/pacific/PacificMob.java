@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -33,9 +34,9 @@ public abstract class PacificMob extends Mob
     protected float speed;
     protected Constant.Farming type;
 
-    public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height)
+    public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, Sonido sonido)
     {
-        super(screen.getWorld(), texture, life);
+        super(screen.getWorld(), texture, life, sonido);
         actors = screen.getActors();
         duration = 0;
         

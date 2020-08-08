@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -17,7 +18,7 @@ import game.tools.Constant;
 public class Rabbit extends PacificMob
 {
     public Rabbit(GameScreen screen, float x, float y) {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("conejo"), 5, x, y, 149 / 4, 32);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("conejo"), 5, x, y, 149 / 4, 32, Sonido.RABBIT);
         textureMeat = screen.getAtlas().findRegion("conejo_carne");
         
         speed = 1.2f;

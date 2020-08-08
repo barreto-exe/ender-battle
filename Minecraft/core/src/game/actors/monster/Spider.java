@@ -17,6 +17,7 @@ import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
+import game.tools.Sonido;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Spider extends MonsterMob
     public Spider(GameScreen screen, int x, int y,boolean isBoss)
     {
 
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10,isBoss);
+        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10,isBoss, Sonido.SPIDER);
         
         if(isBoss){
             setBounds(0, 0, (60 / Constant.PPM)*2, (60 / Constant.PPM)*2);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -17,7 +18,7 @@ import game.tools.Constant;
 public class Pig extends PacificMob
 {
     public Pig(GameScreen screen, float x, float y) {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("cerdo"), 7, x, y, 384 / 4, 64);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("cerdo"), 7, x, y, 384 / 4, 64, Sonido.PIG);
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
         
         speed = 1.2f;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.MassData;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -18,7 +19,7 @@ import game.tools.Constant;
 public class Cow extends PacificMob
 {
     public Cow(GameScreen screen, float x, float y) {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80, Sonido.COW);
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
         
         speed = 1.2f;

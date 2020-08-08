@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Skeleton extends MonsterMob
     float direction;
     public Skeleton(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10,isBoss);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10,isBoss, Sonido.SKELETON);
         
         if(isBoss){
          setBounds(0, 0, (70 / Constant.PPM)*2, (128/ Constant.PPM)*2);

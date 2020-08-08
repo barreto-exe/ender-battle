@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.BattleObject;
+import game.tools.Sonido;
 
 /**
  *
@@ -38,20 +39,13 @@ public abstract class MonsterMob extends Mob
     protected BattleObject prize; 
     protected TextureRegion prizeTexture;
     
-    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss)
+    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss, Sonido sonido)
     {
-        super(world, region, life);
+        super(world, region, life, sonido);
         this.speed = speed;
         this.attackPoints = attackPoints;
         this.isBoss = isBoss;
         duration = 0;
-        
-        
-        
-//        MassData mass = new MassData();
-//        mass.center.set(new Vector2(this.getWidth()/2,this.getHeight()/2));
-//        mass.mass = 1;
-//        this.body.setMassData(mass);
     }
 
     @Override

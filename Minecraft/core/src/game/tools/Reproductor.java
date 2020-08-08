@@ -37,15 +37,20 @@ public class Reproductor implements Runnable
         estaReproduciendo = true;
     }
 
+    public Sonido getSonido()
+    {
+        return sonido;
+    }
+
+    public void setSonido(Sonido sonido)
+    {
+        this.sonido = sonido;
+    }
+
     public void detenerReproduccion()
     {
         this.estaReproduciendo = false;
         player.close();
-    }
-    
-    public void reproducir()
-    {
-        new Thread(this).start();
     }
     
     @Override

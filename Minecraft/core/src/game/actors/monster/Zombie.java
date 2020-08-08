@@ -17,6 +17,7 @@ import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
+import game.tools.Sonido;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Zombie extends MonsterMob
 
     public Zombie(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10,isBoss);
+        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10,isBoss, Sonido.ZOMBIE);
         if(isBoss){
             setBounds(0, 0, (128 / Constant.PPM)*2, (128 / Constant.PPM)*2);
             this.attackPoints *=2;

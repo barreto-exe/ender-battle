@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import game.tools.Sonido;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Enderman extends MonsterMob
 
     public Enderman(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20,isBoss);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20,isBoss, Sonido.ENDERMAN);
         
          if(isBoss){
          setBounds(0, 0, (81 / Constant.PPM)*2, (192/ Constant.PPM)*2);
