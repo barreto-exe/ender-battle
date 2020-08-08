@@ -173,7 +173,7 @@ public class GameScreen extends BaseScreen
         batchUI.begin();
 
         batchUI.draw(esmeralda, 40, 590);
-        cantidadEsmeralda.draw(batchUI, ""+cantMedioCorazones ,50 + esmeralda.getWidth(), 620);
+        cantidadEsmeralda.draw(batchUI, ""+player.getInventory().getEsmeraldas() ,50 + esmeralda.getWidth(), 620);
         
         int i;
         for(i = 0; i < cantCorazones; i++)
