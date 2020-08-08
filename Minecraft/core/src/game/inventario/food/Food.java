@@ -17,6 +17,11 @@ public class Food {
         cant = 0;
     }
 
+    public Farming getType()
+    {
+        return type;
+    }
+
     public void setCant(int cant) {
         this.cant = cant;
     }

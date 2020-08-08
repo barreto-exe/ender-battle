@@ -24,7 +24,59 @@ public class Constant
 
     public enum Farming
     {
-        APPLE, PEAR, BERRY, WATERMELON, CARROT, POTATO, CHICKEN, RABBIT, BEEF
+        APPLE, PEAR, BERRY, WATERMELON, CARROT, POTATO, CHICKEN, RABBIT, BEEF;
+        
+        public static Farming getEnumByDesc(String desc)
+        {
+            switch(desc)
+            {
+                case "manzana":
+                    return APPLE;
+                case "pera":
+                    return PEAR;
+                case "baya":
+                    return BERRY;
+                case "sandia":
+                    return WATERMELON;
+                case "zanahoria":
+                    return CARROT;
+                case "papa":
+                    return POTATO;
+                case "pollo":
+                    return CHICKEN;
+                case "conejo":
+                    return RABBIT;
+                case "carne":
+                    return BEEF;
+            }
+            return null;
+        }
+        
+        public static String getDescByEnum(Farming type)
+        {
+            switch(type)
+            {
+                case APPLE:
+                    return "manzana";
+                case PEAR:
+                    return "pera";
+                case BERRY:
+                    return "baya";
+                case WATERMELON:
+                    return "sandia";
+                case CARROT:
+                    return "zanahoria";
+                case POTATO:
+                    return "papa";
+                case CHICKEN:
+                    return "pollo";
+                case RABBIT:
+                    return "conejo";
+                case BEEF:
+                    return "carne";
+            }
+            return null;
+        }
     };
 
     public enum PlayerCondition

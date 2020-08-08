@@ -61,8 +61,7 @@ public class HandleInput extends InputAdapter
                 
                 //Posición relativa a la ventana de Juego
                 GameScreen.getVentanaInventario().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
-                //Mostrar inventario
-                GameScreen.getVentanaInventario().setVisible(true);
+                GameScreen.getVentanaInventario().mostrar();
                 return true;
             }
             default:

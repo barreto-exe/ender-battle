@@ -1,6 +1,10 @@
 package game.ui;
 
 import game.actors.Player;
+import game.inventario.food.Food;
+import game.tools.Constant.Farming;
+import java.util.HashMap;
+import javax.swing.JLabel;
 
 /**
  *
@@ -9,15 +13,27 @@ import game.actors.Player;
 public final class FrmInventario extends javax.swing.JFrame
 {
     private Player player;
+    private HashMap<String, JLabel> vistasAlimentos;
     
     public FrmInventario(Player player)
     {
         super("Inventario");
         initComponents();
         setResizable(false);
-        
         this.player = player;
+        
+        vistasAlimentos = new HashMap<>();
+        vistasAlimentos.put("manzana", lblManzana);
+        vistasAlimentos.put("pera", lblPera);
+        vistasAlimentos.put("zanahoria", lblZanahoria);
+        vistasAlimentos.put("baya", lblBaya);
+        vistasAlimentos.put("papa", lblPapa);
+        vistasAlimentos.put("sandia", lblSandia);
+        vistasAlimentos.put("conejo", lblConejo);
+        vistasAlimentos.put("pollo", lblPollo);
+        vistasAlimentos.put("carne", lblCarne);
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -172,38 +188,47 @@ public final class FrmInventario extends javax.swing.JFrame
 
         lblManzana.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblManzana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblManzana.setLabelFor(imgManzana);
         lblManzana.setText("1");
 
         lblPera.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblPera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPera.setLabelFor(imgPera);
         lblPera.setText("1");
 
         lblZanahoria.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblZanahoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblZanahoria.setLabelFor(imgZanahoria);
         lblZanahoria.setText("1");
 
         lblBaya.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblBaya.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBaya.setLabelFor(imgBaya);
         lblBaya.setText("1");
 
         lblPapa.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblPapa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPapa.setLabelFor(imgPapa);
         lblPapa.setText("1");
 
         lblSandia.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblSandia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSandia.setLabelFor(imgSandia);
         lblSandia.setText("1");
 
         lblConejo.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblConejo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblConejo.setLabelFor(imgConejo);
         lblConejo.setText("1");
 
         lblPollo.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblPollo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPollo.setLabelFor(imgPollo);
         lblPollo.setText("1");
 
         lblCarne.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         lblCarne.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCarne.setLabelFor(imgCarne);
         lblCarne.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -314,7 +339,12 @@ public final class FrmInventario extends javax.swing.JFrame
 
     private void alimentoClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_alimentoClicked
     {//GEN-HEADEREND:event_alimentoClicked
-        // TODO add your handling code here:
+        //Obtener label clickeado
+        JLabel origen = ((JLabel)evt.getSource());
+        
+        //Alimento que se decidió comer
+        Farming alimento = Farming.getEnumByDesc(origen.getToolTipText());
+        
     }//GEN-LAST:event_alimentoClicked
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowLostFocus
@@ -323,6 +353,37 @@ public final class FrmInventario extends javax.swing.JFrame
         this.setVisible(false);
     }//GEN-LAST:event_formWindowLostFocus
 
+    public void mostrar()
+    {
+        setVisible(true);
+        actualizarVista();
+    }
+    
+    private void actualizarVista()
+    {
+        JLabel label;
+        
+        //Por cada comida del inventario
+        for(Food food : player.getInventory().getFood())
+        {
+            //Tomar el label correspondiente
+            label = vistasAlimentos.get(Farming.getDescByEnum(food.getType()));
+
+            //Actualizar cantidad de comida
+            label.setText(food.getCant() + "");
+            
+            //Si no tiene esa comida, deshabilitar botón
+            if(food.getCant() == 0)
+            {
+                label.getLabelFor().setEnabled(false);
+            }
+            else
+            {
+                label.getLabelFor().setEnabled(true);
+            }
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imgBaya;
     private javax.swing.JLabel imgCarne;

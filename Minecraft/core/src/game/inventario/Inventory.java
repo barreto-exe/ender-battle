@@ -42,6 +42,11 @@ public class Inventory {
         food[7] = new Food(Farming.BEEF, 5);
         food[8] = new Food(Farming.RABBIT, 3);
     }
+
+    public Food[] getFood()
+    {
+        return food;
+    }
     
     private int getIndex(Farming type)
     {
