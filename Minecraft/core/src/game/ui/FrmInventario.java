@@ -66,6 +66,7 @@ public final class FrmInventario extends javax.swing.JFrame
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("1");
 
+        setType(java.awt.Window.Type.UTILITY);
         addWindowFocusListener(new java.awt.event.WindowFocusListener()
         {
             public void windowGainedFocus(java.awt.event.WindowEvent evt)
@@ -368,6 +369,7 @@ public final class FrmInventario extends javax.swing.JFrame
     public void mostrar()
     {
         setVisible(true);
+        requestFocus();
         actualizarVista();
     }
     

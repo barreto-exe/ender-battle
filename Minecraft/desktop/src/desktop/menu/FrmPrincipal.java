@@ -50,6 +50,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      */
     private DBPartida partida;
 
+    /**
+     * La ventana que contiene al juego.
+     */
     private FrmGame ventanaJuego;
 
     /**
@@ -64,6 +67,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      */
     Thread hiloEstadoPartida;
 
+    
     /**
      * Crea la ventana principal del juego.
      */
@@ -75,7 +79,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         this.setResizable(false);
 
         partida = new DBPartida();
-
+        ventanaJuego = new FrmGame(null);
+        
         //Cargar manuales
         cargarRTF(txtManualCrearUsuario, "CrearUsuario");
         cargarRTF(txtManualCrearPartida, "CrearPartida");
@@ -1088,8 +1093,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        new FrmGame(null).setVisible(true);
+        ventanaJuego.mostrar();
     }//GEN-LAST:event_jButton1ActionPerformed
     //</editor-fold>
 
@@ -1428,8 +1432,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     {
                         hiloEstadoPartida.interrupt();
 
-                        ventanaJuego = new FrmGame(usuarioLogueado);
-                        ventanaJuego.setVisible(true);
+                        ventanaJuego.setUsuario(usuarioLogueado);
+                        ventanaJuego.mostrar();
                     } 
                     //</editor-fold>
                     //</editor-fold>
