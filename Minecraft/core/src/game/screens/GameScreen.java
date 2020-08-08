@@ -1,11 +1,14 @@
 package game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -71,7 +74,7 @@ public class GameScreen extends BaseScreen
         this.player = player;
         actors = new Group();
         ventanaInventario = new FrmInventario(player);
-        
+
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
         viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
@@ -92,7 +95,6 @@ public class GameScreen extends BaseScreen
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-
     public TiledMap getMap()
     {
         return map;
@@ -109,12 +111,11 @@ public class GameScreen extends BaseScreen
     }
     //</editor-fold>
 
-    
     public static FrmInventario getVentanaInventario()
     {
         return ventanaInventario;
     }
-    
+
     @Override
     public void show()
     {
@@ -145,6 +146,7 @@ public class GameScreen extends BaseScreen
         //actors.addActor(new Creeper(this,13,5));
 
         world.setContactListener(new WorldContactListener(player));
+
     }
 
     @Override
@@ -153,8 +155,10 @@ public class GameScreen extends BaseScreen
         viewport.update(width, height);
     }
 
+    //Cosas de prueba para la UI
     Batch batchUI = new SpriteBatch();
     BitmapFont font = new BitmapFont();
+    Sprite espada = new Sprite(this.getAtlas().findRegion("espada"));
 
     @Override
     public void render(float delta)
@@ -188,8 +192,11 @@ public class GameScreen extends BaseScreen
 
         //Con batch aparte dibujar las cosas de la UI
         batchUI.begin();
-        batchUI.draw(this.getAtlas().findRegion("esmeralda"), 100, 100);
-        font.draw(batchUI, "Hello World!", 100, 100);
+        font.draw(batchUI, "Hola mundo", 200, 200);
+        batchUI.draw(espada, 100, 100);
+        espada.setPosition(100, 100);
+        espada.draw(batchUI);
+        espada.setColor(Color.CYAN);
         batchUI.end();
     }
 

@@ -20,9 +20,16 @@ amarillo_golpear
   index: -1
 bayas
   rotate: false
-  xy: 772, 1762
+  xy: 904, 1828
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+botas
+  rotate: false
+  xy: 772, 1664
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 caminar_creeper
@@ -53,6 +60,13 @@ caminar_pigman
   orig: 256, 128
   offset: 0, 0
   index: -1
+casco
+  rotate: false
+  xy: 772, 1796
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 cerdo
   rotate: false
   xy: 2, 2
@@ -76,35 +90,42 @@ conejo
   index: -1
 conejo_carne
   rotate: false
-  xy: 516, 630
+  xy: 516, 598
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 corazon_lleno
   rotate: false
-  xy: 388, 2
+  xy: 582, 698
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 corazon_mitad
   rotate: false
-  xy: 772, 1796
+  xy: 454, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 corazon_vacio
   rotate: false
-  xy: 516, 698
+  xy: 772, 1730
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 esmeralda
   rotate: false
-  xy: 454, 2
+  xy: 516, 632
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+espada
+  rotate: false
+  xy: 516, 698
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -118,7 +139,7 @@ explotar_creeper
   index: -1
 ganado_carne
   rotate: false
-  xy: 772, 1728
+  xy: 838, 1696
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -135,6 +156,13 @@ gris_golpear
   xy: 2, 1904
   size: 768, 128
   orig: 768, 128
+  offset: 0, 0
+  index: -1
+hacha
+  rotate: false
+  xy: 388, 2
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 manzana
@@ -179,23 +207,37 @@ oveja
   orig: 267, 64
   offset: 0, 0
   index: -1
+pantalones
+  rotate: false
+  xy: 838, 1796
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 papa
   rotate: false
-  xy: 582, 730
+  xy: 772, 1630
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+pechera
+  rotate: false
+  xy: 838, 1730
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 pera
   rotate: false
-  xy: 872, 1828
+  xy: 904, 1794
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pollo_carne
   rotate: false
-  xy: 516, 664
+  xy: 582, 664
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -216,7 +258,7 @@ rojo_golpear
   index: -1
 sandia
   rotate: false
-  xy: 838, 1828
+  xy: 516, 564
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -251,7 +293,7 @@ verde_golpear
   index: -1
 zanahoria
   rotate: false
-  xy: 616, 730
+  xy: 772, 1596
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
