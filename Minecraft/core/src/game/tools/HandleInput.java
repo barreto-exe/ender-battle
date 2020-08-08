@@ -2,6 +2,7 @@ package game.tools;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import game.screens.GameScreen;
 
 /**
  *
@@ -10,10 +11,12 @@ import com.badlogic.gdx.InputAdapter;
 public class HandleInput extends InputAdapter
 {
     private VirtualController controller;
+    private GameScreen screen;
 
-    public HandleInput(VirtualController controller)
+    public HandleInput(VirtualController controller, GameScreen screen)
     {
         this.controller = controller;
+        this.screen = screen;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class HandleInput extends InputAdapter
                 controller.setHitting(true); 
                 return true; 
             } 
-            case (Input.Keys.Q):
+            case (Input.Keys.K):
             case (Input.Keys.ENTER):
             { 
                 controller.setPickingUp(true); 
@@ -53,7 +56,14 @@ public class HandleInput extends InputAdapter
             } 
             case (Input.Keys.E):
             {
-                //Abrir inventario
+                controller.setRight(false);
+                controller.setLeft(false);
+                
+                //Posición relativa a la ventana de Juego
+                GameScreen.getVentanaInventario().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
+                //Mostrar inventario
+                GameScreen.getVentanaInventario().setVisible(true);
+                return true;
             }
             default:
             {
@@ -91,7 +101,7 @@ public class HandleInput extends InputAdapter
                 controller.setHitting(false); 
                 return true; 
             } 
-            case (Input.Keys.E):
+            case (Input.Keys.K):
             case (Input.Keys.ENTER):
             { 
                 controller.setPickingUp(false); 

@@ -31,6 +31,10 @@ public abstract class BaseScreen implements Screen
         return plantas;
     }
 
+    public MainGame getGame()
+    {
+        return game;
+    }
     @Override
     public void show()
     {

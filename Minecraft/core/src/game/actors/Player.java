@@ -169,7 +169,7 @@ public class Player extends Sprite implements Actor
 
         //<editor-fold defaultstate="collapsed" desc="Controladores">
         controller = new VirtualController();
-        processor = new HandleInput(controller);
+        processor = new HandleInput(controller, screen);
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 

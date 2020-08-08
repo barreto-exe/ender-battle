@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.Constant;
 import game.tools.WorldContactListener;
+import game.ui.FrmInventario;
 
 /**
  *
@@ -57,6 +58,8 @@ public class GameScreen extends BaseScreen
     private Array<Plant> trees;
     //</editor-fold>
 
+    private static FrmInventario ventanaInventario;
+
     /**
      * Es la pantalla del juego principal.
      *
@@ -70,6 +73,7 @@ public class GameScreen extends BaseScreen
         super(game);
         this.player = player;
         actors = new Group();
+        ventanaInventario = new FrmInventario();
         
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
@@ -91,6 +95,7 @@ public class GameScreen extends BaseScreen
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
     public TiledMap getMap()
     {
         return map;
@@ -106,6 +111,12 @@ public class GameScreen extends BaseScreen
     }
     //</editor-fold>
 
+    
+    public static FrmInventario getVentanaInventario()
+    {
+        return ventanaInventario;
+    }
+    
     @Override
     public void show()
     {

@@ -18,6 +18,7 @@ import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteResultado;
 import game.MainGame;
 import game.tools.Constant;
+import game.ui.FrmInventario;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
