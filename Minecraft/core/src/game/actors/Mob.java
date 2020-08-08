@@ -47,7 +47,6 @@ public abstract class Mob extends Sprite implements Actor
     {
 
         life -= hit;
-        System.out.println("vida del mob: " + life);
         
         //El mob que será herido
         final Mob mob = this;

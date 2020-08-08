@@ -7,6 +7,9 @@ package game.actors.pacific;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import game.actors.collectibles.EsmeraldCollective;
+import game.actors.collectibles.FoodCollectible;
+import game.actors.collectibles.ObjectCollectible;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -36,4 +39,16 @@ public class Rabbit extends PacificMob
         return vertice;
     }
     //</editor-fold>  
+
+    @Override
+    protected void toDie() {
+        ObjectCollectible objects[] = new ObjectCollectible[2];
+        objects[0] = new FoodCollectible(type, world, textureMeat, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
+        objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
+        
+        for (ObjectCollectible o : objects)
+        {
+            actors.addActor(o);
+        }
+    }
 }

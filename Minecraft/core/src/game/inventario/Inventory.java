@@ -11,15 +11,23 @@ import game.tools.Constant.Farming;
  */
 public class Inventory {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
+    //Sección de Armamento
     private Array <BattleObject> espadas;
     private Array <BattleObject> hachas;
     private Array <BattleObject> picos;
     private Array <BattleObject> palas;
+    
+    //Sección de Protección
     private Array <BattleObject> botas;
     private Array <BattleObject> pechos;
     private Array <BattleObject> pantalones;
     private Array <BattleObject> cascos;
+    
+    //Sección de Alimentos
     private Food[] food; 
+    
+    //Esmeraldas del jugador
+    private float esmeraldas;
     //</editor-fold>
     
     public Inventory() {
@@ -53,6 +61,14 @@ public class Inventory {
     public Food[] getFood()
     {
         return food;
+    }
+
+    public float getEsmeraldas() {
+        return esmeraldas;
+    }
+
+    public void setEsmeraldas(float esmeraldas) {
+        this.esmeraldas = esmeraldas;
     }
     
     public static int getIndex(Farming type)
