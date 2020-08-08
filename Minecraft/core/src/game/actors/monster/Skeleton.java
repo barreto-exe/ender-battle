@@ -38,16 +38,6 @@ public class Skeleton extends MonsterMob
             setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="Definición Fixture">
-        FixtureDef fixtureD = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2, getHeight() / 2);
-        fixtureD.shape = shape;
-        fixtureD.filter.categoryBits = Constant.MOB_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
-        body.createFixture(fixtureD).setUserData(this);
-        //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="Definición Sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
@@ -84,7 +74,7 @@ public class Skeleton extends MonsterMob
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion texture = screen.getAtlas().findRegion("caminar_esqueleto");
-        TextureRegion[][] region = texture.split(70, 128);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
+        TextureRegion[][] region = texture.split(70, 128);   
         frames = new Array<>();
 
         //APLANANDO ARREGLO DE TEXTURES
@@ -96,7 +86,7 @@ public class Skeleton extends MonsterMob
             }
         }
 
-        animation = new Animation(0.14f, frames);    //CREANDO ANIMACION DE CAMINAR
+        animation = new Animation(0.14f, frames);    
         //</editor-fold>
     }
 

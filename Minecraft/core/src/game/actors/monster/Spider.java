@@ -37,17 +37,6 @@ public class Spider extends MonsterMob
         {
             setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
         }
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
-        FixtureDef fixtureD = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2, getHeight() / 2);
-        fixtureD.shape = shape;
-        fixtureD.filter.categoryBits = Constant.MOB_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
-        body.createFixture(fixtureD).setUserData(this);
-
-        //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         //SENSORES DEL MOB

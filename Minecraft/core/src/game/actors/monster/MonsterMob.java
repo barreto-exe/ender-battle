@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.BattleObject;
+import game.tools.Constant;
 import game.tools.Sonido;
 
 /**
@@ -22,6 +25,9 @@ public abstract class MonsterMob extends Mob
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
+    
+    //Atributos Box2d
+    protected FixtureDef fixtureD;
     
     //Propiedades de los Mobs
     protected boolean isBoss;
@@ -58,6 +64,16 @@ public abstract class MonsterMob extends Mob
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Definición Fixture">
+        fixtureD = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(getWidth() / 2, getHeight() / 2);
+        fixtureD.shape = shape;
+        fixtureD.filter.categoryBits = Constant.MOB_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
+        body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
     }
 
