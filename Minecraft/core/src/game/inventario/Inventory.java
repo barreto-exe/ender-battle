@@ -2,6 +2,7 @@ package game.inventario;
 
 import com.badlogic.gdx.utils.Array;
 import game.inventario.food.Food;
+import game.tools.Constant;
 import game.tools.Constant.Farming;
 
 /**
