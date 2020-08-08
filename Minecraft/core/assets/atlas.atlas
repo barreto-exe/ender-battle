@@ -27,7 +27,7 @@ bayas
   index: -1
 botas
   rotate: false
-  xy: 772, 1664
+  xy: 838, 1796
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -90,37 +90,37 @@ conejo
   index: -1
 conejo_carne
   rotate: false
-  xy: 516, 598
+  xy: 582, 649
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 corazon_lleno
   rotate: false
-  xy: 582, 698
-  size: 64, 64
-  orig: 64, 64
+  xy: 838, 1749
+  size: 45, 45
+  orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_mitad
+  rotate: false
+  xy: 582, 717
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+corazon_vacio
   rotate: false
   xy: 454, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-corazon_vacio
-  rotate: false
-  xy: 772, 1730
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 esmeralda
   rotate: false
-  xy: 516, 632
-  size: 64, 64
-  orig: 64, 64
+  xy: 772, 1683
+  size: 45, 45
+  orig: 45, 45
   offset: 0, 0
   index: -1
 espada
@@ -139,7 +139,7 @@ explotar_creeper
   index: -1
 ganado_carne
   rotate: false
-  xy: 838, 1696
+  xy: 772, 1649
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -209,35 +209,35 @@ oveja
   index: -1
 pantalones
   rotate: false
-  xy: 838, 1796
+  xy: 772, 1730
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 papa
   rotate: false
-  xy: 772, 1630
+  xy: 629, 730
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pechera
   rotate: false
-  xy: 838, 1730
+  xy: 516, 632
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pera
   rotate: false
-  xy: 904, 1794
+  xy: 516, 564
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pollo_carne
   rotate: false
-  xy: 582, 664
+  xy: 582, 683
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,7 +258,7 @@ rojo_golpear
   index: -1
 sandia
   rotate: false
-  xy: 516, 564
+  xy: 516, 598
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -293,7 +293,7 @@ verde_golpear
   index: -1
 zanahoria
   rotate: false
-  xy: 772, 1596
+  xy: 772, 1615
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

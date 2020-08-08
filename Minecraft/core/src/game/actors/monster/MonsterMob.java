@@ -102,29 +102,20 @@ public abstract class MonsterMob extends Mob
         if (attackOportunity(3))
         {
             player.toRecibeAttack(attackPoints);
+        }
+        if (attackOportunity(3))
+        {
             specialAttack(player);
         }
     }
-
-    public void approachPlayer(Player player)
-    {
-
-    }
-
+    
     public boolean attackOportunity(int oportunity)
     {
         int aux;
         aux = oportunity - 1;
         int chance = (int) (Math.random() * oportunity);
-        System.out.println(chance);
-        if (chance == aux)
-        {
-            return true;
-        }
-        return false;
+        return chance == aux;
     }
 
     public abstract void specialAttack(Player player);
-    
-
 }

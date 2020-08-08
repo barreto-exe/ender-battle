@@ -61,7 +61,7 @@ public class Player extends Sprite implements Actor
     private float life;
     private PlayerCondition condition;
     private int direction;
-    
+
     //Atributos de Inventario
     private Inventory inventory;
     private BattleObject[] portedObjects;
@@ -79,7 +79,7 @@ public class Player extends Sprite implements Actor
         this.color = color;
 
         this.life = 100;
-        
+
         //instanciando inventario vacío
         inventory = new Inventory();
         portedObjects = new BattleObject[5];
@@ -152,9 +152,9 @@ public class Player extends Sprite implements Actor
         shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
-        fixtureD.filter.maskBits = 
-                Constant.GROUND_BIT      | Constant.ESMERALD_BIT | Constant.FOOD_BIT | Constant.MOB_BIT | 
-                Constant.MOB_SENSOR_BIT  | Constant.MOB_TOP_BIT  | Constant.TREE_BIT | Constant.ARROW_SENSOR_BIT;
+        fixtureD.filter.maskBits
+                = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FOOD_BIT | Constant.MOB_BIT
+                | Constant.MOB_SENSOR_BIT | Constant.MOB_TOP_BIT | Constant.TREE_BIT | Constant.ARROW_SENSOR_BIT;
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
@@ -212,17 +212,17 @@ public class Player extends Sprite implements Actor
     public void addLife(float lifeAdded)
     {
         System.out.println("tenía de vida: " + life);
-        
+
         life += lifeAdded;
-        
-        if(life > 100)
+
+        if (life > 100)
         {
             life = 100;
         }
-        
+
         System.out.println("ahora tiene de vida: " + life);
     }
-    
+
     public TextureRegion getHitFrame(float delta)
     {
         deltaHit += delta;
@@ -230,13 +230,13 @@ public class Player extends Sprite implements Actor
         {
             isHitting = false;
         }
-        
+
         if (setToAttack && enemy != null)
         {
             toHurt(enemy);
             setToAttack = false;
         }
-        
+
         if (setToAttack && plant != null)
         {
             toCrop(plant);
@@ -319,7 +319,8 @@ public class Player extends Sprite implements Actor
         this.isJumping = isJumping;
     }
 
-    public void canAttack(boolean canAttack) {
+    public void canAttack(boolean canAttack)
+    {
         this.setToAttack = canAttack;
     }
 
@@ -333,25 +334,35 @@ public class Player extends Sprite implements Actor
         this.enemy = enemy;
     }
 
-    public void setFood(FoodCollectible food) {
+    public void setFood(FoodCollectible food)
+    {
         this.objectCollectible = food;
     }
 
-    public void setPlant(Plant plant) {
+    public void setPlant(Plant plant)
+    {
         this.plant = plant;
     }
-        
-    
-    public int getDirection() {
+
+    public int getDirection()
+    {
         return direction;
     }
     //</editor-fold>
-    
+
     @Override
     public void act(float delta)
     {
         affectCondition(delta);
         
+        //System.out.println("Life: " + life + " || " + condition.toString());
+        
+        if (life <= 0)
+        {
+            life = 0;
+            System.out.println("El Jugador ha muerto");
+        }
+
         currentState = getState();
 
         if (currentState == State.FALLING || currentState == State.JUMPING)
@@ -370,12 +381,10 @@ public class Player extends Sprite implements Actor
         {
             direction = -1;
             walk(-1);
-        } 
-        else if (controller.isPickingUp() && (objectCollectible !=null))
+        } else if (controller.isPickingUp() && (objectCollectible != null))
         {
             toPickUp();
-        }
-        else
+        } else
         {
             if (body.getLinearVelocity().x < 0)
             {
@@ -403,9 +412,8 @@ public class Player extends Sprite implements Actor
     {
         if (!(currentState == State.FALLING || currentState == State.JUMPING))
         {
-            body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);  
-        } 
-        else
+            body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);
+        } else
         {
             body.applyForce(((Constant.IMPULSE_JUMP - 12) * 0.6f) * direction, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
@@ -464,8 +472,7 @@ public class Player extends Sprite implements Actor
         if (portedObjects[0] != null)
         {
             return portedObjects[0].getFactorObject();
-        } 
-        else
+        } else
         {
             return 1;
         }
@@ -476,24 +483,19 @@ public class Player extends Sprite implements Actor
         if (mob != null)
         {
             mob.toRecibeAttack(this, calculateDamage());
-            //mob.body.applyLinearImpulse(Constant.IMPULSE_ATTACK*getDirection(), 0, mob.getBody().getWorldCenter().x, mob.getBody().getWorldCenter().y, true);
-            //mob.getBody().applyLinearImpulse(Constant.IMPULSE_ATTACK*getDirection(), 0, mob.getBody().getWorldCenter().x, mob.getBody().getWorldCenter().y, false);
         }
-
     }
 
     public void toRecibeAttack(float hit)
     {
         life -= hit;
-        
-        if (life <= 0)
+
+        if (!isJumping)
         {
-            life = 0;
-            System.out.println("el Jugador ha muerto");
+            body.applyLinearImpulse(0, 3, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
-        body.applyLinearImpulse(0, 3, body.getWorldCenter().x, body.getWorldCenter().y, true);
     }
-    
+
     public void toCrop(Plant plant)
     {
         if (plant != null)
@@ -502,13 +504,14 @@ public class Player extends Sprite implements Actor
         }
     }
 
-    private void toPickUp() {
+    private void toPickUp()
+    {
         objectCollectible.setIsCollected(true);
         if (objectCollectible instanceof FoodCollectible)
         {
-            inventory.addFood(((FoodCollectible)objectCollectible).getType());
+            inventory.addFood(((FoodCollectible) objectCollectible).getType());
         }
-        
+
         //liberar objectCollectible
     }
 
@@ -539,7 +542,7 @@ public class Player extends Sprite implements Actor
         //Colocar segundos de envenenamiento.
         timeCondition = segundos;
     }
-    
+
     /**
      * Cura al jugador de cualquier afección.
      */
@@ -563,7 +566,8 @@ public class Player extends Sprite implements Actor
     /**
      * Afectar al jugador según algún envenenamiento que tenga.
      *
-     * @param delta tiempo en segundos transcurrido desde la última llamada al método.
+     * @param delta tiempo en segundos transcurrido desde la última llamada al
+     * método.
      */
     public void affectCondition(float delta)
     {
@@ -575,47 +579,49 @@ public class Player extends Sprite implements Actor
 
         //Le resta el tiempo al envenenamiento
         timeCondition -= delta;
-        
-        //Afecta al jugador dependiento del hechizo
-        switch (condition)
-        {
-            case POISONED:
-                //Quitar (1) vida por segundo
-                this.life -= 1 * delta;
-                setColor(Color.GREEN);
-                break;
-                
-            case BURNED:
-                //Quitar (2) vidas por segundo
-                this.life -= 2 * delta;
-                setColor(Color.RED);
-                break;
-                
-            case ENTANGLED:
-                body.setGravityScale(80);
-                setColor(Color.GRAY);
-                break;
-        }
-        
-        System.out.println("Life: " + life + " || " + condition.toString());
-        
+
         //Si ya se acabó el envenenamiento, curar al jugador.
         if (timeCondition <= 0)
         {
             timeCondition = 0;
             curate();
         }
+
+        //Afecta al jugador dependiento del hechizo
+        switch (condition)
+        {
+            case POISONED:
+                //Quitar (1) vida por segundo
+                this.life -= 1 * delta;
+                setColor(Color.FOREST);
+                break;
+
+            case BURNED:
+                //Quitar (2) vidas por segundo
+                this.life -= 2 * delta;
+                setColor(Color.RED);
+                break;
+
+            case ENTANGLED:
+                body.setGravityScale(80);
+                setColor(Color.GRAY);
+                break;
+        }
     }
 
-    public void setTimePassed(float timePassed) {
+    public void setTimePassed(float timePassed)
+    {
         this.timePassed = timePassed;
     }
     float timePassed = 0;
-    public boolean timePassed(float delta){
-       timePassed -= delta;
-       if(timePassed <= 0){
-           return true;
-       }
-       return false;
+
+    public boolean timePassed(float delta)
+    {
+        timePassed -= delta;
+        if (timePassed <= 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

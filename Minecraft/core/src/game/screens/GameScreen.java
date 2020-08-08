@@ -159,18 +159,31 @@ public class GameScreen extends BaseScreen
     Batch batchUI = new SpriteBatch();
     BitmapFont cantidadEsmeralda = new BitmapFont();
     Sprite esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
+    Sprite corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
+    Sprite corazonMitad = new Sprite(this.getAtlas().findRegion("corazon_mitad"));
     //</editor-fold>
 
     
     private void dibujarGUI()
-    {        
+    {   
+        int cantMedioCorazones = (int) (player.getLife() /5);
+        int cantCorazones = cantMedioCorazones / 2;
+        boolean medioCorazon = cantMedioCorazones % 2 > 0;
+        
         batchUI.begin();
 
+        batchUI.draw(esmeralda, 40, 590);
+        cantidadEsmeralda.draw(batchUI, ""+cantMedioCorazones ,50 + esmeralda.getWidth(), 620);
         
-        
-        batchUI.draw(esmeralda, 40, 580);
-        cantidadEsmeralda.draw(batchUI, "x123", 50 + esmeralda.getWidth(), 620);
-        
+        int i;
+        for(i = 0; i < cantCorazones; i++)
+        {
+            batchUI.draw(corazon, 825 + (corazon.getWidth()+5)*i, 580);
+        }
+        if(medioCorazon)
+        {
+            batchUI.draw(corazonMitad, 825 + (corazon.getWidth()+5)*i, 580);
+        }
         
         batchUI.end();
     }
@@ -196,7 +209,7 @@ public class GameScreen extends BaseScreen
         gameCam.update();
         renderer.setView(gameCam);
         renderer.render();
-        debugger.render(world, gameCam.combined);
+        //debugger.render(world, gameCam.combined);
         game.getBatch().setProjectionMatrix(gameCam.combined);
         //</editor-fold>
 
