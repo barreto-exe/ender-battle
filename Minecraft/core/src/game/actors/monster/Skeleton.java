@@ -9,11 +9,11 @@ import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -23,16 +23,21 @@ import game.tools.Constant;
  */
 public class Skeleton extends MonsterMob
 {
-
-    private EdgeShape arrow;
-    private int direction;
-
-    public Skeleton(GameScreen screen, int x, int y)
+    
+    float direction;
+    public Skeleton(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10);
-
-        setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
-
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10,isBoss);
+        
+        if(isBoss){
+         setBounds(0, 0, (70 / Constant.PPM)*2, (128/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+         this.prize = new Protection(Constant.BattleObject.LEGGING,Constant.Material.DIAMOND);
+        }else{
+            setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
+        }
+        
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
@@ -60,7 +65,7 @@ public class Skeleton extends MonsterMob
         sensor.set(getWidth() / -2, getHeight() / -2 + 0.5f, getWidth() / -2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
 
-        arrow = new EdgeShape();
+        EdgeShape arrow = new EdgeShape();
         fixtureD.shape = arrow;
         fixtureD.isSensor = true;
         fixtureD.filter.categoryBits = Constant.ARROW_SENSOR_BIT;

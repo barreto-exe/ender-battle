@@ -7,7 +7,6 @@ package game.actors.monster;
 
 import game.actors.Mob;
 import game.actors.Player;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -27,10 +27,17 @@ public class Creeper extends MonsterMob{
     private Array<TextureRegion> explosionFrames;
     private Animation explosionAnimation;
     
-    public Creeper(GameScreen screen, int x, int y) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20);
- 
-        setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
+    public Creeper(GameScreen screen, int x, int y,boolean isBoss) {
+        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_creeper"), 1.5f, 8, 20,isBoss);
+         
+        if(isBoss){
+         setBounds(0, 0, (55 / Constant.PPM)*2, (128/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+         this.prize = new Arm(Constant.BattleObject.AX,Constant.Material.DIAMOND);
+        }else{
+            setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
+        }
         
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);

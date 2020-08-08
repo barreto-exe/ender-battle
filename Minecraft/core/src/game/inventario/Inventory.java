@@ -81,24 +81,24 @@ public class Inventory {
         }
     }
     
-    private Array <BattleObject> getArray (String description)
+    private Array <BattleObject> getArray (Constant.BattleObject object)
     {
-        switch (description){
-            case ("espada"):
+        switch (object){
+            case SWORD:
                 return espadas;
-            case ("hacha"):
+            case AX:
                 return hachas;
-            case ("pico"):
+            case PICK:
                 return picos;
-            case ("pala"):
+            case SHOVEL:
                 return palas;
-            case ("botas"):
+            case BOOTS:
                 return botas;
-            case ("pecho"):
+            case SHIRTFRONT:
                 return pechos;
-            case ("casco"):
+            case HELMET:
                 return cascos;
-            case ("pantalon"):
+            case LEGGING:
                 return pantalones;
             default:
                 return null;
@@ -108,7 +108,7 @@ public class Inventory {
     //<editor-fold defaultstate="collapsed" desc="Add y Remove BattleObject">
     public boolean addBattleObject(BattleObject object)
     {
-        Array <BattleObject> array = getArray(object.getDescription());
+        Array <BattleObject> array = getArray(object.getObject());
         
         if (array == null)
         {
@@ -126,7 +126,7 @@ public class Inventory {
     
     public boolean removeBattleObject(BattleObject object)
     {
-        Array <BattleObject> array = getArray(object.getDescription());
+        Array <BattleObject> array = getArray(object.getObject());
         
         if (array == null)
         {
@@ -179,7 +179,7 @@ public class Inventory {
     }
     //</editor-fold>
     
-    private BattleObject findBattleObject(Array <BattleObject> array, String material)
+    private BattleObject findBattleObject(Array <BattleObject> array, Constant.Material material)
     {
         for (BattleObject object : array) {
             if (object.getMaterial().getMaterial().equals(material))

@@ -7,7 +7,7 @@ package game.actors.monster;
 
 import game.actors.Player;
 import game.actors.Mob;
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.BattleObject;
 
 /**
  *
@@ -34,12 +35,15 @@ public abstract class MonsterMob extends Mob
     protected int attackPoints;
     protected String attackDescription;
     protected float speed;
-
-    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints)
+    protected BattleObject prize; 
+    protected TextureRegion prizeTexture;
+    
+    public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss)
     {
         super(world, region, life);
         this.speed = speed;
         this.attackPoints = attackPoints;
+        this.isBoss = isBoss;
         duration = 0;
         
         
@@ -121,4 +125,6 @@ public abstract class MonsterMob extends Mob
     }
 
     public abstract void specialAttack(Player player);
+    
+
 }

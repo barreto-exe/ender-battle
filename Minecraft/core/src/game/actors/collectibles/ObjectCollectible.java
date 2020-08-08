@@ -1,9 +1,12 @@
-package game.actors.farming.meats;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package game.actors.collectibles;
 
-import game.actors.groups.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,13 +14,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import game.actors.groups.Actor;
 import game.tools.Constant;
 
 /**
  *
  * @author Karen
  */
-public class ObjectCollectible extends Sprite implements Actor
+public abstract class ObjectCollectible extends Sprite implements Actor
 {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2D
@@ -26,19 +30,14 @@ public class ObjectCollectible extends Sprite implements Actor
     
     //Atributos de control
     protected boolean isCollected;
-    
-    //Atributos de información de la carne
-    protected Constant.Farming type;
     //</editor-fold>
 
-    public ObjectCollectible(Constant.Farming type, World world, TextureRegion region, Vector2 posicion) {
-        super(region);
+    public ObjectCollectible(World world, Vector2 posicion)
+    {
         this.world = world;
-        this.type = type;
         
-        //Colocar posición
         setBounds(0, 0, 32 / Constant.PPM, 32 / Constant.PPM);
-
+        
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(posicion);
@@ -62,13 +61,9 @@ public class ObjectCollectible extends Sprite implements Actor
         
         isCollected = false;
     }
-
+    
     public void setIsCollected(boolean isCollected) {
         this.isCollected = isCollected;
-    }
-
-    public Constant.Farming getType() {
-        return type;
     }
     
     @Override
@@ -97,6 +92,5 @@ public class ObjectCollectible extends Sprite implements Actor
         {
             body.destroyFixture(f);
         }
-        //world.destroyBody(body);
     }
 }

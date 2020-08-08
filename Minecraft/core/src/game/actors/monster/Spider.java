@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
@@ -24,13 +25,20 @@ import game.tools.Constant.PlayerCondition;
 public class Spider extends MonsterMob
 {
 
-    public Spider(GameScreen screen, int x, int y)
+    public Spider(GameScreen screen, int x, int y,boolean isBoss)
     {
 
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10);
-
-        //Colocar posición
-        setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
+        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10,isBoss);
+        
+        if(isBoss){
+            setBounds(0, 0, (60 / Constant.PPM)*2, (60 / Constant.PPM)*2);
+            this.attackPoints *=2;
+            this.life *=2;
+            this.prize = new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND);
+        }else{
+            setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
+        }
+        
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();

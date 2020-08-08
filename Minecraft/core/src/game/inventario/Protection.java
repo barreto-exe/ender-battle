@@ -1,5 +1,7 @@
 package game.inventario;
 
+import game.tools.Constant;
+
 /**
  *
  * @author Karen
@@ -7,8 +9,8 @@ package game.inventario;
 public class Protection extends BattleObject{
     private float protection;
 
-    public Protection(String description, String material) {
-        super(description, material);
+    public Protection(Constant.BattleObject object, Constant.Material material) {
+        super(object, material);
     }
 
     @Override
@@ -17,18 +19,18 @@ public class Protection extends BattleObject{
     }
 
     @Override
-    protected boolean setBattleObject(String object) {
+    protected boolean setBattleObject(Constant.BattleObject object) {
         switch (object){
-            case ("botas"):
+            case BOOTS:
                 protection = 5f;
                 return true;
-            case ("pecho"):
+            case  SHIRTFRONT:
                 protection = 4f;
                 return true;
-            case ("pantalon"):
+            case LEGGING:
                 protection = 3f;
                 return true;
-            case ("casco"):
+            case HELMET:
                 protection = 2f;
                 return true;
             default:

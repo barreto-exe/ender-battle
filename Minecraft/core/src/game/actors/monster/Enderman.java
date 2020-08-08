@@ -8,12 +8,12 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -24,11 +24,19 @@ import game.tools.Constant;
 public class Enderman extends MonsterMob
 {
 
-    public Enderman(GameScreen screen, int x, int y)
+    public Enderman(GameScreen screen, int x, int y,boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20);
-
-        setBounds(0, 0, 81 / Constant.PPM, 192 / Constant.PPM);
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_enderman"), 1, 10, 20,isBoss);
+        
+         if(isBoss){
+         setBounds(0, 0, (81 / Constant.PPM)*2, (192/ Constant.PPM)*2);
+         this.attackPoints *=2;
+         this.life *=2;
+         this.prize = new Arm(Constant.BattleObject.SWORD,Constant.Material.DIAMOND);
+        }else{
+            setBounds(0, 0, 81 / Constant.PPM, 192/ Constant.PPM);
+        }
+         
 
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);

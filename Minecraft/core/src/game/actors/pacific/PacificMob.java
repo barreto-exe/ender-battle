@@ -1,6 +1,6 @@
 package game.actors.pacific;
 
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -26,7 +26,7 @@ public abstract class PacificMob extends Mob
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
-    protected ObjectCollectible meat;
+    protected FoodCollectible meat;
     protected TextureRegion textureMeat;
     
     //Propiedades del MOB
@@ -130,7 +130,7 @@ public abstract class PacificMob extends Mob
     {
         if (setToDie && !isDead)
         {
-            meat = new ObjectCollectible(type,world, textureMeat, body.getPosition());
+            meat = new FoodCollectible(type,world, textureMeat, body.getPosition());
             actors.addActor(meat);
             delete();
             isDead = true;
