@@ -3,6 +3,9 @@ package game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -39,7 +42,7 @@ public class GameScreen extends BaseScreen
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private BiomeAssemblerClass manager;
-    
+
     //Atributos de Box2d
     private Box2DDebugRenderer debugger;
     private World world;
@@ -74,7 +77,7 @@ public class GameScreen extends BaseScreen
         viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
         gameCam.position.set(Constant.FRAME_WIDTH / 2 / Constant.PPM, Constant.FRAME_HEIGHT / 2 / Constant.PPM, 0);
         gameCam.zoom += 0.2f;
-        gameCam.translate(new Vector2(2,0.3f));
+        gameCam.translate(new Vector2(2, 0.3f));
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Construir bioma">
@@ -100,7 +103,8 @@ public class GameScreen extends BaseScreen
         return world;
     }
 
-    public Group getActors() {
+    public Group getActors()
+    {
         return actors;
     }
     //</editor-fold>
@@ -117,30 +121,29 @@ public class GameScreen extends BaseScreen
         manager = new BiomeAssemblerClass(this);
         pacificMobs = manager.getPacificMobs();
         trees = manager.getFarming();
-        
+
         for (Plant plant : trees)
         {
             actors.addActor(plant);
         }
-        
+
         for (PacificMob mob : pacificMobs)
         {
             actors.addActor(mob);
         }
-        
+
         //Instanciar actores del mundo
         this.player.create(this);
 
         //Añadir actores al grupo
         actors.addActor(player);
-        
+
         //Monstruos de prueba   
         //actors.addActor(new Skeleton(this,20,5));
-        actors.addActor(new Zombie(this,17,5));
+        actors.addActor(new Zombie(this, 17, 5));
         //actors.addActor(new Pigman(this,15,5));
         //actors.addActor(new Creeper(this,13,5));
-        
-        
+
         world.setContactListener(new WorldContactListener(player));
     }
 
@@ -149,6 +152,9 @@ public class GameScreen extends BaseScreen
     {
         viewport.update(width, height);
     }
+
+    Batch batchUI = new SpriteBatch();
+    BitmapFont font = new BitmapFont();
 
     @Override
     public void render(float delta)
@@ -163,7 +169,7 @@ public class GameScreen extends BaseScreen
         world.step(delta, 6, 2);
 
         //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
-        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM) 
+        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)
                 && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4)
         {
             gameCam.position.x = player.getBody().getPosition().x + 2;
@@ -179,6 +185,12 @@ public class GameScreen extends BaseScreen
         game.getBatch().begin();
         actors.draw(game.getBatch());
         game.getBatch().end();
+
+        //Con batch aparte dibujar las cosas de la UI
+        batchUI.begin();
+        batchUI.draw(this.getAtlas().findRegion("esmeralda"), 100, 100);
+        font.draw(batchUI, "Hello World!", 100, 100);
+        batchUI.end();
     }
 
     @Override
