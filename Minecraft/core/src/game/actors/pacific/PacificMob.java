@@ -2,8 +2,6 @@ package game.actors.pacific;
 
 import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,12 +20,7 @@ import game.tools.Sonido;
  */
 public abstract class PacificMob extends Mob
 {
-    //Atributos de animacion
-    protected float duration;
-    protected Array<TextureRegion> frames;
-    protected Animation animation;
     protected TextureRegion textureMeat;
-    protected TextureAtlas.AtlasRegion textureEsmereald;
     
     //Propiedades del MOB
     protected Constant.Farming type;
@@ -45,10 +38,7 @@ public abstract class PacificMob extends Mob
      */
     public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, Sonido sonido)
     {
-        super(screen.getWorld(), texture, life, sonido);
-        actors = screen.getActors();
-        duration = 0;
-        textureEsmereald = screen.getAtlas().findRegion("esmeralda");
+        super(screen, texture, life, sonido);
         
         setBounds(0, 0, width / Constant.PPM, height / Constant.PPM);
 
@@ -126,53 +116,4 @@ public abstract class PacificMob extends Mob
 
     protected abstract Vector2[] getVerticesTop();
     
-    /**
-     * Acciones que realiza el mob al morir. Usualmente 
-     * es arrojar objetos al suelo.
-     */
-    protected abstract void toDie();
-    
-    @Override
-    public void changeDirection(){
-        speed = speed * -1;
-        
-        for (TextureRegion frame : frames)
-        {
-            frame.flip(true, false);
-        }
-    }
-    
-    @Override
-    public void act(float delta)
-    {
-        if (setToDie && !isDead)
-        {
-            toDie();
-            delete();
-            isDead = true;
-            //actors.removeActor(this);
-        }
-        else if (!isDead)
-        {
-            body.setLinearVelocity(speed, body.getLinearVelocity().y);
-
-            if (body.getLinearVelocity().y < 0)
-            {
-                body.applyForceToCenter(0, -10, true);
-            }
-
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            duration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
-        }
-    }
-    
-    @Override
-    public void draw (Batch batch)
-    {
-        if (life > 0)
-        {
-            super.draw(batch);
-        }
-    }
 }

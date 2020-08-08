@@ -25,7 +25,7 @@ public class Creeper extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("caminar_creeper"),
             x, 
             y, 
@@ -117,6 +117,18 @@ public class Creeper extends MonsterMob
         else
         {
             System.out.println("No exploto");
+        }
+    }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
         }
     }
 

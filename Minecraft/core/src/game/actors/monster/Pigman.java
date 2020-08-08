@@ -22,7 +22,7 @@ public class Pigman extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("caminar_pigman"),
             x, 
             y, 
@@ -79,6 +79,18 @@ public class Pigman extends MonsterMob
             return;
         }
         System.out.println("Failed");
+    }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
+        }
     }
 
 }

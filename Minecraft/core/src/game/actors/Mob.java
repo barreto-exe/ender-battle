@@ -3,11 +3,16 @@ package game.actors;
 import game.actors.groups.Actor;
 import game.actors.groups.Group;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import game.screens.GameScreen;
 import game.tools.Sonido;
 
 public abstract class Mob extends Sprite implements Actor
@@ -18,6 +23,12 @@ public abstract class Mob extends Sprite implements Actor
     protected Body body;
     protected World world;
     protected Group actors;
+    
+    //Atributos de animacion
+    protected float duration;
+    protected Array<TextureRegion> frames;
+    protected Animation animation;
+    protected TextureAtlas.AtlasRegion textureEsmereald;
 
     //Propiedades del MOB
     protected boolean isDead;
@@ -28,14 +39,19 @@ public abstract class Mob extends Sprite implements Actor
     private int contadorSonidos;
     //</editor-fold>
 
-    public Mob(World world, TextureRegion region, float life, Sonido sonido)
+    public Mob(GameScreen screen, TextureRegion region, float life, Sonido sonido)
     {
         super(region);
-        this.world = world;
+        world = screen.getWorld();
+        
+        textureEsmereald = screen.getAtlas().findRegion("esmeralda");
+        actors = screen.getActors();
+        
         this.life = life;
         
         this.sonido = sonido;
         this.contadorSonidos = 0;
+        duration = 0;
         
         isDead = setToDie = false;
     }
@@ -107,11 +123,59 @@ public abstract class Mob extends Sprite implements Actor
             setToDie = true;
         }
     }
+    
+    /**
+     * Acciones que realiza el mob al morir. Usualmente 
+     * es arrojar objetos al suelo.
+     */
+    protected abstract void toDie();
+    
+    @Override
+    public void act(float delta)
+    {
+        if (setToDie && !isDead)
+        {
+            toDie();
+            delete();
+            isDead = true;
+            //actors.removeActor(this);
+        }
+        else if (!isDead)
+        {
+            body.setLinearVelocity(speed, body.getLinearVelocity().y);
+
+            if (body.getLinearVelocity().y < 0)
+            {
+                body.applyForceToCenter(0, -10, true);
+            }
+
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            duration += delta;
+            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
+        }
+    }
+    
+    @Override
+    public void draw (Batch batch)
+    {
+        if (life > 0)
+        {
+            super.draw(batch);
+        }
+    }
 
     /**
      * Cambiar dirección del mob.
      */
-    public abstract void changeDirection();
+    public void changeDirection()
+    {
+        speed = speed * -1;
+
+        for (TextureRegion frame : frames)
+        {
+            frame.flip(true, false);
+        }
+    }
 
     /**
      * Borra al mob del mapa.

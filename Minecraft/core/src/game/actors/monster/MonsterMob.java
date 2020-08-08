@@ -2,15 +2,16 @@ package game.actors.monster;
 
 import game.actors.Player;
 import game.actors.Mob;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import game.actors.collectibles.EsmeraldCollective;
+import game.actors.collectibles.ObjectCollectible;
 import game.inventario.BattleObject;
+import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Sonido;
 
@@ -21,11 +22,6 @@ import game.tools.Sonido;
 public abstract class MonsterMob extends Mob
 {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
-    //Atributos de animacion
-    protected float animationDuration;
-    protected Array<TextureRegion> frames;
-    protected Animation animation;
-    
     //Atributos Box2d
     protected FixtureDef fixtureD;
     
@@ -41,7 +37,7 @@ public abstract class MonsterMob extends Mob
     
     /**
      * Representa a un monstruo del juego.
-     * @param world es el mundo en el que se encuentra.
+     * @param screen es la pantalla en la que se encuentra.
      * @param region es el sprite del mob que está en el atlas.
      * @param x ubicación horizonal en el mapa.
      * @param y ubicación vertical en el mapa.
@@ -55,14 +51,13 @@ public abstract class MonsterMob extends Mob
      * @param prize es el premio que arroja si el mob es jefe.
      * @param sonido es el sonido que hace al recibir ataques.
      */
-    public MonsterMob(World world, TextureRegion region, float x, float y, float width, float height, float speed, float life, int attackPoints, boolean isBoss, BattleObject prize, Sonido sonido)
+    public MonsterMob(GameScreen screen, TextureRegion region, float x, float y, float width, float height, float speed, float life, int attackPoints, boolean isBoss, BattleObject prize, Sonido sonido)
     {
-        super(world, region, life, sonido);
+        super(screen, region, life, sonido);
         this.speed = speed;
         this.attackPoints = attackPoints;
         this.isBoss = isBoss;
         this.prize = prize;
-        animationDuration = 0;
         
         if (isBoss)
         {
@@ -93,49 +88,6 @@ public abstract class MonsterMob extends Mob
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
-    }
-    
-    @Override
-    public void changeDirection()
-    {
-        speed = speed * -1;
-
-        for (TextureRegion frame : frames)
-        {
-            frame.flip(true, false);
-        }
-    }
-
-    @Override
-    public void act(float delta)
-    {
-        if (setToDie && !isDead)
-        {
-            delete();
-            isDead = true;
-        } 
-        else if (!isDead)
-        {
-            body.setLinearVelocity(speed, body.getLinearVelocity().y);
-
-            if (body.getLinearVelocity().y < 0)
-            {
-                body.applyForceToCenter(0, -10, true);
-            }
-
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            animationDuration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(animationDuration, true));
-        }
-    }
-        
-    @Override
-    public void draw (Batch batch)
-    {
-        if (life > 0)
-        {
-            super.draw(batch);
-        }
     }
     
     /**
@@ -172,4 +124,20 @@ public abstract class MonsterMob extends Mob
      * @param player es el jugador que recibe el ataque.
      */
     public abstract void specialAttack(Player player);
+
+    @Override
+    protected void toDie() {
+        ObjectCollectible objects[] = new ObjectCollectible[3];
+            
+            objects[0] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
+            objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
+            objects[2] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x, body.getPosition().y));
+            
+            for (ObjectCollectible o : objects)
+            {
+                actors.addActor(o);
+            }
+    }
+    
+    
 }

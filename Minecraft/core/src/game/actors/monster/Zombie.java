@@ -3,8 +3,11 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.utils.Array;
+import game.actors.collectibles.EsmeraldCollective;
+import game.actors.collectibles.ObjectCollectible;
 import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
@@ -21,7 +24,7 @@ public class Zombie extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("zombie"),
             x, 
             y, 
@@ -34,7 +37,6 @@ public class Zombie extends MonsterMob
             new Protection(Constant.BattleObject.BOOTS, Constant.Material.DIAMOND), 
             Sonido.ZOMBIE
         );
- 
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
@@ -75,4 +77,17 @@ public class Zombie extends MonsterMob
     {
         player.setCondition(PlayerCondition.POISONED, 5);
     }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
+        }
+    }
+    
 }

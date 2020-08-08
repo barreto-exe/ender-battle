@@ -22,7 +22,7 @@ public class Spider extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("spider"),
             x, 
             y, 
@@ -76,6 +76,18 @@ public class Spider extends MonsterMob
     public void specialAttack(Player player)
     {
         player.setCondition(PlayerCondition.ENTANGLED, 5);
+    }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
+        }
     }
 
 }

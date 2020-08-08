@@ -26,7 +26,7 @@ public class Enderman extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("caminar_enderman"),
             x, 
             y, 
@@ -77,6 +77,18 @@ public class Enderman extends MonsterMob
     public void specialAttack(Player player)
     {
         body.setLinearVelocity(player.getBody().getPosition().x + 80 * player.getDirection(), 0);
+    }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
+        }
     }
 
 }

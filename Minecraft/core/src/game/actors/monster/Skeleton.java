@@ -23,7 +23,7 @@ public class Skeleton extends MonsterMob
     {
         super
         (
-            screen.getWorld(), 
+            screen, 
             screen.getAtlas().findRegion("caminar_esqueleto"),
             x, 
             y, 
@@ -106,4 +106,17 @@ public class Skeleton extends MonsterMob
         direction = direction * -1;
         System.out.println("Direction: " + direction);
     }
+
+    @Override
+    protected void toDie() {
+        if (isBoss)
+        {
+            System.out.println("suelta un arma");
+        }
+        else
+        {
+            super.toDie();
+        }
+    }
+    
 }
