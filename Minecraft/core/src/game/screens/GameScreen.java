@@ -109,13 +109,14 @@ public class GameScreen extends BaseScreen
     {
         return actors;
     }
-    //</editor-fold>
 
     public static FrmInventario getVentanaInventario()
     {
         return ventanaInventario;
     }
 
+    //</editor-fold>
+    
     @Override
     public void show()
     {
@@ -141,12 +142,11 @@ public class GameScreen extends BaseScreen
 
         //Monstruos de prueba   
         //actors.addActor(new Skeleton(this,20,5));
-        actors.addActor(new Zombie(this, 17, 5));
+        //actors.addActor(new Zombie(this, 17, 5));
         //actors.addActor(new Pigman(this,15,5));
         //actors.addActor(new Creeper(this,13,5));
 
         world.setContactListener(new WorldContactListener(player));
-
     }
 
     @Override
@@ -155,11 +155,26 @@ public class GameScreen extends BaseScreen
         viewport.update(width, height);
     }
 
-    //Cosas de prueba para la UI
+    //<editor-fold defaultstate="collapsed" desc="Elementos de la GUI">
     Batch batchUI = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
-    Sprite espada = new Sprite(this.getAtlas().findRegion("espada"));
+    BitmapFont cantidadEsmeralda = new BitmapFont();
+    Sprite esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
+    //</editor-fold>
 
+    
+    private void dibujarGUI()
+    {        
+        batchUI.begin();
+
+        
+        
+        batchUI.draw(esmeralda, 40, 580);
+        cantidadEsmeralda.draw(batchUI, "x123", 50 + esmeralda.getWidth(), 620);
+        
+        
+        batchUI.end();
+    }
+    
     @Override
     public void render(float delta)
     {
@@ -190,14 +205,7 @@ public class GameScreen extends BaseScreen
         actors.draw(game.getBatch());
         game.getBatch().end();
 
-        //Con batch aparte dibujar las cosas de la UI
-        batchUI.begin();
-        font.draw(batchUI, "Hola mundo", 200, 200);
-        batchUI.draw(espada, 100, 100);
-        espada.setPosition(100, 100);
-        espada.draw(batchUI);
-        espada.setColor(Color.CYAN);
-        batchUI.end();
+        dibujarGUI();
     }
 
     @Override
