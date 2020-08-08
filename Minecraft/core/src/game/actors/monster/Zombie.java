@@ -80,7 +80,6 @@ public class Zombie extends MonsterMob
         }
 
         animation = new Animation(0.14f, frames);    //CREANDO ANIMACION DE CAMINAR
-
     }
 
     @Override
