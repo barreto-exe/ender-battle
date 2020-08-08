@@ -1,47 +1,44 @@
 package game.inventario;
 
+import game.tools.Constant;
+
 /**
  *
  * @author Karen
  */
 public class Material {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
-    private String name;
+    private Constant.Material material;
     private int factor;
     //</editor-fold>
 
-    public Material(String name) {
-        setFactor(name);
+    public Material(Constant.Material material) {
+        setFactor(material);
     }
 
-    public String getMaterial() {
-        return name;
+    public Constant.Material getMaterial() {
+        return material;
     }
 
     public int getFactor() {
         return factor;
     }
 
-    private boolean setFactor(String name) {
-        switch (name){
-            case ("madera"):
-                this.name = name;
+    private boolean setFactor(Constant.Material material) {
+        switch (material){
+            case WOOD:
                 factor = 2;
                 return true;
-            case ("hierro"):
-                this.name = name;
+            case IRON:
                 factor = 3;
                 return true;
-            case ("oro"):
-                this.name = name;
+            case GOLD:
                 factor = 4;
                 return true;
-            case("diamante"):
-                this.name = name;
+            case DIAMOND:
                 factor = 5;
                 return true;
             default:
-                this.name = "";
                 factor = 0;
                 return false;
         }

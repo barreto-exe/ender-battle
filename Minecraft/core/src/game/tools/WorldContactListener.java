@@ -10,7 +10,7 @@ import game.actors.pacific.PacificMob;
 import game.actors.monster.MonsterMob;
 import game.actors.monster.Skeleton;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 
 /**
@@ -69,11 +69,11 @@ public class WorldContactListener implements ContactListener
             case Constant.PLAYER_BIT | Constant.FOOD_BIT:
                 if (a.getFilterData().categoryBits == Constant.FOOD_BIT)
                 {
-                    player.setFood((ObjectCollectible)a.getUserData());
+                    player.setFood((FoodCollectible)a.getUserData());
                 }
                 else 
                 {
-                    player.setFood((ObjectCollectible)b.getUserData());
+                    player.setFood((FoodCollectible)b.getUserData());
                 }   
                 break;
             case Constant.MOB_BIT | Constant.MOB_BIT:

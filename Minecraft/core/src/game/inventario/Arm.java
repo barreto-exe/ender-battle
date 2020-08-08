@@ -1,5 +1,7 @@
 package game.inventario;
 
+import game.tools.Constant;
+
 /**
  *
  * @author Karen
@@ -7,8 +9,8 @@ package game.inventario;
 public class Arm extends BattleObject{
     private float attack;
 
-    public Arm(String description, String material) {
-        super(description, material);
+    public Arm(Constant.BattleObject object, Constant.Material material) {
+        super(object, material);
     }
 
     @Override
@@ -17,18 +19,18 @@ public class Arm extends BattleObject{
     }
         
     @Override
-    protected boolean setBattleObject(String object) {
+    protected boolean setBattleObject(Constant.BattleObject object) {
         switch (object){
-            case ("espada"):
+            case SWORD:
                 attack = 5f;
                 return true;
-            case ("hacha"):
+            case AX:
                 attack = 4f;
                 return true;
-            case ("pico"):
+            case PICK:
                 attack = 3f;
                 return true;
-            case ("pala"):
+            case SHOVEL:
                 attack = 2f;
                 return true;
             default:

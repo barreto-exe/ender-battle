@@ -31,7 +31,7 @@ public class Pigman extends MonsterMob{
          setBounds(0, 0, (64 / Constant.PPM)*2, (128/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
-         this.prize = new Protection("casco","diamante");
+         this.prize = new Protection(Constant.BattleObject.HELMET, Constant.Material.DIAMOND);
         }else{
             setBounds(0, 0, 64 / Constant.PPM, 128 / Constant.PPM);
         }

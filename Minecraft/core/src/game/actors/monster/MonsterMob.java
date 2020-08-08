@@ -7,7 +7,7 @@ package game.actors.monster;
 
 import game.actors.Player;
 import game.actors.Mob;
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

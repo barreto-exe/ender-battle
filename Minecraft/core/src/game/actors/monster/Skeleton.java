@@ -9,7 +9,6 @@ import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -34,7 +33,7 @@ public class Skeleton extends MonsterMob
          setBounds(0, 0, (70 / Constant.PPM)*2, (128/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
-         this.prize = new Protection("pantalon","diamante");
+         this.prize = new Protection(Constant.BattleObject.LEGGING,Constant.Material.DIAMOND);
         }else{
             setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
         }

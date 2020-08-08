@@ -6,7 +6,7 @@
 package game.actors.farming.plants;
 
 import game.actors.Player;
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import game.actors.groups.Actor;
 import game.actors.groups.Group;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -47,7 +47,7 @@ public abstract class Plant extends Sprite implements Actor
     protected float life;
     protected TextureAtlas.AtlasRegion plantEmpty;
     protected Constant.Farming type;
-    protected ObjectCollectible[] fruits;
+    protected FoodCollectible[] fruits;
     protected TextureAtlas.AtlasRegion fruitTexture;
     //</editor-fold>
 
@@ -72,14 +72,14 @@ public abstract class Plant extends Sprite implements Actor
         {
             setRegion(plantEmpty);
             
-            fruits = new ObjectCollectible[5];
-            fruits[0] = new ObjectCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 2, body.getPosition().y));
-            fruits[1] = new ObjectCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 4, body.getPosition().y));
-            fruits[2] = new ObjectCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 4, body.getPosition().y));
-            fruits[3] = new ObjectCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 2, body.getPosition().y));
-            fruits[4] = new ObjectCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x, body.getPosition().y));
+            fruits = new FoodCollectible[5];
+            fruits[0] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 2, body.getPosition().y));
+            fruits[1] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 4, body.getPosition().y));
+            fruits[2] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 4, body.getPosition().y));
+            fruits[3] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 2, body.getPosition().y));
+            fruits[4] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x, body.getPosition().y));
             
-            for (ObjectCollectible fruit : fruits)
+            for (FoodCollectible fruit : fruits)
             {
                 actors.addActor(fruit);
             }

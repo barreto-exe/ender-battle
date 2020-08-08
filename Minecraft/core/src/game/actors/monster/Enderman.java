@@ -8,7 +8,6 @@ package game.actors.monster;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -33,7 +32,7 @@ public class Enderman extends MonsterMob
          setBounds(0, 0, (81 / Constant.PPM)*2, (192/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
-         this.prize = new Arm("espada","diamante");
+         this.prize = new Arm(Constant.BattleObject.SWORD,Constant.Material.DIAMOND);
         }else{
             setBounds(0, 0, 81 / Constant.PPM, 192/ Constant.PPM);
         }

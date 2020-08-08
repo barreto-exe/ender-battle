@@ -1,5 +1,7 @@
 package game.inventario;
 
+import game.tools.Constant;
+
 /**
  *
  * @author Karen
@@ -8,31 +10,26 @@ package game.inventario;
 public abstract class BattleObject {
     
     //<editor-fold defaultstate="collapsed" desc="Atributos">
-    private String description;
+    private Constant.BattleObject object;
     protected float factorObject;
     private boolean isPorted;
     protected Material material;
     private int use;
     //</editor-fold>
 
-    public BattleObject(String description, String material){
-        if (setObject(description, material))
+    public BattleObject(Constant.BattleObject object, Constant.Material material){
+        if (setObject(object))
         {
-            this.description = description;
+            this.object = object;
             this.material = new Material(material);
-        }
-        else
-        {
-            this.description = "";
-            this.material = new Material("");
         }
         
         isPorted = false;
         setFactorObject();
     }
 
-    public String getDescription() {
-        return description;
+    public Constant.BattleObject getObject() {
+        return object;
     }
 
     public Material getMaterial() {
@@ -43,27 +40,11 @@ public abstract class BattleObject {
         return factorObject;
     }
     
-    protected abstract boolean setBattleObject(String object);
-    
-    private boolean isMaterial(String name)
-    {
-        switch (name){
-            case ("madera"):
-                return true;
-            case ("hierro"):
-                return true;
-            case ("oro"):
-                return true;
-            case("diamante"):
-                return true;
-            default:
-                return false;
-        }
-    }
+    protected abstract boolean setBattleObject(Constant.BattleObject object);
 
-    private boolean setObject(String description, String material)
+    private boolean setObject(Constant.BattleObject object)
     {
-        if (setBattleObject(description) && isMaterial(material)){
+        if (setBattleObject(object)){
             return true;
         }
         else 
@@ -79,12 +60,6 @@ public abstract class BattleObject {
     
 
     protected abstract void setFactorObject();
-
-    @Override
-    public String toString() {
-        return "Pieza: " + description + 
-             "\nMaterial: " + material.getMaterial();
-    }
     
     
 }

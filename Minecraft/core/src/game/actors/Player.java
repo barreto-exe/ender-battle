@@ -15,9 +15,10 @@ import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import game.inventario.BattleObject;
 import game.inventario.Inventory;
-import game.actors.farming.meats.ObjectCollectible;
+import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 import com.badlogic.gdx.graphics.Color;
+import game.actors.collectibles.ObjectCollectible;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
@@ -44,7 +45,7 @@ public class Player extends Sprite implements Actor
     private boolean isHitting;
     private boolean setToAttack;
     private Mob enemy;
-    private ObjectCollectible food;
+    private ObjectCollectible objectCollectible;
     private Plant plant;
 
     //Atributos de Textura
@@ -178,7 +179,7 @@ public class Player extends Sprite implements Actor
         condition = PlayerCondition.NORMAL;
         deltaFrame = 0;
         enemy = null;
-        food = null;
+        objectCollectible = null;
         plant = null;
     }
 
@@ -318,8 +319,8 @@ public class Player extends Sprite implements Actor
         this.enemy = enemy;
     }
 
-    public void setFood(ObjectCollectible food) {
-        this.food = food;
+    public void setFood(FoodCollectible food) {
+        this.objectCollectible = food;
     }
 
     public void setPlant(Plant plant) {
@@ -356,7 +357,7 @@ public class Player extends Sprite implements Actor
             direction = -1;
             walk(-1);
         } 
-        else if (controller.isPickingUp() && (food !=null))
+        else if (controller.isPickingUp() && (objectCollectible !=null))
         {
             toPickUp();
         }
@@ -413,24 +414,24 @@ public class Player extends Sprite implements Actor
     {
         int index = 0;
 
-        switch (object.getDescription())
+        switch (object.getObject())
         {
-            case ("espada"):
-            case ("hacha"):
-            case ("pico"):
-            case ("pala"):
+            case SWORD:
+            case AX:
+            case PICK:
+            case SHOVEL:
                 index = 0;
                 break;
-            case ("casco"):
+            case HELMET:
                 index = 1;
                 break;
-            case ("pecho"):
+            case SHIRTFRONT:
                 index = 2;
                 break;
-            case ("pantalon"):
+            case LEGGING:
                 index = 3;
                 break;
-            case ("botas"):
+            case BOOTS:
                 index = 4;
                 break;
         }
@@ -488,9 +489,13 @@ public class Player extends Sprite implements Actor
     }
 
     private void toPickUp() {
-        food.setIsCollected(true);
-        inventory.addFood(food.getType());
-        //liberar food
+        objectCollectible.setIsCollected(true);
+        if (objectCollectible instanceof FoodCollectible)
+        {
+            inventory.addFood(((FoodCollectible)objectCollectible).getType());
+        }
+        
+        //liberar objectCollectible
     }
 
     //Lleva este atributo hacia la parte de atributos e inicializalo 

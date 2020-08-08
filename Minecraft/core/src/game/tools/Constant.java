@@ -20,23 +20,26 @@ public class Constant
     public enum State
     {
         JUMPING, HITTING, WALKING_RIGHT, WALKING_LEFT, FALLING, STANDING, PICKING_UP
-    };
+    }
 
     public enum Farming
     {
         APPLE, PEAR, BERRY, WATERMELON, CARROT, POTATO, CHICKEN, RABBIT, BEEF
-    };
+    }
 
     public enum PlayerCondition
     {
-        NORMAL,
-        BURNED,
-        ENTANGLED,
-        POISONED,
+        NORMAL, BURNED, ENTANGLED, POISONED
     }
     
-    public enum Protection{
-        HELMET,CHESTPLATE,LEGGING,BOOTS 
+    public enum BattleObject
+    {
+        HELMET,SHIRTFRONT,LEGGING,BOOTS, AX, SWORD, SHOVEL, PICK 
+    }
+    
+    public enum Material
+    {
+        WOOD, GOLD, IRON, DIAMOND
     }
     
     public static final short GROUND_BIT = 1;

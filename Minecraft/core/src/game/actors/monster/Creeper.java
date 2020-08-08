@@ -7,7 +7,6 @@ package game.actors.monster;
 
 import game.actors.Mob;
 import game.actors.Player;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -35,7 +34,7 @@ public class Creeper extends MonsterMob{
          setBounds(0, 0, (55 / Constant.PPM)*2, (128/ Constant.PPM)*2);
          this.attackPoints *=2;
          this.life *=2;
-         this.prize = new Arm("hacha","diamante");
+         this.prize = new Arm(Constant.BattleObject.AX,Constant.Material.DIAMOND);
         }else{
             setBounds(0, 0, 55 / Constant.PPM, 128 / Constant.PPM);
         }

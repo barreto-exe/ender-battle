@@ -1,6 +1,5 @@
 package game.actors;
 
-import game.actors.Player;
 import game.actors.groups.Actor;
 import game.actors.groups.Group;
 import com.badlogic.gdx.graphics.Color;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import game.tools.Constant;
 
 public abstract class Mob extends Sprite implements Actor
 {
