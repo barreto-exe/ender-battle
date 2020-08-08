@@ -35,6 +35,7 @@ public abstract class Mob extends Sprite implements Actor
         this.life = life;
         
         this.sonido = sonido;
+        this.contadorSonidos = 0;
         
         isDead = setToDie = false;
     }
@@ -50,13 +51,23 @@ public abstract class Mob extends Sprite implements Actor
     }
 
     private final Sonido sonido;
+    private int contadorSonidos;
     
     public void toRecibeAttack(Player player, float hit)
     {
 
         life -= hit;
         
-        sonido.reproducir();
+        if(contadorSonidos == 0)
+        {
+            sonido.reproducir();
+        }
+        
+        contadorSonidos++;
+        if(contadorSonidos > 3)
+        {
+            contadorSonidos = 0;
+        }
         
         //El mob que será herido
         final Mob mob = this;

@@ -345,8 +345,22 @@ public final class FrmInventario extends javax.swing.JFrame
         //Obtener label clickeado
         JLabel origen = ((JLabel)evt.getSource());
         
+        //Alimento que se decidió comer
+        Farming alimento = Farming.getEnumByDesc(origen.getToolTipText());
+        
+        //Obtener la cantidad de vida a curar
+        int index = Inventory.getIndex(alimento);
+        Food food = player.getInventory().getFood()[index];
+        
+        //Si no tiene en el inventario
+        if(food.getCant() <= 0)
+        {
+            //No hacer nada
+            return;
+        }
+        
         //<editor-fold defaultstate="collapsed" desc="Sonido comer">
-        int eatToSound = (int) ((Math.random() * ((3 - 0) + 1)) + 0);
+        int eatToSound = (int) ((Math.random() * ((3 - 1) + 1)) + 1);
         switch(eatToSound)
         {
             case 1:
@@ -368,13 +382,6 @@ public final class FrmInventario extends javax.swing.JFrame
                 Sonido.EAT1.reproducir();
         }
         //</editor-fold>    
-        
-        //Alimento que se decidió comer
-        Farming alimento = Farming.getEnumByDesc(origen.getToolTipText());
-        
-        //Obtener la cantidad de vida a curar
-        int index = Inventory.getIndex(alimento);
-        Food food = player.getInventory().getFood()[index];
         
         //Añadir vida al jugador
         player.addLife(food.getFood());
