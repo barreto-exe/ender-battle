@@ -1,21 +1,21 @@
 package game.tools;
 
 /**
- *
+ * Clase contenedora de constantes del programa.
+ * 
  * @author Karen
  */
 public class Constant
 {
-
     public static final float PPM = 50;
     public static final int MAX_MAP = 6400;
-    public static final int PLAYER_WIDTH = 512;  //width de la region de "Walking"
-    public static final int PLAYER_HEIGHT = 128;  //height de la region de "Walking"
+    public static final int PLAYER_WIDTH = 512;  
+    public static final int PLAYER_HEIGHT = 128;  
     public static final int IMPULSE_JUMP = 15;  
     public static final float SPEED_PLAYER = 3.8f;  
-    public static final int FRAME_WIDTH = 855;  //width del frame 
-    public static final int FRAME_HEIGHT = 500;  //height del frame  
-    public static final int IMPULSE_ATTACK = 8;  //height del frame  
+    public static final int FRAME_WIDTH = 855;  
+    public static final int FRAME_HEIGHT = 500;  
+    public static final int IMPULSE_ATTACK = 8;   
 
     public enum State
     {

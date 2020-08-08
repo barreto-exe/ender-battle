@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Player;
@@ -23,25 +18,33 @@ import game.tools.Sonido;
  *
  * @author Diego
  */
-public class Pigman extends MonsterMob{
+public class Pigman extends MonsterMob
+{
 
-     public Pigman(GameScreen screen, int x, int y,boolean isBoss) {
-        super(screen.getWorld(),  screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20,isBoss, Sonido.PIGMAN);
-        
-        if(isBoss){
-         setBounds(0, 0, (64 / Constant.PPM)*2, (128/ Constant.PPM)*2);
-         this.attackPoints *=2;
-         this.life *=2;
-         this.prize = new Protection(Constant.BattleObject.HELMET, Constant.Material.DIAMOND);
-        }else{
+    public Pigman(GameScreen screen, int x, int y, boolean isBoss)
+    {
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_pigman"), 0.8f, 10, 20, isBoss, Sonido.PIGMAN);
+
+        if (isBoss)
+        {
+            setBounds(0, 0, (64 / Constant.PPM) * 2, (128 / Constant.PPM) * 2);
+            this.attackPoints *= 2;
+            this.life *= 2;
+            this.prize = new Protection(Constant.BattleObject.HELMET, Constant.Material.DIAMOND);
+        }
+        else
+        {
             setBounds(0, 0, 64 / Constant.PPM, 128 / Constant.PPM);
         }
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
-        
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getWidth() / 2, getHeight() / 2);
@@ -49,22 +52,24 @@ public class Pigman extends MonsterMob{
         fixtureD.filter.categoryBits = Constant.MOB_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de sensores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;
         fixtureD.filter.categoryBits = Constant.MOB_SENSOR_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
-        
         //DERECHA
-        sensor.set(getWidth() / 2, getHeight() / -2 + 0.1f, getWidth() / 2, getHeight() / 2 -0.1f);
+        sensor.set(getWidth() / 2, getHeight() / -2 + 0.1f, getWidth() / 2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
-        
+
         //IZQUIERDA
-         sensor.set(getWidth() / -2, getHeight() / -2 + 0.1f, getWidth() / -2, getHeight() / 2 -0.1f);
+        sensor.set(getWidth() / -2, getHeight() / -2 + 0.1f, getWidth() / -2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
-        
-         //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion texture = screen.getAtlas().findRegion("caminar_pigman");
         TextureRegion[][] region = texture.split(256 / 4, 128);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
         frames = new Array<>();
@@ -77,20 +82,21 @@ public class Pigman extends MonsterMob{
                 frames.add(regionC);
             }
         }
-        
+
         animation = new Animation(0.18f, frames);    //CREANDO ANIMACION DE CAMINAR
-        
+        //</editor-fold>
     }
 
-    
     @Override
-    public void specialAttack(Player player) {
-        if(attackOportunity(3)){
-            player.setCondition(PlayerCondition.BURNED,5);
+    public void specialAttack(Player player)
+    {
+        if (attackOportunity(3))
+        {
+            player.setCondition(PlayerCondition.BURNED, 5);
             System.out.println("Is burned");
             return;
         }
         System.out.println("Failed");
     }
-    
+
 }

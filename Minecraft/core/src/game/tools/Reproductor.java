@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.tools;
 
 import java.io.BufferedInputStream;
@@ -22,7 +17,6 @@ public class Reproductor implements Runnable
     private boolean estaReproduciendo;
     private Player player;
     
-
     /**
      * Objeto que reproduce sonido en otro hilo.
      * 
@@ -37,21 +31,23 @@ public class Reproductor implements Runnable
         estaReproduciendo = true;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Sonido getSonido()
     {
         return sonido;
     }
-
+    
     public void setSonido(Sonido sonido)
     {
         this.sonido = sonido;
     }
-
+    
     public void detenerReproduccion()
     {
         this.estaReproduciendo = false;
         player.close();
     }
+    //</editor-fold>
     
     @Override
     public void run()

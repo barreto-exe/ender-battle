@@ -26,6 +26,8 @@ public abstract class Mob extends Sprite implements Actor
     protected boolean setToDie;
     protected float life;
     protected float speed;
+    private final Sonido sonido;
+    private int contadorSonidos;
     //</editor-fold>
 
     public Mob(World world, TextureRegion region, float life, Sonido sonido)
@@ -50,12 +52,14 @@ public abstract class Mob extends Sprite implements Actor
         return body;
     }
 
-    private final Sonido sonido;
-    private int contadorSonidos;
     
+    /**
+     * Recibe un ataque del jugador.
+     * @param player el jugador que ataca al mob.
+     * @param hit cantidad de vida que se le restará al mob.
+     */
     public void toRecibeAttack(Player player, float hit)
     {
-
         life -= hit;
         
         if(contadorSonidos == 0)
@@ -106,8 +110,14 @@ public abstract class Mob extends Sprite implements Actor
         }
     }
 
+    /**
+     * Cambiar dirección del mob.
+     */
     public abstract void changeDirection();
 
+    /**
+     * Borra al mob del mapa.
+     */
     protected void delete()
     {
         for (Fixture f : body.getFixtureList())

@@ -13,13 +13,13 @@ import game.tools.Sonido;
  *
  * @author Karen
  */
-public class Chicken extends PacificMob 
+public class Chicken extends PacificMob
 {
     public Chicken(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion)screen.getAtlas().findRegion("chicken"), 5, x, y, 96 / 3, 25, Sonido.CHICKEN);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("chicken"), 5, x, y, 96 / 3, 25, Sonido.CHICKEN);
         textureMeat = screen.getAtlas().findRegion("pollo_carne");
-        
+
         speed = 1.2f;
         type = Constant.Farming.CHICKEN;
     }
@@ -38,11 +38,12 @@ public class Chicken extends PacificMob
     //</editor-fold>    
 
     @Override
-    protected void toDie() {
+    protected void toDie()
+    {
         ObjectCollectible objects[] = new ObjectCollectible[2];
         objects[0] = new FoodCollectible(type, world, textureMeat, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
         objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
-        
+
         for (ObjectCollectible o : objects)
         {
             actors.addActor(o);

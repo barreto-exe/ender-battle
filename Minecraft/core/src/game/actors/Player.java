@@ -32,7 +32,6 @@ import game.tools.VirtualController;
  */
 public class Player extends Sprite implements Actor
 {
-
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2d
     private World world;
@@ -62,11 +61,13 @@ public class Player extends Sprite implements Actor
     private final String color;
     private float life;
     private PlayerCondition condition;
+    float timeCondition = 0;
     private int direction;
 
     //Atributos de Inventario
     private Inventory inventory;
     private BattleObject[] portedObjects;
+    
     //</editor-fold>
 
     /**
@@ -89,100 +90,6 @@ public class Player extends Sprite implements Actor
         {
             portedObjects[i] = null;
         }
-    }
-
-    /**
-     * Método que controla y dibuja al protagonista del juego en pantalla.
-     *
-     * @param screen la pantalla en la que se está mostrando el jugador.
-     */
-    public void create(GameScreen screen)
-    {
-        setRegion(screen.getAtlas().findRegion(color + "_caminar"));
-        world = screen.getWorld();
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
-        TextureRegion spriteSheet = screen.getAtlas().findRegion(color + "_caminar");
-        TextureRegion[][] region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
-        walkFrames = new Array<>();
-
-        //APLANANDO ARREGLO DE TEXTURES
-        for (TextureRegion[] regionF : region)
-        {
-            for (TextureRegion regionC : regionF)
-            {
-                walkFrames.add(regionC);
-            }
-        }
-
-        walkAnimation = new Animation(0.15f, walkFrames);
-        //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Golpear"">
-        spriteSheet = screen.getAtlas().findRegion(color + "_golpear");
-        region = spriteSheet.split(768 / 6, Constant.PLAYER_HEIGHT);
-        punchFrames = new Array<>();
-
-        //APLANANDO ARREGLO DE TEXTURES
-        for (TextureRegion[] regionF : region)
-        {
-            for (TextureRegion regionC : regionF)
-            {
-                punchFrames.add(regionC);
-            }
-        }
-
-        punchAnimation = new Animation(0.06f, punchFrames);
-        //</editor-fold>
-
-        //Colocar posición
-        setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
-
-        //Colocar frame en reposo
-        setRegion(walkFrames.get(3));
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
-        BodyDef bodyD = new BodyDef();
-        bodyD.position.set(3, 2);
-        bodyD.type = BodyDef.BodyType.DynamicBody;
-        body = this.world.createBody(bodyD);
-        //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture Cuerpo">
-        FixtureDef fixtureD = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
-        fixtureD.shape = shape;
-        fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
-        fixtureD.filter.maskBits
-                = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FOOD_BIT | Constant.MOB_BIT
-                | Constant.MOB_SENSOR_BIT | Constant.MOB_TOP_BIT | Constant.TREE_BIT | Constant.ARROW_SENSOR_BIT;
-        body.createFixture(fixtureD).setUserData(this);
-        //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="Definición Fixture Pies">
-        EdgeShape feet = new EdgeShape();
-        feet.set(getWidth() / -2 + 0.9f, getHeight() / -2, getWidth() / 2 - 0.9f, getHeight() / -2);
-        fixtureD.shape = feet;
-        fixtureD.filter.categoryBits = Constant.PLAYER_FEET_BIT;
-        fixtureD.filter.maskBits = Constant.GROUND_BIT;
-        fixtureD.isSensor = true;
-        body.createFixture(fixtureD).setUserData(this);
-        //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="Controladores">
-        controller = new VirtualController();
-        processor = new HandleInput(controller, screen);
-        Gdx.input.setInputProcessor(processor);
-        //</editor-fold>
-
-        isJumping = isHitting = setToAttack = false;
-        previousState = State.WALKING_RIGHT;
-        condition = PlayerCondition.NORMAL;
-        deltaFrame = 0;
-        enemy = null;
-        objectCollectible = null;
-        plant = null;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -357,6 +264,100 @@ public class Player extends Sprite implements Actor
     }
     //</editor-fold>
 
+    /**
+     * Método que crea y dibuja al protagonista del juego en pantalla.
+     *
+     * @param screen la pantalla en la que se está mostrando el jugador.
+     */
+    public void create(GameScreen screen)
+    {
+        setRegion(screen.getAtlas().findRegion(color + "_caminar"));
+        world = screen.getWorld();
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
+        TextureRegion spriteSheet = screen.getAtlas().findRegion(color + "_caminar");
+        TextureRegion[][] region = spriteSheet.split(Constant.PLAYER_WIDTH / 4, Constant.PLAYER_HEIGHT);
+        walkFrames = new Array<>();
+
+        //APLANANDO ARREGLO DE TEXTURES
+        for (TextureRegion[] regionF : region)
+        {
+            for (TextureRegion regionC : regionF)
+            {
+                walkFrames.add(regionC);
+            }
+        }
+
+        walkAnimation = new Animation(0.15f, walkFrames);
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Golpear"">
+        spriteSheet = screen.getAtlas().findRegion(color + "_golpear");
+        region = spriteSheet.split(768 / 6, Constant.PLAYER_HEIGHT);
+        punchFrames = new Array<>();
+
+        //APLANANDO ARREGLO DE TEXTURES
+        for (TextureRegion[] regionF : region)
+        {
+            for (TextureRegion regionC : regionF)
+            {
+                punchFrames.add(regionC);
+            }
+        }
+
+        punchAnimation = new Animation(0.06f, punchFrames);
+        //</editor-fold>
+
+        //Colocar posición
+        setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
+
+        //Colocar frame en reposo
+        setRegion(walkFrames.get(3));
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
+        BodyDef bodyD = new BodyDef();
+        bodyD.position.set(3, 2);
+        bodyD.type = BodyDef.BodyType.DynamicBody;
+        body = this.world.createBody(bodyD);
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture Cuerpo">
+        FixtureDef fixtureD = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
+        fixtureD.shape = shape;
+        fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
+        fixtureD.filter.maskBits
+                = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FOOD_BIT | Constant.MOB_BIT
+                | Constant.MOB_SENSOR_BIT | Constant.MOB_TOP_BIT | Constant.TREE_BIT | Constant.ARROW_SENSOR_BIT;
+        body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Definición Fixture Pies">
+        EdgeShape feet = new EdgeShape();
+        feet.set(getWidth() / -2 + 0.9f, getHeight() / -2, getWidth() / 2 - 0.9f, getHeight() / -2);
+        fixtureD.shape = feet;
+        fixtureD.filter.categoryBits = Constant.PLAYER_FEET_BIT;
+        fixtureD.filter.maskBits = Constant.GROUND_BIT;
+        fixtureD.isSensor = true;
+        body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Controladores">
+        controller = new VirtualController();
+        processor = new HandleInput(controller, screen);
+        Gdx.input.setInputProcessor(processor);
+        //</editor-fold>
+
+        isJumping = isHitting = setToAttack = false;
+        previousState = State.WALKING_RIGHT;
+        condition = PlayerCondition.NORMAL;
+        deltaFrame = 0;
+        enemy = null;
+        objectCollectible = null;
+        plant = null;
+    }
+
     @Override
     public void act(float delta)
     {
@@ -413,6 +414,9 @@ public class Player extends Sprite implements Actor
         setRegion(getFrame(delta));
     }
 
+    /**
+     * Aplica impulso al jugador para que salte.
+     */
     private void jump()
     {
         if (!(currentState == State.FALLING || currentState == State.JUMPING || condition == PlayerCondition.ENTANGLED))
@@ -422,6 +426,10 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    /**
+     * Aplica impulso al jugador para que camine.
+     * @param direction 
+     */
     public void walk(int direction)
     {
         if (!(currentState == State.FALLING || currentState == State.JUMPING))
@@ -434,6 +442,9 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    /**
+     * Invierte la animación del jugador.
+     */
     public void invertAnimation()
     {
         for (TextureRegion frame : walkFrames)
@@ -447,6 +458,10 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    /**
+     * Añade un objeto al inventario del jugador.
+     * @param object el que se añade al inventario.
+     */
     public void portarObjeto(BattleObject object)
     {
         int index = 0;
@@ -482,6 +497,10 @@ public class Player extends Sprite implements Actor
         portedObjects[index] = object;
     }
 
+    /**
+     * Calcula el daño que hace el jugador de acuerdo al arma que porta.
+     * @return cantidad de daño que hace.
+     */
     private float calculateDamage()
     {
         if (portedObjects[0] != null)
@@ -494,6 +513,10 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    /**
+     * Hiere a un mob.
+     * @param mob el que va a herirse.
+     */
     public void toHurt(Mob mob)
     {
         if (mob != null)
@@ -502,6 +525,23 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    /**
+     * Hace daño a una planta.
+     * @param plant la que recibe el golpe.
+     */
+    public void toCrop(Plant plant)
+    {
+        if (plant != null)
+        {
+            Sonido.ARBOLHIT.reproducir();
+            plant.toRecibeAttack(this, calculateDamage());
+        }
+    }
+
+    /**
+     * Recibir un ataque.
+     * @param hit catidad de daño del ataque.
+     */
     public void toRecibeAttack(float hit)
     {
         life -= hit;
@@ -541,15 +581,9 @@ public class Player extends Sprite implements Actor
         }
     }
 
-    public void toCrop(Plant plant)
-    {
-        if (plant != null)
-        {
-            Sonido.ARBOLHIT.reproducir();
-            plant.toRecibeAttack(this, calculateDamage());
-        }
-    }
-
+    /**
+     * Recoge un objeto del suelo.
+     */
     private void toPickUp()
     {
         objectCollectible.setIsCollected(true);
@@ -567,11 +601,6 @@ public class Player extends Sprite implements Actor
 
         //liberar objectCollectible
     }
-
-    //Lleva este atributo hacia la parte de atributos e inicializalo 
-    //en el constructor cuando termines de hacer las pruebas. 
-    //No lo inicialices en el constructor.
-    float timeCondition = 0;
 
     /**
      * Le coloca al jugador un estado de envenenamiento por un monstruo. Cada
@@ -660,17 +689,5 @@ public class Player extends Sprite implements Actor
                 setColor(Color.GRAY);
                 break;
         }
-    }
-
-    public void setTimePassed(float timePassed)
-    {
-        this.timePassed = timePassed;
-    }
-    float timePassed = 0;
-
-    public boolean timePassed(float delta)
-    {
-        timePassed -= delta;
-        return timePassed <= 0;
     }
 }

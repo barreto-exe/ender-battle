@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Player;
@@ -25,25 +20,30 @@ import game.tools.Sonido;
  */
 public class Zombie extends MonsterMob
 {
-
-    public Zombie(GameScreen screen, int x, int y,boolean isBoss)
+    public Zombie(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10,isBoss, Sonido.ZOMBIE);
-        if(isBoss){
-            setBounds(0, 0, (128 / Constant.PPM)*2, (128 / Constant.PPM)*2);
-            this.attackPoints *=2;
-            this.life *=2;
+        super(screen.getWorld(), screen.getAtlas().findRegion("zombie"), 1, 8, 10, isBoss, Sonido.ZOMBIE);
+ 
+        if (isBoss)
+        {
+            setBounds(0, 0, (128 / Constant.PPM) * 2, (128 / Constant.PPM) * 2);
+            this.attackPoints *= 2;
+            this.life *= 2;
             this.prize = new Protection(Constant.BattleObject.BOOTS, Constant.Material.DIAMOND);
-        }else{
+        }
+        else
+        {
             setBounds(0, 0, 128 / Constant.PPM, 128 / Constant.PPM);
         }
-        
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
@@ -51,7 +51,9 @@ public class Zombie extends MonsterMob
         fixtureD.filter.categoryBits = Constant.MOB_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Sesores">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;
@@ -65,10 +67,11 @@ public class Zombie extends MonsterMob
         //IZQUIERDA
         sensor.set(getWidth() / -2, getHeight() / -2 + 0.1f, getWidth() / -2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
+        //<editor-fold defaultstate="collapsed" desc="Definición de animación">
         TextureRegion texture = screen.getAtlas().findRegion("zombie");
-        TextureRegion[][] region = texture.split(128, 128);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
+        TextureRegion[][] region = texture.split(128, 128);
         frames = new Array<>();
 
         //APLANANDO ARREGLO DE TEXTURES
@@ -80,18 +83,13 @@ public class Zombie extends MonsterMob
             }
         }
 
-        animation = new Animation(0.14f, frames);    //CREANDO ANIMACION DE CAMINAR
-    }
+        animation = new Animation(0.14f, frames);
+        //</editor-fold>
+}
 
     @Override
     public void specialAttack(Player player)
     {
-        if (attackOportunity(2))
-        {
-            player.setCondition(PlayerCondition.POISONED, 5);
-            System.out.println("Is poisoned");
-            return;
-        }
-        System.out.println("Failed");
+        player.setCondition(PlayerCondition.POISONED, 5);
     }
 }

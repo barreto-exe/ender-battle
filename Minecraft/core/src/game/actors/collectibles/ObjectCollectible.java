@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.collectibles;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -23,11 +18,12 @@ import game.tools.Constant;
  */
 public abstract class ObjectCollectible extends Sprite implements Actor
 {
+
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2D
     protected World world;
     protected Body body;
-    
+
     //Atributos de control
     protected boolean isCollected;
     //</editor-fold>
@@ -35,9 +31,9 @@ public abstract class ObjectCollectible extends Sprite implements Actor
     public ObjectCollectible(World world, Vector2 posicion)
     {
         this.world = world;
-        
+
         setBounds(0, 0, 32 / Constant.PPM, 32 / Constant.PPM);
-        
+
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(posicion);
@@ -45,6 +41,7 @@ public abstract class ObjectCollectible extends Sprite implements Actor
         body = this.world.createBody(bodyD);
         //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getHeight() / 2, getHeight() / 2);
@@ -53,24 +50,28 @@ public abstract class ObjectCollectible extends Sprite implements Actor
         fixtureD.filter.categoryBits = Constant.FOOD_BIT;
         fixtureD.filter.maskBits = Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de Sensor">
         fixtureD.isSensor = false;
         fixtureD.filter.categoryBits = Constant.FOOD_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT;
         body.createFixture(fixtureD).setUserData(this);
-        
+        //</editor-fold>
+
         isCollected = false;
     }
-    
-    public void setIsCollected(boolean isCollected) {
+
+    public void setIsCollected(boolean isCollected)
+    {
         this.isCollected = isCollected;
     }
-    
+
     @Override
-    public void act(float delta) 
+    public void act(float delta)
     {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        
+
         if (isCollected)
         {
             delete();
@@ -85,7 +86,7 @@ public abstract class ObjectCollectible extends Sprite implements Actor
             super.draw(batch);
         }
     }
-    
+
     private void delete()
     {
         for (Fixture f : body.getFixtureList())

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Player;
@@ -26,20 +21,22 @@ import game.tools.Sonido;
 public class Spider extends MonsterMob
 {
 
-    public Spider(GameScreen screen, int x, int y,boolean isBoss)
+    public Spider(GameScreen screen, int x, int y, boolean isBoss)
     {
 
-        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10,isBoss, Sonido.SPIDER);
-        
-        if(isBoss){
-            setBounds(0, 0, (60 / Constant.PPM)*2, (60 / Constant.PPM)*2);
-            this.attackPoints *=2;
-            this.life *=2;
+        super(screen.getWorld(), screen.getAtlas().findRegion("spider"), 1.1f, 8, 10, isBoss, Sonido.SPIDER);
+
+        if (isBoss)
+        {
+            setBounds(0, 0, (60 / Constant.PPM) * 2, (60 / Constant.PPM) * 2);
+            this.attackPoints *= 2;
+            this.life *= 2;
             this.prize = new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND);
-        }else{
+        }
+        else
+        {
             setBounds(0, 0, 60 / Constant.PPM, 40 / Constant.PPM);
         }
-        
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
@@ -95,13 +92,7 @@ public class Spider extends MonsterMob
     @Override
     public void specialAttack(Player player)
     {
-        if (attackOportunity(1))
-        {
-            player.setCondition(PlayerCondition.ENTANGLED, 5);
-            System.out.println("Is entangled");
-            return;
-        }
-        System.out.println("Failed");
+        player.setCondition(PlayerCondition.ENTANGLED, 5);
     }
 
 }

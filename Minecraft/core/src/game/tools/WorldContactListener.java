@@ -9,7 +9,6 @@ import game.actors.Mob;
 import game.actors.monster.MonsterMob;
 import game.actors.monster.Skeleton;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import game.actors.collectibles.FoodCollectible;
 import game.actors.collectibles.ObjectCollectible;
 import game.actors.farming.plants.Plant;
 
@@ -22,6 +21,10 @@ public class WorldContactListener implements ContactListener
 
     private final Player player;
 
+    /**
+     * Objeto que está a la escucha de los contactos entre los Actores.
+     * @param player instancia del jugador de la partida.
+     */
     public WorldContactListener(Player player)
     {
         this.player = player;

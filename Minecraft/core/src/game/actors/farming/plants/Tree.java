@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.farming.plants;
 
 import game.screens.GameScreen;
@@ -14,25 +9,24 @@ import game.tools.Constant;
  */
 public class Tree extends Plant
 {
-    
     public Tree(GameScreen screen, Constant.Farming type, float x, float y)
     {
         super(screen, type, x, y);
-        
+
         int random = (int) (Math.random() * 3) + 1;
-        
+
         if (setFrame(type, random))
         {
             setBounds(0, 0, width / Constant.PPM, height / Constant.PPM);
-            createBody(x, y); 
+            createBody(x, y);
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
     }
-    
+
     private boolean setFrame(Constant.Farming type, int random)
     {
         String fruit;
-        
+
         switch (type)
         {
             case APPLE:
@@ -46,9 +40,9 @@ public class Tree extends Plant
             default:
                 return false;
         }
-        
+
         String tree = "arbol";
-        
+
         switch (random)
         {
             case 1:

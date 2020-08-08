@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.farming.plants;
 
 import game.actors.Player;
@@ -28,21 +23,22 @@ import game.tools.Constant;
  */
 public abstract class Plant extends Sprite implements Actor
 {
+
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     protected TextureAtlas atlasPlants;
     protected TextureAtlas atlasFruit;
     protected Group actors;
-    
+
     //Atributos de Box2D
     protected World world;
     protected Body body;
     protected int width;
     protected int height;
-    
+
     //Atributos de control
     protected boolean isEmpty;
     protected boolean setToCrop;
-    
+
     //Atributos de información del árbol
     protected float life;
     protected TextureAtlas.AtlasRegion plantEmpty;
@@ -51,45 +47,48 @@ public abstract class Plant extends Sprite implements Actor
     protected TextureAtlas.AtlasRegion fruitTexture;
     //</editor-fold>
 
-    public Plant(GameScreen screen, Constant.Farming type, float x, float y) {
+    public Plant(GameScreen screen, Constant.Farming type, float x, float y)
+    {
         world = screen.getWorld();
         atlasPlants = screen.getPlantas();
         atlasFruit = screen.getAtlas();
         actors = screen.getActors();
-        isEmpty = setToCrop =  false;
+        isEmpty = setToCrop = false;
         life = 8;
         this.type = type;
-    }    
+    }
 
-    public void setIsEmpty(boolean isEmpty) {
+    public void setIsEmpty(boolean isEmpty)
+    {
         this.isEmpty = isEmpty;
     }
-      
+
+    
     @Override
     public void act(float delta)
-    {  
+    {
         if (setToCrop && !isEmpty)
         {
             setRegion(plantEmpty);
-            
+
             fruits = new FoodCollectible[5];
             fruits[0] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 2, body.getPosition().y));
             fruits[1] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 4, body.getPosition().y));
             fruits[2] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 4, body.getPosition().y));
             fruits[3] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 2, body.getPosition().y));
             fruits[4] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x, body.getPosition().y));
-            
+
             for (FoodCollectible fruit : fruits)
             {
                 actors.addActor(fruit);
             }
-            
+
             delete();
-            isEmpty = true;            
+            isEmpty = true;
         }
-        
+
     }
-    
+
     private void delete()
     {
         for (Fixture f : body.getFixtureList())
@@ -98,21 +97,22 @@ public abstract class Plant extends Sprite implements Actor
         }
         world.destroyBody(body);
     }
-    
+
     @Override
-    public void draw (Batch batch)
+    public void draw(Batch batch)
     {
         super.draw(batch);
     }
 
-    protected void createBody(float x, float y) {
+    protected void createBody(float x, float y)
+    {
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y + (height / 2 / Constant.PPM));
         //bodyD.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyD);
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="Definición de Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -121,28 +121,26 @@ public abstract class Plant extends Sprite implements Actor
         fixtureD.isSensor = true;
         fixtureD.filter.categoryBits = Constant.TREE_BIT;
         fixtureD.filter.maskBits = Constant.PLAYER_BIT;
-        body.createFixture(fixtureD).setUserData(this);  
-        
-        
+        body.createFixture(fixtureD).setUserData(this);
+
         fixtureD.isSensor = false;
         fixtureD.filter.categoryBits = Constant.TREE_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT;
-        body.createFixture(fixtureD).setUserData(this);  
-        
-        
+        body.createFixture(fixtureD).setUserData(this);
+
         //</editor-fold> 
     }
-    
+
     public void toRecibeAttack(Player player, float hit)
     {
         //ver si el hit también depende del arma del player
         life -= hit;
-        
+
         if (life <= 0)
         {
             life = 0;
             setToCrop = true;
         }
     }
-    
+
 }

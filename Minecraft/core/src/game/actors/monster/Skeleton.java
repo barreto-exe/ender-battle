@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Player;
@@ -24,34 +19,43 @@ import game.tools.Sonido;
  */
 public class Skeleton extends MonsterMob
 {
-    
+
     float direction;
-    public Skeleton(GameScreen screen, int x, int y,boolean isBoss)
+
+    public Skeleton(GameScreen screen, int x, int y, boolean isBoss)
     {
-        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10,isBoss, Sonido.SKELETON);
-        
-        if(isBoss){
-         setBounds(0, 0, (70 / Constant.PPM)*2, (128/ Constant.PPM)*2);
-         this.attackPoints *=2;
-         this.life *=2;
-         this.prize = new Protection(Constant.BattleObject.LEGGING,Constant.Material.DIAMOND);
-        }else{
+        super(screen.getWorld(), screen.getAtlas().findRegion("caminar_esqueleto"), 1, 8, 10, isBoss, Sonido.SKELETON);
+
+        if (isBoss)
+        {
+            setBounds(0, 0, (70 / Constant.PPM) * 2, (128 / Constant.PPM) * 2);
+            this.attackPoints *= 2;
+            this.life *= 2;
+            this.prize = new Protection(Constant.BattleObject.LEGGING, Constant.Material.DIAMOND);
+        }
+        else
+        {
             setBounds(0, 0, 70 / Constant.PPM, 128 / Constant.PPM);
         }
-        
+
+        //<editor-fold defaultstate="collapsed" desc="Definición del body">
         BodyDef bodyD = new BodyDef();
         bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición Fixture">
         FixtureDef fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2 , getHeight() / 2);
+        shape.setAsBox(getWidth() / 2, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.MOB_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición del sensor">
         EdgeShape sensor = new EdgeShape();
         fixtureD.shape = sensor;
         fixtureD.isSensor = true;
@@ -65,7 +69,9 @@ public class Skeleton extends MonsterMob
         //IZQUIERDA
         sensor.set(getWidth() / -2, getHeight() / -2 + 0.5f, getWidth() / -2, getHeight() / 2 - 0.1f);
         body.createFixture(fixtureD).setUserData(this);
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Definición de flecha">
         EdgeShape arrow = new EdgeShape();
         fixtureD.shape = arrow;
         fixtureD.isSensor = true;
@@ -81,6 +87,8 @@ public class Skeleton extends MonsterMob
         body.createFixture(fixtureD).setUserData(this);
 
         direction = 1;
+        //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación">
         TextureRegion texture = screen.getAtlas().findRegion("caminar_esqueleto");
         TextureRegion[][] region = texture.split(70, 128);   //DIVIDIENDO LA TEXTURE-REGION EN UN ARREGLO DE TEXTURES
@@ -96,7 +104,7 @@ public class Skeleton extends MonsterMob
         }
 
         animation = new Animation(0.14f, frames);    //CREANDO ANIMACION DE CAMINAR
-
+        //</editor-fold>
     }
 
     @Override
@@ -117,4 +125,3 @@ public class Skeleton extends MonsterMob
         System.out.println("Direction: " + direction);
     }
 }
-//arrow.set(getWidth() / -2 - 4, getHeight() / -2 + 0.5f, getWidth() / -2 - 4, getHeight() / 2 - 0.1f);

@@ -9,28 +9,34 @@ import game.tools.Constant.Farming;
  *
  * @author Karen
  */
-public class Inventory {
+public class Inventory
+{
+
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Sección de Armamento
-    private Array <BattleObject> espadas;
-    private Array <BattleObject> hachas;
-    private Array <BattleObject> picos;
-    private Array <BattleObject> palas;
-    
+    private Array<BattleObject> espadas;
+    private Array<BattleObject> hachas;
+    private Array<BattleObject> picos;
+    private Array<BattleObject> palas;
+
     //Sección de Protección
-    private Array <BattleObject> botas;
-    private Array <BattleObject> pechos;
-    private Array <BattleObject> pantalones;
-    private Array <BattleObject> cascos;
-    
+    private Array<BattleObject> botas;
+    private Array<BattleObject> pechos;
+    private Array<BattleObject> pantalones;
+    private Array<BattleObject> cascos;
+
     //Sección de Alimentos
-    private Food[] food; 
-    
+    private Food[] food;
+
     //Esmeraldas del jugador
     private int esmeraldas;
     //</editor-fold>
-    
-    public Inventory() {
+
+    /**
+     * Es el inventario del jugador.
+     */
+    public Inventory()
+    {
         espadas = new Array<>();
         hachas = new Array<>();
         picos = new Array<>();
@@ -39,19 +45,19 @@ public class Inventory {
         pechos = new Array<>();
         pantalones = new Array<>();
         cascos = new Array<>();
-        
+
         food = new Food[9];
-        
+
         //Curan 1/4 de corazón
         food[2] = new Food(Farming.APPLE, 2.5f);
         food[3] = new Food(Farming.PEAR, 2.5f);
         food[0] = new Food(Farming.CARROT, 2.5f);
-        
+
         //Curan 1/2 corazón
         food[5] = new Food(Farming.BERRY, 5);
         food[1] = new Food(Farming.POTATO, 5);
         food[4] = new Food(Farming.WATERMELON, 5);
-        
+
         //Curan 1 corazón
         food[8] = new Food(Farming.RABBIT, 10);
         food[6] = new Food(Farming.CHICKEN, 10);
@@ -63,14 +69,16 @@ public class Inventory {
         return food;
     }
 
-    public int getEsmeraldas() {
+    public int getEsmeraldas()
+    {
         return esmeraldas;
     }
 
-    public void setEsmeraldas(int esmeraldas) {
+    public void setEsmeraldas(int esmeraldas)
+    {
         this.esmeraldas = esmeraldas;
     }
-    
+
     public static int getIndex(Farming type)
     {
         switch (type)
@@ -97,10 +105,11 @@ public class Inventory {
                 return -1;
         }
     }
-    
-    private Array <BattleObject> getArray (Constant.BattleObject object)
+
+    private Array<BattleObject> getArray(Constant.BattleObject object)
     {
-        switch (object){
+        switch (object)
+        {
             case SWORD:
                 return espadas;
             case AX:
@@ -121,37 +130,37 @@ public class Inventory {
                 return null;
         }
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Add y Remove BattleObject">
     public boolean addBattleObject(BattleObject object)
     {
-        Array <BattleObject> array = getArray(object.getObject());
-        
+        Array<BattleObject> array = getArray(object.getObject());
+
         if (array == null)
         {
             return false;
         }
-        
+
         if (findBattleObject(array, object.getMaterial().getMaterial()) != null)
         {
             return false;
         }
-        
+
         array.add(object);
         return true;
     }
-    
+
     public boolean removeBattleObject(BattleObject object)
     {
-        Array <BattleObject> array = getArray(object.getObject());
-        
+        Array<BattleObject> array = getArray(object.getObject());
+
         if (array == null)
         {
             return false;
         }
-        
+
         BattleObject item = findBattleObject(array, object.getMaterial().getMaterial());
-        
+
         if (item != null)
         {
             array.removeValue(item, true);
@@ -161,28 +170,26 @@ public class Inventory {
         return false;
     }
     //</editor-fold>
-    
-    
+
     //<editor-fold defaultstate="collapsed" desc="Add y Remove Food">
-    
     public boolean addFood(Farming type)
     {
         int index = getIndex(type);
-        
+
         if (index >= 0)
         {
             food[index].setCant(food[index].getCant() + 1);
             System.out.println("añadido al inventario objeto indice: " + index);
             return true;
         }
-                
+
         return false;
     }
-    
+
     public boolean removeFood(Farming type)
     {
-        int index = getIndex(type);        
-        
+        int index = getIndex(type);
+
         if (index >= 0)
         {
             if (food[index].getCant() > 0)
@@ -191,14 +198,15 @@ public class Inventory {
                 return true;
             }
         }
-        
+
         return false;
     }
     //</editor-fold>
-    
-    private BattleObject findBattleObject(Array <BattleObject> array, Constant.Material material)
+
+    private BattleObject findBattleObject(Array<BattleObject> array, Constant.Material material)
     {
-        for (BattleObject object : array) {
+        for (BattleObject object : array)
+        {
             if (object.getMaterial().getMaterial().equals(material))
             {
                 return object;

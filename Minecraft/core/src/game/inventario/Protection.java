@@ -6,25 +6,36 @@ import game.tools.Constant;
  *
  * @author Karen
  */
-public class Protection extends BattleObject{
+public class Protection extends BattleObject
+{
+
     private float protection;
 
-    public Protection(Constant.BattleObject object, Constant.Material material) {
+    /**
+     * Representa una pieza de armadura.
+     * @param object el tipo de la pieza.
+     * @param material dice de qué está hecha.
+     */
+    public Protection(Constant.BattleObject object, Constant.Material material)
+    {
         super(object, material);
     }
 
     @Override
-    protected void setFactorObject() {
+    protected void setFactorObject()
+    {
         factorObject = protection * material.getFactor();
     }
 
     @Override
-    protected boolean setBattleObject(Constant.BattleObject object) {
-        switch (object){
+    protected boolean setBattleObject(Constant.BattleObject object)
+    {
+        switch (object)
+        {
             case BOOTS:
                 protection = 5f;
                 return true;
-            case  SHIRTFRONT:
+            case SHIRTFRONT:
                 protection = 4f;
                 return true;
             case LEGGING:
@@ -38,5 +49,5 @@ public class Protection extends BattleObject{
                 return false;
         }
     }
-    
+
 }

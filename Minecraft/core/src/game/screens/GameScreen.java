@@ -33,7 +33,6 @@ import game.ui.FrmInventario;
  */
 public class GameScreen extends BaseScreen
 {
-
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de la cámara
     private OrthographicCamera gameCam;
@@ -55,6 +54,13 @@ public class GameScreen extends BaseScreen
     private Player player;
     private Array<PacificMob> pacificMobs;
     private Array<Plant> trees;
+    
+    //Atributos de la GUI
+    Batch batchUI = new SpriteBatch();
+    BitmapFont cantidadEsmeralda; 
+    Sprite esmeralda;               
+    Sprite corazon;              
+    Sprite corazonMitad;         
     //</editor-fold>
 
     private static FrmInventario ventanaInventario;
@@ -90,7 +96,13 @@ public class GameScreen extends BaseScreen
         world = new World(new Vector2(0, -10), true);
         debugger = new Box2DDebugRenderer();
         //</editor-fold>
-
+    
+        //<editor-fold defaultstate="collapsed" desc="Inicializar GUI">
+        cantidadEsmeralda = new BitmapFont();
+        esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
+        corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
+        corazonMitad = new Sprite(this.getAtlas().findRegion("corazon_mitad"));
+        //</editor-fold>
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -155,26 +167,23 @@ public class GameScreen extends BaseScreen
         viewport.update(width, height);
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Elementos de la GUI">
-    Batch batchUI = new SpriteBatch();
-    BitmapFont cantidadEsmeralda = new BitmapFont();
-    Sprite esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
-    Sprite corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
-    Sprite corazonMitad = new Sprite(this.getAtlas().findRegion("corazon_mitad"));
-    //</editor-fold>
-
-    
+    /**
+     * Muestra la vida y las esmeraldas del usuario.
+     */
     private void dibujarGUI()
     {   
+        //Contar cantidad de corazones a dibujar
         int cantMedioCorazones = (int) (player.getLife() /5);
         int cantCorazones = cantMedioCorazones / 2;
         boolean medioCorazon = cantMedioCorazones % 2 > 0;
         
         batchUI.begin();
 
+        //Dibujar sprite esmeralda y su cantidad
         batchUI.draw(esmeralda, 40, 590);
         cantidadEsmeralda.draw(batchUI, ""+player.getInventory().getEsmeraldas() ,50 + esmeralda.getWidth(), 620);
         
+        //Dibujar los corazones
         int i;
         for(i = 0; i < cantCorazones; i++)
         {
@@ -228,8 +237,6 @@ public class GameScreen extends BaseScreen
         renderer.dispose();
         world.dispose();
         debugger.dispose();
-
-        //group.dispose!!!!!!!!!!!!!!!!!!!!
     }
 
 }

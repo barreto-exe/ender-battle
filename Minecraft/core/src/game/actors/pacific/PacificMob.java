@@ -1,6 +1,5 @@
 package game.actors.pacific;
 
-import game.actors.collectibles.FoodCollectible;
 import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -33,6 +32,17 @@ public abstract class PacificMob extends Mob
     //Propiedades del MOB
     protected Constant.Farming type;
 
+    /**
+     * Representa a una criatura pacífica que no ataca al jugador. Al morir arroja comida y esmeraldas.
+     * @param screen pantalla del juego.
+     * @param texture textura del mob.
+     * @param life vida del mob.
+     * @param x ubicación horizontal en el mapa.
+     * @param y ubicación vertical en el mapa.
+     * @param width ancho del mob.
+     * @param height alto del mob.
+     * @param sonido es el que se reproduce al ser golpeado
+     */
     public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, Sonido sonido)
     {
         super(screen.getWorld(), texture, life, sonido);
@@ -116,6 +126,12 @@ public abstract class PacificMob extends Mob
 
     protected abstract Vector2[] getVerticesTop();
     
+    /**
+     * Acciones que realiza el mob al morir. Usualmente 
+     * es arrojar objetos al suelo.
+     */
+    protected abstract void toDie();
+    
     @Override
     public void changeDirection(){
         speed = speed * -1;
@@ -126,8 +142,6 @@ public abstract class PacificMob extends Mob
         }
     }
     
-    protected abstract void toDie();
-        
     @Override
     public void act(float delta)
     {

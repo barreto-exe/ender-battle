@@ -53,6 +53,33 @@ public class Sonido
         this.duracion  = duracion;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public String getUbicacionSonido()
+    {
+        return CARPETA_SONIDOS + nombre;
+    }
+    
+    public String getNombre()
+    {
+        return nombre;
+    }
+    
+    public int getDuracion()
+    {
+        return duracion;
+    }
+    
+    public boolean isReproduciendo()
+    {
+        return reproduciendo;
+    }
+    
+    public void setReproduciendo(boolean reproduciendo)
+    {
+        this.reproduciendo = reproduciendo;
+    }
+    //</editor-fold>
+    
     /**
      * Reproduce un sonido a partir de la constante <code>CLICK</code>.
      * Es sabido que el sonido de click no se necesita controlar en una variable, 
@@ -63,34 +90,11 @@ public class Sonido
         new Thread(new Reproductor(Sonido.CLICK, false)).start();
     }
     
+    /**
+     * Reproduce el sonido
+     */
     public void reproducir()
     {
         new Thread(new Reproductor(this,false)).start();
     }
-    
-    public String getUbicacionSonido()
-    {
-        return CARPETA_SONIDOS + nombre;
-    }
-
-    public String getNombre()
-    {
-        return nombre;
-    }
-
-    public int getDuracion()
-    {
-        return duracion;
-    }
-
-    public boolean isReproduciendo()
-    {
-        return reproduciendo;
-    }
-
-    public void setReproduciendo(boolean reproduciendo)
-    {
-        this.reproduciendo = reproduciendo;
-    }
-    
 }

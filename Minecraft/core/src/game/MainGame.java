@@ -11,31 +11,32 @@ import javax.swing.JFrame;
 public class MainGame extends Game
 {
     private DBUsuario usuario;
+    private Player player;
     private JFrame ventanaOrigen;
+    private SpriteBatch batch;
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public DBUsuario getUsuario()
     {
         return usuario;
     }
-
+    
     public void setUsuario(DBUsuario usuario)
     {
         this.usuario = usuario;
     }
-
+    
     public JFrame getVentanaOrigen()
     {
         return ventanaOrigen;
     }
-
+    
     public void setVentanaOrigen(JFrame ventanaOrigen)
     {
         this.ventanaOrigen = ventanaOrigen;
     }
     
-    
-    private SpriteBatch batch;
-    private Player player;
+    //</editor-fold>
     
     @Override
     public void create()

@@ -11,18 +11,21 @@ import game.tools.Constant;
  */
 public class FoodCollectible extends ObjectCollectible
 {
+
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de información del alimento
     protected Constant.Farming type;
     //</editor-fold>
 
-    public FoodCollectible(Constant.Farming type, World world, TextureRegion region, Vector2 posicion) {
-        super(world,posicion);
+    public FoodCollectible(Constant.Farming type, World world, TextureRegion region, Vector2 posicion)
+    {
+        super(world, posicion);
         this.type = type;
         setRegion(region);
     }
 
-    public Constant.Farming getType() {
+    public Constant.Farming getType()
+    {
         return type;
     }
 }

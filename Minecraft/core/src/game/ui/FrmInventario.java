@@ -17,6 +17,10 @@ public final class FrmInventario extends javax.swing.JFrame
     private Player player;
     private HashMap<String, JLabel> vistasAlimentos;
     
+    /**
+     * Ventana que ofrece la vista del inventario del jugador.
+     * @param player jugador que posee el inventario.
+     */
     public FrmInventario(Player player)
     {
         super("Inventario");
@@ -398,6 +402,9 @@ public final class FrmInventario extends javax.swing.JFrame
         this.setVisible(false);
     }//GEN-LAST:event_formWindowLostFocus
 
+    /**
+     * Muestra la ventana del inventario.
+     */
     public void mostrar()
     {
         setVisible(true);
@@ -405,6 +412,9 @@ public final class FrmInventario extends javax.swing.JFrame
         actualizarVista();
     }
     
+    /**
+     * Actualiza los componentes de acuerdo al inventario del jugador.
+     */
     private void actualizarVista()
     {
         JLabel label;

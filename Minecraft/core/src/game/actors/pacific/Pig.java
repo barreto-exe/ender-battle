@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.pacific;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,10 +15,12 @@ import game.tools.Sonido;
  */
 public class Pig extends PacificMob
 {
-    public Pig(GameScreen screen, float x, float y) {
+
+    public Pig(GameScreen screen, float x, float y)
+    {
         super(screen, (TextureRegion) screen.getAtlas().findRegion("cerdo"), 7, x, y, 384 / 4, 64, Sonido.PIG);
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
-        
+
         speed = 1.2f;
         type = Constant.Farming.BEEF;
     }
@@ -42,12 +39,13 @@ public class Pig extends PacificMob
     //</editor-fold>  
 
     @Override
-    protected void toDie() {
+    protected void toDie()
+    {
         ObjectCollectible objects[] = new ObjectCollectible[3];
         objects[0] = new FoodCollectible(type, world, textureMeat, body.getPosition());
         objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
         objects[2] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
-        
+
         for (ObjectCollectible o : objects)
         {
             actors.addActor(o);

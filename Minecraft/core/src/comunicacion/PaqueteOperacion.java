@@ -10,6 +10,41 @@ import java.io.Serializable;
  */
 public class PaqueteOperacion<E> implements Serializable
 {
+    private Operacion tipo;
+    private E informacion;
+
+    /**
+     * Paquete de para realizar peticiones al servidor.
+     * @param tipo de la operación o petición.
+     * @param informacion relacionada a la operación.
+     */
+    public PaqueteOperacion(Operacion tipo, E informacion)
+    {
+        this.tipo = tipo;
+        this.informacion = informacion;
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public Operacion getTipo()
+    {
+        return tipo;
+    }
+    
+    public void setTipo(Operacion tipo)
+    {
+        this.tipo = tipo;
+    }
+    
+    public E getInformacion()
+    {
+        return informacion;
+    }
+    
+    public void setInformacion(E informacion)
+    {
+        this.informacion = informacion;
+    }
+    //</editor-fold>
 
     /**
      * Indica el tipo de operacion contra el servidor.
@@ -60,35 +95,6 @@ public class PaqueteOperacion<E> implements Serializable
         
         //Respuesta para SALIR_PARTIDA
         SALIR_PARTIDA_EXITOSO,
-    }
-
-    private Operacion tipo;
-    private E informacion;
-
-    public PaqueteOperacion(Operacion tipo, E informacion)
-    {
-        this.tipo = tipo;
-        this.informacion = informacion;
-    }
-
-    public Operacion getTipo()
-    {
-        return tipo;
-    }
-
-    public void setTipo(Operacion tipo)
-    {
-        this.tipo = tipo;
-    }
-
-    public E getInformacion()
-    {
-        return informacion;
-    }
-
-    public void setInformacion(E informacion)
-    {
-        this.informacion = informacion;
     }
 
 }

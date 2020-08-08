@@ -117,13 +117,14 @@ public class BiomeAssemblerClass
         }
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Array<PacificMob> getPacificMobs() {
         return pacificMobs;
     }
-
     public Array<Plant> getFarming() {
         return farming;
     }
+    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Randomize PacificMobs">
     private PacificMob getLittleMob(GameScreen screen, float x, float y)

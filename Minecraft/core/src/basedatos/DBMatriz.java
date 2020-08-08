@@ -22,23 +22,23 @@ import java.util.Queue;
  */
 public class DBMatriz
 {
-    //Atributos************************************************************************************/
+    //<editor-fold defaultstate="collapsed" desc="Atributos">
     /**
      * Lista de los nombres de las columnas que arroja la consulta.
      */
     private ArrayList<String> columnas;
-
+    
     /**
      * Una cola con las filas y los valores en cada una.
      */
     private Queue<Object[]> filas;
-
+    
     /**
      * Indica si puede ser leída o no;
      */
     private boolean abierta;
+    //</editor-fold>
 
-    //Constructores************************************************************************************/
     /**
      * Un objeto con el que se pueden operar los resultados de las consultas a las
      * bases de datos hechas con <code>DBOperacion</code>.
@@ -57,13 +57,13 @@ public class DBMatriz
         filas.add(new Object[0]);
     }
 
-    //Getters & Setters********************************************************************************/
+    
     public String[] getColumnas()
     {
         return (String[])columnas.toArray();
     }
 
-    //Métodos*****************************************************************************************/
+    
     /**
      * Obtener variable contenida en la fila leída actual.
      * @param columna es el valor de la fila a leer.

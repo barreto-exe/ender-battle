@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package basedatos;
 
 import java.io.Serializable;
@@ -15,42 +10,38 @@ import java.io.UnsupportedEncodingException;
  */
 public final class DBUsuario implements Serializable
 {
-    
+
     private String correo, usuario, pass, ip;
     /**
      * Es el id del usuario en la base de datos.
      */
     private int id;
-    
+
     /**
-     * El color de personaje que seleccionó el jugador.
-     *  || 0 - NORMAL 
-     *  || 1 - ROJO
-     *  || 2 - VERDE
-     *  || 3 - AMARILLO
-     *  || 4 - MORADO
-     *  || 5 - GRIS
-     *  ||
+     * El color de personaje que seleccionó el jugador. || 0 - NORMAL || 1 -
+     * ROJO || 2 - VERDE || 3 - AMARILLO || 4 - MORADO || 5 - GRIS ||
      */
     private int personajeSeleccionado;
-    
+
     /**
      * Es el id de la partida a la que pertenece el usuario.
      */
     private int partida;
-    
+
     /**
-     * La posición que ocupa el jugador en la tabla de participantes.
-     * Este atributo es usado para saber en qué número de bioma inicia.
+     * La posición que ocupa el jugador en la tabla de participantes. Este
+     * atributo es usado para saber en qué número de bioma inicia.
      */
     private int numeroJugador;
 
     /**
-     * Crea una instancia de entidad en relación a la tabla m_usuarios de la Base de Datos.
+     * Crea una instancia de entidad en relación a la tabla m_usuarios de la
+     * Base de Datos.
+     *
      * @param correo es el correo del usuario.
      * @param usuario es el nombre de usuario.
-     * @param pass es la constraseña ENCRIPTADA del usuario.
-     * en la base de datos.
+     * @param pass es la constraseña ENCRIPTADA del usuario. en la base de
+     * datos.
      */
     public DBUsuario(String correo, String usuario, String pass)
     {
@@ -63,7 +54,9 @@ public final class DBUsuario implements Serializable
     }
 
     /**
-     * Relaciona un usuario con su nombre y su ip dentro del Lobby de una partida.
+     * Relaciona un usuario con su nombre y su ip dentro del Lobby de una
+     * partida.
+     *
      * @param usuario es el nombre de usuario.
      * @param ip es la dirección ip del usuario.
      */
@@ -79,11 +72,14 @@ public final class DBUsuario implements Serializable
     }
 
     /**
-     * Relaciona el nombre de un usuario en partida con su ip, su id y el personaje que seleccionó.
+     * Relaciona el nombre de un usuario en partida con su ip, su id y el
+     * personaje que seleccionó.
+     *
      * @param usuario es el nombre de usuario.
      * @param ip es la dirección ip del usuario.
      * @param id es el id del usuario en la base de datos.
-     * @param personajeSeleccionado es el número del personaje seleccionado por el usuario.
+     * @param personajeSeleccionado es el número del personaje seleccionado por
+     * el usuario.
      */
     public DBUsuario(String usuario, String ip, int id, int personajeSeleccionado)
     {
@@ -95,82 +91,89 @@ public final class DBUsuario implements Serializable
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-
     public int getNumeroJugador()
     {
         return numeroJugador;
     }
+
     public void setNumeroJugador(int numeroJugador)
     {
         this.numeroJugador = numeroJugador;
     }
-    
+
     public int getId()
     {
         return id;
     }
+
     public void setId(int id)
     {
         this.id = id;
     }
-    
+
     public String getCorreo()
     {
         return correo;
     }
+
     public void setCorreo(String correo)
     {
         this.correo = correo;
     }
-    
+
     public String getUsuario()
     {
         return usuario;
     }
+
     public void setUsuario(String usuario)
     {
         this.usuario = usuario;
     }
-    
+
     public String getPass()
     {
         return pass;
     }
+
     public void setPass(String pass)
     {
         this.pass = encriptarMD5(pass);
     }
-    
+
     public int getPersonajeSeleccionado()
     {
         return personajeSeleccionado;
     }
+
     public void setPersonajeSeleccionado(int personajeSeleccionado)
     {
         this.personajeSeleccionado = personajeSeleccionado;
     }
-    
+
     public int getPartida()
     {
         return partida;
     }
+
     public void setPartida(int partida)
     {
         this.partida = partida;
     }
-    
+
     public String getIp()
     {
         return ip;
     }
+
     public void setIp(String ip)
     {
         this.ip = ip;
     }
-    
+
     public String getPersonajeSeleccionadoString()
     {
-        switch(personajeSeleccionado)
+        switch (personajeSeleccionado)
         {
             case 0:
             {
@@ -283,6 +286,7 @@ public final class DBUsuario implements Serializable
 
     /**
      * Consulta existencia de un usuario que coincida con la misma clave.
+     *
      * @param usuario es la instancia de usuario a consultar.
      * @return el id del usuario en la BD. Retorna -1 si no existe.
      */
@@ -327,8 +331,10 @@ public final class DBUsuario implements Serializable
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e)
+        }
+        catch (java.security.NoSuchAlgorithmException | UnsupportedEncodingException e)
         {
+            System.out.println(e.getMessage());
         }
         return null;
     }

@@ -6,12 +6,19 @@ import game.tools.Constant.Farming;
  *
  * @author Karen
  */
-public class Food {
+public class Food
+{
     private Farming type;
     private float food;
     private int cant;
 
-    public Food(Farming type, float food) {
+    /**
+     * Representa un alimento.
+     * @param type tipo de alimento.
+     * @param food vida que aporta al comerlo.
+     */
+    public Food(Farming type, float food)
+    {
         this.type = type;
         this.food = food;
         cant = 0;
@@ -22,11 +29,13 @@ public class Food {
         return type;
     }
 
-    public void setCant(int cant) {
+    public void setCant(int cant)
+    {
         this.cant = cant;
     }
 
-    public int getCant() {
+    public int getCant()
+    {
         return cant;
     }
 
@@ -34,5 +43,5 @@ public class Food {
     {
         return food;
     }
-    
+
 }

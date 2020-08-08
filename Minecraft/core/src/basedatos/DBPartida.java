@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package basedatos;
 
 import java.io.Serializable;
@@ -14,23 +9,6 @@ import java.io.Serializable;
  */
 public class DBPartida implements Serializable
 {
-    public enum EstadoPartida implements Serializable
-    {
-        LOBBY(1),
-        JUGANDO(2),
-        TERMINADA(3);
-        
-        private final int value;
-        private EstadoPartida(int value)
-        {
-            this.value = value;
-        }
-        public int getValue()
-        {
-            return value;
-        }
-    }
-    
     private String nombre, descripcion;
     private EstadoPartida estado;
     private int limiteJugadores, cantidadJugadores;
@@ -66,6 +44,7 @@ public class DBPartida implements Serializable
         this.id = -1;
     }
     
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public String getNombre()
     {
         return nombre;
@@ -83,7 +62,7 @@ public class DBPartida implements Serializable
     {
         this.descripcion = descripcion;
     }
-
+    
     public int getLimiteJugadores()
     {
         return limiteJugadores;
@@ -92,19 +71,17 @@ public class DBPartida implements Serializable
     {
         this.limiteJugadores = limiteJugadores;
     }
-
+    
     public int getCantidadJugadores()
     {
         return cantidadJugadores;
     }
-
+    
     public void setCantidadJugadores(int cantidadJugadores)
     {
         this.cantidadJugadores = cantidadJugadores;
     }
     
-    
-
     public int getId()
     {
         return id;
@@ -113,7 +90,7 @@ public class DBPartida implements Serializable
     {
         this.id = id;
     }
-
+    
     public EstadoPartida getEstado()
     {
         return estado;
@@ -122,6 +99,8 @@ public class DBPartida implements Serializable
     {
         this.estado = estado;
     }
+    //</editor-fold>
+    
     
     /**
      * Registra una partida en la base de datos.
@@ -206,7 +185,13 @@ public class DBPartida implements Serializable
         }
     }
     
-    
+    /**
+     * Agrega un jugador a la partida.
+     * @param usuario contine datos del usuario y el id de la partida a la que
+     * se quiere unir.
+     * @param ip del usuario.
+     * @return true si se pudo unir a la partida.
+     */
     public static boolean agregarJugador(DBUsuario usuario, String ip) 
     {
         String query = 
@@ -278,6 +263,11 @@ public class DBPartida implements Serializable
         operacion.ejecutar();
     }
     
+    /**
+     * Setear a la partida como en juego.
+     * @param idPartida es el id de la partida que comenzará.
+     * @return true si se colocó como comenzada.
+     */
     public static boolean comenzarPartida(int idPartida)
     {
         String query =
@@ -288,6 +278,11 @@ public class DBPartida implements Serializable
         return operacion.ejecutar() > 0;
     }
     
+    /**
+     * Consulta el estado de la partida.
+     * @param idPartida id de la partida a consultar.
+     * @return el estado de la partida.
+     */
     public static EstadoPartida obtenerEstadoPartida(int idPartida)
     {
         String query = 
@@ -311,5 +306,22 @@ public class DBPartida implements Serializable
             }
         }
         return EstadoPartida.TERMINADA;
+    }
+    
+    public enum EstadoPartida implements Serializable
+    {
+        LOBBY(1),
+        JUGANDO(2),
+        TERMINADA(3);
+        
+        private final int value;
+        private EstadoPartida(int value)
+        {
+            this.value = value;
+        }
+        public int getValue()
+        {
+            return value;
+        }
     }
 }

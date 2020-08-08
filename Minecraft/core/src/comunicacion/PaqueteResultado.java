@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package comunicacion;
 
 import java.io.Serializable;
@@ -17,14 +12,14 @@ public class PaqueteResultado <E> implements Serializable
     private ResultadoOperacion resultado;
     private E informacion;
 
+    /**
+     * Paquete que envía el servidor como resultado de una operación. Dentro
+     * contiene información que está en contexto con la respuesta.
+     * @param resultado tipo de resultado.
+     */
     public PaqueteResultado(ResultadoOperacion resultado)
     {
         this.resultado = resultado;
-    }
-
-    public PaqueteResultado(int ERROR)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public ResultadoOperacion getResultado()
@@ -46,7 +41,4 @@ public class PaqueteResultado <E> implements Serializable
     {
         this.informacion = informacion;
     }
-    
-    
-    
 }

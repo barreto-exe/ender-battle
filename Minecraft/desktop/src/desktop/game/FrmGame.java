@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package desktop.game;
 
 import basedatos.DBUsuario;
@@ -30,10 +25,13 @@ import javax.swing.JOptionPane;
  */
 public final class FrmGame extends JFrame implements UsesSocket
 {
-
     private DBUsuario usuario;
     private Canvas contenedorJuego;
     
+    /**
+     * Ventana que contiene al juego.
+     * @param contiene a los datos del usuario que está jugando
+     */
     public FrmGame(DBUsuario usuario)
     {
         this.usuario = usuario;
@@ -104,16 +102,20 @@ public final class FrmGame extends JFrame implements UsesSocket
             );
     }//GEN-LAST:event_formWindowClosing
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public DBUsuario getUsuario()
     {
         return usuario;
     }
-
     public void setUsuario(DBUsuario usuario)
     {
         this.usuario = usuario;
     }
-
+    //</editor-fold>
+    
+    /**
+     * Hace visible la ventana de juego.
+     */
     public void mostrar()
     {
         setSize(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);

@@ -6,9 +6,9 @@ import game.tools.Constant;
  *
  * @author Karen
  */
+public abstract class BattleObject
+{
 
-public abstract class BattleObject {
-    
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     private Constant.BattleObject object;
     protected float factorObject;
@@ -17,49 +17,57 @@ public abstract class BattleObject {
     private int use;
     //</editor-fold>
 
-    public BattleObject(Constant.BattleObject object, Constant.Material material){
+    /**
+     * Representa un objeto de batalla, como armas y piezas de armadura.
+     * @param object es el tipo de objeto.
+     * @param material de qué está hecho.
+     */
+    public BattleObject(Constant.BattleObject object, Constant.Material material)
+    {
         if (setObject(object))
         {
             this.object = object;
             this.material = new Material(material);
         }
-        
+
         isPorted = false;
         setFactorObject();
     }
 
-    public Constant.BattleObject getObject() {
+    public Constant.BattleObject getObject()
+    {
         return object;
     }
 
-    public Material getMaterial() {
+    public Material getMaterial()
+    {
         return material;
     }
 
-    public float getFactorObject() {
+    public float getFactorObject()
+    {
         return factorObject;
     }
-    
+
     protected abstract boolean setBattleObject(Constant.BattleObject object);
 
     private boolean setObject(Constant.BattleObject object)
     {
-        if (setBattleObject(object)){
+        if (setBattleObject(object))
+        {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
     }
-    
+
     public void setIsPorted(boolean isPorted)
     {
         this.isPorted = isPorted;
     }
-    
 
     protected abstract void setFactorObject();
-    
-    
+
 }

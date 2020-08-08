@@ -9,12 +9,10 @@ import game.MainGame;
  */
 public abstract class BaseScreen implements Screen
 {
-    //ATTRIBUTES
     protected MainGame game;
     private TextureAtlas atlas;
     private TextureAtlas plantas;
 
-    //BUILDER
     public BaseScreen(MainGame game)
     {
         atlas = new TextureAtlas("atlas.atlas");
@@ -22,19 +20,20 @@ public abstract class BaseScreen implements Screen
         this.game = game;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public TextureAtlas getAtlas()
     {
         return atlas;
     }
-
     public TextureAtlas getPlantas() {
         return plantas;
     }
-
     public MainGame getGame()
     {
         return game;
     }
+    //</editor-fold>
+    
     @Override
     public void show()
     {

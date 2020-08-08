@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.actors.monster;
 
 import game.actors.Player;
 import game.actors.Mob;
-import game.actors.collectibles.FoodCollectible;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.BattleObject;
@@ -24,21 +16,32 @@ import game.tools.Sonido;
  */
 public abstract class MonsterMob extends Mob
 {
-
+    //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de animacion
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
-
+    
     //Propiedades de los Mobs
     protected boolean isBoss;
     protected int dificulty;
     protected int attackPoints;
     protected String attackDescription;
     protected float speed;
-    protected BattleObject prize; 
+    protected BattleObject prize;
     protected TextureRegion prizeTexture;
+    //</editor-fold>
     
+    /**
+     * Representa a un monstruo del juego.
+     * @param world es el mundo en el que se encuentra.
+     * @param region es el sprite del mob que está en el atlas.
+     * @param speed la velocidad del mob.
+     * @param life la vida del mob.
+     * @param attackPoints puntos que restan al atacar.
+     * @param isBoss si es jefe o no.
+     * @param sonido es el sonido que hace al recibir ataques.
+     */
     public MonsterMob(World world, TextureRegion region, float speed, float life, int attackPoints,boolean isBoss, Sonido sonido)
     {
         super(world, region, life, sonido);
@@ -91,9 +94,13 @@ public abstract class MonsterMob extends Mob
         }
     }
     
+    /**
+     * Atacar a un jugador.
+     * @param player es el jugador que recibe el ataque.
+     */
     public void attackPlayer(Player player)
     {
-        if (attackOportunity(3))
+        if (attackOportunity(2))
         {
             player.toRecibeAttack(attackPoints);
         }
@@ -103,6 +110,11 @@ public abstract class MonsterMob extends Mob
         }
     }
     
+    /**
+     * Determina aleatoriamente si el mob tiene oportunidad de atacar al jugador.
+     * @param oportunity factor de oportunidad.
+     * @return true si puede atacar.
+     */
     public boolean attackOportunity(int oportunity)
     {
         int aux;
@@ -111,5 +123,9 @@ public abstract class MonsterMob extends Mob
         return chance == aux;
     }
 
+    /**
+     * Ejecuta ataque especial al jugador.
+     * @param player es el jugador que recibe el ataque.
+     */
     public abstract void specialAttack(Player player);
 }
