@@ -27,7 +27,7 @@ public class Inventory {
     private Food[] food; 
     
     //Esmeraldas del jugador
-    private float esmeraldas;
+    private int esmeraldas;
     //</editor-fold>
     
     public Inventory() {
@@ -63,11 +63,11 @@ public class Inventory {
         return food;
     }
 
-    public float getEsmeraldas() {
+    public int getEsmeraldas() {
         return esmeraldas;
     }
 
-    public void setEsmeraldas(float esmeraldas) {
+    public void setEsmeraldas(int esmeraldas) {
         this.esmeraldas = esmeraldas;
     }
     
