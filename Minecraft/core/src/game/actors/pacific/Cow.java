@@ -7,7 +7,9 @@ package game.actors.pacific;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.MassData;
+import game.actors.collectibles.EsmeraldCollective;
+import game.actors.collectibles.FoodCollectible;
+import game.actors.collectibles.ObjectCollectible;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Sonido;
@@ -38,4 +40,17 @@ public class Cow extends PacificMob
         return vertice;
     }
     //</editor-fold>  
+
+    @Override
+    protected void toDie() {
+        ObjectCollectible objects[] = new ObjectCollectible[3];
+        objects[0] = new FoodCollectible(type, world, textureMeat, body.getPosition());
+        objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
+        objects[2] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
+        
+        for (ObjectCollectible o : objects)
+        {
+            actors.addActor(o);
+        }
+    }
 }

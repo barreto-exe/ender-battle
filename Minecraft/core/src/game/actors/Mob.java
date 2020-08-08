@@ -55,7 +55,6 @@ public abstract class Mob extends Sprite implements Actor
     {
 
         life -= hit;
-        System.out.println("vida del mob: " + life);
         
         sonido.reproducir();
         

@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import game.actors.Player;
 import game.actors.Mob;
-import game.actors.pacific.PacificMob;
 import game.actors.monster.MonsterMob;
 import game.actors.monster.Skeleton;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import game.actors.collectibles.FoodCollectible;
+import game.actors.collectibles.ObjectCollectible;
 import game.actors.farming.plants.Plant;
 
 /**
@@ -69,11 +69,11 @@ public class WorldContactListener implements ContactListener
             case Constant.PLAYER_BIT | Constant.FOOD_BIT:
                 if (a.getFilterData().categoryBits == Constant.FOOD_BIT)
                 {
-                    player.setFood((FoodCollectible)a.getUserData());
+                    player.setObjectCollectible((ObjectCollectible)a.getUserData());
                 }
                 else 
                 {
-                    player.setFood((FoodCollectible)b.getUserData());
+                    player.setObjectCollectible((ObjectCollectible)b.getUserData());
                 }   
                 break;
             case Constant.MOB_BIT | Constant.MOB_BIT:
@@ -121,7 +121,7 @@ public class WorldContactListener implements ContactListener
                 player.setEnemy(null);
                 break;
             case Constant.PLAYER_BIT | Constant.FOOD_BIT:   
-                player.setFood(null);
+                player.setObjectCollectible(null);
                 break;
             case Constant.PLAYER_BIT | Constant.TREE_BIT:
                 player.setPlant(null);

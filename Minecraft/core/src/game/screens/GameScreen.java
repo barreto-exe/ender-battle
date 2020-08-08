@@ -1,14 +1,12 @@
 package game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -23,6 +21,7 @@ import game.actors.monster.Zombie;
 import game.actors.pacific.PacificMob;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import game.actors.collectibles.EsmeraldCollective;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.Constant;
 import game.tools.WorldContactListener;
@@ -145,6 +144,7 @@ public class GameScreen extends BaseScreen
         actors.addActor(new Zombie(this, 17, 5, false));
         //actors.addActor(new Pigman(this,15,5));
         //actors.addActor(new Creeper(this,13,5));
+        actors.addActor(new EsmeraldCollective(getAtlas().findRegion("esmeralda"), world, new Vector2(25, 6)));
 
         world.setContactListener(new WorldContactListener(player));
     }

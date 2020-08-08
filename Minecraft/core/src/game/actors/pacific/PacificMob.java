@@ -4,11 +4,11 @@ import game.actors.collectibles.FoodCollectible;
 import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -27,11 +27,10 @@ public abstract class PacificMob extends Mob
     protected float duration;
     protected Array<TextureRegion> frames;
     protected Animation animation;
-    protected FoodCollectible meat;
     protected TextureRegion textureMeat;
+    protected TextureAtlas.AtlasRegion textureEsmereald;
     
     //Propiedades del MOB
-    protected float speed;
     protected Constant.Farming type;
 
     public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, Sonido sonido)
@@ -39,6 +38,7 @@ public abstract class PacificMob extends Mob
         super(screen.getWorld(), texture, life, sonido);
         actors = screen.getActors();
         duration = 0;
+        textureEsmereald = screen.getAtlas().findRegion("esmeralda");
         
         setBounds(0, 0, width / Constant.PPM, height / Constant.PPM);
 
@@ -125,14 +125,15 @@ public abstract class PacificMob extends Mob
             frame.flip(true, false);
         }
     }
+    
+    protected abstract void toDie();
         
     @Override
     public void act(float delta)
     {
         if (setToDie && !isDead)
         {
-            meat = new FoodCollectible(type,world, textureMeat, body.getPosition());
-            actors.addActor(meat);
+            toDie();
             delete();
             isDead = true;
             //actors.removeActor(this);

@@ -18,6 +18,7 @@ import game.inventario.Inventory;
 import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 import com.badlogic.gdx.graphics.Color;
+import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
 import game.tools.Constant;
 import game.tools.Constant.*;
@@ -334,8 +335,7 @@ public class Player extends Sprite implements Actor
         this.enemy = enemy;
     }
 
-    public void setFood(FoodCollectible food)
-    {
+    public void setObjectCollectible(ObjectCollectible food) {
         this.objectCollectible = food;
     }
 
@@ -383,8 +383,12 @@ public class Player extends Sprite implements Actor
             walk(-1);
         } else if (controller.isPickingUp() && (objectCollectible != null))
         {
-            toPickUp();
-        } else
+            if ((objectCollectible instanceof FoodCollectible) || (objectCollectible instanceof EsmeraldCollective))
+            {
+                toPickUp();
+            }
+        }
+        else
         {
             if (body.getLinearVelocity().x < 0)
             {
@@ -511,7 +515,11 @@ public class Player extends Sprite implements Actor
         {
             inventory.addFood(((FoodCollectible) objectCollectible).getType());
         }
-
+        else if (objectCollectible instanceof EsmeraldCollective)
+        {
+            inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
+        }
+        
         //liberar objectCollectible
     }
 
