@@ -43,6 +43,11 @@ public class Reproductor implements Runnable
         player.close();
     }
     
+    public void reproducir()
+    {
+        new Thread(this).start();
+    }
+    
     @Override
     public void run()
     {
