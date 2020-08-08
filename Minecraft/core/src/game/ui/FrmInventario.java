@@ -4,6 +4,7 @@ import game.actors.Player;
 import game.inventario.Inventory;
 import game.inventario.food.Food;
 import game.tools.Constant.Farming;
+import game.tools.Sonido;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
@@ -343,6 +344,30 @@ public final class FrmInventario extends javax.swing.JFrame
     {//GEN-HEADEREND:event_alimentoClicked
         //Obtener label clickeado
         JLabel origen = ((JLabel)evt.getSource());
+        
+        //<editor-fold defaultstate="collapsed" desc="Sonido comer">
+        int eatToSound = (int) ((Math.random() * ((3 - 0) + 1)) + 0);
+        switch(eatToSound)
+        {
+            case 1:
+            {
+                Sonido.EAT1.reproducir();
+                break;
+            }
+            case 2:
+            {
+                Sonido.EAT2.reproducir();
+                break;
+            }
+            case 3:
+            {
+                Sonido.EAT3.reproducir();
+                break;
+            }
+            default:
+                Sonido.EAT1.reproducir();
+        }
+        //</editor-fold>    
         
         //Alimento que se decidió comer
         Farming alimento = Farming.getEnumByDesc(origen.getToolTipText());

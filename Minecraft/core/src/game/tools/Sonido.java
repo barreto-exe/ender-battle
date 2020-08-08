@@ -15,6 +15,17 @@ public class Sonido
     public static final Sonido CLICK = new Sonido("click.mp3", 2);
     public static final Sonido TEMA_PRINCIPAL = new Sonido("temaPrincipal.mp3", 254);
 
+    public static final Sonido ARBOLHIT  = new Sonido("arbolhit.mp3", 2);
+    public static final Sonido EAT1      = new Sonido("eat1.mp3", 2);
+    public static final Sonido EAT2      = new Sonido("eat2.mp3", 2);
+    public static final Sonido EAT3      = new Sonido("eat3.mp3", 2);
+    public static final Sonido PSSS      = new Sonido("psss.mp3", 2);
+    public static final Sonido EXPLOSION = new Sonido("explosion.mp3", 2);
+    public static final Sonido PICK      = new Sonido("pick.mp3", 2);
+    public static final Sonido ESMERALDA = new Sonido("esmeralda.mp3", 2);
+    public static final Sonido HURT1     = new Sonido("hurt1.mp3", 2);
+    public static final Sonido HURT2     = new Sonido("hurt2.mp3", 2);
+    
     public static final Sonido CHICKEN   = new Sonido("mobs/chicken.mp3", 2);
     public static final Sonido COW       = new Sonido("mobs/cow.mp3", 2);
     public static final Sonido CREEPER   = new Sonido("mobs/creeper.mp3", 2);

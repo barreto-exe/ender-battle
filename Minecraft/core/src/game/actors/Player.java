@@ -23,6 +23,7 @@ import game.actors.collectibles.ObjectCollectible;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
+import game.tools.Sonido;
 import game.tools.VirtualController;
 
 /**
@@ -259,19 +260,24 @@ public class Player extends Sprite implements Actor
         if (isHitting)
         {
             return State.HITTING;
-        } else if (body.getLinearVelocity().y >= 0.02f)
+        }
+        else if (body.getLinearVelocity().y >= 0.02f)
         {
             return State.JUMPING;
-        } else if (body.getLinearVelocity().y <= -0.02f)
+        }
+        else if (body.getLinearVelocity().y <= -0.02f)
         {
             return State.FALLING;
-        } else if (body.getLinearVelocity().x >= 1 && controller.isRight())
+        }
+        else if (body.getLinearVelocity().x >= 1 && controller.isRight())
         {
             return State.WALKING_RIGHT;
-        } else if (body.getLinearVelocity().x <= -1 && controller.isLeft())
+        }
+        else if (body.getLinearVelocity().x <= -1 && controller.isLeft())
         {
             return State.WALKING_LEFT;
-        } else
+        }
+        else
         {
             return State.STANDING;
         }
@@ -335,7 +341,8 @@ public class Player extends Sprite implements Actor
         this.enemy = enemy;
     }
 
-    public void setObjectCollectible(ObjectCollectible food) {
+    public void setObjectCollectible(ObjectCollectible food)
+    {
         this.objectCollectible = food;
     }
 
@@ -354,9 +361,8 @@ public class Player extends Sprite implements Actor
     public void act(float delta)
     {
         affectCondition(delta);
-        
+
         //System.out.println("Life: " + life + " || " + condition.toString());
-        
         if (life <= 0)
         {
             life = 0;
@@ -373,15 +379,18 @@ public class Player extends Sprite implements Actor
         if (controller.isUp() && !isJumping)
         {
             jump();
-        } else if (controller.isRight())
+        }
+        else if (controller.isRight())
         {
             direction = 1;
             walk(1);
-        } else if (controller.isLeft())
+        }
+        else if (controller.isLeft())
         {
             direction = -1;
             walk(-1);
-        } else if (controller.isPickingUp() && (objectCollectible != null))
+        }
+        else if (controller.isPickingUp() && (objectCollectible != null))
         {
             if ((objectCollectible instanceof FoodCollectible) || (objectCollectible instanceof EsmeraldCollective))
             {
@@ -393,7 +402,8 @@ public class Player extends Sprite implements Actor
             if (body.getLinearVelocity().x < 0)
             {
                 body.applyForceToCenter(8, 0, true);
-            } else if (body.getLinearVelocity().x > 0)
+            }
+            else if (body.getLinearVelocity().x > 0)
             {
                 body.applyForceToCenter(-8, 0, true);
             }
@@ -417,7 +427,8 @@ public class Player extends Sprite implements Actor
         if (!(currentState == State.FALLING || currentState == State.JUMPING))
         {
             body.setLinearVelocity(direction * Constant.SPEED_PLAYER, 0);
-        } else
+        }
+        else
         {
             body.applyForce(((Constant.IMPULSE_JUMP - 12) * 0.6f) * direction, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
@@ -476,7 +487,8 @@ public class Player extends Sprite implements Actor
         if (portedObjects[0] != null)
         {
             return portedObjects[0].getFactorObject();
-        } else
+        }
+        else
         {
             return 1;
         }
@@ -493,7 +505,36 @@ public class Player extends Sprite implements Actor
     public void toRecibeAttack(float hit)
     {
         life -= hit;
+        
+        Sonido.HURT1.reproducir();
+        Sonido.HURT2.reproducir();
 
+        final Player player = this;
+
+        //Cantidad de segudos que permanece coloreado de rojo
+        final float segundos = 1;
+
+        //Colorear de rojo por haber sido herido
+        player.setColor(Color.CORAL);
+
+        //Lanzar thread que espera un segundo y lo colorea a la normalidad
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(((long) (segundos)) * 1000);
+                    player.setColor(Color.WHITE);
+                } catch (InterruptedException ex)
+                {
+                    System.out.println(ex.getMessage());
+                }
+            }
+
+        }).start();
+        
         if (!isJumping)
         {
             body.applyLinearImpulse(0, 3, body.getWorldCenter().x, body.getWorldCenter().y, true);
@@ -504,6 +545,7 @@ public class Player extends Sprite implements Actor
     {
         if (plant != null)
         {
+            Sonido.ARBOLHIT.reproducir();
             plant.toRecibeAttack(this, calculateDamage());
         }
     }
@@ -511,15 +553,18 @@ public class Player extends Sprite implements Actor
     private void toPickUp()
     {
         objectCollectible.setIsCollected(true);
+        
         if (objectCollectible instanceof FoodCollectible)
         {
+            Sonido.PICK.reproducir();
             inventory.addFood(((FoodCollectible) objectCollectible).getType());
         }
         else if (objectCollectible instanceof EsmeraldCollective)
         {
+            Sonido.ESMERALDA.reproducir();
             inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
         }
-        
+
         //liberar objectCollectible
     }
 
@@ -626,10 +671,6 @@ public class Player extends Sprite implements Actor
     public boolean timePassed(float delta)
     {
         timePassed -= delta;
-        if (timePassed <= 0)
-        {
-            return true;
-        }
-        return false;
+        return timePassed <= 0;
     }
 }
