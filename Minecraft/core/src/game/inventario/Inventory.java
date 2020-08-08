@@ -2,7 +2,7 @@ package game.inventario;
 
 import com.badlogic.gdx.utils.Array;
 import game.inventario.food.Food;
-import game.tools.Constant;
+import game.tools.Constant.Farming;
 
 /**
  *
@@ -30,20 +30,20 @@ public class Inventory {
         pechos = new Array<>();
         pantalones = new Array<>();
         cascos = new Array<>();
-        food = new Food[9];
         
-        food[0] = new Food(Constant.Farming.CARROT, 2);
-        food[1] = new Food(Constant.Farming.POTATO, 2);
-        food[2] = new Food(Constant.Farming.APPLE, 2);
-        food[3] = new Food(Constant.Farming.PEAR, 2);
-        food[4] = new Food(Constant.Farming.WATERMELON, 3);
-        food[5] = new Food(Constant.Farming.BERRY, 1);
-        food[6] = new Food(Constant.Farming.CHICKEN, 4);
-        food[7] = new Food(Constant.Farming.BEEF, 5);
-        food[8] = new Food(Constant.Farming.RABBIT, 3);
+        food = new Food[9];
+        food[0] = new Food(Farming.CARROT, 2);
+        food[1] = new Food(Farming.POTATO, 2);
+        food[2] = new Food(Farming.APPLE, 2);
+        food[3] = new Food(Farming.PEAR, 2);
+        food[4] = new Food(Farming.WATERMELON, 3);
+        food[5] = new Food(Farming.BERRY, 1);
+        food[6] = new Food(Farming.CHICKEN, 4);
+        food[7] = new Food(Farming.BEEF, 5);
+        food[8] = new Food(Farming.RABBIT, 3);
     }
     
-    private int getIndex(Constant.Farming type)
+    private int getIndex(Farming type)
     {
         switch (type)
         {
@@ -137,7 +137,7 @@ public class Inventory {
     
     //<editor-fold defaultstate="collapsed" desc="Add y Remove Food">
     
-    public boolean addFood(Constant.Farming type)
+    public boolean addFood(Farming type)
     {
         int index = getIndex(type);
         
@@ -151,7 +151,7 @@ public class Inventory {
         return false;
     }
     
-    public boolean removeFood(Constant.Farming type)
+    public boolean removeFood(Farming type)
     {
         int index = getIndex(type);        
         

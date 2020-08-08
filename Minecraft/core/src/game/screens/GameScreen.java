@@ -11,14 +11,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import game.MainGame;
 import game.actors.Player;
-import game.actors.farming.plants.Bush;
 import game.actors.farming.plants.Plant;
 import game.actors.groups.Group;
-import game.actors.monster.Creeper;
-import game.actors.monster.Enderman;
-import game.actors.monster.Pigman;
-import game.actors.monster.Skeleton;
-import game.actors.monster.Spider;
 import game.actors.monster.Zombie;
 import game.actors.pacific.PacificMob;
 import com.badlogic.gdx.utils.Array;
@@ -73,7 +67,7 @@ public class GameScreen extends BaseScreen
         super(game);
         this.player = player;
         actors = new Group();
-        ventanaInventario = new FrmInventario();
+        ventanaInventario = new FrmInventario(player);
         
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
