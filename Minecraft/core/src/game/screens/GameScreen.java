@@ -153,7 +153,7 @@ public class GameScreen extends BaseScreen
     @Override
     public void show()
     {
-        villager = new Villager(world, getAtlas().findRegion("aldeano"), 5, 2);
+        villager = new Villager(world, getAtlas().findRegion("aldeano"), 5, 2.6f);
         actors.addActor(villager);
         manager = new BiomeAssemblerClass(this);
         pacificMobs = manager.getPacificMobs();

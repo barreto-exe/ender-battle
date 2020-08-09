@@ -77,6 +77,8 @@ public final class FrmTienda extends javax.swing.JFrame
         {
             labelPrecio = vistasPrecios.get(objeto);                
             imgObjeto = (JLabel) labelPrecio.getLabelFor();
+            
+            
             precio = listaPreciosBase.get(objeto);
                 
 
@@ -84,13 +86,20 @@ public final class FrmTienda extends javax.swing.JFrame
             if(!(objeto.equals("manzana") || objeto.equals("zanahoria") || objeto.equals("carne")))
             {
                 precio*=materialSeleccionado;
+                
+                imgObjeto.setIcon
+                (
+                    new javax.swing.ImageIcon
+                    (
+                        getClass().getResource("/sprites/objetos/"+objeto+materialSeleccionado+".png")
+                    )
+                );
             }
-            
             //Actualizar precio de acuerdo al material seleccionado
             labelPrecio.setText("" + precio);
             
             //Habilitar imagen de objeto si tiene suficientes esmeraldas para comprar
-            imgObjeto.setEnabled(player.getInventory().getEsmeraldas() >= precio);
+            //imgObjeto.setEnabled(player.getInventory().getEsmeraldas() >= precio);
         }
     }
     
@@ -152,7 +161,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco.png"))); // NOI18N
+        imgCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgCasco.setToolTipText("casco");
         imgCasco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgCasco.addMouseListener(new java.awt.event.MouseAdapter()
@@ -163,7 +172,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgPechera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pechera.png"))); // NOI18N
+        imgPechera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgPechera.setToolTipText("pechera");
         imgPechera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgPechera.addMouseListener(new java.awt.event.MouseAdapter()
@@ -174,7 +183,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgPantalones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pantalones.png"))); // NOI18N
+        imgPantalones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgPantalones.setToolTipText("pantalones");
         imgPantalones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgPantalones.addMouseListener(new java.awt.event.MouseAdapter()
@@ -185,7 +194,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgBotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas.png"))); // NOI18N
+        imgBotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgBotas.setToolTipText("botas");
         imgBotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgBotas.addMouseListener(new java.awt.event.MouseAdapter()
@@ -196,7 +205,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgEspada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/espada.png"))); // NOI18N
+        imgEspada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgEspada.setToolTipText("espada");
         imgEspada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgEspada.addMouseListener(new java.awt.event.MouseAdapter()
@@ -207,7 +216,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgHacha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/hacha.png"))); // NOI18N
+        imgHacha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgHacha.setToolTipText("hacha");
         imgHacha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgHacha.addMouseListener(new java.awt.event.MouseAdapter()
@@ -218,7 +227,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pico.png"))); // NOI18N
+        imgPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgPico.setToolTipText("pico");
         imgPico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgPico.addMouseListener(new java.awt.event.MouseAdapter()
@@ -229,7 +238,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
         });
 
-        imgPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/shovel.png"))); // NOI18N
+        imgPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
         imgPala.setToolTipText("pala");
         imgPala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         imgPala.addMouseListener(new java.awt.event.MouseAdapter()

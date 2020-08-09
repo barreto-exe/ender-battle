@@ -68,6 +68,11 @@ public final class FrmInventario extends javax.swing.JFrame
         lblConejo = new javax.swing.JLabel();
         lblPollo = new javax.swing.JLabel();
         lblCarne = new javax.swing.JLabel();
+        lblCasco = new javax.swing.JLabel();
+        lblCasco1 = new javax.swing.JLabel();
+        lblCasco2 = new javax.swing.JLabel();
+        lblCasco3 = new javax.swing.JLabel();
+        lblCasco4 = new javax.swing.JLabel();
 
         jLabel5.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -241,12 +246,30 @@ public final class FrmInventario extends javax.swing.JFrame
         lblCarne.setLabelFor(imgCarne);
         lblCarne.setText("1");
 
+        lblCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
+        lblCasco1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
+        lblCasco2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
+        lblCasco3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
+        lblCasco4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(466, Short.MAX_VALUE)
+                .addGap(114, 114, 114)
+                .addComponent(lblCasco4)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCasco1)
+                    .addComponent(lblCasco2)
+                    .addComponent(lblCasco3)
+                    .addComponent(lblCasco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -298,40 +321,56 @@ public final class FrmInventario extends javax.swing.JFrame
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lblComida)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imgManzana)
-                    .addComponent(imgPera)
-                    .addComponent(imgZanahoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblManzana)
-                    .addComponent(lblPera)
-                    .addComponent(lblZanahoria))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(imgBaya)
-                    .addComponent(imgPapa)
-                    .addComponent(imgSandia))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSandia)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblBaya)
-                        .addComponent(lblPapa)))
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(imgConejo)
+                        .addGap(10, 10, 10)
+                        .addComponent(lblComida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblConejo)
-                            .addComponent(lblPollo)
-                            .addComponent(lblCarne)))
-                    .addComponent(imgPollo)
-                    .addComponent(imgCarne))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(imgManzana)
+                                    .addComponent(imgPera)
+                                    .addComponent(imgZanahoria))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblManzana)
+                                    .addComponent(lblPera)
+                                    .addComponent(lblZanahoria)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCasco)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCasco3)
+                                .addGap(11, 11, 11)
+                                .addComponent(lblCasco2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCasco1))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(169, 169, 169)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(imgBaya)
+                            .addComponent(imgPapa)
+                            .addComponent(imgSandia))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCasco4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSandia)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblBaya)
+                                        .addComponent(lblPapa)))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(imgConejo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lblConejo)
+                                            .addComponent(lblPollo)
+                                            .addComponent(lblCarne)))
+                                    .addComponent(imgPollo)
+                                    .addComponent(imgCarne))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -436,6 +475,11 @@ public final class FrmInventario extends javax.swing.JFrame
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblBaya;
     private javax.swing.JLabel lblCarne;
+    private javax.swing.JLabel lblCasco;
+    private javax.swing.JLabel lblCasco1;
+    private javax.swing.JLabel lblCasco2;
+    private javax.swing.JLabel lblCasco3;
+    private javax.swing.JLabel lblCasco4;
     private javax.swing.JLabel lblComida;
     private javax.swing.JLabel lblConejo;
     private javax.swing.JLabel lblManzana;
