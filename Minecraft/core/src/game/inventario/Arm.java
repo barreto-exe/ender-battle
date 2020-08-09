@@ -8,7 +8,7 @@ import game.tools.Constant;
  */
 public class Arm extends BattleObject
 {
-    private float attack;
+    private int attack;
 
     /**
      * Representa un arma del juego.
@@ -32,16 +32,16 @@ public class Arm extends BattleObject
         switch (object)
         {
             case SWORD:
-                attack = 5f;
+                attack = 5;
                 return true;
             case AX:
-                attack = 4f;
+                attack = 4;
                 return true;
             case PICK:
-                attack = 3f;
+                attack = 3;
                 return true;
             case SHOVEL:
-                attack = 2f;
+                attack = 2;
                 return true;
             default:
                 attack = 0;

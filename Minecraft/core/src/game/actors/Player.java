@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.Color;
 import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
+import game.inventario.Protection;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
@@ -50,7 +51,6 @@ public class Player extends Sprite implements Actor
     
     //Atributos de interacciones en el bioma
     private boolean setToAttack;
-    private boolean isInShop;
     private Villager villager;
     private Mob enemy;
     private ObjectCollectible objectCollectible;
@@ -272,6 +272,17 @@ public class Player extends Sprite implements Actor
     {
         this.life = life;
     }
+    
+    private int getTotalProtection()
+    {
+        int total = 0;
+        for(int i=0; i<4; i++)
+        {
+            if(portedObjects[i] != null)
+                total += ((Protection)portedObjects[i]).getFactorObject();
+        }
+        return total;
+    }
     //</editor-fold>
 
     /**
@@ -359,7 +370,7 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
-        isJumping = isHitting = setToAttack = isInShop = false;
+        isJumping = isHitting = setToAttack = false;
         previousState = State.WALKING_RIGHT;
         condition = PlayerCondition.NORMAL;
         deltaFrame = 0;
@@ -377,48 +388,56 @@ public class Player extends Sprite implements Actor
         if (life <= 0)
         {
             life = 0;
-            System.out.println("El Jugador ha muerto");
         }
 
-        if (!isInShop)
+        currentState = getState();
+
+        if (currentState == State.FALLING || currentState == State.JUMPING)
         {
-            currentState = getState();
-
-            if (currentState == State.FALLING || currentState == State.JUMPING)
-            {
-                body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
-            }
+            body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             
-            else if (controller.isUp() && !isJumping)
+            //Aplica una ligera fuerza lateral durante el salto dependiendo
+            //de la tecla que se presiona
+            if(controller.isLeft())
             {
-                jump();
+                body.applyForceToCenter(-2, 0, true);
             }
-            else if (controller.isRight())
+            if(controller.isRight())
             {
-                direction = 1;
-                walk(1);
+                body.applyForceToCenter(2, 0, true);
             }
-            else if (controller.isLeft())
-            {
-                direction = -1;
-                walk(-1);
-            }
-            else if (controller.isPickingUp() && (objectCollectible != null))
-            {
-                toPickUp();
-            }
-            else
-            {
-                if (body.getLinearVelocity().x < 0)
-                {
-                    body.applyForceToCenter(8, 0, true);
-                }
-                else if (body.getLinearVelocity().x > 0)
-                {
-                    body.applyForceToCenter(-8, 0, true);
-                }
-            }    
         }
+
+        else if (controller.isUp() && !isJumping)
+        {
+            jump();
+        }
+            
+        else if (controller.isRight())
+        {
+            direction = 1;
+            walk(1);
+        }
+        else if (controller.isLeft())
+        {
+            direction = -1;
+            walk(-1);
+        }
+        else if (controller.isPickingUp() && (objectCollectible != null))
+        {
+            toPickUp();
+        }
+        else
+        {
+            if (body.getLinearVelocity().x < 0)
+            {
+                body.applyForceToCenter(8, 0, true);
+            }
+            else if (body.getLinearVelocity().x > 0)
+            {
+                body.applyForceToCenter(-8, 0, true);
+            }
+        }    
 
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
@@ -474,8 +493,8 @@ public class Player extends Sprite implements Actor
     }
 
     /**
-     * Añade un objeto al inventario del jugador.
-     * @param object el que se añade al inventario.
+     * Indica si un objeto es portado por el jugador.
+     * @param object el objeto que se portará.
      */
     public void portarObjeto(BattleObject object)
     {
@@ -558,7 +577,13 @@ public class Player extends Sprite implements Actor
      * @param hit catidad de daño del ataque.
      */
     public void toRecibeAttack(float hit)
-    {
+    {        
+        hit -= getTotalProtection();
+        if(hit <= 0)
+        {
+            hit = 1;
+        }
+        
         life -= hit;
         
         soundManager.get("sonidos/hurt1.ogg", Sound.class).play();

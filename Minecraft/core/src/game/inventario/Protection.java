@@ -9,7 +9,7 @@ import game.tools.Constant;
 public class Protection extends BattleObject
 {
 
-    private float protection;
+    private int protection;
 
     /**
      * Representa una pieza de armadura.
@@ -33,16 +33,16 @@ public class Protection extends BattleObject
         switch (object)
         {
             case SHIRTFRONT:
-                protection = 5f;
+                protection = 3;
                 return true;
             case HELMET:
-                protection = 4f;
+                protection = 2;
                 return true;
             case LEGGING:
-                protection = 3f;
+                protection = 2;
                 return true;
             case BOOTS:
-                protection = 2f;
+                protection = 1;
                 return true;
             default:
                 protection = 0;

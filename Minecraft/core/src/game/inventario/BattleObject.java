@@ -11,7 +11,7 @@ public abstract class BattleObject
 
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     private Constant.BattleObject object;
-    protected float factorObject;
+    protected int factorObject;
     private boolean isPorted;
     protected Material material;
     private int use;
@@ -44,7 +44,7 @@ public abstract class BattleObject
         return material;
     }
 
-    public float getFactorObject()
+    public int getFactorObject()
     {
         return factorObject;
     }

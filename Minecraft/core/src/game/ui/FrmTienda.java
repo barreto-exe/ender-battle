@@ -1,6 +1,12 @@
 package game.ui;
 
+import com.badlogic.gdx.audio.Sound;
 import game.actors.Player;
+import game.inventario.Arm;
+import game.inventario.BattleObject;
+import game.inventario.Protection;
+import game.tools.Constant;
+import static game.tools.Sonido.soundManager;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -148,27 +154,91 @@ public final class FrmTienda extends javax.swing.JFrame
 
         imgCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco.png"))); // NOI18N
         imgCasco.setToolTipText("casco");
+        imgCasco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgCasco.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgPechera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pechera.png"))); // NOI18N
         imgPechera.setToolTipText("pechera");
+        imgPechera.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgPechera.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgPantalones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pantalones.png"))); // NOI18N
         imgPantalones.setToolTipText("pantalones");
+        imgPantalones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgPantalones.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgBotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas.png"))); // NOI18N
         imgBotas.setToolTipText("botas");
+        imgBotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgBotas.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgEspada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/espada.png"))); // NOI18N
         imgEspada.setToolTipText("espada");
+        imgEspada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgEspada.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgHacha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/hacha.png"))); // NOI18N
         imgHacha.setToolTipText("hacha");
+        imgHacha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgHacha.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pico.png"))); // NOI18N
         imgPico.setToolTipText("pico");
+        imgPico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgPico.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/shovel.png"))); // NOI18N
         imgPala.setToolTipText("pala");
+        imgPala.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgPala.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         jsMateriales.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jsMateriales.setMajorTickSpacing(1);
@@ -185,13 +255,6 @@ public final class FrmTienda extends javax.swing.JFrame
             public void stateChanged(javax.swing.event.ChangeEvent evt)
             {
                 jsMaterialesStateChanged(evt);
-            }
-        });
-        jsMateriales.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseReleased(java.awt.event.MouseEvent evt)
-            {
-                jsMaterialesMouseReleased(evt);
             }
         });
 
@@ -249,12 +312,36 @@ public final class FrmTienda extends javax.swing.JFrame
 
         imgManzana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/manzana.png"))); // NOI18N
         imgManzana.setToolTipText("manzana");
+        imgManzana.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgManzana.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgZanahoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/zanahoria.png"))); // NOI18N
         imgZanahoria.setToolTipText("zanahoria");
+        imgZanahoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgZanahoria.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         imgCarne.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/ganado_carne.png"))); // NOI18N
         imgCarne.setToolTipText("carne");
+        imgCarne.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        imgCarne.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                imgObjetoClicked(evt);
+            }
+        });
 
         lblPrecioManzana.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioManzana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -428,9 +515,110 @@ public final class FrmTienda extends javax.swing.JFrame
         actualizarVista();
     }//GEN-LAST:event_jsMaterialesStateChanged
 
-    private void jsMaterialesMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jsMaterialesMouseReleased
-    {//GEN-HEADEREND:event_jsMaterialesMouseReleased
-    }//GEN-LAST:event_jsMaterialesMouseReleased
+    private void imgObjetoClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_imgObjetoClicked
+    {//GEN-HEADEREND:event_imgObjetoClicked
+        //Si está deshabilitado no hago nada.
+        if(!((JLabel)evt.getSource()).isEnabled())
+            return;
+        
+        
+        soundManager.get("sonidos/pick.ogg", Sound.class).play();
+
+        //Nombre del objeto
+        String objeto = ((JLabel)evt.getSource()).getToolTipText();
+
+        //Obtener precio del objeto
+        int precio = listaPreciosBase.get(objeto);
+
+        //Si no es comida
+        if(!(objeto.equals("manzana") || objeto.equals("zanahoria") || objeto.equals("carne")))
+        {
+            precio*=this.jsMateriales.getValue();
+            
+            
+            Constant.Material material = null;
+            //<editor-fold defaultstate="collapsed" desc="Material">
+            switch(this.jsMateriales.getValue())
+            {
+                case 1:
+                    material = Constant.Material.WOOD;
+                    break;
+                case 2:
+                    material = Constant.Material.GOLD;
+                    break;
+                case 3:
+                    material = Constant.Material.IRON;
+                    break;
+            }
+            //</editor-fold>
+            
+            Constant.BattleObject type;
+            BattleObject object = null;
+            switch(objeto)
+            {
+                //<editor-fold defaultstate="collapsed" desc="Protection Object">
+                case "botas":
+                    type = Constant.BattleObject.BOOTS;
+                    object = new Protection(type,material);
+                    break;
+                case "pantalones":
+                    type = Constant.BattleObject.LEGGING;
+                    object = new Protection(type,material);
+                    break;
+                case "pechera":
+                    type = Constant.BattleObject.SHIRTFRONT;
+                    object = new Protection(type,material);
+                    break;
+                case "casco":
+                    type = Constant.BattleObject.HELMET;
+                    object = new Protection(type,material);
+                    break;
+                //</editor-fold>
+                    
+                //<editor-fold defaultstate="collapsed" desc="Arm Object">
+                case "pico":
+                    type = Constant.BattleObject.PICK;
+                    object = new Arm(type,material);
+                    break;
+                case "pala":
+                    type = Constant.BattleObject.SHOVEL;
+                    object = new Arm(type,material);
+                    break;
+                case "hacha":
+                    type = Constant.BattleObject.AX;
+                    object = new Arm(type,material);
+                    break;
+                case "espada":
+                    type = Constant.BattleObject.SWORD;
+                    object = new Arm(type,material);
+                    break;
+                //</editor-fold>
+            }
+            
+            player.getInventory().addBattleObject(object);
+        }
+        //Si es comida
+        else
+        {
+            switch(objeto)
+            {
+                case "manzana":
+                    player.getInventory().addFood(Constant.Farming.APPLE);
+                    break;
+                case "zanahoria":
+                    player.getInventory().addFood(Constant.Farming.CARROT);
+                    break;
+                case "carne":
+                    player.getInventory().addFood(Constant.Farming.BEEF);
+                    break;
+            }
+        }
+        
+        //Cobrar
+        player.getInventory().addEsmeraldas(-precio);
+        
+        actualizarVista();
+    }//GEN-LAST:event_imgObjetoClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imgBotas;

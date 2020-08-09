@@ -215,7 +215,13 @@
           <Image iconType="3" name="/sprites/objetos/casco.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="casco"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgPechera">
       <Properties>
@@ -223,7 +229,13 @@
           <Image iconType="3" name="/sprites/objetos/pechera.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="pechera"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgPantalones">
       <Properties>
@@ -231,7 +243,13 @@
           <Image iconType="3" name="/sprites/objetos/pantalones.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="pantalones"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgBotas">
       <Properties>
@@ -239,7 +257,13 @@
           <Image iconType="3" name="/sprites/objetos/botas.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="botas"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgEspada">
       <Properties>
@@ -247,7 +271,13 @@
           <Image iconType="3" name="/sprites/objetos/espada.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="espada"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgHacha">
       <Properties>
@@ -255,7 +285,13 @@
           <Image iconType="3" name="/sprites/objetos/hacha.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="hacha"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgPico">
       <Properties>
@@ -263,7 +299,13 @@
           <Image iconType="3" name="/sprites/objetos/pico.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="pico"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgPala">
       <Properties>
@@ -271,7 +313,13 @@
           <Image iconType="3" name="/sprites/objetos/shovel.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="pala"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="jsMateriales">
       <Properties>
@@ -290,7 +338,6 @@
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jsMaterialesStateChanged"/>
-        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jsMaterialesMouseReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblMadera">
@@ -422,7 +469,13 @@
           <Image iconType="3" name="/sprites/comida/manzana.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="manzana"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgZanahoria">
       <Properties>
@@ -430,7 +483,13 @@
           <Image iconType="3" name="/sprites/comida/zanahoria.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="zanahoria"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgCarne">
       <Properties>
@@ -438,7 +497,13 @@
           <Image iconType="3" name="/sprites/comida/ganado_carne.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="carne"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
+        </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgObjetoClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPrecioManzana">
       <Properties>

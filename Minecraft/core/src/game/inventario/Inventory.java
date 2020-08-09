@@ -69,6 +69,11 @@ public class Inventory
         return food;
     }
 
+    public void addEsmeraldas(int esmeraldas)
+    {
+        this.esmeraldas += esmeraldas;
+    }
+    
     public int getEsmeraldas()
     {
         return esmeraldas;
@@ -78,7 +83,7 @@ public class Inventory
     {
         this.esmeraldas = esmeraldas;
     }
-
+    
     public static int getIndex(Farming type)
     {
         switch (type)
