@@ -82,7 +82,7 @@ public class BattleObjectCollectible extends ObjectCollectible
                 setColor(Color.GOLD);
                 break;
             case DIAMOND:
-                setColor(Color.TAN);
+                setColor(Color.CYAN);
                 break;
         }
     }

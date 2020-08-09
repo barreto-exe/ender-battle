@@ -1,5 +1,6 @@
 package game.actors.monster;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import game.actors.Player;
 import game.actors.Mob;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
 import game.inventario.BattleObject;
@@ -30,7 +32,7 @@ public abstract class MonsterMob extends Mob
     protected int attackPoints;
     protected String attackDescription;
     protected BattleObject prize;
-    protected TextureRegion prizeTexture;
+    private final TextureAtlas atlas;
     //</editor-fold>
     
     /**
@@ -53,6 +55,7 @@ public abstract class MonsterMob extends Mob
     {
         super(screen, region, life, sonido);
         this.speed = speed;
+        atlas = screen.getAtlas();
         this.attackPoints = attackPoints;
         this.isBoss = isBoss;
         this.prize = prize;
@@ -137,5 +140,25 @@ public abstract class MonsterMob extends Mob
             }
     }
     
+    /**
+     * Deja caer la pieza de la armadura de diamante que el jefe custodia cuando el Jefe muere.
+     * También deja caer algunas esmeraldas como premio.
+     */
+    protected void toDropPrize()
+    {
+        ObjectCollectible objects[] = new ObjectCollectible[5];
+            
+            objects[0] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 2, body.getPosition().y));
+            objects[1] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x - getWidth() / 4, body.getPosition().y));
+            objects[2] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 2, body.getPosition().y));
+            objects[3] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 4, body.getPosition().y));
+            //pieza
+            objects[4] = new BattleObjectCollectible(prize.getObject(), Constant.Material.DIAMOND, atlas, world, body.getPosition());
+            
+            for (ObjectCollectible o : objects)
+            {
+                actors.addActor(o);
+            }
+    }
     
 }

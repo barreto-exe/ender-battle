@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.utils.Array;
 import game.inventario.Arm;
-import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Sonido;
@@ -84,7 +83,7 @@ public class Enderman extends MonsterMob
     protected void toDie() {
         if (isBoss)
         {
-            System.out.println("suelta un arma");
+            toDropPrize();
         }
         else
         {
