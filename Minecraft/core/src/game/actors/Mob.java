@@ -138,7 +138,7 @@ public abstract class Mob extends Sprite implements Actor
             toDie();
             delete();
             isDead = true;
-            //actors.removeActor(this);
+            actors.removeActor(this);
         }
         else if (!isDead)
         {

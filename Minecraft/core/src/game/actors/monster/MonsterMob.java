@@ -29,7 +29,6 @@ public abstract class MonsterMob extends Mob
     protected int dificulty;
     protected int attackPoints;
     protected String attackDescription;
-    protected float speed;
     protected BattleObject prize;
     protected TextureRegion prizeTexture;
     //</editor-fold>

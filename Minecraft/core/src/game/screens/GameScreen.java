@@ -22,7 +22,7 @@ import game.actors.pacific.PacificMob;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import game.actors.collectibles.EsmeraldCollective;
-import game.actors.monster.Creeper;
+import game.actors.monster.Skeleton;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.Constant;
 import game.tools.WorldContactListener;
@@ -154,7 +154,7 @@ public class GameScreen extends BaseScreen
 
         //Monstruos de prueba   
         //actors.addActor(new Skeleton(this,20,5));
-        actors.addActor(new Creeper(this, 17, 5, false));
+        actors.addActor(new Skeleton(this, 17, 5, false));
         //actors.addActor(new Pigman(this,15,5));
         //actors.addActor(new Creeper(this,13,5));
         actors.addActor(new EsmeraldCollective(getAtlas().findRegion("esmeralda"), world, new Vector2(25, 6)));
