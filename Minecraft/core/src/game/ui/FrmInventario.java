@@ -73,6 +73,7 @@ public final class FrmInventario extends javax.swing.JFrame
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("1");
 
+        setPreferredSize(new java.awt.Dimension(685, 430));
         setType(java.awt.Window.Type.UTILITY);
         addWindowFocusListener(new java.awt.event.WindowFocusListener()
         {
@@ -339,7 +340,6 @@ public final class FrmInventario extends javax.swing.JFrame
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
-        // TODO add your handling code here:
         if(evt.getKeyChar() == 'E' || evt.getKeyChar() == 'e')
         {
             this.setVisible(false);

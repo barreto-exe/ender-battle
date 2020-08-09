@@ -42,10 +42,10 @@ public class Material
             case WOOD:
                 factor = 2;
                 return true;
-            case IRON:
+            case GOLD:
                 factor = 3;
                 return true;
-            case GOLD:
+            case IRON:
                 factor = 4;
                 return true;
             case DIAMOND:

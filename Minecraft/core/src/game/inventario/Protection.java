@@ -32,16 +32,16 @@ public class Protection extends BattleObject
     {
         switch (object)
         {
-            case BOOTS:
+            case SHIRTFRONT:
                 protection = 5f;
                 return true;
-            case SHIRTFRONT:
+            case HELMET:
                 protection = 4f;
                 return true;
             case LEGGING:
                 protection = 3f;
                 return true;
-            case HELMET:
+            case BOOTS:
                 protection = 2f;
                 return true;
             default:
