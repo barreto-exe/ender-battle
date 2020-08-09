@@ -139,14 +139,14 @@ public class Inventory
     //<editor-fold defaultstate="collapsed" desc="Add y Remove BattleObject">
     public boolean addBattleObject(BattleObject object)
     {
-        Array<BattleObject> array = getArray(object.getObject());
-
-        if (array == null)
+        if (findBattleObject(object.getObject(), object.getMaterial().getMaterial()) != null)
         {
             return false;
         }
+        
+        Array<BattleObject> array = getArray(object.getObject());
 
-        if (findBattleObject(array, object.getMaterial().getMaterial()) != null)
+        if (array == null)
         {
             return false;
         }
@@ -157,21 +157,22 @@ public class Inventory
 
     public boolean removeBattleObject(BattleObject object)
     {
+        BattleObject item = findBattleObject(object.getObject(), object.getMaterial().getMaterial());
+        
+        if (item == null)
+        {
+            return false;
+        }
+
         Array<BattleObject> array = getArray(object.getObject());
 
         if (array == null)
         {
             return false;
         }
-
-        BattleObject item = findBattleObject(array, object.getMaterial().getMaterial());
-
-        if (item != null)
-        {
-            array.removeValue(item, true);
-            return true;
-        }
-        return false;
+            
+        array.removeValue(item, true);
+        return true;
     }
     //</editor-fold>
 
@@ -229,13 +230,19 @@ public class Inventory
         return mayor;
     }
 
-    private BattleObject findBattleObject(Array<BattleObject> array, Constant.Material material)
+    private BattleObject findBattleObject(Constant.BattleObject object, Constant.Material material)
     {
-        for (BattleObject object : array)
+        Array<BattleObject> array = getArray(object);
+        
+        if (array.isEmpty())
         {
-            if (object.getMaterial().getMaterial().equals(material))
+            return null;
+        }
+        for (BattleObject o : array)
+        {
+            if (o.getMaterial().getMaterial().equals(material))
             {
-                return object;
+                return o;
             }
         }
         return null;
