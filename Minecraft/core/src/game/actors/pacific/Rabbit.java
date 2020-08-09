@@ -17,7 +17,7 @@ public class Rabbit extends PacificMob
 {
     public Rabbit(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("conejo"), 5, x, y, 149 / 4, 32, Sonido.RABBIT);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("conejo"), 5, x, y, 149 / 4, 32, "rabbit");
         textureMeat = screen.getAtlas().findRegion("conejo_carne");
 
         speed = 1.2f;

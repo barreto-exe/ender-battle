@@ -7,6 +7,7 @@ package game.tools;
  */
 public class Constant
 {
+    
     public static final float PPM = 50;
     public static final int MAX_MAP = 6400;
     public static final int PLAYER_WIDTH = 512;  
@@ -93,6 +94,7 @@ public class Constant
     {
         WOOD, GOLD, IRON, DIAMOND
     }
+    
     
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;

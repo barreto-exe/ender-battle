@@ -49,7 +49,7 @@ public abstract class MonsterMob extends Mob
      * @param prize es el premio que arroja si el mob es jefe.
      * @param sonido es el sonido que hace al recibir ataques.
      */
-    public MonsterMob(GameScreen screen, TextureRegion region, float x, float y, float width, float height, float speed, float life, int attackPoints, boolean isBoss, BattleObject prize, Sonido sonido)
+    public MonsterMob(GameScreen screen, TextureRegion region, float x, float y, float width, float height, float speed, float life, int attackPoints, boolean isBoss, BattleObject prize, String sonido)
     {
         super(screen, region, life, sonido);
         this.speed = speed;

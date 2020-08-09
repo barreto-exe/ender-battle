@@ -12,7 +12,6 @@ import game.actors.collectibles.FoodCollectible;
 import game.actors.collectibles.ObjectCollectible;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *
@@ -22,7 +21,7 @@ public class Cow extends PacificMob
 {
     public Cow(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80, Sonido.COW);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80, "cow");
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
 
         speed = 1.2f;

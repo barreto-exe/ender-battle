@@ -34,7 +34,7 @@ public class Skeleton extends MonsterMob
             10,     //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObject.LEGGING, Constant.Material.DIAMOND), 
-            Sonido.SKELETON
+            "skeleton"
         );
 
         //<editor-fold defaultstate="collapsed" desc="Definición Sensores">

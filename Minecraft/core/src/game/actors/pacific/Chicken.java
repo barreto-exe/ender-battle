@@ -17,7 +17,7 @@ public class Chicken extends PacificMob
 {
     public Chicken(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("chicken"), 5, x, y, 96 / 3, 25, Sonido.CHICKEN);
+        super(screen, (TextureRegion) screen.getAtlas().findRegion("chicken"), 5, x, y, 96 / 3, 25, "chicken");
         textureMeat = screen.getAtlas().findRegion("pollo_carne");
 
         speed = 1.2f;

@@ -1,5 +1,6 @@
 package game.actors;
 
+import com.badlogic.gdx.audio.Sound;
 import game.actors.groups.Actor;
 import game.actors.groups.Group;
 import com.badlogic.gdx.graphics.Color;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import game.tools.Sonido;
+import static game.tools.Sonido.soundManager;
 
 public abstract class Mob extends Sprite implements Actor
 {
@@ -35,11 +37,11 @@ public abstract class Mob extends Sprite implements Actor
     protected boolean setToDie;
     protected float life;
     protected float speed;
-    private final Sonido sonido;
+    private final String sonido;
     private int contadorSonidos;
     //</editor-fold>
 
-    public Mob(GameScreen screen, TextureRegion region, float life, Sonido sonido)
+    public Mob(GameScreen screen, TextureRegion region, float life, String sonido)
     {
         super(region);
         world = screen.getWorld();
@@ -78,7 +80,7 @@ public abstract class Mob extends Sprite implements Actor
         
         if(contadorSonidos == 0)
         {
-            sonido.reproducir();
+            Sonido.soundManager.get("sonidos/mobs/"+sonido+".ogg", Sound.class).play();
         }
         
         contadorSonidos++;

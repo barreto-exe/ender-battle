@@ -944,55 +944,55 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      */
     //<editor-fold defaultstate="collapsed" desc="Eventos">
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
-        Sonido.Click();
+        Sonido.click();
         mostrarPanel(panelAyuda);
     }//GEN-LAST:event_btnAyudaActionPerformed
 
     private void btnAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcercaActionPerformed
-        Sonido.Click();
+        Sonido.click();
         mostrarPanel(panelAcercaDe);
     }//GEN-LAST:event_btnAcercaActionPerformed
 
     private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
-        Sonido.Click();
+        Sonido.click();
     }//GEN-LAST:event_btnEstadisticasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        Sonido.Click();
+        Sonido.click();
         txtCorreo.requestFocus();
         mostrarPanel(panelRegistrarse);
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        Sonido.Click();
+        Sonido.click();
         txtUsuarioIniciar.requestFocus();
         mostrarPanel(panelIniciar);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnVolverActionPerformed
     {//GEN-HEADEREND:event_btnVolverActionPerformed
-        Sonido.Click();
+        Sonido.click();
         mostrarPanel(panelBienvenida);
         limpiarTextBoxes();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAceptarRegistroActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarRegistroActionPerformed
     {//GEN-HEADEREND:event_btnAceptarRegistroActionPerformed
-        Sonido.Click();
+        Sonido.click();
 
         registrarUsuario();
     }//GEN-LAST:event_btnAceptarRegistroActionPerformed
 
     private void btnAceptarInicioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarInicioActionPerformed
     {//GEN-HEADEREND:event_btnAceptarInicioActionPerformed
-        Sonido.Click();
+        Sonido.click();
 
         iniciarSesion();
     }//GEN-LAST:event_btnAceptarInicioActionPerformed
 
     private void btnCambiarServidorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCambiarServidorActionPerformed
     {//GEN-HEADEREND:event_btnCambiarServidorActionPerformed
-        Sonido.Click();
+        Sonido.click();
 
         //Cambiar IP de la base de datos
         DBOperacion.SERVIDOR = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
@@ -1000,28 +1000,28 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
     private void lblFlechaDerechaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaDerechaMouseClicked
     {//GEN-HEADEREND:event_lblFlechaDerechaMouseClicked
-        Sonido.Click();
+        Sonido.click();
         personajeSeleccionado--;
         elegirImagenPersonaje();
     }//GEN-LAST:event_lblFlechaDerechaMouseClicked
 
     private void lblFlechaIzquierdaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaIzquierdaMouseClicked
     {//GEN-HEADEREND:event_lblFlechaIzquierdaMouseClicked
-        Sonido.Click();
+        Sonido.click();
         personajeSeleccionado++;
         elegirImagenPersonaje();
     }//GEN-LAST:event_lblFlechaIzquierdaMouseClicked
 
     private void btnComenzarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnComenzarPartidaActionPerformed
     {//GEN-HEADEREND:event_btnComenzarPartidaActionPerformed
-        Sonido.Click();
+        Sonido.click();
 
         comenzarPartida();
     }//GEN-LAST:event_btnComenzarPartidaActionPerformed
 
     private void btnCrearPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCrearPartidaActionPerformed
     {//GEN-HEADEREND:event_btnCrearPartidaActionPerformed
-        Sonido.Click();
+        Sonido.click();
         crearPartida();
     }//GEN-LAST:event_btnCrearPartidaActionPerformed
 
@@ -1057,7 +1057,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
     private void btnCancelarPartidaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarPartidaActionPerformed
     {//GEN-HEADEREND:event_btnCancelarPartidaActionPerformed
-        Sonido.Click();
+        Sonido.click();
         mostrarPanel(panelBienvenida);
 
         salirPartida();

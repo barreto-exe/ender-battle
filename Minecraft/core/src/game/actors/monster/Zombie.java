@@ -32,7 +32,7 @@ public class Zombie extends MonsterMob
             10,  //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObject.BOOTS, Constant.Material.DIAMOND), 
-            Sonido.ZOMBIE
+            "zombie"
         );
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

@@ -2,6 +2,7 @@ package game.actors;
 
 import game.actors.groups.Actor;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,6 +25,7 @@ import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
 import game.tools.Sonido;
+import static game.tools.Sonido.soundManager;
 import game.tools.VirtualController;
 
 /**
@@ -533,7 +535,7 @@ public class Player extends Sprite implements Actor
     {
         if (plant != null)
         {
-            Sonido.ARBOLHIT.reproducir();
+            soundManager.get("sonidos/arbolhit.ogg", Sound.class).play();
             plant.toRecibeAttack(this, calculateDamage());
         }
     }
@@ -546,9 +548,9 @@ public class Player extends Sprite implements Actor
     {
         life -= hit;
         
-        Sonido.HURT1.reproducir();
-        Sonido.HURT2.reproducir();
-
+        soundManager.get("sonidos/hurt1.ogg", Sound.class).play();
+        soundManager.get("sonidos/hurt2.ogg", Sound.class).play();
+        
         final Player player = this;
 
         //Cantidad de segudos que permanece coloreado de rojo
@@ -590,12 +592,12 @@ public class Player extends Sprite implements Actor
         
         if (objectCollectible instanceof FoodCollectible)
         {
-            Sonido.PICK.reproducir();
+            soundManager.get("sonidos/pick.ogg", Sound.class).play();
             inventory.addFood(((FoodCollectible) objectCollectible).getType());
         }
         else if (objectCollectible instanceof EsmeraldCollective)
         {
-            Sonido.ESMERALDA.reproducir();
+            soundManager.get("sonidos/esmeralda.ogg", Sound.class).play();
             inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
         }
 

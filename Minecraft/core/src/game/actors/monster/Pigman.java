@@ -33,7 +33,7 @@ public class Pigman extends MonsterMob
             10,     //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObject.HELMET, Constant.Material.DIAMOND), 
-            Sonido.PIGMAN
+            "pigman"
         );
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

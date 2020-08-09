@@ -37,7 +37,7 @@ public class Creeper extends MonsterMob
             20,     //Puntos de ataque
             isBoss, 
             new Arm(Constant.BattleObject.AX, Constant.Material.DIAMOND), 
-            Sonido.CREEPER
+            "creeper"
         );
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();

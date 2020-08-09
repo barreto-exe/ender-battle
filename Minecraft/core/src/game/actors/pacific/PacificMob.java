@@ -36,7 +36,7 @@ public abstract class PacificMob extends Mob
      * @param height alto del mob.
      * @param sonido es el que se reproduce al ser golpeado
      */
-    public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, Sonido sonido)
+    public PacificMob(GameScreen screen, TextureRegion texture, float life, float x, float y, int width, int height, String sonido)
     {
         super(screen, texture, life, sonido);
         

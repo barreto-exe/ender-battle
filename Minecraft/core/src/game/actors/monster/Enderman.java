@@ -38,7 +38,7 @@ public class Enderman extends MonsterMob
             20,     //Puntos de ataque
             isBoss, 
             new Arm(Constant.BattleObject.SWORD, Constant.Material.DIAMOND), 
-            Sonido.ENDERMAN
+            "enderman"
         );
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

@@ -33,7 +33,7 @@ public class Spider extends MonsterMob
             10,     //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND), 
-            Sonido.SPIDER
+            "spider"
         );
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

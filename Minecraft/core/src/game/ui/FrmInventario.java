@@ -1,10 +1,12 @@
 package game.ui;
 
+import com.badlogic.gdx.audio.Sound;
 import game.actors.Player;
 import game.inventario.Inventory;
 import game.inventario.food.Food;
 import game.tools.Constant.Farming;
 import game.tools.Sonido;
+import static game.tools.Sonido.soundManager;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
@@ -365,26 +367,7 @@ public final class FrmInventario extends javax.swing.JFrame
         
         //<editor-fold defaultstate="collapsed" desc="Sonido comer">
         int eatToSound = (int) ((Math.random() * ((3 - 1) + 1)) + 1);
-        switch(eatToSound)
-        {
-            case 1:
-            {
-                Sonido.EAT1.reproducir();
-                break;
-            }
-            case 2:
-            {
-                Sonido.EAT2.reproducir();
-                break;
-            }
-            case 3:
-            {
-                Sonido.EAT3.reproducir();
-                break;
-            }
-            default:
-                Sonido.EAT1.reproducir();
-        }
+        Sonido.soundManager.get("sonidos/eat"+eatToSound+".ogg", Sound.class).play();
         //</editor-fold>    
         
         //Añadir vida al jugador
