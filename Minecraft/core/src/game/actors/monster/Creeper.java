@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
@@ -35,7 +36,7 @@ public class Creeper extends MonsterMob
             8,      //Vida
             20,     //Puntos de ataque
             isBoss, 
-            new Protection(Constant.BattleObject.AX, Constant.Material.DIAMOND), 
+            new Arm(Constant.BattleObject.AX, Constant.Material.DIAMOND), 
             Sonido.CREEPER
         );
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

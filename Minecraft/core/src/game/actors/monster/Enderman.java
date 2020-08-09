@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.utils.Array;
+import game.inventario.Arm;
 import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
@@ -36,7 +37,7 @@ public class Enderman extends MonsterMob
             10,     //Vida
             20,     //Puntos de ataque
             isBoss, 
-            new Protection(Constant.BattleObject.SWORD, Constant.Material.DIAMOND), 
+            new Arm(Constant.BattleObject.SWORD, Constant.Material.DIAMOND), 
             Sonido.ENDERMAN
         );
 
