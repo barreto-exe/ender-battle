@@ -98,8 +98,8 @@ public class Constant
     
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;
-    public static final short ESMERALD_BIT = 4;
-    public static final short FOOD_BIT = 8;
+    public static final short VILLAGER_BIT = 4;
+    public static final short OBJECT_BIT = 8;
     public static final short TREE_BIT = 16;
     public static final short MOB_BIT = 32;
     public static final short PLAYER_FEET_BIT = 64;

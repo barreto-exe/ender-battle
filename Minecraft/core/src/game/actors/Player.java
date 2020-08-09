@@ -330,7 +330,7 @@ public class Player extends Sprite implements Actor
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.PLAYER_BIT;
         fixtureD.filter.maskBits
-                = Constant.GROUND_BIT | Constant.ESMERALD_BIT | Constant.FOOD_BIT | Constant.MOB_BIT
+                = Constant.GROUND_BIT | Constant.VILLAGER_BIT | Constant.OBJECT_BIT | Constant.MOB_BIT
                 | Constant.MOB_SENSOR_BIT | Constant.MOB_TOP_BIT | Constant.TREE_BIT | Constant.ARROW_SENSOR_BIT;
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>

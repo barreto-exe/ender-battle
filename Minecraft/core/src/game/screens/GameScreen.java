@@ -20,6 +20,7 @@ import game.actors.groups.Group;
 import game.actors.pacific.PacificMob;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.monster.Skeleton;
 import game.screens.worlds.BiomeAssemblerClass;
@@ -52,6 +53,7 @@ public class GameScreen extends BaseScreen
     private String color;
     private Group actors;
     private Player player;
+    private Villager villager;
     private Array<PacificMob> pacificMobs;
     private Array<Plant> trees;
     
@@ -131,6 +133,8 @@ public class GameScreen extends BaseScreen
     @Override
     public void show()
     {
+        villager = new Villager(world, getAtlas().findRegion("aldeano"), 5, 2);
+        actors.addActor(villager);
         manager = new BiomeAssemblerClass(this);
         pacificMobs = manager.getPacificMobs();
         trees = manager.getFarming();
@@ -218,7 +222,7 @@ public class GameScreen extends BaseScreen
         gameCam.update();
         renderer.setView(gameCam);
         renderer.render();
-        //debugger.render(world, gameCam.combined);
+        debugger.render(world, gameCam.combined);
         game.getBatch().setProjectionMatrix(gameCam.combined);
         //</editor-fold>
 

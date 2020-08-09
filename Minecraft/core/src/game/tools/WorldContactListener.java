@@ -69,8 +69,8 @@ public class WorldContactListener implements ContactListener
                 }
                 player.canAttack(true);
                 break;
-            case Constant.PLAYER_BIT | Constant.FOOD_BIT:
-                if (a.getFilterData().categoryBits == Constant.FOOD_BIT)
+            case Constant.PLAYER_BIT | Constant.OBJECT_BIT:
+                if (a.getFilterData().categoryBits == Constant.OBJECT_BIT)
                 {
                     player.setObjectCollectible((ObjectCollectible)a.getUserData());
                 }
@@ -123,7 +123,7 @@ public class WorldContactListener implements ContactListener
             case Constant.PLAYER_BIT | Constant.MOB_SENSOR_BIT:
                 player.setEnemy(null);
                 break;
-            case Constant.PLAYER_BIT | Constant.FOOD_BIT:   
+            case Constant.PLAYER_BIT | Constant.OBJECT_BIT:   
                 player.setObjectCollectible(null);
                 break;
             case Constant.PLAYER_BIT | Constant.TREE_BIT:

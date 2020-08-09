@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import game.screens.GameScreen;
 import game.tools.Sonido;
-import static game.tools.Sonido.soundManager;
 
 public abstract class Mob extends Sprite implements Actor
 {

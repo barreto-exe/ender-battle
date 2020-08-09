@@ -47,14 +47,14 @@ public abstract class ObjectCollectible extends Sprite implements Actor
         shape.setAsBox(getHeight() / 2, getHeight() / 2);
         fixtureD.shape = shape;
         fixtureD.isSensor = true;
-        fixtureD.filter.categoryBits = Constant.FOOD_BIT;
+        fixtureD.filter.categoryBits = Constant.OBJECT_BIT;
         fixtureD.filter.maskBits = Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensor">
         fixtureD.isSensor = false;
-        fixtureD.filter.categoryBits = Constant.FOOD_BIT;
+        fixtureD.filter.categoryBits = Constant.OBJECT_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT;
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
