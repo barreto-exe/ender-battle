@@ -130,14 +130,16 @@ public class GameScreen extends BaseScreen
         return ventanaInventario;
     }
 
-    public boolean isPaused() {
+    public boolean isIsPaused()
+    {
         return isPaused;
     }
 
-    public void setIsPaused(boolean isPaused) {
+    public void setIsPaused(boolean isPaused)
+    {
         this.isPaused = isPaused;
     }
-    
+
     //</editor-fold>
     
     @Override
@@ -218,8 +220,6 @@ public class GameScreen extends BaseScreen
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);
         //Limpiar buffer
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        isPaused = player.isInShop();
 
         //Actualizar actores y mundo   
         if (!isPaused)
@@ -258,4 +258,12 @@ public class GameScreen extends BaseScreen
         debugger.dispose();
     }
 
+    /**
+     * Intercambia el estado del juego entre pausado
+     * y despausado.
+     */
+    public void switchPaused()
+    {
+        isPaused ^= true;
+    }
 }

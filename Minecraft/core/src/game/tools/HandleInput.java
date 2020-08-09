@@ -3,6 +3,7 @@ package game.tools;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import game.screens.GameScreen;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,9 +65,21 @@ public class HandleInput extends InputAdapter
                 GameScreen.getVentanaInventario().mostrar();
                 return true;
             }
-            case (Input.Keys.Q):
+            case (Input.Keys.T):
             {
-                controller.setViewingStore(true);
+                if(!screen.getGame().getPlayer().hasVillager())
+                    return true;
+                
+                controller.setRight(false);
+                controller.setLeft(false);
+                
+                GameScreen.getVentanaInventario().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
+                GameScreen.getVentanaInventario().mostrar();
+                return true;
+            }
+            case (Input.Keys.P):
+            {
+                screen.switchPaused();
                 return true;
             }
             default:
@@ -111,11 +124,6 @@ public class HandleInput extends InputAdapter
                 controller.setPickingUp(false); 
                 return true; 
             } 
-            case (Input.Keys.Q):
-            {
-                controller.setViewingStore(false);
-                return true;
-            }
             default:
             {
                 return false;

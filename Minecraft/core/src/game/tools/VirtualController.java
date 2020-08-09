@@ -10,7 +10,6 @@ public class VirtualController
     private boolean up;
     private boolean hitting;
     private boolean pickingUp;
-    private boolean viewingStore;
 
     public boolean isLeft()
     {
@@ -62,11 +61,5 @@ public class VirtualController
         this.pickingUp = pickingUp;
     }
 
-    public boolean isViewingStore() {
-        return viewingStore;
-    }
-
-    public void setViewingStore(boolean viewingStore) {
-        this.viewingStore = viewingStore;
-    }
+    
 }

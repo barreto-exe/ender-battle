@@ -27,6 +27,7 @@ import game.tools.Constant.*;
 import game.tools.HandleInput;
 import static game.tools.Sonido.soundManager;
 import game.tools.VirtualController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -113,11 +114,7 @@ public class Player extends Sprite implements Actor
     {
         return controller;
     }
-
-    public boolean isInShop() {
-        return isInShop;
-    }
-
+    
     public float getLife()
     {
         return life;
@@ -392,12 +389,6 @@ public class Player extends Sprite implements Actor
                 body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             }
             
-            if (controller.isViewingStore() && villager != null)
-            {
-                isInShop = true;
-                /*Acá va la instrucción para entrar en la tienda (mostrar frame en la pantalla).
-                Recuerda que al cerrar el frame debes poner la variable isInShop en falso para renaudar la partida*/
-            }
             else if (controller.isUp() && !isJumping)
             {
                 jump();
@@ -431,6 +422,11 @@ public class Player extends Sprite implements Actor
 
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
+    }
+    
+    public boolean hasVillager()
+    {
+        return villager != null;
     }
 
     /**

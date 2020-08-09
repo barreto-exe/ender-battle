@@ -16,6 +16,12 @@ public class MainGame extends Game
     private SpriteBatch batch;
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    
+    public Player getPlayer()
+    {
+        return player;
+    }
+
     public DBUsuario getUsuario()
     {
         return usuario;
