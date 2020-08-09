@@ -85,7 +85,7 @@ public class Pigman extends MonsterMob
     protected void toDie() {
         if (isBoss)
         {
-            System.out.println("suelta un arma");
+            toDropPrize();
         }
         else
         {
