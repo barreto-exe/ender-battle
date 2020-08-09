@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game.ui;
 
 import game.actors.Player;
+import java.util.HashMap;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
 
 /**
  *
@@ -14,6 +12,9 @@ import game.actors.Player;
 public final class FrmTienda extends javax.swing.JFrame
 {
     Player player;
+    private HashMap<String, JLabel>  vistasPrecios;
+    private HashMap<String, Integer> listaPreciosBase;
+    
     
     /**
      *  Ventana que ofrece la vista de la tienda al jugador.
@@ -26,6 +27,72 @@ public final class FrmTienda extends javax.swing.JFrame
         initComponents();
         setResizable(false);
         this.player = player;
+        
+        vistasPrecios = new HashMap<>();
+        //<editor-fold defaultstate="collapsed" desc="JLabels">
+        vistasPrecios.put("manzana", lblPrecioManzana);
+        vistasPrecios.put("zanahoria", lblPrecioZanahoria);
+        vistasPrecios.put("carne", lblPrecioCarne);
+        vistasPrecios.put("casco", lblPrecioCasco);
+        vistasPrecios.put("pechera", lblPrecioPechera);
+        vistasPrecios.put("pantalones", lblPrecioPantalones);
+        vistasPrecios.put("botas", lblPrecioBotas);
+        vistasPrecios.put("espada", lblPrecioEspada);
+        vistasPrecios.put("hacha", lblPrecioHacha);
+        vistasPrecios.put("pico", lblPrecioPico);
+        vistasPrecios.put("pala", lblPrecioPala);
+        //</editor-fold>
+
+        listaPreciosBase = new HashMap<>();
+        //<editor-fold defaultstate="collapsed" desc="Precios">
+        listaPreciosBase.put("manzana", 5);
+        listaPreciosBase.put("zanahoria", 7);
+        listaPreciosBase.put("carne", 10);
+        listaPreciosBase.put("casco", 10);
+        listaPreciosBase.put("pechera", 15);
+        listaPreciosBase.put("pantalones", 8);
+        listaPreciosBase.put("botas", 6);
+        listaPreciosBase.put("espada", 15);
+        listaPreciosBase.put("hacha", 10);
+        listaPreciosBase.put("pico", 8);
+        listaPreciosBase.put("pala", 6);
+        //</editor-fold>
+        
+        actualizarVista();
+    }
+    
+    private void actualizarVista()
+    {
+        JLabel labelPrecio, imgObjeto;
+        int precio, materialSeleccionado = this.jsMateriales.getValue();
+        
+        //A cada objeto de la tienda
+        for(String objeto : listaPreciosBase.keySet())
+        {
+            labelPrecio = vistasPrecios.get(objeto);                
+            imgObjeto = (JLabel) labelPrecio.getLabelFor();
+            precio = listaPreciosBase.get(objeto);
+                
+
+            //Multiplicar precio si no es comida
+            if(!(objeto.equals("manzana") || objeto.equals("zanahoria") || objeto.equals("carne")))
+            {
+                precio*=materialSeleccionado;
+            }
+            
+            //Actualizar precio de acuerdo al material seleccionado
+            labelPrecio.setText("" + precio);
+            
+            //Habilitar imagen de objeto si tiene suficientes esmeraldas para comprar
+            imgObjeto.setEnabled(player.getInventory().getEsmeraldas() >= precio);
+        }
+    }
+    
+    public void mostrar()
+    {
+        setVisible(true);
+        requestFocus();
+        actualizarVista();
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +107,7 @@ public final class FrmTienda extends javax.swing.JFrame
         imgEspada = new javax.swing.JLabel();
         imgHacha = new javax.swing.JLabel();
         imgPico = new javax.swing.JLabel();
-        imPala = new javax.swing.JLabel();
+        imgPala = new javax.swing.JLabel();
         jsMateriales = new javax.swing.JSlider();
         lblMadera = new javax.swing.JLabel();
         lblOro = new javax.swing.JLabel();
@@ -60,6 +127,7 @@ public final class FrmTienda extends javax.swing.JFrame
         lblPrecioZanahoria = new javax.swing.JLabel();
         lblPrecioCarne = new javax.swing.JLabel();
 
+        setType(java.awt.Window.Type.UTILITY);
         addWindowFocusListener(new java.awt.event.WindowFocusListener()
         {
             public void windowGainedFocus(java.awt.event.WindowEvent evt)
@@ -79,28 +147,28 @@ public final class FrmTienda extends javax.swing.JFrame
         });
 
         imgCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco.png"))); // NOI18N
-        imgCasco.setToolTipText("Click para añadir a la compra");
+        imgCasco.setToolTipText("casco");
 
         imgPechera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pechera.png"))); // NOI18N
-        imgPechera.setToolTipText("Click para añadir a la compra");
+        imgPechera.setToolTipText("pechera");
 
         imgPantalones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pantalones.png"))); // NOI18N
-        imgPantalones.setToolTipText("Click para añadir a la compra");
+        imgPantalones.setToolTipText("pantalones");
 
         imgBotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas.png"))); // NOI18N
-        imgBotas.setToolTipText("Click para añadir a la compra");
+        imgBotas.setToolTipText("botas");
 
         imgEspada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/espada.png"))); // NOI18N
-        imgEspada.setToolTipText("Click para añadir a la compra");
+        imgEspada.setToolTipText("espada");
 
         imgHacha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/hacha.png"))); // NOI18N
-        imgHacha.setToolTipText("Click para añadir a la compra");
+        imgHacha.setToolTipText("hacha");
 
         imgPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pico.png"))); // NOI18N
-        imgPico.setToolTipText("Click para añadir a la compra");
+        imgPico.setToolTipText("pico");
 
-        imPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/shovel.png"))); // NOI18N
-        imPala.setToolTipText("Click para añadir a la compra");
+        imgPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/shovel.png"))); // NOI18N
+        imgPala.setToolTipText("pala");
 
         jsMateriales.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         jsMateriales.setMajorTickSpacing(1);
@@ -112,6 +180,20 @@ public final class FrmTienda extends javax.swing.JFrame
         jsMateriales.setSnapToTicks(true);
         jsMateriales.setValue(1);
         jsMateriales.setFocusable(false);
+        jsMateriales.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                jsMaterialesStateChanged(evt);
+            }
+        });
+        jsMateriales.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                jsMaterialesMouseReleased(evt);
+            }
+        });
 
         lblMadera.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblMadera.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -127,55 +209,66 @@ public final class FrmTienda extends javax.swing.JFrame
 
         lblPrecioBotas.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioBotas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioBotas.setLabelFor(imgBotas);
         lblPrecioBotas.setText("6");
 
         lblPrecioPantalones.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioPantalones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioPantalones.setLabelFor(imgPantalones);
         lblPrecioPantalones.setText("8");
 
         lblPrecioPechera.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioPechera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioPechera.setLabelFor(imgPechera);
         lblPrecioPechera.setText("15");
 
         lblPrecioCasco.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioCasco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioCasco.setLabelFor(imgCasco);
         lblPrecioCasco.setText("10");
 
         lblPrecioHacha.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioHacha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioHacha.setLabelFor(imgHacha);
         lblPrecioHacha.setText("10");
 
         lblPrecioPico.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioPico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioPico.setLabelFor(imgPico);
         lblPrecioPico.setText("8");
 
         lblPrecioPala.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioPala.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioPala.setLabelFor(imgPala);
         lblPrecioPala.setText("6");
 
         lblPrecioEspada.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioEspada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioEspada.setLabelFor(imgEspada);
         lblPrecioEspada.setText("15");
 
         imgManzana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/manzana.png"))); // NOI18N
-        imgManzana.setToolTipText("Click para añadir a la compra");
+        imgManzana.setToolTipText("manzana");
 
         imgZanahoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/zanahoria.png"))); // NOI18N
-        imgZanahoria.setToolTipText("Click para añadir a la compra");
+        imgZanahoria.setToolTipText("zanahoria");
 
         imgCarne.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/comida/ganado_carne.png"))); // NOI18N
-        imgCarne.setToolTipText("Click para añadir a la compra");
+        imgCarne.setToolTipText("carne");
 
         lblPrecioManzana.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioManzana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioManzana.setLabelFor(imgManzana);
         lblPrecioManzana.setText("5");
 
         lblPrecioZanahoria.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioZanahoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioZanahoria.setLabelFor(imgZanahoria);
         lblPrecioZanahoria.setText("7");
 
         lblPrecioCarne.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         lblPrecioCarne.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioCarne.setLabelFor(imgCarne);
         lblPrecioCarne.setText("10");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,7 +293,7 @@ public final class FrmTienda extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(imgCarne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblPrecioCarne, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(57, 57, 57))
+                        .addGap(65, 65, 65))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -229,7 +322,7 @@ public final class FrmTienda extends javax.swing.JFrame
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(imPala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(imgPala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblPrecioPala, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +367,7 @@ public final class FrmTienda extends javax.swing.JFrame
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(imPala)
+                                        .addComponent(imgPala)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblPrecioPala))
                                     .addGroup(layout.createSequentialGroup()
@@ -330,14 +423,23 @@ public final class FrmTienda extends javax.swing.JFrame
         this.setVisible(false);
     }//GEN-LAST:event_formWindowLostFocus
 
+    private void jsMaterialesStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jsMaterialesStateChanged
+    {//GEN-HEADEREND:event_jsMaterialesStateChanged
+        actualizarVista();
+    }//GEN-LAST:event_jsMaterialesStateChanged
+
+    private void jsMaterialesMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jsMaterialesMouseReleased
+    {//GEN-HEADEREND:event_jsMaterialesMouseReleased
+    }//GEN-LAST:event_jsMaterialesMouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel imPala;
     private javax.swing.JLabel imgBotas;
     private javax.swing.JLabel imgCarne;
     private javax.swing.JLabel imgCasco;
     private javax.swing.JLabel imgEspada;
     private javax.swing.JLabel imgHacha;
     private javax.swing.JLabel imgManzana;
+    private javax.swing.JLabel imgPala;
     private javax.swing.JLabel imgPantalones;
     private javax.swing.JLabel imgPechera;
     private javax.swing.JLabel imgPico;

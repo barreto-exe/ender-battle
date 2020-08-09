@@ -24,9 +24,8 @@ import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.monster.Skeleton;
 import game.screens.worlds.BiomeAssemblerClass;
-import game.tools.Constant;
-import game.tools.WorldContactListener;
-import game.ui.FrmInventario;
+import game.tools.*;
+import game.ui.*;
 
 /**
  *
@@ -66,7 +65,9 @@ public class GameScreen extends BaseScreen
     Sprite corazonMitad;         
     //</editor-fold>
 
-    private static FrmInventario ventanaInventario;
+    private static FrmInventario ventanaInventario;    
+    private static FrmTienda ventanaTienda;
+
 
     /**
      * Es la pantalla del juego principal.
@@ -83,6 +84,7 @@ public class GameScreen extends BaseScreen
         isPaused = false;
         actors = new Group();
         ventanaInventario = new FrmInventario(player);
+        ventanaTienda = new FrmTienda(player);
 
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
@@ -130,6 +132,12 @@ public class GameScreen extends BaseScreen
         return ventanaInventario;
     }
 
+    public static FrmTienda getVentanaTienda()
+    {
+        return ventanaTienda;
+    }
+
+    
     public boolean isIsPaused()
     {
         return isPaused;

@@ -73,8 +73,8 @@ public class HandleInput extends InputAdapter
                 controller.setRight(false);
                 controller.setLeft(false);
                 
-                GameScreen.getVentanaInventario().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
-                GameScreen.getVentanaInventario().mostrar();
+                GameScreen.getVentanaTienda().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
+                GameScreen.getVentanaTienda().mostrar();
                 return true;
             }
             case (Input.Keys.P):
