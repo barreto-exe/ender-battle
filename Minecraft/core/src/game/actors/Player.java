@@ -46,7 +46,11 @@ public class Player extends Sprite implements Actor
     private State currentState;
     private boolean isJumping;
     private boolean isHitting;
+    
+    //Atributos de interacciones en el bioma
     private boolean setToAttack;
+    private boolean isInShop;
+    private Villager villager;
     private Mob enemy;
     private ObjectCollectible objectCollectible;
     private Plant plant;
@@ -110,14 +114,23 @@ public class Player extends Sprite implements Actor
         return controller;
     }
 
+    public boolean isInShop() {
+        return isInShop;
+    }
+
     public float getLife()
     {
         return life;
     }
 
-    public void setLife(float life)
+    public Mob getEnemy()
     {
-        this.life = life;
+        return enemy;
+    }
+
+    public int getDirection()
+    {
+        return direction;
     }
 
     public void addLife(float lifeAdded)
@@ -226,7 +239,6 @@ public class Player extends Sprite implements Actor
                     break;
             }
         }
-
         return frame;
     }
 
@@ -238,11 +250,6 @@ public class Player extends Sprite implements Actor
     public void canAttack(boolean canAttack)
     {
         this.setToAttack = canAttack;
-    }
-
-    public Mob getEnemy()
-    {
-        return enemy;
     }
 
     public void setEnemy(Mob enemy)
@@ -260,9 +267,13 @@ public class Player extends Sprite implements Actor
         this.plant = plant;
     }
 
-    public int getDirection()
+    public void setVillager(Villager villager) {
+        this.villager = villager;
+    }
+
+    public void setLife(float life)
     {
-        return direction;
+        this.life = life;
     }
     //</editor-fold>
 
@@ -351,13 +362,14 @@ public class Player extends Sprite implements Actor
         Gdx.input.setInputProcessor(processor);
         //</editor-fold>
 
-        isJumping = isHitting = setToAttack = false;
+        isJumping = isHitting = setToAttack = isInShop = false;
         previousState = State.WALKING_RIGHT;
         condition = PlayerCondition.NORMAL;
         deltaFrame = 0;
         enemy = null;
         objectCollectible = null;
         plant = null;
+        villager = null;
     }
 
     @Override
@@ -365,48 +377,56 @@ public class Player extends Sprite implements Actor
     {
         affectCondition(delta);
 
-        //System.out.println("Life: " + life + " || " + condition.toString());
         if (life <= 0)
         {
             life = 0;
             System.out.println("El Jugador ha muerto");
         }
 
-        currentState = getState();
+        if (!isInShop)
+        {
+            currentState = getState();
 
-        if (currentState == State.FALLING || currentState == State.JUMPING)
-        {
-            body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
-        }
-
-        if (controller.isUp() && !isJumping)
-        {
-            jump();
-        }
-        else if (controller.isRight())
-        {
-            direction = 1;
-            walk(1);
-        }
-        else if (controller.isLeft())
-        {
-            direction = -1;
-            walk(-1);
-        }
-        else if (controller.isPickingUp() && (objectCollectible != null))
-        {
-            toPickUp();
-        }
-        else
-        {
-            if (body.getLinearVelocity().x < 0)
+            if (currentState == State.FALLING || currentState == State.JUMPING)
             {
-                body.applyForceToCenter(8, 0, true);
+                body.applyForceToCenter(0, Constant.IMPULSE_JUMP * -0.75f, true);
             }
-            else if (body.getLinearVelocity().x > 0)
+            
+            if (controller.isViewingStore() && villager != null)
             {
-                body.applyForceToCenter(-8, 0, true);
+                isInShop = true;
+                /*Acá va la instrucción para entrar en la tienda (mostrar frame en la pantalla).
+                Recuerda que al cerrar el frame debes poner la variable isInShop en falso para renaudar la partida*/
             }
+            else if (controller.isUp() && !isJumping)
+            {
+                jump();
+            }
+            else if (controller.isRight())
+            {
+                direction = 1;
+                walk(1);
+            }
+            else if (controller.isLeft())
+            {
+                direction = -1;
+                walk(-1);
+            }
+            else if (controller.isPickingUp() && (objectCollectible != null))
+            {
+                toPickUp();
+            }
+            else
+            {
+                if (body.getLinearVelocity().x < 0)
+                {
+                    body.applyForceToCenter(8, 0, true);
+                }
+                else if (body.getLinearVelocity().x > 0)
+                {
+                    body.applyForceToCenter(-8, 0, true);
+                }
+            }    
         }
 
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);

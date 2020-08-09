@@ -44,6 +44,7 @@ public class GameScreen extends BaseScreen
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private BiomeAssemblerClass manager;
+    private boolean isPaused;
 
     //Atributos de Box2d
     private Box2DDebugRenderer debugger;
@@ -79,6 +80,7 @@ public class GameScreen extends BaseScreen
     {
         super(game);
         this.player = player;
+        isPaused = false;
         actors = new Group();
         ventanaInventario = new FrmInventario(player);
 
@@ -128,6 +130,14 @@ public class GameScreen extends BaseScreen
         return ventanaInventario;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setIsPaused(boolean isPaused) {
+        this.isPaused = isPaused;
+    }
+    
     //</editor-fold>
     
     @Override
@@ -208,10 +218,15 @@ public class GameScreen extends BaseScreen
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);
         //Limpiar buffer
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        isPaused = player.isInShop();
 
-        //Actualizar actores y mundo        
-        actors.act(delta);
-        world.step(delta, 6, 2);
+        //Actualizar actores y mundo   
+        if (!isPaused)
+        {
+            actors.act(delta);
+            world.step(delta, 6, 2);   
+        }
 
         //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
         if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)

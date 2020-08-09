@@ -9,6 +9,7 @@ import game.actors.Mob;
 import game.actors.monster.MonsterMob;
 import game.actors.monster.Skeleton;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import game.actors.Villager;
 import game.actors.collectibles.ObjectCollectible;
 import game.actors.farming.plants.Plant;
 
@@ -106,6 +107,17 @@ public class WorldContactListener implements ContactListener
                     skeleton.specialAttack(player);
                 }
                 break;
+            case Constant.PLAYER_BIT | Constant.VILLAGER_BIT:
+                System.out.println("toca aldeano");
+                if (a.getFilterData().categoryBits == Constant.VILLAGER_BIT)
+                {
+                    player.setVillager((Villager)a.getUserData());
+                }
+                else 
+                {
+                    player.setVillager((Villager)b.getUserData());
+                }
+                break;
                 
         }
     }
@@ -128,6 +140,10 @@ public class WorldContactListener implements ContactListener
                 break;
             case Constant.PLAYER_BIT | Constant.TREE_BIT:
                 player.setPlant(null);
+                break;
+            case Constant.PLAYER_BIT | Constant.VILLAGER_BIT:
+                System.out.println("deja de tocar");
+                player.setVillager(null);
                 break;
         }
     }

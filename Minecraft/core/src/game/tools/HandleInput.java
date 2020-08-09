@@ -64,6 +64,11 @@ public class HandleInput extends InputAdapter
                 GameScreen.getVentanaInventario().mostrar();
                 return true;
             }
+            case (Input.Keys.Q):
+            {
+                controller.setViewingStore(true);
+                return true;
+            }
             default:
             {
                 return false;
@@ -106,6 +111,11 @@ public class HandleInput extends InputAdapter
                 controller.setPickingUp(false); 
                 return true; 
             } 
+            case (Input.Keys.Q):
+            {
+                controller.setViewingStore(false);
+                return true;
+            }
             default:
             {
                 return false;
