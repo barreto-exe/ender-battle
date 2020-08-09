@@ -171,7 +171,6 @@ public class Inventory
             array.removeValue(item, true);
             return true;
         }
-        System.out.println("item no encontrado");
         return false;
     }
     //</editor-fold>
@@ -207,6 +206,28 @@ public class Inventory
         return false;
     }
     //</editor-fold>
+    
+    public BattleObject findBestBattleObject(Constant.BattleObject object)
+    {
+        Array<BattleObject> array = getArray(object);
+        
+        if (array.isEmpty())
+        {
+            return null;
+        }
+        
+        BattleObject mayor = array.first();
+        
+        for (BattleObject o : array)
+        {
+            if (mayor.getFactorObject() > o.getFactorObject())
+            {
+                mayor = o;
+            }
+        }
+        
+        return mayor;
+    }
 
     private BattleObject findBattleObject(Array<BattleObject> array, Constant.Material material)
     {
