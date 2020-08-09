@@ -9,6 +9,7 @@ import game.tools.Constant;
 import static game.tools.Sonido.soundManager;
 import java.util.HashMap;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 
 /**
@@ -561,7 +562,7 @@ public final class FrmTienda extends javax.swing.JFrame
             }
             //</editor-fold>
             
-            Constant.BattleObject type;
+            Constant.BattleObject type = null;
             BattleObject object = null;
             switch(objeto)
             {
@@ -602,6 +603,12 @@ public final class FrmTienda extends javax.swing.JFrame
                     object = new Arm(type,material);
                     break;
                 //</editor-fold>
+            }
+            
+            if(player.getInventory().findBattleObject(type, material) != null)
+            {
+                JOptionPane.showMessageDialog(null, "Ya tienes esto objeto");
+                return;
             }
             
             player.getInventory().addBattleObject(object);

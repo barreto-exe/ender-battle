@@ -230,7 +230,7 @@ public class Inventory
         return mayor;
     }
 
-    private BattleObject findBattleObject(Constant.BattleObject object, Constant.Material material)
+    public BattleObject findBattleObject(Constant.BattleObject object, Constant.Material material)
     {
         Array<BattleObject> array = getArray(object);
         

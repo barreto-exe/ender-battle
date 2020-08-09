@@ -22,6 +22,7 @@ public class Material
      */
     public Material(Constant.Material material)
     {
+        this.material = material;
         setFactor(material);
     }
 
