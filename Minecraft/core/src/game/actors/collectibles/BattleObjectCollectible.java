@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import game.inventario.Arm;
+import game.inventario.BattleObject;
+import game.inventario.Protection;
 import game.tools.Constant;
 
 /**
@@ -16,22 +19,35 @@ public class BattleObjectCollectible extends ObjectCollectible
     private TextureAtlas atlas;
     
     //Atributos de información del arma
-    private Constant.BattleObject object;
-    private Constant.Material material;
+    private BattleObject object;
     //</editor-fold>
 
     public BattleObjectCollectible(Constant.BattleObject object, Constant.Material material, TextureAtlas atlas, World world, Vector2 posicion)
     {
         super(world, posicion);
-        this.object = object;
-        this.material = material;
         this.atlas = atlas;
+        
+        switch (object)
+        {
+            case SWORD:
+            case AX:
+            case PICK:
+            case SHOVEL:
+                this.object = new Arm(object, material);
+                break;
+            case BOOTS:
+            case LEGGING:
+            case HELMET:
+            case SHIRTFRONT:
+                this.object = new Protection(object, material);
+                break;
+        }
         
         setFrame(object);
         setColor(material);
     }
 
-    public Constant.BattleObject getObject()
+    public BattleObject getObject()
     {
         return object;
     }

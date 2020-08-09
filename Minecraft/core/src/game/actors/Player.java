@@ -19,12 +19,12 @@ import game.inventario.Inventory;
 import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 import com.badlogic.gdx.graphics.Color;
+import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
-import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
 import game.tools.VirtualController;
 
@@ -395,10 +395,7 @@ public class Player extends Sprite implements Actor
         }
         else if (controller.isPickingUp() && (objectCollectible != null))
         {
-            if ((objectCollectible instanceof FoodCollectible) || (objectCollectible instanceof EsmeraldCollective))
-            {
-                toPickUp();
-            }
+            toPickUp();
         }
         else
         {
@@ -599,6 +596,10 @@ public class Player extends Sprite implements Actor
         {
             soundManager.get("sonidos/esmeralda.ogg", Sound.class).play();
             inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
+        }
+        else if (objectCollectible instanceof BattleObjectCollectible)
+        {
+            inventory.addBattleObject(((BattleObjectCollectible) objectCollectible).getObject());
         }
 
         //liberar objectCollectible
