@@ -53,14 +53,7 @@ public abstract class BattleObject
 
     private boolean setObject(Constant.BattleObjectEnum object)
     {
-        if (setBattleObject(object))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return setBattleObject(object);
     }
 
     public void setIsPorted(boolean isPorted)
@@ -68,6 +61,16 @@ public abstract class BattleObject
         this.isPorted = isPorted;
     }
 
+    public boolean isPorted()
+    {
+        return isPorted;
+    }
+
     protected abstract void setFactorObject();
 
+    @Override
+    public String toString()
+    {
+        return this.object.toString() + " de " + this.material.getMaterial().toString();
+    }
 }

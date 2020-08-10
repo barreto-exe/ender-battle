@@ -21,7 +21,17 @@ public class Cow extends PacificMob
 {
     public Cow(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("vaca"), 7, x, y, 528 / 4, 80, "cow");
+        super
+        (
+            screen, 
+            (TextureRegion) screen.getAtlas().findRegion("vaca"), 
+            35, 
+            x, 
+            y, 
+            528 / 4, 
+            80, 
+            "cow"
+        );
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
 
         speed = 1.2f;

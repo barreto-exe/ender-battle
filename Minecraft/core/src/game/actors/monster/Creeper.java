@@ -32,8 +32,8 @@ public class Creeper extends MonsterMob
             55,     //Ancho
             128,    //Alto
             1.5f,   //Velocidad
-            8,      //Vida
-            20,     //Puntos de ataque
+            50,      //Vida
+            40,     //Puntos de ataque
             isBoss, 
             new Arm(Constant.BattleObjectEnum.AX, Constant.Material.DIAMOND), 
             "creeper"

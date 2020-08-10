@@ -112,6 +112,28 @@ public class Constant
             }
             return null;
         }
+        
+        public static int getIntByEnum(BattleObjectEnum battleObject)
+        {
+            switch (battleObject)
+            {
+                case SWORD:
+                case AX:
+                case PICK:
+                case SHOVEL:
+                    return 0;
+                case HELMET:
+                    return 1;
+                case SHIRTFRONT:
+                    return 2;
+                case LEGGING:
+                    return 3;
+                case BOOTS:
+                    return 4;
+            }
+            
+            return -1;
+        }
     }
     
     public enum Material

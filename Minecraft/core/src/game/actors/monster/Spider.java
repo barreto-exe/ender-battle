@@ -29,8 +29,8 @@ public class Spider extends MonsterMob
             60,     //Ancho
             40,     //Alto
             1.1f,   //velocidad
-            8,      //Vida
-            10,     //Puntos de ataque
+            50,      //Vida
+            30,     //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObjectEnum.SHIRTFRONT, Constant.Material.DIAMOND), 
             "spider"

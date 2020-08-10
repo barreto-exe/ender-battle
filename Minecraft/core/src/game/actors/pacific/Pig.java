@@ -18,7 +18,16 @@ public class Pig extends PacificMob
 
     public Pig(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("cerdo"), 7, x, y, 384 / 4, 64, "pig");
+        super
+        (
+            screen, (TextureRegion) screen.getAtlas().findRegion("cerdo"),
+            35, 
+            x, 
+            y, 
+            384 / 4, 
+            64,
+            "pig"
+        );
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
 
         speed = 1.2f;

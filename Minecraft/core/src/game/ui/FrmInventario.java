@@ -13,6 +13,7 @@ import static game.tools.Sonido.soundManager;
 import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JLabel;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -282,45 +283,49 @@ public final class FrmInventario extends javax.swing.JFrame
 
         btnUsarCasco.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnUsarCasco.setText("Usar");
+        btnUsarCasco.setToolTipText("casco");
         btnUsarCasco.setFocusable(false);
         btnUsarCasco.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnUsarProteccionClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btnUsarPechera.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnUsarPechera.setText("Usar");
+        btnUsarPechera.setToolTipText("pechera");
         btnUsarPechera.setFocusable(false);
         btnUsarPechera.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnUsarProteccionClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btnUsarPantalones.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnUsarPantalones.setText("Usar");
+        btnUsarPantalones.setToolTipText("pantalones");
         btnUsarPantalones.setFocusable(false);
         btnUsarPantalones.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnUsarProteccionClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btnUsarBotas.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         btnUsarBotas.setText("Usar");
+        btnUsarBotas.setToolTipText("botas");
         btnUsarBotas.setFocusable(false);
         btnUsarBotas.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnUsarProteccionClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
@@ -335,48 +340,52 @@ public final class FrmInventario extends javax.swing.JFrame
         btngArmas.add(rbEspada);
         rbEspada.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         rbEspada.setText("Espada");
+        rbEspada.setToolTipText("espada");
         rbEspada.setFocusable(false);
         rbEspada.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                rbArmaClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btngArmas.add(rbHacha);
         rbHacha.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         rbHacha.setText("Hacha");
+        rbHacha.setToolTipText("hacha");
         rbHacha.setFocusable(false);
         rbHacha.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                rbArmaClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btngArmas.add(rbPico);
         rbPico.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         rbPico.setText("Pico");
+        rbPico.setToolTipText("pico");
         rbPico.setFocusable(false);
         rbPico.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                rbArmaClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
         btngArmas.add(rbPala);
         rbPala.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         rbPala.setText("Pala");
+        rbPala.setToolTipText("pala");
         rbPala.setFocusable(false);
         rbPala.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                rbArmaClicked(evt);
+                portarArmaClicked(evt);
             }
         });
 
@@ -598,15 +607,26 @@ public final class FrmInventario extends javax.swing.JFrame
         this.setVisible(false);
     }//GEN-LAST:event_formWindowLostFocus
 
-    private void btnUsarProteccionClicked(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnUsarProteccionClicked
-    {//GEN-HEADEREND:event_btnUsarProteccionClicked
+    private void portarArmaClicked(java.awt.event.ActionEvent evt)//GEN-FIRST:event_portarArmaClicked
+    {//GEN-HEADEREND:event_portarArmaClicked
+        String objeto  = ((JToggleButton)evt.getSource()).getToolTipText();
+        boolean portar = ((JToggleButton)evt.getSource()).isSelected();
         
-    }//GEN-LAST:event_btnUsarProteccionClicked
-
-    private void rbArmaClicked(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rbArmaClicked
-    {//GEN-HEADEREND:event_rbArmaClicked
+        Constant.BattleObjectEnum typeObject = Constant.BattleObjectEnum.getEnumByDesc(objeto);
         
-    }//GEN-LAST:event_rbArmaClicked
+        //Obtener el mejor objeto de ese tipo en el inventario
+        BattleObject bestBattleObject = player.getInventory().findBestBattleObject(typeObject);
+        
+        if(portar)
+        {
+            player.portarObjeto(bestBattleObject);
+        }
+        else
+        {
+            player.desportarObjeto(typeObject);
+        }
+        
+    }//GEN-LAST:event_portarArmaClicked
 
     /**
      * Muestra la ventana del inventario.
@@ -665,11 +685,16 @@ public final class FrmInventario extends javax.swing.JFrame
                     )
                 );
                 
-                //Deshabilitar componentes para ese objeto
+                //Habilitar componentes para ese objeto
                 for(Component component : vistasObjetosBatalla.get(objeto))
                 {
                     component.setEnabled(true);
                 }
+                
+                //Colocar el boton como seleccionado si el jugador 
+                //está portando el objeto
+                ((JToggleButton)vistasObjetosBatalla.get(objeto)[1])
+                .setSelected(bestBattleObject.isPorted());
             }
             else
             {

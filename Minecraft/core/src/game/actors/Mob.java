@@ -76,6 +76,7 @@ public abstract class Mob extends Sprite implements Actor
     public void toRecibeAttack(Player player, float hit)
     {
         life -= hit;
+        System.out.println("Vida: " + life);
         
         if(contadorSonidos == 0)
         {

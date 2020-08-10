@@ -33,8 +33,8 @@ public class Enderman extends MonsterMob
             81,     //Ancho
             192,    //Alto
             1,      //Velocidad
-            10,     //Vida
-            20,     //Puntos de ataque
+            75,     //Vida
+            40,     //Puntos de ataque
             isBoss, 
             new Arm(Constant.BattleObjectEnum.SWORD, Constant.Material.DIAMOND), 
             "enderman"

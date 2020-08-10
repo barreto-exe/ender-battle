@@ -29,8 +29,8 @@ public class Pigman extends MonsterMob
             64,     //Ancho
             128,    //Alto
             0.8f,   //Velocidad
-            8,      //Vida
-            10,     //Puntos de ataque
+            50,      //Vida
+            30,     //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObjectEnum.HELMET, Constant.Material.DIAMOND), 
             "pigman"

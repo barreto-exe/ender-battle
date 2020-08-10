@@ -276,7 +276,7 @@ public class Player extends Sprite implements Actor
     private int getTotalProtection()
     {
         int total = 0;
-        for(int i=0; i<4; i++)
+        for(int i=1; i<5; i++)
         {
             if(portedObjects[i] != null)
                 total += ((Protection)portedObjects[i]).getFactorObject();
@@ -493,44 +493,40 @@ public class Player extends Sprite implements Actor
     }
 
     /**
-     * Indica si un objeto es portado por el jugador.
+     * Portar un objeto en el inventario activo.
      * @param object el objeto que se portará.
      */
     public void portarObjeto(BattleObject object)
     {
-        int index = 0;
-
-        switch (object.getObject())
-        {
-            case SWORD:
-            case AX:
-            case PICK:
-            case SHOVEL:
-                index = 0;
-                break;
-            case HELMET:
-                index = 1;
-                break;
-            case SHIRTFRONT:
-                index = 2;
-                break;
-            case LEGGING:
-                index = 3;
-                break;
-            case BOOTS:
-                index = 4;
-                break;
-        }
+        //Obtener posición correspondiente del objeto
+        int index = BattleObjectEnum.getIntByEnum(object.getObject());
 
         if (portedObjects[index] != null)
         {
             portedObjects[index].setIsPorted(false);
+            System.out.println("Desportado: " + portedObjects[index].toString());
         }
 
         object.setIsPorted(true);
         portedObjects[index] = object;
+        System.out.println("Portado: " + object.toString());
     }
 
+    /**
+     * Indicar que un objeto debe ser desportado.
+     * @param type es el tipo de objeto a desportar.
+     */
+    public void desportarObjeto(Constant.BattleObjectEnum type)
+    {
+        int index = BattleObjectEnum.getIntByEnum(type);
+        
+        if (portedObjects[index] != null)
+        {
+            portedObjects[index].setIsPorted(false);
+            System.out.println("Desportado: " + portedObjects[index].toString());
+        }
+    }
+    
     /**
      * Calcula el daño que hace el jugador de acuerdo al arma que porta.
      * @return cantidad de daño que hace.
@@ -543,9 +539,10 @@ public class Player extends Sprite implements Actor
         }
         else
         {
-            return 1;
+            return 10;
         }
     }
+    
 
     /**
      * Hiere a un mob.

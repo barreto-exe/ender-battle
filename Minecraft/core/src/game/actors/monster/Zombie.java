@@ -28,8 +28,8 @@ public class Zombie extends MonsterMob
             128, //Ancho
             128, //Alto
             1,   //velocidad
-            8,   //Vida
-            10,  //Puntos de ataque
+            50,   //Vida
+            30,  //Puntos de ataque
             isBoss, 
             new Protection(Constant.BattleObjectEnum.BOOTS, Constant.Material.DIAMOND), 
             "zombie"

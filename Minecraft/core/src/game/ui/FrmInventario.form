@@ -540,10 +540,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Usar"/>
+        <Property name="toolTipText" type="java.lang.String" value="casco"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsarProteccionClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnUsarPechera">
@@ -552,10 +553,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Usar"/>
+        <Property name="toolTipText" type="java.lang.String" value="pechera"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsarProteccionClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnUsarPantalones">
@@ -564,10 +566,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Usar"/>
+        <Property name="toolTipText" type="java.lang.String" value="pantalones"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsarProteccionClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="btnUsarBotas">
@@ -576,10 +579,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Usar"/>
+        <Property name="toolTipText" type="java.lang.String" value="botas"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsarProteccionClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="imgEspada">
@@ -619,10 +623,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Espada"/>
+        <Property name="toolTipText" type="java.lang.String" value="espada"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbArmaClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbHacha">
@@ -634,10 +639,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Hacha"/>
+        <Property name="toolTipText" type="java.lang.String" value="hacha"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbArmaClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbPico">
@@ -649,10 +655,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Pico"/>
+        <Property name="toolTipText" type="java.lang.String" value="pico"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbArmaClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbPala">
@@ -664,10 +671,11 @@
           <Font name="Consolas" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Pala"/>
+        <Property name="toolTipText" type="java.lang.String" value="pala"/>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbArmaClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="portarArmaClicked"/>
       </Events>
     </Component>
   </SubComponents>

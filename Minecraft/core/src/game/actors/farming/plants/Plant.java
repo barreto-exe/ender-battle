@@ -54,7 +54,7 @@ public abstract class Plant extends Sprite implements Actor
         atlasFruit = screen.getAtlas();
         actors = screen.getActors();
         isEmpty = setToCrop = false;
-        life = 8;
+        life = 75;
         this.type = type;
     }
 

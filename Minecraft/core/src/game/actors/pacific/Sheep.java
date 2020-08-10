@@ -16,7 +16,17 @@ public class Sheep extends PacificMob
 {
     public Sheep(GameScreen screen, float x, float y)
     {
-        super(screen, (TextureRegion) screen.getAtlas().findRegion("oveja"), 7, x, y, 267 / 3, 64, "sheep");
+        super
+        (
+            screen, 
+            (TextureRegion) screen.getAtlas().findRegion("oveja"),
+            35,
+            x,
+            y, 
+            267 / 3, 
+            64, 
+            "sheep"
+        );
         textureMeat = screen.getAtlas().findRegion("ganado_carne");
 
         speed = 1.2f;
