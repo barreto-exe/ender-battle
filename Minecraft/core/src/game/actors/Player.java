@@ -19,6 +19,7 @@ import game.inventario.Inventory;
 import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 import com.badlogic.gdx.graphics.Color;
+import comunicacion.ProgresoJugador;
 import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
@@ -70,6 +71,7 @@ public class Player extends Sprite implements Actor
     private PlayerCondition condition;
     float timeCondition = 0;
     private int direction;
+    private ProgresoJugador progreso;
 
     //Atributos de Inventario
     private Inventory inventory;
@@ -294,6 +296,7 @@ public class Player extends Sprite implements Actor
     {
         setRegion(screen.getAtlas().findRegion(color + "_caminar"));
         world = screen.getWorld();
+        progreso = screen.getGame().getProgreso();
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Animación "Caminar"">
         TextureRegion spriteSheet = screen.getAtlas().findRegion(color + "_caminar");
@@ -625,22 +628,26 @@ public class Player extends Sprite implements Actor
     {
         objectCollectible.setIsCollected(true);
         
-        if (objectCollectible instanceof FoodCollectible)
-        {
-            soundManager.get("sonidos/pick.ogg", Sound.class).play();
-            inventory.addFood(((FoodCollectible) objectCollectible).getType());
-        }
-        else if (objectCollectible instanceof EsmeraldCollective)
+        if (objectCollectible instanceof EsmeraldCollective)
         {
             soundManager.get("sonidos/esmeralda.ogg", Sound.class).play();
             inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
+            progreso.setEsmeraldasRecogidas(progreso.getEsmeraldasRecogidas()+1);
         }
-        else if (objectCollectible instanceof BattleObjectCollectible)
+        else
         {
-            inventory.addBattleObject(((BattleObjectCollectible) objectCollectible).getObject());
+            soundManager.get("sonidos/pick.ogg", Sound.class).play();
+            progreso.setObjetosRecogidos(progreso.getObjetosRecogidos()+1);
+            
+            if (objectCollectible instanceof FoodCollectible)
+            {
+                inventory.addFood(((FoodCollectible) objectCollectible).getType());
+            }
+            else if (objectCollectible instanceof BattleObjectCollectible)
+            {
+                inventory.addBattleObject(((BattleObjectCollectible) objectCollectible).getObject());
+            }
         }
-
-        //liberar objectCollectible
     }
 
     /**

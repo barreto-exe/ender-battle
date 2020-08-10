@@ -13,6 +13,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import comunicacion.ProgresoJugador;
+import game.actors.monster.MonsterMob;
+import game.actors.pacific.PacificMob;
 import game.screens.GameScreen;
 import game.tools.Sonido;
 
@@ -38,12 +41,16 @@ public abstract class Mob extends Sprite implements Actor
     protected float speed;
     private final String sonido;
     private int contadorSonidos;
+    
+    //Propiedades del juego
+    private ProgresoJugador progreso;
     //</editor-fold>
 
     public Mob(GameScreen screen, TextureRegion region, float life, String sonido)
     {
         super(region);
         world = screen.getWorld();
+        progreso = screen.getGame().getProgreso();
         
         textureEsmereald = screen.getAtlas().findRegion("esmeralda");
         actors = screen.getActors();
@@ -117,12 +124,30 @@ public abstract class Mob extends Sprite implements Actor
         }).start();
 
         //Saltar por el golpe
-        //body.applyLinearImpulse(0, 8f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        body.applyLinearImpulse(0, 3, body.getWorldCenter().x, body.getWorldCenter().y, true);
 
         if (life <= 0)
         {
             life = 0;
             setToDie = true;
+            
+            //Contar las muertes en el progreso
+            if(this instanceof PacificMob)
+            {
+                progreso.setAnimalesMatados(progreso.getAnimalesMatados()+1);
+            }
+            else if(this instanceof MonsterMob)
+            {
+                MonsterMob monster = (MonsterMob) this;
+                if(monster.isIsBoss())
+                {
+                    progreso.setJefesMatados(progreso.getJefesMatados()+1);
+                }
+                else
+                {
+                    progreso.setMonstruosMatados(progreso.getMonstruosMatados()+1);
+                }
+            }
         }
     }
     

@@ -1,7 +1,6 @@
 package servidor;
 
 import basedatos.DBPartida;
-import basedatos.DBUsuario;
 import comunicacion.PaqueteOperacion;
 import comunicacion.PaqueteOperacion.Operacion;
 import static comunicacion.PaqueteOperacion.Operacion.*;
@@ -59,7 +58,7 @@ public class HiloPartidas implements Runnable
                 if(operacion == REPORTE_PROGRESO)
                 {
                     final ProgresoJugador progresoEntrada = (ProgresoJugador) paquete.getInformacion();
-                    ventanaServer.appendVentanaPartidas("Jugador: " + progresoEntrada.getIdJugador());
+                    ventanaServer.appendVentanaPartidas("Jugador: " + progresoEntrada.getIdJugador() + "\n\n");
                     
                     //Registrar el progreso reportado por el jugador
                     DBPartida.registarProgreso(progresoEntrada);

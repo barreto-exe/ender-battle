@@ -49,7 +49,7 @@ public class FrmJugadores extends javax.swing.JFrame
         jtJugadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {"Barreto", "Azul", "2", "40"}
+
             },
             new String []
             {

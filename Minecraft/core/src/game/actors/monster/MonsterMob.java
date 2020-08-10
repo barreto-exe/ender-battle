@@ -90,6 +90,12 @@ public abstract class MonsterMob extends Mob
         body.createFixture(fixtureD).setUserData(this);
         //</editor-fold>
     }
+
+    public boolean isIsBoss()
+    {
+        return isBoss;
+    }
+    
     
     /**
      * Atacar a un jugador.

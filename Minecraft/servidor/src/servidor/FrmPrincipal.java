@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
-import java.util.ArrayList;
 import basedatos.*;
 import basedatos.DBPartida.*;
 import static basedatos.DBPartida.obtenerEstadoPartida;
