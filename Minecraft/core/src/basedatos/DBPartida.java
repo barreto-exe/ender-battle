@@ -1,6 +1,7 @@
 package basedatos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *Es una partida que un jugador puede hostear o a la que se puede unir.
@@ -306,6 +307,92 @@ public class DBPartida implements Serializable
             }
         }
         return EstadoPartida.TERMINADA;
+    }
+    
+    public static ArrayList<DBUsuario> usuariosPartida(int idPartida)
+    {
+        ArrayList<DBUsuario> usuarios = new ArrayList<DBUsuario>();
+        String query = 
+                "SELECT id_jugador as id, ( SELECT u.usuario FROM m_usuarios u WHERE u.id = id_jugador ) AS usuario, personajeSeleccionado, ip \n" +
+                "FROM m_partidas_jugadores WHERE id_partida = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        while(resultado.leer())
+        {
+            usuarios.add(new DBUsuario(
+                    (String) resultado.getValor("usuario"), 
+                    (String) resultado.getValor("ip"),
+                    (int) resultado.getValor("id"),
+                    (int) resultado.getValor("personajeSeleccionado")
+            ));
+        }
+        
+        return usuarios;
+    }
+    
+    public static int cantidadUsuariosPartida(int idPartida)
+    {
+        String query = 
+                "SELECT COUNT(*) as cantidadJugadores \n" +
+                "FROM m_partidas_jugadores WHERE id_partida = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idPartida);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        if(resultado.leer())
+        {
+            return (int)resultado.getValor("cantidadJugadores");
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    public static ArrayList<DBPartida> partidasActivas()
+    {
+        ArrayList<DBPartida> partidas = new ArrayList<DBPartida>();
+        
+        String query = "SELECT * FROM m_partidas WHERE estado < 3";
+        DBOperacion operacion = new DBOperacion(query);
+
+        DBMatriz resultado = operacion.consultar();
+
+        String nombre, descripcion;
+        EstadoPartida estado = EstadoPartida.LOBBY;
+        int id, limiteJugadores, cantidadJugadores, estadoInt;
+        
+        while(resultado.leer())
+        {
+            nombre = (String) resultado.getValor("nombre");
+            descripcion = (String) resultado.getValor("descripcion");
+            estadoInt = (int) resultado.getValor("estado");
+            switch(estadoInt)
+            {
+                case 1:
+                {
+                    estado = EstadoPartida.LOBBY;
+                    break;
+                }
+                case 2:
+                {
+                    estado = EstadoPartida.JUGANDO;
+                    break;
+                }
+            }
+            
+            id = (int) resultado.getValor("id");
+            limiteJugadores = (int) resultado.getValor("limiteJugadores");
+            cantidadJugadores = DBPartida.cantidadUsuariosPartida(id);
+            
+            partidas.add(new DBPartida(nombre,descripcion,estado,limiteJugadores,cantidadJugadores,id));
+        }
+         
+        return partidas;
     }
     
     public enum EstadoPartida implements Serializable
