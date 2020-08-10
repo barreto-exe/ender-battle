@@ -37,7 +37,7 @@ public class HiloPartidas implements Runnable
 
         try
         {
-            ServerSocket servidor = new ServerSocket(27016);
+            ServerSocket servidor = new ServerSocket(27014);
             boolean responderResultado;
             
             while (true)
