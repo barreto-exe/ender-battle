@@ -52,23 +52,17 @@ public class HiloPartidas implements Runnable
                 PaqueteOperacion paquete = (PaqueteOperacion) input.readObject();
                 Operacion operacion = paquete.getTipo();
                 
-                ventanaServer.appendVentanaPartidas("Operacion: " + operacion.toString() + "|"+ ip +"\n\n");
+                ventanaServer.appendVentanaPartidas("Operacion: " + operacion.toString() + "|"+ ip +"\n");
                 
                 PaqueteResultado resultado = new PaqueteResultado(ResultadoOperacion.ERROR);
                 
                 if(operacion == REPORTE_PROGRESO)
                 {
                     final ProgresoJugador progresoEntrada = (ProgresoJugador) paquete.getInformacion();
+                    ventanaServer.appendVentanaPartidas("Jugador: " + progresoEntrada.getIdJugador());
                     
                     //Registrar el progreso reportado por el jugador
-                    new Thread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            DBPartida.registarProgreso(progresoEntrada);
-                        }
-                    }).start();
+                    DBPartida.registarProgreso(progresoEntrada);
                     
                     //Si salió de partida entonces no hacer más nada 
                     if(!progresoEntrada.isEnPartida())

@@ -1203,11 +1203,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             return;
         }
 
-        if (hiloEstadoPartida.isAlive())
-        {
-            //Dejar de escuchar los usuarios nuevos
-            hiloEstadoPartida.interrupt();
-        }
+        //Dejar de escuchar los usuarios nuevos
+        hiloEstadoPartida.interrupt();
 
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado), this);
     }

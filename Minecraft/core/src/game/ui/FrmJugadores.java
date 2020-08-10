@@ -56,6 +56,7 @@ public class FrmJugadores extends javax.swing.JFrame
                 "Jugador", "Color", "Jefes Ganados", "Esmeraldas"
             }
         ));
+        jtJugadores.setFocusable(false);
         jtJugadores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jtJugadores);
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class DBOperacion
 {
-    public static String SERVIDOR = "java-server.brazilsouth.cloudapp.azure.com";
+    public static String SERVIDOR = "192.168.2.105";
 
     /**
      * Representa la ubicación del archivo SQLite con respecto al ejecutable del

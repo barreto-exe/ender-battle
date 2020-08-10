@@ -124,6 +124,12 @@ public class GameScreen extends BaseScreen implements UsesSocket
         corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
         corazonMitad = new Sprite(this.getAtlas().findRegion("corazon_mitad"));
         //</editor-fold>
+        
+        
+        if(game.getUsuario() != null)
+        {
+            comunicarEstadoJugador();
+        }
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -205,11 +211,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
 
         world.setContactListener(new WorldContactListener(player));
         
-        
-        if(game.getUsuario() != null)
-        {
-            comunicarEstadoJugador();
-        }
     }
 
     @Override
@@ -302,6 +303,20 @@ public class GameScreen extends BaseScreen implements UsesSocket
         isPaused ^= true;
     }
     
+    Thread hiloProgreso;
+    
+    public void pararReporteEstadoJugador()
+    {
+        if(hiloProgreso != null)
+        {
+            hiloProgreso.interrupt();
+            
+            //Enviar último reporte de salir de partida
+            game.getProgreso().setEnPartida(false);
+            PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REPORTE_PROGRESO, game.getProgreso());
+            MetodosSocket.enviarPaquete(paquete, null);
+        }
+    }
     
     /**
      * Método que se encarga de comunicar constantemente al servidor sobre
@@ -311,27 +326,31 @@ public class GameScreen extends BaseScreen implements UsesSocket
     public void comunicarEstadoJugador()
     {
         final UsesSocket ventanaOrigen = this;
-        new Thread(new Runnable()
+        hiloProgreso = new Thread(new Runnable()
         {
             @Override
             public void run()
             {
-                while(true)
+                try
                 {
-                    try
+                    while(true)
                     {
+                        PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REPORTE_PROGRESO, game.getProgreso());
+                        MetodosSocket.enviarPaquete(paquete, ventanaOrigen);
                         Thread.sleep(1000);
                     }
-                    catch (InterruptedException ex)
-                    {
-                    }
-                    
-                    PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REPORTE_PROGRESO, game.getProgreso());
-                    MetodosSocket.enviarPaquete(paquete, ventanaOrigen);
                 }
+                catch (InterruptedException ex)
+                {
+                    System.out.println(ex.toString());
+                }
+                
             }
-        }).start();
+        });
+        hiloProgreso.start();
     }
+    
+    private static int cont = 0;
     
     @Override
     public void recibirRespuestaServer(final Socket socket, UsesSocket ventanaDelegada)
@@ -341,7 +360,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
             @Override
             public void run()
             {
-                System.out.println("Esperando respuesta server partidas...");
+                System.out.println("Esperando respuesta server partidas... " + cont++);
 
                 try
                 {

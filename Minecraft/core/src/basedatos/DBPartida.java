@@ -342,6 +342,7 @@ public class DBPartida implements Serializable
         
         for(DBUsuario usuario : usuariosPartida(idPartida))
         {
+            usuario.setPartida(idPartida);
             progresos.add(obtenerProgreso(usuario));
         }
         
@@ -392,6 +393,7 @@ public class DBPartida implements Serializable
                 + "idpartida = ? AND idjugador = ?";
         DBOperacion operacion = new DBOperacion(query);
         operacion.pasarParametro(progreso.getIdPartida());
+        operacion.pasarParametro(progreso.getIdJugador());
         
         operacion.ejecutar();
         

@@ -12,6 +12,7 @@ import comunicacion.PaqueteOperacion;
 import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteResultado;
 import game.MainGame;
+import game.screens.GameScreen;
 import game.tools.Constant;
 import java.awt.Canvas;
 import java.io.IOException;
@@ -101,8 +102,8 @@ public final class FrmGame extends JFrame implements UsesSocket
                 this
             );
             
-            //Enviar abandonar partida aquí
-            game.getProgreso().setEnPartida(false);
+            //Enviar abandonar partida 
+            ((GameScreen)game.getScreen()).pararReporteEstadoJugador();
         }
     }//GEN-LAST:event_formWindowClosing
 
