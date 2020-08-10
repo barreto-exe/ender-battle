@@ -27,7 +27,7 @@ public class MetodosSocket
             int puerto;
             if(paquete.getTipo().equals(PaqueteOperacion.Operacion.REPORTE_PROGRESO))
             {
-                puerto = 27016;
+                puerto = 27014;
             }
             else
             {

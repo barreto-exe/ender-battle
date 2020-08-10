@@ -21,6 +21,7 @@ import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
 import desktop.game.FrmGame;
 import game.tools.Constant;
+import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javax.swing.JEditorPane;
@@ -995,7 +996,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         Sonido.click();
 
         //Cambiar IP de la base de datos
-        DBOperacion.SERVIDOR = JOptionPane.showInputDialog(null, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
+        DBOperacion.SERVIDOR = JOptionPane.showInputDialog(this, "Ingrese IP del servidor", DBOperacion.SERVIDOR);
     }//GEN-LAST:event_btnCambiarServidorActionPerformed
 
     private void lblFlechaDerechaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblFlechaDerechaMouseClicked
@@ -1107,11 +1108,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         //Verificar que las contraseñas sean iguales y que no estén vacías
         if (!Arrays.equals(txtPass.getPassword(), txtPassConfirmar.getPassword()))
         {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
         } //Verificar que no haya campos vacíoss
         else if ("".equals(correo) || "".equals(usuario) || pass.length == 0)
         {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
+            JOptionPane.showMessageDialog(this, "Hay campos vacíos.");
         } else
         {
             //Crear instancia de usuario para enviarla al servidor
@@ -1135,7 +1136,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         if ("".equals(usuario) || "".equals(pass))
         {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos.");
+            JOptionPane.showMessageDialog(this, "Hay campos vacíos.");
         } else
         {
             //Crear instancia de usuario para enviarla al servidor
@@ -1159,7 +1160,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         if (nombrePartida.equals(""))
         {
-            JOptionPane.showMessageDialog(null, "El nombre de la partida no puede estar en blanco.");
+            JOptionPane.showMessageDialog(this, "El nombre de la partida no puede estar en blanco.");
             return;
         }
 
@@ -1271,7 +1272,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                     if (resultado.getResultado() == ResultadoOperacion.ERROR)
                     {
-                        JOptionPane.showMessageDialog(null, "Hubo un error en la operación.");
+                        JOptionPane.showMessageDialog(formulario, "Hubo un error en la operación.");
                         formulario.btnVolver.doClick();
                     } 
 
@@ -1279,20 +1280,20 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     //Resultados de registro
                     else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                     {
-                        JOptionPane.showMessageDialog(null, "Correo no disponible.");
+                        JOptionPane.showMessageDialog(formulario, "Correo no disponible.");
                     } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
                     {
-                        JOptionPane.showMessageDialog(null, "Usuario no disponible.");
+                        JOptionPane.showMessageDialog(formulario, "Usuario no disponible.");
                     } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
                     {
-                        JOptionPane.showMessageDialog(null, "¡Usuario registrado exitosamente!");
+                        JOptionPane.showMessageDialog(formulario, "¡Usuario registrado exitosamente!");
                         formulario.btnVolver.doClick();
                     } //</editor-fold>  
                     //<editor-fold defaultstate="collapsed" desc="Resultados de inicio de sesión">
                     //Resultados de inicio de sesión
                     else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
                     {
-                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+                        JOptionPane.showMessageDialog(formulario, "Usuario o contraseña incorrectos.");
                     } else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
                     {
                         formulario.mostrarPanel(formulario.panelPartida);
@@ -1317,7 +1318,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         formulario.jtPartidas.setEnabledAt(1, false);
                     } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
                     {
-                        JOptionPane.showMessageDialog(null, "Ya existe una partida con el mismo nombre.");
+                        JOptionPane.showMessageDialog(formulario, "Ya existe una partida con el mismo nombre.");
 
                         //Rehabilitar selección de partida y personaje
                         formulario.btnCrearPartida.setEnabled(true);
@@ -1372,7 +1373,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                     {
                         JOptionPane.showMessageDialog(
-                                null,
+                                formulario,
                                 "La partida a la que te quieres unir está llena, en curso o no existe."
                         );
 
@@ -1455,7 +1456,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     //<editor-fold defaultstate="collapsed" desc="Resultados de salir de partida">
                     else if (resultado.getResultado() == ResultadoOperacion.SALIR_PARTIDA_EXITOSO)
                     {
-                        JOptionPane.showMessageDialog(null, "Has salido de la sala.");
+                        JOptionPane.showMessageDialog(formulario, "Has salido de la sala.");
                     }
                     //</editor-fold>
 
@@ -1463,7 +1464,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                 } catch (IOException | ClassNotFoundException ex)
                 {
                     System.out.println(ex.getMessage());
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog((Component) ventanaOrigen, ex.getMessage());
                 }
             }
         }).start();

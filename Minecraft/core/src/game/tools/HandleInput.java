@@ -83,6 +83,7 @@ public class HandleInput extends InputAdapter
             }
             case(Input.Keys.TAB):
             {
+                GameScreen.getVentanaJugadores().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
                 GameScreen.getVentanaJugadores().setVisible(true);
                 return true;
             }

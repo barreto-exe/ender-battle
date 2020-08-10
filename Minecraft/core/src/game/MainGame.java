@@ -20,7 +20,9 @@ public class MainGame extends Game
     public MainGame(DBUsuario usuario)
     {
         this.usuario = usuario;
-        progreso = new ProgresoJugador(usuario);
+        
+        if(usuario != null)
+            progreso = new ProgresoJugador(usuario);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">

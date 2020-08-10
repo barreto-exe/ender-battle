@@ -132,6 +132,7 @@ public final class FrmGame extends JFrame implements UsesSocket
     @Override
     public void recibirRespuestaServer(final Socket socket, final MetodosSocket.UsesSocket ventanaOrigen)
     {
+        final JFrame formulario = this;
         new Thread(new Runnable()
         {
             @Override
@@ -154,7 +155,7 @@ public final class FrmGame extends JFrame implements UsesSocket
                 } catch (IOException | ClassNotFoundException ex)
                 {
                     System.out.println(ex.getMessage());
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog(formulario, ex.getMessage());
                 }
             }
         }
