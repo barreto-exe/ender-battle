@@ -14,7 +14,6 @@ import game.actors.collectibles.ObjectCollectible;
 import game.inventario.BattleObject;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *

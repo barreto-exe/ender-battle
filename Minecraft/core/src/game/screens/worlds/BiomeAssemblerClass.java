@@ -12,11 +12,19 @@ import game.actors.pacific.Sheep;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import game.actors.monster.Creeper;
+import game.actors.monster.Enderman;
+import game.actors.monster.MonsterMob;
+import game.actors.monster.Pigman;
+import game.actors.monster.Skeleton;
+import game.actors.monster.Spider;
+import game.actors.monster.Zombie;
 import game.tools.Constant;
 import game.screens.GameScreen;
 
@@ -26,8 +34,11 @@ import game.screens.GameScreen;
 public class BiomeAssemblerClass
 {
     //Mobs
-    Array<PacificMob> pacificMobs;
-    Array<Plant> farming;
+    private final Array<PacificMob> pacificMobs;
+    private final Array<MonsterMob> monsterMobs;
+    private final Array<Plant> farming;
+    private final Vector2 villagerPosition;
+    private final Vector2 playerPosition;
         
     /**
      * Se encarga de ensamblar el bioma en la bantalla.
@@ -57,7 +68,7 @@ public class BiomeAssemblerClass
         }
         
         pacificMobs = new Array<>();
-        PacificMob mob;
+        PacificMob mobP;
 
         //<editor-fold defaultstate="collapsed" desc="Ubicar Mobs Pacíficos">
         //Ubicando mobs pacíficos pequeños [2]
@@ -65,11 +76,11 @@ public class BiomeAssemblerClass
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            mob = getLittleMob(screen, rectangle.getX(), rectangle.getY());
+            mobP = getLittleMob(screen, rectangle.getX(), rectangle.getY());
 
-            if (mob != null)
+            if (mobP != null)
             {
-                pacificMobs.add(mob);
+                pacificMobs.add(mobP);
             }
         }
 
@@ -78,15 +89,16 @@ public class BiomeAssemblerClass
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            mob = getBigMob(screen, rectangle.getX(), rectangle.getY());
+            mobP = getBigMob(screen, rectangle.getX(), rectangle.getY());
 
-            if (mob != null)
+            if (mobP != null)
             {
-                pacificMobs.add(mob);
+                pacificMobs.add(mobP);
             }
         }
         //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Ubicar Plantas">
         farming = new Array<>();
         Plant plant;
         
@@ -115,14 +127,67 @@ public class BiomeAssemblerClass
                 farming.add(plant);
             }
         }
+        //</editor-fold>
+        
+        monsterMobs = new Array<>();
+        MonsterMob mobM;
+        
+        //<editor-fold defaultstate="collapsed" desc="Ubicar Monstruos">
+        //Ubicando mobs pacíficos pequeños [2]
+        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class))
+        {
+            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+            mobM = getMonster(screen, rectangle.getX(), rectangle.getY());
+
+            if (mobM != null)
+            {
+                monsterMobs.add(mobM);
+            }
+        }
+        //</editor-fold>
+        
+        Rectangle rectangle = new Rectangle();
+        //Ubicación del Aldeano
+        for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class))
+        {
+            rectangle = ((RectangleMapObject) object).getRectangle();
+        }
+        
+        villagerPosition = new Vector2(rectangle.getX() / Constant.PPM, rectangle.getY() * 2 / Constant.PPM);
+        
+        
+        //Ubicación del Jugador
+        for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class))
+        {
+            rectangle = ((RectangleMapObject) object).getRectangle();
+        }
+        
+        playerPosition = new Vector2(rectangle.getX() / Constant.PPM, rectangle.getY() / Constant.PPM);
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Array<PacificMob> getPacificMobs() {
+    //<editor-fold defaultstate="collapsed" desc="Getters">
+    public Array<PacificMob> getPacificMobs()
+    {
         return pacificMobs;
     }
-    public Array<Plant> getFarming() {
+    
+    public Array<Plant> getPlants()
+    {
         return farming;
+    }
+    
+    public Array<MonsterMob> getMonsters()
+    {
+        return monsterMobs;
+    }
+
+    public Vector2 getVillagerPosition() {
+        return villagerPosition;
+    }
+
+    public Vector2 getPlayerPosition() {
+        return playerPosition;
     }
     //</editor-fold>
     
@@ -195,5 +260,30 @@ public class BiomeAssemblerClass
         }
     }
     
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Randomize Monsters">
+    private MonsterMob getMonster(GameScreen screen, float x, float y)
+    {
+        int random = (int) (Math.random() * 6) + 1;
+        
+        switch (random)
+        {
+            case 1:
+                return new Creeper(screen, x / Constant.PPM, y / Constant.PPM, false);
+            case 2:
+                return new Enderman(screen, x / Constant.PPM, y / Constant.PPM, false);
+            case 3:
+                return new Pigman(screen, x / Constant.PPM, y / Constant.PPM, false);
+            case 4:
+                return new Spider(screen, x / Constant.PPM, y / Constant.PPM, false);
+            case 5:
+                return new Skeleton(screen, x / Constant.PPM, y / Constant.PPM, false);
+            case 6:
+                return new Zombie(screen, x / Constant.PPM, y / Constant.PPM, false);
+            default:
+                return null;
+        }
+    }
     //</editor-fold>
 }

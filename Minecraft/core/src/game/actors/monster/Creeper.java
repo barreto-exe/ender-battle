@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *
@@ -21,7 +20,7 @@ public class Creeper extends MonsterMob
     private Array<TextureRegion> explosionFrames;
     private Animation explosionAnimation;
 
-    public Creeper(GameScreen screen, int x, int y, boolean isBoss)
+    public Creeper(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
         (

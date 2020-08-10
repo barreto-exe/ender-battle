@@ -29,6 +29,7 @@ import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
 import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
+import game.actors.monster.MonsterMob;
 import game.actors.monster.Skeleton;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
@@ -37,8 +38,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -68,6 +67,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     private Player player;
     private Villager villager;
     private Array<PacificMob> pacificMobs;
+    private Array<MonsterMob> monsterMobs;
     private Array<Plant> trees;
     
     //Atributos de la GUI
@@ -149,6 +149,14 @@ public class GameScreen extends BaseScreen implements UsesSocket
         return world;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Villager getVillager() {
+        return villager;
+    }
+    
     public Group getActors()
     {
         return actors;
@@ -180,11 +188,14 @@ public class GameScreen extends BaseScreen implements UsesSocket
     @Override
     public void show()
     {
-        villager = new Villager(world, getAtlas().findRegion("aldeano"), 5, 2.6f);
-        actors.addActor(villager);
         manager = new BiomeAssemblerClass(this);
+        Vector2 position;
+        position = manager.getVillagerPosition();
+        villager = new Villager(world, getAtlas().findRegion("aldeano"), position.x, position.y);
+        actors.addActor(villager);
         pacificMobs = manager.getPacificMobs();
-        trees = manager.getFarming();
+        trees = manager.getPlants();
+        monsterMobs = manager.getMonsters();
 
         for (Plant plant : trees)
         {
@@ -195,19 +206,18 @@ public class GameScreen extends BaseScreen implements UsesSocket
         {
             actors.addActor(mob);
         }
+        
+        for (MonsterMob mob : monsterMobs)
+        {
+            actors.addActor(mob);
+        }
 
-        //Instanciar actores del mundo
-        this.player.create(this);
-
+        position = manager.getPlayerPosition();
+        player.create(this, position.x, position.y);
         //Añadir actores al grupo
         actors.addActor(player);
 
         //Monstruos de prueba   
-        //actors.addActor(new Skeleton(this,20,5));
-        actors.addActor(new Skeleton(this, 17, 5, true));
-        //actors.addActor(new Pigman(this,15,5));
-        //actors.addActor(new Creeper(this,13,5));
-        actors.addActor(new EsmeraldCollective(getAtlas().findRegion("esmeralda"), world, new Vector2(25, 6)));
 
         world.setContactListener(new WorldContactListener(player));
         

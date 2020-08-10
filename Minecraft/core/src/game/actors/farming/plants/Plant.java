@@ -108,7 +108,7 @@ public abstract class Plant extends Sprite implements Actor
     {
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
-        bodyD.position.set(x /*+ (width / 2 / Constant.PPM)*/, y + (height / 2 / Constant.PPM));
+        bodyD.position.set(x, y + (height / 2 / Constant.PPM));
         body = world.createBody(bodyD);
         //</editor-fold>
 

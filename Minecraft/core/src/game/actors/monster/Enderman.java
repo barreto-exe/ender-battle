@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *
@@ -22,7 +21,7 @@ import game.tools.Sonido;
 public class Enderman extends MonsterMob
 {
 
-    public Enderman(GameScreen screen, int x, int y, boolean isBoss)
+    public Enderman(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
         (
