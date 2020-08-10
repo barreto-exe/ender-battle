@@ -670,6 +670,18 @@ public class Player extends Sprite implements Actor
 
         //Colocar segundos de envenenamiento.
         timeCondition = segundos;
+        
+        //Sonido
+        switch(condition)
+        {
+            case ENTANGLED:
+            case POISONED:
+                soundManager.get("sonidos/hechizo_normal.ogg", Sound.class).play();
+                break;
+            case BURNED:
+                soundManager.get("sonidos/hechizo_quemar.ogg", Sound.class).play();
+                break;
+        }
     }
 
     /**

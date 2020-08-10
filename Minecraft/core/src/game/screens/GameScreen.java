@@ -29,8 +29,11 @@ import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
 import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
+import game.actors.monster.Creeper;
 import game.actors.monster.MonsterMob;
+import game.actors.monster.Pigman;
 import game.actors.monster.Skeleton;
+import game.actors.monster.Zombie;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
 import game.ui.*;
@@ -216,6 +219,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         player.create(this, position.x, position.y);
         //Añadir actores al grupo
         actors.addActor(player);
+        actors.addActor(new Creeper(this, 2, 15, false));
 
         //Monstruos de prueba   
 

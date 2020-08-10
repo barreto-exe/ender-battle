@@ -106,6 +106,8 @@ public final class FrmTienda extends javax.swing.JFrame
     
     public void mostrar()
     {
+        soundManager.get("sonidos/mobs/aldeano.ogg", Sound.class).play();
+        
         setVisible(true);
         requestFocus();
         actualizarVista();

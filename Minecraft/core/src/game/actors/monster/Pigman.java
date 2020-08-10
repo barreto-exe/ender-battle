@@ -74,10 +74,7 @@ public class Pigman extends MonsterMob
         if (attackOportunity(3))
         {
             player.setCondition(PlayerCondition.BURNED, 5);
-            System.out.println("Is burned");
-            return;
         }
-        System.out.println("Failed");
     }
 
     @Override

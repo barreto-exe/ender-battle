@@ -614,6 +614,10 @@ public final class FrmInventario extends javax.swing.JFrame
         
         Constant.BattleObjectEnum typeObject = Constant.BattleObjectEnum.getEnumByDesc(objeto);
         
+        //Sonido
+        int toSound = (int) ((Math.random() * ((3 - 1) + 1)) + 1);
+        Sonido.soundManager.get("sonidos/objetobatalla"+toSound+".ogg", Sound.class).play();
+        
         //Obtener el mejor objeto de ese tipo en el inventario
         BattleObject bestBattleObject = player.getInventory().findBestBattleObject(typeObject);
         
