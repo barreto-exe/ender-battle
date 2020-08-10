@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *
@@ -19,7 +18,7 @@ public class Skeleton extends MonsterMob
 
     float direction;
 
-    public Skeleton(GameScreen screen, int x, int y, boolean isBoss)
+    public Skeleton(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
         (

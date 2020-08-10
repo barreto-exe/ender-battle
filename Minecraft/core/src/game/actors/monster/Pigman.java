@@ -9,7 +9,6 @@ import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
-import game.tools.Sonido;
 
 /**
  *
@@ -18,7 +17,7 @@ import game.tools.Sonido;
 public class Pigman extends MonsterMob
 {
 
-    public Pigman(GameScreen screen, int x, int y, boolean isBoss)
+    public Pigman(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
         (

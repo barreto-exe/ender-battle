@@ -9,7 +9,6 @@ import game.inventario.Protection;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.PlayerCondition;
-import game.tools.Sonido;
 
 /**
  *
@@ -17,7 +16,7 @@ import game.tools.Sonido;
  */
 public class Zombie extends MonsterMob
 {
-    public Zombie(GameScreen screen, int x, int y, boolean isBoss)
+    public Zombie(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
         (

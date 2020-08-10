@@ -28,7 +28,6 @@ import game.tools.Constant.*;
 import game.tools.HandleInput;
 import static game.tools.Sonido.soundManager;
 import game.tools.VirtualController;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -290,7 +289,7 @@ public class Player extends Sprite implements Actor
      *
      * @param screen la pantalla en la que se está mostrando el jugador.
      */
-    public void create(GameScreen screen)
+    public void create(GameScreen screen, float x, float y)
     {
         setRegion(screen.getAtlas().findRegion(color + "_caminar"));
         world = screen.getWorld();
@@ -337,7 +336,7 @@ public class Player extends Sprite implements Actor
 
         //<editor-fold defaultstate="collapsed" desc="Definición de Body">
         BodyDef bodyD = new BodyDef();
-        bodyD.position.set(3, 2);
+        bodyD.position.set(x, y);
         bodyD.type = BodyDef.BodyType.DynamicBody;
         body = this.world.createBody(bodyD);
         //</editor-fold>
