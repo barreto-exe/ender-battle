@@ -6,21 +6,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import game.screens.GameScreen;
 import basedatos.DBUsuario;
 import com.badlogic.gdx.Gdx;
+import comunicacion.ProgresoJugador;
 import javax.swing.JFrame;
 
-public class MainGame extends Game
+public class MainGame extends Game 
 {
     private DBUsuario usuario;
     private Player player;
     private JFrame ventanaOrigen;
     private SpriteBatch batch;
+    private ProgresoJugador progreso;
 
     public MainGame(DBUsuario usuario)
     {
         this.usuario = usuario;
+        progreso = new ProgresoJugador(usuario);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public ProgresoJugador getProgreso()
+    {
+        return progreso;
+    }
+    
     public Player getPlayer()
     {
         return player;
@@ -60,7 +69,8 @@ public class MainGame extends Game
         }
         
         player = new Player(skin);
-        setScreen(new GameScreen(this, "bioma_01.tmx", player));          
+        setScreen(new GameScreen(this, "bioma_01.tmx", player)); 
+      
     }
 
     @Override

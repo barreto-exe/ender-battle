@@ -3,7 +3,6 @@ package game.tools;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import game.screens.GameScreen;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -80,6 +79,11 @@ public class HandleInput extends InputAdapter
             case (Input.Keys.P):
             {
                 screen.switchPaused();
+                return true;
+            }
+            case(Input.Keys.TAB):
+            {
+                GameScreen.getVentanaJugadores().setVisible(true);
                 return true;
             }
             default:

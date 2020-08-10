@@ -20,18 +20,31 @@ import game.actors.groups.Group;
 import game.actors.pacific.PacificMob;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import comunicacion.MetodosSocket;
+import comunicacion.MetodosSocket.UsesSocket;
+import comunicacion.PaqueteOperacion;
+import comunicacion.PaqueteOperacion.Operacion;
+import comunicacion.PaqueteOperacion.ResultadoOperacion;
+import comunicacion.PaqueteResultado;
+import comunicacion.ProgresoJugador;
 import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.monster.Skeleton;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
 import game.ui.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Karen
  */
-public class GameScreen extends BaseScreen
+public class GameScreen extends BaseScreen implements UsesSocket
 {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de la cámara
@@ -67,7 +80,7 @@ public class GameScreen extends BaseScreen
 
     private static FrmInventario ventanaInventario;    
     private static FrmTienda ventanaTienda;
-
+    private static FrmJugadores ventanaJugadores;
 
     /**
      * Es la pantalla del juego principal.
@@ -83,9 +96,11 @@ public class GameScreen extends BaseScreen
         this.player = player;
         isPaused = false;
         actors = new Group();
+        
         ventanaInventario = new FrmInventario(player);
         ventanaTienda = new FrmTienda(player);
-
+        ventanaJugadores = new FrmJugadores();
+        
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();
         viewport = new FillViewport(Constant.FRAME_WIDTH / Constant.PPM, Constant.FRAME_HEIGHT / Constant.PPM, gameCam);
@@ -112,6 +127,12 @@ public class GameScreen extends BaseScreen
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    
+    public static FrmJugadores getVentanaJugadores()
+    {
+        return ventanaJugadores;
+    }
+
     public TiledMap getMap()
     {
         return map;
@@ -183,6 +204,12 @@ public class GameScreen extends BaseScreen
         actors.addActor(new EsmeraldCollective(getAtlas().findRegion("esmeralda"), world, new Vector2(25, 6)));
 
         world.setContactListener(new WorldContactListener(player));
+        
+        
+        if(game.getUsuario() != null)
+        {
+            comunicarEstadoJugador();
+        }
     }
 
     @Override
@@ -273,5 +300,82 @@ public class GameScreen extends BaseScreen
     public void switchPaused()
     {
         isPaused ^= true;
+    }
+    
+    
+    /**
+     * Método que se encarga de comunicar constantemente al servidor sobre
+     * el avance del jugador en la partida. También se envarga de recibir
+     * el estado de los demás jugadores.
+     */
+    public void comunicarEstadoJugador()
+    {
+        final UsesSocket ventanaOrigen = this;
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                while(true)
+                {
+                    try
+                    {
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException ex)
+                    {
+                    }
+                    
+                    PaqueteOperacion paquete = new PaqueteOperacion(Operacion.REPORTE_PROGRESO, game.getProgreso());
+                    MetodosSocket.enviarPaquete(paquete, ventanaOrigen);
+                }
+            }
+        }).start();
+    }
+    
+    @Override
+    public void recibirRespuestaServer(final Socket socket, UsesSocket ventanaDelegada)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                System.out.println("Esperando respuesta server partidas...");
+
+                try
+                {
+                    //Leer respuesta del servidor
+                    ObjectInputStream paqueteRecibido = new ObjectInputStream(socket.getInputStream());
+                    PaqueteResultado resultado = (PaqueteResultado) paqueteRecibido.readObject();
+
+                    if (resultado.getResultado() == ResultadoOperacion.RESPUESTA_REPORTE)
+                    {
+                        ArrayList<ProgresoJugador> progresos = (ArrayList<ProgresoJugador>)resultado.getInformacion();
+                        Object[][] rows = new Object[progresos.size()][];
+                        
+                        int index = 0;
+                        for(ProgresoJugador progreso : progresos)
+                        {
+                            rows[index] = new Object[]
+                            {
+                                progreso.getNombreJugador(),
+                                progreso.getPersonajeSeleccionadoString(),
+                                progreso.getJefesMatados(),
+                                progreso.getEsmeraldasRecogidas()
+                            };
+                            index++;
+                        }
+                        
+                        ventanaJugadores.actualizarTabla(rows);
+                    } 
+                    
+                    socket.close();
+                } 
+                catch (IOException | ClassNotFoundException ex)
+                {
+                }
+            }
+        }).start();
     }
 }

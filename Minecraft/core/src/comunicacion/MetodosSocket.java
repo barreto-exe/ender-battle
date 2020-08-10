@@ -24,8 +24,18 @@ public class MetodosSocket
     {
         try
         {
+            int puerto;
+            if(paquete.getTipo().equals(PaqueteOperacion.Operacion.REPORTE_PROGRESO))
+            {
+                puerto = 27016;
+            }
+            else
+            {
+                puerto = 27015;
+            }
+            
             //Enviar solicitud al server
-            Socket socket = new Socket(DBOperacion.SERVIDOR, 27015);
+            Socket socket = new Socket(DBOperacion.SERVIDOR, puerto);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(paquete);
             

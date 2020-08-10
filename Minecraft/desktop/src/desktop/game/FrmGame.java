@@ -26,7 +26,8 @@ import javax.swing.JOptionPane;
 public final class FrmGame extends JFrame implements UsesSocket
 {
     private DBUsuario usuario;
-    private Canvas contenedorJuego;
+    private final Canvas contenedorJuego;
+    private final MainGame game;
     
     /**
      * Ventana que contiene al juego.
@@ -46,7 +47,7 @@ public final class FrmGame extends JFrame implements UsesSocket
         config.width = Constant.FRAME_WIDTH;
         //</editor-fold>
 
-        MainGame game = new MainGame(usuario);
+        game = new MainGame(usuario);
         game.setVentanaOrigen(this);
 
         //<editor-fold defaultstate="collapsed" desc="Añadir juego al jFrame">
@@ -93,11 +94,16 @@ public final class FrmGame extends JFrame implements UsesSocket
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
         if(usuario !=null) 
+        {
             MetodosSocket.enviarPaquete
             (
                 new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuario),
                 this
             );
+            
+            //Enviar abandonar partida aquí
+            game.getProgreso().setEnPartida(false);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">

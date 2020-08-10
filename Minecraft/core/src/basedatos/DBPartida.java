@@ -1,5 +1,6 @@
 package basedatos;
 
+import comunicacion.ProgresoJugador;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -309,6 +310,7 @@ public class DBPartida implements Serializable
         return EstadoPartida.TERMINADA;
     }
     
+    
     public static ArrayList<DBUsuario> usuariosPartida(int idPartida)
     {
         ArrayList<DBUsuario> usuarios = new ArrayList<DBUsuario>();
@@ -331,6 +333,83 @@ public class DBPartida implements Serializable
         }
         
         return usuarios;
+    }
+    
+    
+    public static ArrayList<ProgresoJugador> progresoJugadores(int idPartida)
+    {
+        ArrayList<ProgresoJugador> progresos = new ArrayList<>();
+        
+        for(DBUsuario usuario : usuariosPartida(idPartida))
+        {
+            progresos.add(obtenerProgreso(usuario));
+        }
+        
+        return progresos;
+    }
+    
+    public static ProgresoJugador obtenerProgreso(DBUsuario usuario)
+    {
+        String query =
+                "SELECT *, (SELECT usuario FROM m_usuarios WHERE id = ?) as nombreJugador "
+                + "FROM m_partidas_progreso WHERE "
+                + "idpartida = ? AND idjugador = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(usuario.getId());
+        operacion.pasarParametro(usuario.getPartida());
+        operacion.pasarParametro(usuario.getId());
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        if(resultado.leer())
+        {
+            int partidaGanada  = (int)resultado.getValor("partidaGanada");
+            int partidaEnCurso = (int)resultado.getValor("partidaEnCurso");
+            
+            return new ProgresoJugador
+                (
+                    (int)resultado.getValor("idpartida"),
+                    (int)resultado.getValor("idjugador"),
+                    (int)resultado.getValor("personajeSeleccionado"),
+                    (int)resultado.getValor("animalesMatados"),
+                    (int)resultado.getValor("monstruosMatados"),
+                    (int)resultado.getValor("jefesMatados"),
+                    (int)resultado.getValor("esmeraldasRecogidas"),
+                    (int)resultado.getValor("objetosRecogidos"),
+                    partidaGanada == 1,
+                    partidaEnCurso == 1,
+                    (String)resultado.getValor("nombreJugador")
+                );
+        }
+        
+        return null;
+    }
+    
+    public static void registarProgreso(ProgresoJugador progreso)
+    {
+        String query = 
+                "DELETE FROM m_partidas_progreso WHERE "
+                + "idpartida = ? AND idjugador = ?";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(progreso.getIdPartida());
+        
+        operacion.ejecutar();
+        
+        query = 
+                "INSERT INTO m_partidas_progreso VALUES "
+                + "(?,?,?,?,?,?,?,?,?,?)";
+        operacion = new DBOperacion(query);
+        operacion.pasarParametro(progreso.getIdPartida());
+        operacion.pasarParametro(progreso.getIdJugador());
+        operacion.pasarParametro(progreso.getPersonajeSeleccionado());
+        operacion.pasarParametro(progreso.getAnimalesMatados());
+        operacion.pasarParametro(progreso.getMonstruosMatados());
+        operacion.pasarParametro(progreso.getJefesMatados());
+        operacion.pasarParametro(progreso.getEsmeraldasRecogidas());
+        operacion.pasarParametro(progreso.getObjetosRecogidos());
+        operacion.pasarParametro(progreso.isGanoPartida());
+        operacion.pasarParametro(progreso.isEnPartida());
+        operacion.ejecutar();
     }
     
     public static int cantidadUsuariosPartida(int idPartida)
