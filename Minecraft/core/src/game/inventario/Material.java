@@ -44,13 +44,13 @@ public class Material
                 factor = 2;
                 return true;
             case GOLD:
-                factor = 2;
-                return true;
-            case IRON:
                 factor = 3;
                 return true;
-            case DIAMOND:
+            case IRON:
                 factor = 4;
+                return true;
+            case DIAMOND:
+                factor = 5;
                 return true;
             default:
                 factor = 0;

@@ -33,7 +33,7 @@ public class Skeleton extends MonsterMob
             8,      //Vida
             10,     //Puntos de ataque
             isBoss, 
-            new Protection(Constant.BattleObject.LEGGING, Constant.Material.DIAMOND), 
+            new Protection(Constant.BattleObjectEnum.LEGGING, Constant.Material.DIAMOND), 
             "skeleton"
         );
 

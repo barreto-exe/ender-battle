@@ -36,7 +36,7 @@ public class Enderman extends MonsterMob
             10,     //Vida
             20,     //Puntos de ataque
             isBoss, 
-            new Arm(Constant.BattleObject.SWORD, Constant.Material.DIAMOND), 
+            new Arm(Constant.BattleObjectEnum.SWORD, Constant.Material.DIAMOND), 
             "enderman"
         );
 

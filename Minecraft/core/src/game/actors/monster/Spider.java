@@ -32,7 +32,7 @@ public class Spider extends MonsterMob
             8,      //Vida
             10,     //Puntos de ataque
             isBoss, 
-            new Protection(Constant.BattleObject.SHIRTFRONT, Constant.Material.DIAMOND), 
+            new Protection(Constant.BattleObjectEnum.SHIRTFRONT, Constant.Material.DIAMOND), 
             "spider"
         );
         

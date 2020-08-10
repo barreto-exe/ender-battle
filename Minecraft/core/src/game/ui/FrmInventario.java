@@ -2,11 +2,15 @@ package game.ui;
 
 import com.badlogic.gdx.audio.Sound;
 import game.actors.Player;
+import game.inventario.BattleObject;
 import game.inventario.Inventory;
 import game.inventario.food.Food;
+import game.tools.Constant;
+import game.tools.Constant.BattleObjectEnum;
 import game.tools.Constant.Farming;
 import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
+import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
@@ -18,6 +22,7 @@ public final class FrmInventario extends javax.swing.JFrame
 {
     private Player player;
     private HashMap<String, JLabel> vistasAlimentos;
+    private HashMap<String, Component[]> vistasObjetosBatalla;
     
     /**
      * Ventana que ofrece la vista del inventario del jugador.
@@ -40,15 +45,24 @@ public final class FrmInventario extends javax.swing.JFrame
         vistasAlimentos.put("conejo", lblConejo);
         vistasAlimentos.put("pollo", lblPollo);
         vistasAlimentos.put("carne", lblCarne);
+        
+        vistasObjetosBatalla = new HashMap<>();
+        vistasObjetosBatalla.put("casco", new Component[]{imgCasco,btnUsarCasco});
+        vistasObjetosBatalla.put("pechera", new Component[]{imgPechera,btnUsarPechera});
+        vistasObjetosBatalla.put("pantalones", new Component[]{imgPantalones,btnUsarPantalones});
+        vistasObjetosBatalla.put("botas", new Component[]{imgBotas,btnUsarBotas});
+        vistasObjetosBatalla.put("espada", new Component[]{imgEspada,rbEspada});
+        vistasObjetosBatalla.put("hacha", new Component[]{imgHacha,rbHacha});
+        vistasObjetosBatalla.put("pico", new Component[]{imgPico,rbPico});
+        vistasObjetosBatalla.put("pala", new Component[]{imgPala,rbPala});
     }
     
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
     {
 
-        jLabel5 = new javax.swing.JLabel();
+        btngArmas = new javax.swing.ButtonGroup();
         imgManzana = new javax.swing.JLabel();
         imgPera = new javax.swing.JLabel();
         imgZanahoria = new javax.swing.JLabel();
@@ -68,15 +82,23 @@ public final class FrmInventario extends javax.swing.JFrame
         lblConejo = new javax.swing.JLabel();
         lblPollo = new javax.swing.JLabel();
         lblCarne = new javax.swing.JLabel();
-        lblCasco = new javax.swing.JLabel();
-        lblCasco1 = new javax.swing.JLabel();
-        lblCasco2 = new javax.swing.JLabel();
-        lblCasco3 = new javax.swing.JLabel();
-        lblCasco4 = new javax.swing.JLabel();
-
-        jLabel5.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("1");
+        lblBatalla = new javax.swing.JLabel();
+        imgCasco = new javax.swing.JLabel();
+        imgPechera = new javax.swing.JLabel();
+        imgPantalones = new javax.swing.JLabel();
+        imgBotas = new javax.swing.JLabel();
+        btnUsarCasco = new javax.swing.JToggleButton();
+        btnUsarPechera = new javax.swing.JToggleButton();
+        btnUsarPantalones = new javax.swing.JToggleButton();
+        btnUsarBotas = new javax.swing.JToggleButton();
+        imgEspada = new javax.swing.JLabel();
+        imgHacha = new javax.swing.JLabel();
+        imgPico = new javax.swing.JLabel();
+        imgPala = new javax.swing.JLabel();
+        rbEspada = new javax.swing.JRadioButton();
+        rbHacha = new javax.swing.JRadioButton();
+        rbPico = new javax.swing.JRadioButton();
+        rbPala = new javax.swing.JRadioButton();
 
         setPreferredSize(new java.awt.Dimension(685, 430));
         setType(java.awt.Window.Type.UTILITY);
@@ -246,77 +268,207 @@ public final class FrmInventario extends javax.swing.JFrame
         lblCarne.setLabelFor(imgCarne);
         lblCarne.setText("1");
 
-        lblCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+        lblBatalla.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblBatalla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBatalla.setText("Batalla");
 
-        lblCasco1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+        imgCasco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/casco1.png"))); // NOI18N
 
-        lblCasco2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+        imgPechera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pechera1.png"))); // NOI18N
 
-        lblCasco3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+        imgPantalones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pantalones1.png"))); // NOI18N
 
-        lblCasco4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+        imgBotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/botas1.png"))); // NOI18N
+
+        btnUsarCasco.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnUsarCasco.setText("Usar");
+        btnUsarCasco.setFocusable(false);
+        btnUsarCasco.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnUsarProteccionClicked(evt);
+            }
+        });
+
+        btnUsarPechera.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnUsarPechera.setText("Usar");
+        btnUsarPechera.setFocusable(false);
+        btnUsarPechera.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnUsarProteccionClicked(evt);
+            }
+        });
+
+        btnUsarPantalones.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnUsarPantalones.setText("Usar");
+        btnUsarPantalones.setFocusable(false);
+        btnUsarPantalones.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnUsarProteccionClicked(evt);
+            }
+        });
+
+        btnUsarBotas.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnUsarBotas.setText("Usar");
+        btnUsarBotas.setFocusable(false);
+        btnUsarBotas.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnUsarProteccionClicked(evt);
+            }
+        });
+
+        imgEspada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/espada1.png"))); // NOI18N
+
+        imgHacha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/hacha1.png"))); // NOI18N
+
+        imgPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pico1.png"))); // NOI18N
+
+        imgPala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sprites/objetos/pala1.png"))); // NOI18N
+
+        btngArmas.add(rbEspada);
+        rbEspada.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        rbEspada.setText("Espada");
+        rbEspada.setFocusable(false);
+        rbEspada.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                rbArmaClicked(evt);
+            }
+        });
+
+        btngArmas.add(rbHacha);
+        rbHacha.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        rbHacha.setText("Hacha");
+        rbHacha.setFocusable(false);
+        rbHacha.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                rbArmaClicked(evt);
+            }
+        });
+
+        btngArmas.add(rbPico);
+        rbPico.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        rbPico.setText("Pico");
+        rbPico.setFocusable(false);
+        rbPico.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                rbArmaClicked(evt);
+            }
+        });
+
+        btngArmas.add(rbPala);
+        rbPala.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        rbPala.setText("Pala");
+        rbPala.setFocusable(false);
+        rbPala.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                rbArmaClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(lblCasco4)
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCasco1)
-                    .addComponent(lblCasco2)
-                    .addComponent(lblCasco3)
-                    .addComponent(lblCasco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBaya, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPapa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblSandia, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgBotas)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUsarBotas))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgPantalones)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUsarPantalones))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgPechera)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUsarPechera))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgCasco)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnUsarCasco)))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgPala)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbPala))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgPico)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbPico))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgHacha)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbHacha))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgEspada)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbEspada))))
+                    .addComponent(lblBatalla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblComida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblManzana, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(imgManzana))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(imgPera)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(imgZanahoria))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblPera, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblZanahoria, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblBaya, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPapa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblSandia, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(imgBaya)
                                 .addGap(6, 6, 6)
-                                .addComponent(imgPapa))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblConejo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(imgConejo))
+                                .addComponent(imgPapa)
                                 .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(imgPollo)
-                                    .addComponent(lblPollo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(imgSandia))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(imgCarne))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCarne, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(imgSandia))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblManzana, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(imgManzana))
+                            .addComponent(lblConejo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(imgConejo))
                         .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(imgPera)
-                                .addGap(6, 6, 6)
-                                .addComponent(imgZanahoria))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblPera, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblZanahoria, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(imgPollo)
+                            .addComponent(lblPollo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(imgCarne)
+                            .addComponent(lblCarne, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,51 +479,74 @@ public final class FrmInventario extends javax.swing.JFrame
                         .addComponent(lblComida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(imgManzana)
-                                    .addComponent(imgPera)
-                                    .addComponent(imgZanahoria))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblManzana)
-                                    .addComponent(lblPera)
-                                    .addComponent(lblZanahoria)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCasco)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCasco3)
-                                .addGap(11, 11, 11)
-                                .addComponent(lblCasco2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCasco1))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
+                            .addComponent(imgManzana)
+                            .addComponent(imgPera)
+                            .addComponent(imgZanahoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblManzana)
+                            .addComponent(lblPera)
+                            .addComponent(lblZanahoria))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(imgBaya)
-                            .addComponent(imgPapa)
-                            .addComponent(imgSandia))
-                        .addGap(15, 15, 15)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCasco4)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblSandia)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lblBaya)
-                                        .addComponent(lblPapa)))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(imgConejo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(lblConejo)
-                                            .addComponent(lblPollo)
-                                            .addComponent(lblCarne)))
-                                    .addComponent(imgPollo)
-                                    .addComponent(imgCarne))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(lblPapa))))
+                            .addComponent(imgBaya)
+                            .addComponent(imgPapa)
+                            .addComponent(imgSandia))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(imgConejo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblConejo)
+                                    .addComponent(lblPollo)
+                                    .addComponent(lblCarne)))
+                            .addComponent(imgPollo)
+                            .addComponent(imgCarne)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnUsarCasco)
+                            .addComponent(imgCasco))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnUsarPechera)
+                            .addComponent(imgPechera))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnUsarPantalones)
+                            .addComponent(imgPantalones))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(imgBotas)
+                            .addComponent(btnUsarBotas)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblBatalla)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(rbEspada)
+                            .addComponent(imgEspada))
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(rbHacha)
+                            .addComponent(imgHacha))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(imgPico)
+                            .addComponent(rbPico))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(imgPala)
+                            .addComponent(rbPala))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -420,18 +595,27 @@ public final class FrmInventario extends javax.swing.JFrame
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowLostFocus
     {//GEN-HEADEREND:event_formWindowLostFocus
-        // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_formWindowLostFocus
+
+    private void btnUsarProteccionClicked(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnUsarProteccionClicked
+    {//GEN-HEADEREND:event_btnUsarProteccionClicked
+        
+    }//GEN-LAST:event_btnUsarProteccionClicked
+
+    private void rbArmaClicked(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rbArmaClicked
+    {//GEN-HEADEREND:event_rbArmaClicked
+        
+    }//GEN-LAST:event_rbArmaClicked
 
     /**
      * Muestra la ventana del inventario.
      */
     public void mostrar()
     {
+        actualizarVista();
         setVisible(true);
         requestFocus();
-        actualizarVista();
     }
     
     /**
@@ -451,35 +635,79 @@ public final class FrmInventario extends javax.swing.JFrame
             label.setText(food.getCant() + "");
             
             //Si no tiene esa comida, deshabilitar botón
-            if(food.getCant() == 0)
+            label.getLabelFor().setEnabled(food.getCant() != 0);
+        }
+        
+        Constant.BattleObjectEnum typeObject;
+        BattleObject bestBattleObject;
+        int material;
+        JLabel image;
+        
+        //Por cada tipo de objeto
+        for(String objeto : vistasObjetosBatalla.keySet())
+        {
+            typeObject = Constant.BattleObjectEnum.getEnumByDesc(objeto);
+            
+            //Obtener el mejor objeto de ese tipo en el inventario
+            bestBattleObject = player.getInventory().findBestBattleObject(typeObject);
+            if(bestBattleObject != null)
             {
-                label.getLabelFor().setEnabled(false);
+                //Obtener número que representa al material
+                material = Constant.Material.getIntByEnum(bestBattleObject.getMaterial().getMaterial());
+                
+                //Colocar imagen al jlabel del objeto (con color que corresponde)
+                image = (JLabel)vistasObjetosBatalla.get(objeto)[0];
+                image.setIcon
+                (
+                    new javax.swing.ImageIcon
+                    (
+                        getClass().getResource("/sprites/objetos/"+objeto+material+".png")
+                    )
+                );
+                
+                //Deshabilitar componentes para ese objeto
+                for(Component component : vistasObjetosBatalla.get(objeto))
+                {
+                    component.setEnabled(true);
+                }
             }
             else
             {
-                label.getLabelFor().setEnabled(true);
+                //Deshabilitar componentes para ese objeto
+                for(Component component : vistasObjetosBatalla.get(objeto))
+                {
+                    component.setEnabled(false);
+                }
             }
         }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnUsarBotas;
+    private javax.swing.JToggleButton btnUsarCasco;
+    private javax.swing.JToggleButton btnUsarPantalones;
+    private javax.swing.JToggleButton btnUsarPechera;
+    private javax.swing.ButtonGroup btngArmas;
     private javax.swing.JLabel imgBaya;
+    private javax.swing.JLabel imgBotas;
     private javax.swing.JLabel imgCarne;
+    private javax.swing.JLabel imgCasco;
     private javax.swing.JLabel imgConejo;
+    private javax.swing.JLabel imgEspada;
+    private javax.swing.JLabel imgHacha;
     private javax.swing.JLabel imgManzana;
+    private javax.swing.JLabel imgPala;
+    private javax.swing.JLabel imgPantalones;
     private javax.swing.JLabel imgPapa;
+    private javax.swing.JLabel imgPechera;
     private javax.swing.JLabel imgPera;
+    private javax.swing.JLabel imgPico;
     private javax.swing.JLabel imgPollo;
     private javax.swing.JLabel imgSandia;
     private javax.swing.JLabel imgZanahoria;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblBatalla;
     private javax.swing.JLabel lblBaya;
     private javax.swing.JLabel lblCarne;
-    private javax.swing.JLabel lblCasco;
-    private javax.swing.JLabel lblCasco1;
-    private javax.swing.JLabel lblCasco2;
-    private javax.swing.JLabel lblCasco3;
-    private javax.swing.JLabel lblCasco4;
     private javax.swing.JLabel lblComida;
     private javax.swing.JLabel lblConejo;
     private javax.swing.JLabel lblManzana;
@@ -488,5 +716,9 @@ public final class FrmInventario extends javax.swing.JFrame
     private javax.swing.JLabel lblPollo;
     private javax.swing.JLabel lblSandia;
     private javax.swing.JLabel lblZanahoria;
+    private javax.swing.JRadioButton rbEspada;
+    private javax.swing.JRadioButton rbHacha;
+    private javax.swing.JRadioButton rbPala;
+    private javax.swing.JRadioButton rbPico;
     // End of variables declaration//GEN-END:variables
 }

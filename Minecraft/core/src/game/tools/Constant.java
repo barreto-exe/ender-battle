@@ -85,14 +85,54 @@ public class Constant
         NORMAL, BURNED, ENTANGLED, POISONED
     }
     
-    public enum BattleObject
+    public enum BattleObjectEnum
     {
-        HELMET,SHIRTFRONT,LEGGING,BOOTS, AX, SWORD, SHOVEL, PICK 
+        HELMET,SHIRTFRONT,LEGGING,BOOTS, AX, SWORD, SHOVEL, PICK; 
+        
+        public static BattleObjectEnum getEnumByDesc(String desc)
+        {
+            switch(desc)
+            {
+                case "casco":
+                    return HELMET;
+                case "pechera":
+                    return SHIRTFRONT;
+                case "pantalones":
+                    return LEGGING;
+                case "botas":
+                    return BOOTS;
+                case "hacha":
+                    return AX;
+                case "espada":
+                    return SWORD;
+                case "pala":
+                    return SHOVEL;
+                case "pico":
+                    return PICK;
+            }
+            return null;
+        }
     }
     
     public enum Material
     {
-        WOOD, GOLD, IRON, DIAMOND
+        WOOD, GOLD, IRON, DIAMOND;
+        
+        public static int getIntByEnum(Material material)
+        {
+            switch(material)
+            {
+                case WOOD:
+                    return 1;
+                case GOLD:
+                    return 2;
+                case IRON:
+                    return 3;
+                case DIAMOND:
+                    return 4;
+            }
+            return 0;
+        }
     }
     
     

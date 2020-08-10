@@ -32,7 +32,7 @@ public class Pigman extends MonsterMob
             8,      //Vida
             10,     //Puntos de ataque
             isBoss, 
-            new Protection(Constant.BattleObject.HELMET, Constant.Material.DIAMOND), 
+            new Protection(Constant.BattleObjectEnum.HELMET, Constant.Material.DIAMOND), 
             "pigman"
         );
         

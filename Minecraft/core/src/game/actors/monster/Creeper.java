@@ -35,7 +35,7 @@ public class Creeper extends MonsterMob
             8,      //Vida
             20,     //Puntos de ataque
             isBoss, 
-            new Arm(Constant.BattleObject.AX, Constant.Material.DIAMOND), 
+            new Arm(Constant.BattleObjectEnum.AX, Constant.Material.DIAMOND), 
             "creeper"
         );
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">

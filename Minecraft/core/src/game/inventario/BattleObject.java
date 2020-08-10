@@ -10,7 +10,7 @@ public abstract class BattleObject
 {
 
     //<editor-fold defaultstate="collapsed" desc="Atributos">
-    private Constant.BattleObject object;
+    private Constant.BattleObjectEnum object;
     protected int factorObject;
     private boolean isPorted;
     protected Material material;
@@ -22,7 +22,7 @@ public abstract class BattleObject
      * @param object es el tipo de objeto.
      * @param material de qué está hecho.
      */
-    public BattleObject(Constant.BattleObject object, Constant.Material material)
+    public BattleObject(Constant.BattleObjectEnum object, Constant.Material material)
     {
         if (setObject(object))
         {
@@ -34,7 +34,7 @@ public abstract class BattleObject
         setFactorObject();
     }
 
-    public Constant.BattleObject getObject()
+    public Constant.BattleObjectEnum getObject()
     {
         return object;
     }
@@ -49,9 +49,9 @@ public abstract class BattleObject
         return factorObject;
     }
 
-    protected abstract boolean setBattleObject(Constant.BattleObject object);
+    protected abstract boolean setBattleObject(Constant.BattleObjectEnum object);
 
-    private boolean setObject(Constant.BattleObject object)
+    private boolean setObject(Constant.BattleObjectEnum object)
     {
         if (setBattleObject(object))
         {

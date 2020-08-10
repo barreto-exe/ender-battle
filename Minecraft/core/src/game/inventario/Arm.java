@@ -15,7 +15,7 @@ public class Arm extends BattleObject
      * @param object el tipo de objeto.
      * @param material de qué está hecho.
      */
-    public Arm(Constant.BattleObject object, Constant.Material material)
+    public Arm(Constant.BattleObjectEnum object, Constant.Material material)
     {
         super(object, material);
     }
@@ -27,7 +27,7 @@ public class Arm extends BattleObject
     }
 
     @Override
-    protected boolean setBattleObject(Constant.BattleObject object)
+    protected boolean setBattleObject(Constant.BattleObjectEnum object)
     {
         switch (object)
         {

@@ -22,7 +22,7 @@ public class BattleObjectCollectible extends ObjectCollectible
     private BattleObject object;
     //</editor-fold>
 
-    public BattleObjectCollectible(Constant.BattleObject object, Constant.Material material, TextureAtlas atlas, World world, Vector2 posicion)
+    public BattleObjectCollectible(Constant.BattleObjectEnum object, Constant.Material material, TextureAtlas atlas, World world, Vector2 posicion)
     {
         super(world, posicion);
         this.atlas = atlas;
@@ -53,7 +53,7 @@ public class BattleObjectCollectible extends ObjectCollectible
     }
     
     
-    private void setFrame(Constant.BattleObject object)
+    private void setFrame(Constant.BattleObjectEnum object)
     {
         switch (object)
         {

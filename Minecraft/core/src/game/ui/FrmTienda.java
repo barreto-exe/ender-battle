@@ -72,13 +72,13 @@ public final class FrmTienda extends javax.swing.JFrame
     {
         JLabel labelPrecio, imgObjeto;
         int precio, materialSeleccionado = this.jsMateriales.getValue();
-        
+    
         //A cada objeto de la tienda
         for(String objeto : listaPreciosBase.keySet())
         {
             labelPrecio = vistasPrecios.get(objeto);                
             imgObjeto = (JLabel) labelPrecio.getLabelFor();
-            
+    
             
             precio = listaPreciosBase.get(objeto);
                 
@@ -562,44 +562,44 @@ public final class FrmTienda extends javax.swing.JFrame
             }
             //</editor-fold>
             
-            Constant.BattleObject type = null;
+            Constant.BattleObjectEnum type = Constant.BattleObjectEnum.SWORD;
             BattleObject object = null;
             switch(objeto)
             {
                 //<editor-fold defaultstate="collapsed" desc="Protection Object">
                 case "botas":
-                    type = Constant.BattleObject.BOOTS;
+                    type = Constant.BattleObjectEnum.BOOTS;
                     object = new Protection(type,material);
                     break;
                 case "pantalones":
-                    type = Constant.BattleObject.LEGGING;
+                    type = Constant.BattleObjectEnum.LEGGING;
                     object = new Protection(type,material);
                     break;
                 case "pechera":
-                    type = Constant.BattleObject.SHIRTFRONT;
+                    type = Constant.BattleObjectEnum.SHIRTFRONT;
                     object = new Protection(type,material);
                     break;
                 case "casco":
-                    type = Constant.BattleObject.HELMET;
+                    type = Constant.BattleObjectEnum.HELMET;
                     object = new Protection(type,material);
                     break;
                 //</editor-fold>
                     
                 //<editor-fold defaultstate="collapsed" desc="Arm Object">
                 case "pico":
-                    type = Constant.BattleObject.PICK;
+                    type = Constant.BattleObjectEnum.PICK;
                     object = new Arm(type,material);
                     break;
                 case "pala":
-                    type = Constant.BattleObject.SHOVEL;
+                    type = Constant.BattleObjectEnum.SHOVEL;
                     object = new Arm(type,material);
                     break;
                 case "hacha":
-                    type = Constant.BattleObject.AX;
+                    type = Constant.BattleObjectEnum.AX;
                     object = new Arm(type,material);
                     break;
                 case "espada":
-                    type = Constant.BattleObject.SWORD;
+                    type = Constant.BattleObjectEnum.SWORD;
                     object = new Arm(type,material);
                     break;
                 //</editor-fold>

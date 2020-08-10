@@ -16,7 +16,7 @@ public class Protection extends BattleObject
      * @param object el tipo de la pieza.
      * @param material dice de qué está hecha.
      */
-    public Protection(Constant.BattleObject object, Constant.Material material)
+    public Protection(Constant.BattleObjectEnum object, Constant.Material material)
     {
         super(object, material);
     }
@@ -28,7 +28,7 @@ public class Protection extends BattleObject
     }
 
     @Override
-    protected boolean setBattleObject(Constant.BattleObject object)
+    protected boolean setBattleObject(Constant.BattleObjectEnum object)
     {
         switch (object)
         {

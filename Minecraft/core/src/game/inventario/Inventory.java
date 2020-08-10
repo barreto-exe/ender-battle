@@ -111,7 +111,7 @@ public class Inventory
         }
     }
 
-    private Array<BattleObject> getArray(Constant.BattleObject object)
+    private Array<BattleObject> getArray(Constant.BattleObjectEnum object)
     {
         switch (object)
         {
@@ -208,7 +208,7 @@ public class Inventory
     }
     //</editor-fold>
     
-    public BattleObject findBestBattleObject(Constant.BattleObject object)
+    public BattleObject findBestBattleObject(Constant.BattleObjectEnum object)
     {
         Array<BattleObject> array = getArray(object);
         
@@ -221,7 +221,7 @@ public class Inventory
         
         for (BattleObject o : array)
         {
-            if (mayor.getFactorObject() > o.getFactorObject())
+            if (o.getMaterial().getFactor() > mayor.getMaterial().getFactor())
             {
                 mayor = o;
             }
@@ -230,7 +230,7 @@ public class Inventory
         return mayor;
     }
 
-    public BattleObject findBattleObject(Constant.BattleObject object, Constant.Material material)
+    public BattleObject findBattleObject(Constant.BattleObjectEnum object, Constant.Material material)
     {
         Array<BattleObject> array = getArray(object);
         
