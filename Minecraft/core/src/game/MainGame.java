@@ -15,8 +15,12 @@ public class MainGame extends Game
     private JFrame ventanaOrigen;
     private SpriteBatch batch;
 
+    public MainGame(DBUsuario usuario)
+    {
+        this.usuario = usuario;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    
     public Player getPlayer()
     {
         return player;
@@ -48,7 +52,14 @@ public class MainGame extends Game
     public void create()
     {
         batch = new SpriteBatch();
-        player = new Player("normal");
+        
+        String skin = "normal";
+        if(usuario != null)
+        {
+            skin = usuario.getPersonajeSeleccionadoString();
+        }
+        
+        player = new Player(skin);
         setScreen(new GameScreen(this, "bioma_01.tmx", player));          
     }
 

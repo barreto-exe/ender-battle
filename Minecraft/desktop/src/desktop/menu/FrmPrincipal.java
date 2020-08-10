@@ -1088,7 +1088,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        ventanaJuego.mostrar();
+        abrirJuego();
     }//GEN-LAST:event_jButton1ActionPerformed
     //</editor-fold>
 
@@ -1427,8 +1427,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     {
                         hiloEstadoPartida.interrupt();
 
-                        ventanaJuego.setUsuario(usuarioLogueado);
-                        ventanaJuego.mostrar();
+                        abrirJuego();
                     } 
                     //</editor-fold>
                     //</editor-fold>
@@ -1468,6 +1467,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                 }
             }
         }).start();
+    }
+    
+    private void abrirJuego()
+    {
+        ventanaJuego = new FrmGame(usuarioLogueado);
+        ventanaJuego.mostrar();
     }
 
     /**

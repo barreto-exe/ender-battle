@@ -177,27 +177,27 @@ public final class DBUsuario implements Serializable
         {
             case 0:
             {
-                return "NORMAL";
+                return "normal";
             }
             case 1:
             {
-                return "ROJO";
+                return "rojo";
             }
             case 2:
             {
-                return "VERDE";
+                return "verde";
             }
             case 3:
             {
-                return "AMARILLO";
+                return "amarillo";
             }
             case 4:
             {
-                return "MORADO";
+                return "morado";
             }
             case 5:
             {
-                return "GRIS";
+                return "gris";
             }
             default:
             {

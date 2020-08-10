@@ -30,14 +30,13 @@ public final class FrmGame extends JFrame implements UsesSocket
     
     /**
      * Ventana que contiene al juego.
-     * @param contiene a los datos del usuario que está jugando
+     * @param usuario contiene a los datos del usuario que está jugando
      */
     public FrmGame(DBUsuario usuario)
     {
+        initComponents();
         this.usuario = usuario;
 
-        initComponents();
-        
         final Container container = getContentPane();
         container.setLayout(new BorderLayout());
 
@@ -47,8 +46,7 @@ public final class FrmGame extends JFrame implements UsesSocket
         config.width = Constant.FRAME_WIDTH;
         //</editor-fold>
 
-        MainGame game = new MainGame();
-        game.setUsuario(usuario);
+        MainGame game = new MainGame(usuario);
         game.setVentanaOrigen(this);
 
         //<editor-fold defaultstate="collapsed" desc="Añadir juego al jFrame">
