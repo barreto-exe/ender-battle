@@ -276,10 +276,11 @@ public class GameScreen extends BaseScreen implements UsesSocket
 
         //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
         if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)
-                && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4)
+            && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4)
         {
             gameCam.position.x = player.getBody().getPosition().x + 2;
         }
+        
         gameCam.update();
         renderer.setView(gameCam);
         renderer.render();
