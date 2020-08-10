@@ -9,7 +9,7 @@ public class Constant
 {
     
     public static final float PPM = 50;
-    public static final int MAX_MAP = 6400;
+    public static final int MAX_MAP = 12800;
     public static final int PLAYER_WIDTH = 512;  
     public static final int PLAYER_HEIGHT = 128;  
     public static final int IMPULSE_JUMP = 15;  
