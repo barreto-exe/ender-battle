@@ -100,7 +100,7 @@ public final class FrmTienda extends javax.swing.JFrame
             labelPrecio.setText("" + precio);
             
             //Habilitar imagen de objeto si tiene suficientes esmeraldas para comprar
-            //imgObjeto.setEnabled(player.getInventory().getEsmeraldas() >= precio);
+            imgObjeto.setEnabled(player.getInventory().getEsmeraldas() >= precio);
         }
     }
     

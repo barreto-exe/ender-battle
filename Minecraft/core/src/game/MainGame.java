@@ -23,6 +23,8 @@ public class MainGame extends Game
         
         if(usuario != null)
             progreso = new ProgresoJugador(usuario);
+        else
+            progreso = new ProgresoJugador();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">

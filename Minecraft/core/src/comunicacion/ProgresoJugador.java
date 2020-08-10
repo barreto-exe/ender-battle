@@ -35,6 +35,20 @@ public class ProgresoJugador implements Serializable
         enPartida = true;
     }
 
+    public ProgresoJugador()
+    {
+        idPartida = idJugador = personajeSeleccionado = 0;
+        animalesMatados = 0;
+        monstruosMatados = 0;
+        jefesMatados = 0;
+        esmeraldasRecogidas = 0;
+        objetosRecogidos = 0;
+        ganoPartida = false;
+        enPartida = true;
+    }
+    
+    
+
     private String nombreJugador;
     public ProgresoJugador(int idPartida, int idJugador, int personajeSeleccionado, int animalesMatados, int monstruosMatados, int jefesMatados, int esmeraldasRecogidas, int objetosRecogidos, boolean ganoPartida, boolean enPartida, String nombreJugador)
     {

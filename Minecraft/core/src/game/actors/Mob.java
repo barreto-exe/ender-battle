@@ -124,7 +124,7 @@ public abstract class Mob extends Sprite implements Actor
         }).start();
 
         //Saltar por el golpe
-        body.applyLinearImpulse(0, 3, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        body.applyLinearImpulse(0, 1, body.getWorldCenter().x, body.getWorldCenter().y, true);
 
         if (life <= 0)
         {
