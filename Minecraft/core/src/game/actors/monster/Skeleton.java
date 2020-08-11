@@ -105,17 +105,5 @@ public class Skeleton extends MonsterMob
         direction = direction * -1;
         System.out.println("Direction: " + direction);
     }
-
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
     
 }

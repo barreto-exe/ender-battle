@@ -119,16 +119,4 @@ public class Creeper extends MonsterMob
         }
     }
 
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
-
 }

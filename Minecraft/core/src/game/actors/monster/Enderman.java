@@ -77,17 +77,5 @@ public class Enderman extends MonsterMob
     {
         body.setLinearVelocity(player.getBody().getPosition().x + 80 * player.getDirection(), 0);
     }
-
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
-
+    
 }

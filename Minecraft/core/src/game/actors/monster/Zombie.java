@@ -73,17 +73,5 @@ public class Zombie extends MonsterMob
     {
         player.setCondition(PlayerCondition.POISONED, 5);
     }
-
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
     
 }
