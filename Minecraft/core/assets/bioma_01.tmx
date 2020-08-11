@@ -89,7 +89,7 @@
   <object id="110" x="11775.7" y="224.333" width="127.667" height="63.3333"/>
   <object id="111" x="12798.5" y="3.81818" width="1.09091" height="411.818"/>
  </objectgroup>
- <objectgroup id="3" name="LittleMob [2]" visible="0">
+ <objectgroup id="3" name="Little Mob [2]">
   <object id="32" x="3008" y="447" width="30" height="32"/>
   <object id="34" x="3104" y="448" width="30" height="32"/>
   <object id="53" x="4768.67" y="416" width="30.6667" height="30.6667"/>
@@ -102,7 +102,7 @@
   <object id="123" x="8640" y="416" width="33.3333" height="30.6667"/>
   <object id="144" x="4416.5" y="416" width="31" height="32.5"/>
  </objectgroup>
- <objectgroup id="4" name="BigMob [3]" visible="0">
+ <objectgroup id="4" name="Big Mob [3]">
   <object id="60" x="480" y="448" width="30.6667" height="32"/>
   <object id="62" x="1441.33" y="352" width="29.3333" height="30.6667"/>
   <object id="63" x="3710.67" y="414.667" width="33.3333" height="33.3333"/>
@@ -110,7 +110,7 @@
   <object id="113" x="6239.33" y="415.333" width="32.6667" height="32"/>
   <object id="114" x="6400" y="415.333" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="8" name="Tree [4]" visible="0">
+ <objectgroup id="8" name="Tree [4]">
   <object id="68" x="2273.33" y="286.667" width="30.6667" height="32"/>
   <object id="70" x="3520.17" y="352.417" width="31.5833" height="31.75"/>
   <object id="71" x="5823.84" y="288.166" width="32.6667" height="31.6667"/>
@@ -120,7 +120,7 @@
   <object id="129" x="11200.5" y="320.11" width="32.3333" height="32"/>
   <object id="134" x="6336.17" y="160.167" width="31.6667" height="31"/>
  </objectgroup>
- <objectgroup id="5" name="Bush [5]" visible="0">
+ <objectgroup id="5" name="Bush [5]">
   <object id="40" x="5503.33" y="416" width="32" height="30.6667"/>
   <object id="74" x="438.333" y="223.667" width="29.3333" height="32"/>
   <object id="130" x="12320" y="384" width="32" height="32"/>
@@ -129,7 +129,7 @@
   <object id="140" x="8192.33" y="159.667" width="31.3333" height="31.6667"/>
   <object id="141" x="8384.17" y="192.333" width="32" height="32.6667"/>
  </objectgroup>
- <objectgroup id="9" name="Monster [6]" visible="0">
+ <objectgroup id="9" name="Monster [6]">
   <object id="125" x="8256.67" y="416" width="31.3333" height="33.3333"/>
   <object id="126" x="9280" y="385.333" width="33.3333" height="29.3333"/>
   <object id="127" x="6304" y="417" width="31" height="31"/>
