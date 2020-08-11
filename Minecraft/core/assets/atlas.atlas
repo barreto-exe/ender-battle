@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 aldeano
   rotate: false
-  xy: 516, 864
+  xy: 516, 734
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
@@ -27,14 +27,14 @@ amarillo_golpear
   index: -1
 bayas
   rotate: false
-  xy: 954, 1870
+  xy: 516, 468
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 botas
   rotate: false
-  xy: 582, 568
+  xy: 838, 1796
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -62,14 +62,14 @@ caminar_esqueleto
   index: -1
 caminar_pigman
   rotate: false
-  xy: 516, 734
+  xy: 516, 864
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 casco
   rotate: false
-  xy: 388, 2
+  xy: 772, 1796
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -97,35 +97,35 @@ conejo
   index: -1
 conejo_carne
   rotate: false
-  xy: 772, 1630
+  xy: 772, 1615
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 corazon_lleno
   rotate: false
-  xy: 838, 1749
+  xy: 904, 1815
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_mitad
   rotate: false
-  xy: 904, 1815
+  xy: 582, 587
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_vacio
   rotate: false
-  xy: 454, 2
-  size: 64, 64
-  orig: 64, 64
+  xy: 772, 1683
+  size: 45, 45
+  orig: 45, 45
   offset: 0, 0
   index: -1
 esmeralda
   rotate: false
-  xy: 516, 455
+  xy: 838, 1749
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
@@ -146,7 +146,7 @@ explotar_creeper
   index: -1
 ganado_carne
   rotate: false
-  xy: 772, 1596
+  xy: 516, 434
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -167,14 +167,14 @@ gris_golpear
   index: -1
 hacha
   rotate: false
-  xy: 772, 1796
+  xy: 388, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 manzana
   rotate: false
-  xy: 582, 534
+  xy: 954, 1870
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -216,42 +216,42 @@ oveja
   index: -1
 pantalones
   rotate: false
-  xy: 838, 1796
+  xy: 454, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 papa
   rotate: false
-  xy: 516, 421
+  xy: 772, 1649
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pechera
   rotate: false
-  xy: 772, 1664
+  xy: 516, 502
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pera
   rotate: false
-  xy: 838, 1681
+  xy: 582, 519
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pico
   rotate: false
-  xy: 516, 502
+  xy: 772, 1730
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pollo_carne
   rotate: false
-  xy: 838, 1715
+  xy: 629, 600
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -272,16 +272,9 @@ rojo_golpear
   index: -1
 sandia
   rotate: false
-  xy: 516, 387
+  xy: 582, 553
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-shovel
-  rotate: false
-  xy: 772, 1730
-  size: 64, 64
-  orig: 64, 64
   offset: 0, 0
   index: -1
 spider
@@ -314,7 +307,7 @@ verde_golpear
   index: -1
 zanahoria
   rotate: false
-  xy: 772, 1562
+  xy: 516, 400
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

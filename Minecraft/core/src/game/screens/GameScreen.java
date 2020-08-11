@@ -77,7 +77,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     Batch batchUI = new SpriteBatch();
     BitmapFont cantidadEsmeralda; 
     Sprite esmeralda;               
-    Sprite corazon;              
+    Sprite corazon, corazonVacio;              
     Sprite corazonMitad;         
     //</editor-fold>
 
@@ -125,6 +125,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         cantidadEsmeralda = new BitmapFont();
         esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
         corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
+        corazonVacio = new Sprite(this.getAtlas().findRegion("corazon_vacio"));
         corazonMitad = new Sprite(this.getAtlas().findRegion("corazon_mitad"));
         //</editor-fold>
         
@@ -251,13 +252,17 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         //Dibujar los corazones
         int i;
+        for(i = 0; i < 10; i++)
+        {
+            batchUI.draw(corazonVacio, 835 + (corazon.getWidth()+5)*i, 580);
+        }
         for(i = 0; i < cantCorazones; i++)
         {
-            batchUI.draw(corazon, 825 + (corazon.getWidth()+5)*i, 580);
+            batchUI.draw(corazon, 835 + (corazon.getWidth()+5)*i, 580);
         }
         if(medioCorazon)
         {
-            batchUI.draw(corazonMitad, 825 + (corazon.getWidth()+5)*i, 580);
+            batchUI.draw(corazonMitad, 835 + (corazon.getWidth()+5)*i, 580);
         }
         
         batchUI.end();
