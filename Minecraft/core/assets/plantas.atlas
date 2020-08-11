@@ -35,8 +35,8 @@ arbol_ender
 arbol_ender2
   rotate: false
   xy: 2, 2
-  size: 152, 192
-  orig: 152, 192
+  size: 160, 192
+  orig: 160, 192
   offset: 0, 0
   index: -1
 arbol_manzana1
@@ -90,28 +90,28 @@ mata
   index: -1
 mata2
   rotate: false
-  xy: 665, 585
-  size: 108, 125
-  orig: 108, 125
+  xy: 665, 582
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 mata_bayas
   rotate: false
-  xy: 156, 69
+  xy: 164, 69
   size: 80, 125
   orig: 80, 125
   offset: 0, 0
   index: -1
 mata_papa
   rotate: false
-  xy: 775, 585
+  xy: 795, 585
   size: 80, 125
   orig: 80, 125
   offset: 0, 0
   index: -1
 mata_sandia
   rotate: false
-  xy: 665, 458
+  xy: 665, 455
   size: 80, 125
   orig: 80, 125
   offset: 0, 0
