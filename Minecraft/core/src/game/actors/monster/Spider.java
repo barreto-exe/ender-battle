@@ -77,16 +77,4 @@ public class Spider extends MonsterMob
         player.setCondition(PlayerCondition.ENTANGLED, 5);
     }
 
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
-
 }

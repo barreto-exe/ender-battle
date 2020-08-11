@@ -77,16 +77,4 @@ public class Pigman extends MonsterMob
         }
     }
 
-    @Override
-    protected void toDie() {
-        if (isBoss)
-        {
-            toDropPrize();
-        }
-        else
-        {
-            super.toDie();
-        }
-    }
-
 }

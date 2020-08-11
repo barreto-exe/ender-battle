@@ -52,7 +52,7 @@ public class BiomeAssemblerClass
         Body body;
         
         //Creando fixtures bioma [1]
-        for (MapObject object : screen.getMap().getLayers().get(1).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
@@ -72,7 +72,7 @@ public class BiomeAssemblerClass
 
         //<editor-fold defaultstate="collapsed" desc="Ubicar Mobs Pacíficos">
         //Ubicando mobs pacíficos pequeños [2]
-        for (MapObject object : screen.getMap().getLayers().get(2).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
@@ -85,7 +85,7 @@ public class BiomeAssemblerClass
         }
 
         //Ubicando mobs pacíficos grandes [3]
-        for (MapObject object : screen.getMap().getLayers().get(3).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
@@ -103,7 +103,7 @@ public class BiomeAssemblerClass
         Plant plant;
         
         //Ubicando arboles [4]
-        for (MapObject object : screen.getMap().getLayers().get(4).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
@@ -116,7 +116,7 @@ public class BiomeAssemblerClass
         }
         
         //Ubicando arbustos [5]
-        for (MapObject object : screen.getMap().getLayers().get(5).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             
@@ -134,7 +134,7 @@ public class BiomeAssemblerClass
         
         //<editor-fold defaultstate="collapsed" desc="Ubicar Monstruos">
         //Ubicando mobs pacíficos pequeños [2]
-        for (MapObject object : screen.getMap().getLayers().get(6).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
@@ -149,7 +149,7 @@ public class BiomeAssemblerClass
         
         Rectangle rectangle = new Rectangle();
         //Ubicación del Aldeano
-        for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class))
         {
             rectangle = ((RectangleMapObject) object).getRectangle();
         }
@@ -158,7 +158,7 @@ public class BiomeAssemblerClass
         
         
         //Ubicación del Jugador
-        for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class))
+        for (MapObject object : screen.getMap().getLayers().get(9).getObjects().getByType(RectangleMapObject.class))
         {
             rectangle = ((RectangleMapObject) object).getRectangle();
         }

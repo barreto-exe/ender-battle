@@ -219,7 +219,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         player.create(this, position.x, position.y);
         //Añadir actores al grupo
         actors.addActor(player);
-        actors.addActor(new Creeper(this, 2, 15, false));
+        actors.addActor(new Creeper(this, 8, 15, true));
 
         //Monstruos de prueba   
 
