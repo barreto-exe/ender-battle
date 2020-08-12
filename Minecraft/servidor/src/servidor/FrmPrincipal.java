@@ -11,6 +11,7 @@ import comunicacion.*;
 import comunicacion.PaqueteOperacion.*;
 import static comunicacion.PaqueteOperacion.Operacion.*;
 import static comunicacion.PaqueteOperacion.ResultadoOperacion.*;
+import java.util.HashMap;
 
 /**
  *
@@ -381,14 +382,35 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
                 }
                 //</editor-fold>
                 
+                //<editor-fold defaultstate="collapsed" desc="Comenzar la partida">
                 if(operacion == COMENZAR_PARTIDA)
                 {
                     int partida = ((DBPartida) paquete.getInformacion()).getId();
-                    
+
                     DBPartida.comenzarPartida(partida);
-                    
+
                     responderResultado = false;
                 }
+                //</editor-fold>
+                
+                //<editor-fold defaultstate="collapsed" desc="Pedir Estadísticas del Usuario">
+                if(operacion == ESTADISTICAS)
+                {
+                    String usuario = (String) paquete.getInformacion();
+
+                    HashMap<String,String> estadisticas = DBUsuario.estadisticasUsuario(usuario);
+                    resultado.setInformacion(estadisticas);
+
+                    if(estadisticas != null)
+                    {
+                        resultado.setResultado(RESPUESTA_ESTADISTICAS);
+                    }
+                    else
+                    {
+                        resultado.setResultado(NO_HAY_ESTADISTICAS);
+                    }
+                }
+                //</editor-fold>
                 
                 //**************************************************************
                 //Enviar respuesta al cliente

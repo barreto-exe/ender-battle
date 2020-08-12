@@ -59,7 +59,8 @@ public class PaqueteOperacion<E> implements Serializable
         PEDIR_PARTIDAS_ACTIVAS,
         SALIR_PARTIDA,
         COMENZAR_PARTIDA,
-        REPORTE_PROGRESO
+        REPORTE_PROGRESO,
+        ESTADISTICAS
     }
 
     /**
@@ -99,6 +100,10 @@ public class PaqueteOperacion<E> implements Serializable
         
         //Respuesta para REPORTE_PROGRESO
         RESPUESTA_REPORTE,
+        
+        //Respuesta para ESTADISTICAS
+        RESPUESTA_ESTADISTICAS,
+        NO_HAY_ESTADISTICAS
     }
 
 }

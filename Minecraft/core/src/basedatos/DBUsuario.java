@@ -2,6 +2,7 @@ package basedatos;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 /**
  * Clase con funcionalidades CRUD para los usuarios en la base de datos.
@@ -310,6 +311,12 @@ public final class DBUsuario implements Serializable
 
         //Retornar -1 si el usuario está disponible
         return -1;
+    }
+    
+    public static HashMap<String,String> estadisticasUsuario(String usuario)
+    {
+        
+        return null;
     }
 
     /**

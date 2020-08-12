@@ -24,6 +24,7 @@ import game.tools.Constant;
 import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import javax.swing.JEditorPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.rtf.RTFEditorKit;
@@ -83,7 +84,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         cargarRTF(txtManualUnirsePartida, "UnirsePartida");
         cargarRTF(txtAcercaDe, "AcercaDe");
 
-        this.limpiarPanelPartidas();
+        limpiarPanelPartidas();
     }
 
     /**
@@ -179,6 +180,32 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         btnComenzarPartida = new javax.swing.JButton();
         btnCancelarPartida = new javax.swing.JButton();
         fondoAcerca1 = new javax.swing.JLabel();
+        panelEstadisticas = new javax.swing.JPanel();
+        txtUsuarioEstadisticas = new javax.swing.JTextField();
+        btnConsultarEstadisticas = new javax.swing.JButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        lblEstNombreUsuario = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        lblPartidasJugadas = new javax.swing.JLabel();
+        lblMonstruosMatados = new javax.swing.JLabel();
+        lblObjetosRecogidos = new javax.swing.JLabel();
+        lblPartidasGanadas = new javax.swing.JLabel();
+        lblJefesMatados = new javax.swing.JLabel();
+        lblEsmeraldasRecogidas = new javax.swing.JLabel();
+        lblColorFavorito = new javax.swing.JLabel();
+        lblAnimalesMatados = new javax.swing.JLabel();
+        lblPartidasPerdidas = new javax.swing.JLabel();
+        btnVolver4 = new javax.swing.JButton();
+        fondoEstadisticas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
@@ -935,6 +962,193 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         jlpPrincipal.add(panelPartida, "card3");
 
+        panelEstadisticas.setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelEstadisticas.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        panelEstadisticas.setLayout(null);
+
+        txtUsuarioEstadisticas.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
+        txtUsuarioEstadisticas.setText("barreto");
+        panelEstadisticas.add(txtUsuarioEstadisticas);
+        txtUsuarioEstadisticas.setBounds(10, 50, 220, 30);
+
+        btnConsultarEstadisticas.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnConsultarEstadisticas.setText("Consultar");
+        btnConsultarEstadisticas.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnConsultarEstadisticasActionPerformed(evt);
+            }
+        });
+        panelEstadisticas.add(btnConsultarEstadisticas);
+        btnConsultarEstadisticas.setBounds(250, 50, 120, 30);
+
+        lblEstNombreUsuario.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblEstNombreUsuario.setText("Usuario...");
+
+        jLabel4.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel4.setText("Partidas Jugadas");
+
+        jLabel5.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel5.setText("Color Favorito");
+
+        jLabel6.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel6.setText("Animales Matados");
+
+        jLabel7.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel7.setText("Monstruos Matados");
+
+        jLabel8.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel8.setText("Jefes Matados");
+
+        jLabel9.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel9.setText("Esmeraldas Recogidas");
+
+        jLabel10.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel10.setText("Objetos Recogidos");
+
+        jLabel11.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel11.setText("Partidas Ganadas");
+
+        jLabel12.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel12.setText("Partidas Perdidas");
+
+        lblPartidasJugadas.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblPartidasJugadas.setText("20");
+        lblPartidasJugadas.setToolTipText("");
+
+        lblMonstruosMatados.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblMonstruosMatados.setText("20");
+        lblMonstruosMatados.setToolTipText("");
+
+        lblObjetosRecogidos.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblObjetosRecogidos.setText("20");
+        lblObjetosRecogidos.setToolTipText("");
+
+        lblPartidasGanadas.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblPartidasGanadas.setText("20");
+        lblPartidasGanadas.setToolTipText("");
+
+        lblJefesMatados.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblJefesMatados.setText("20");
+        lblJefesMatados.setToolTipText("");
+
+        lblEsmeraldasRecogidas.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblEsmeraldasRecogidas.setText("20");
+        lblEsmeraldasRecogidas.setToolTipText("");
+
+        lblColorFavorito.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblColorFavorito.setText("Azul");
+        lblColorFavorito.setToolTipText("");
+
+        lblAnimalesMatados.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblAnimalesMatados.setText("20");
+        lblAnimalesMatados.setToolTipText("");
+
+        lblPartidasPerdidas.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        lblPartidasPerdidas.setText("20");
+        lblPartidasPerdidas.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEstNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel4)
+                            .addComponent(lblPartidasJugadas)
+                            .addComponent(lblPartidasGanadas)
+                            .addComponent(jLabel12)
+                            .addComponent(lblPartidasPerdidas))
+                        .addGap(110, 110, 110)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6)
+                            .addComponent(lblMonstruosMatados)
+                            .addComponent(lblJefesMatados)
+                            .addComponent(lblAnimalesMatados))
+                        .addGap(110, 110, 110)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblObjetosRecogidos)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9)
+                            .addComponent(lblEsmeraldasRecogidas)
+                            .addComponent(jLabel5)
+                            .addComponent(lblColorFavorito))
+                        .addGap(0, 207, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEstNombreUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPartidasJugadas)
+                    .addComponent(lblMonstruosMatados)
+                    .addComponent(lblObjetosRecogidos))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPartidasGanadas)
+                    .addComponent(lblJefesMatados)
+                    .addComponent(lblEsmeraldasRecogidas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblColorFavorito)
+                            .addComponent(lblAnimalesMatados)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPartidasPerdidas)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Estadísticas del Usuario", jPanel4);
+
+        panelEstadisticas.add(jTabbedPane2);
+        jTabbedPane2.setBounds(10, 100, 830, 310);
+
+        btnVolver4.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
+        btnVolver4.setText("VOLVER");
+        btnVolver4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnVolverActionPerformed(evt);
+            }
+        });
+        panelEstadisticas.add(btnVolver4);
+        btnVolver4.setBounds(10, 420, 170, 40);
+
+        fondoEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondos/tierra.png"))); // NOI18N
+        panelEstadisticas.add(fondoEstadisticas);
+        fondoEstadisticas.setBounds(0, 0, 850, 480);
+
+        jlpPrincipal.add(panelEstadisticas, "card3");
+
         getContentPane().add(jlpPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -956,6 +1170,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
     private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
         Sonido.click();
+        mostrarPanel(panelEstadisticas);
     }//GEN-LAST:event_btnEstadisticasActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -1091,11 +1306,36 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     {//GEN-HEADEREND:event_jButton1ActionPerformed
         abrirJuego();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnConsultarEstadisticasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnConsultarEstadisticasActionPerformed
+    {//GEN-HEADEREND:event_btnConsultarEstadisticasActionPerformed
+        consultarEstadisticas();
+    }//GEN-LAST:event_btnConsultarEstadisticasActionPerformed
     //</editor-fold>
 
     /**
      * **********************************************************************************************
      */
+    private void consultarEstadisticas()
+    {
+        //Pedir consulta del usuario indicado
+        MetodosSocket.enviarPaquete
+        (
+            new PaqueteOperacion(Operacion.ESTADISTICAS,this.txtUsuarioEstadisticas.getText()),
+            this
+        );
+        
+        //Bloquear botón
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                btnConsultarEstadisticas.setEnabled(false);
+            }
+        }).start();
+    }
+    
     /**
      * Solicita al servidor que registre al usuario con los datos proveídos.
      */
@@ -1457,6 +1697,42 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     }
                     //</editor-fold>
 
+                    else if(resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS)
+                    {
+                        HashMap<String, String> estadisticas = (HashMap<String, String>) resultado.getInformacion();
+
+                        formulario.lblEstNombreUsuario.setText(estadisticas.get("nombre"));
+                        formulario.lblColorFavorito.setText(estadisticas.get("colorFavorito"));
+                        formulario.lblPartidasGanadas.setText(estadisticas.get("partidasGanadas"));
+                        formulario.lblPartidasJugadas.setText(estadisticas.get("colorFavorito"));
+                        formulario.lblPartidasPerdidas.setText(estadisticas.get("partidasPerdidas"));
+                        formulario.lblMonstruosMatados.setText(estadisticas.get("monstruosMatados"));
+                        formulario.lblAnimalesMatados.setText(estadisticas.get("animalesMatados"));
+                        formulario.lblJefesMatados.setText(estadisticas.get("jefesMatados"));
+                        formulario.lblObjetosRecogidos.setText(estadisticas.get("objetosRecogidos"));
+                        formulario.lblEsmeraldasRecogidas.setText(estadisticas.get("esmeraldasRecogidas"));
+                    }
+                    else if(resultado.getResultado() == ResultadoOperacion.NO_HAY_ESTADISTICAS)
+                    {
+                        JOptionPane.showMessageDialog(formulario, "No existe el usuario deseado.");
+                    }
+                    //Desbloquear botón
+                    if(resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS
+                        || resultado.getResultado() == ResultadoOperacion.NO_HAY_ESTADISTICAS)
+                    {
+                        formulario.txtUsuarioEstadisticas.setText("");
+                        
+                        new Thread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                formulario.btnConsultarEstadisticas.setEnabled(true);
+                            }
+                        }).start();
+                    }
+                        
+                    
                     socket.close();
                 } catch (IOException | ClassNotFoundException ex)
                 {
@@ -1532,10 +1808,27 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         this.jtPartidas.setSelectedIndex(0);
         this.personajeSeleccionado = 0;
         this.elegirImagenPersonaje();
+        
+        this.limpiarPanelEstadisticas();
 
         this.partida.setId(-1);
         ((DefaultTableModel) this.jtPartidasActivas.getModel()).setRowCount(0);
         ((DefaultTableModel) this.jtJugadores.getModel()).setRowCount(0);
+    }
+    
+    private void limpiarPanelEstadisticas()
+    {
+        this.txtUsuarioEstadisticas.setText("");
+        this.lblEstNombreUsuario.setText("...");
+        this.lblColorFavorito.setText("...");
+        this.lblPartidasGanadas.setText("0");
+        this.lblPartidasJugadas.setText("0");
+        this.lblPartidasPerdidas.setText("0");
+        this.lblMonstruosMatados.setText("0");
+        this.lblAnimalesMatados.setText("0");
+        this.lblJefesMatados.setText("0");
+        this.lblObjetosRecogidos.setText("0");
+        this.lblEsmeraldasRecogidas.setText("0");
     }
 
     /**
@@ -1574,6 +1867,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JButton btnCambiarServidor;
     private javax.swing.JButton btnCancelarPartida;
     private javax.swing.JButton btnComenzarPartida;
+    private javax.swing.JButton btnConsultarEstadisticas;
     private javax.swing.JButton btnCrearPartida;
     private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnIniciarSesion;
@@ -1583,19 +1877,31 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JButton btnVolver1;
     private javax.swing.JButton btnVolver2;
     private javax.swing.JButton btnVolver3;
+    private javax.swing.JButton btnVolver4;
     private javax.swing.JLabel fondoAcerca;
     private javax.swing.JLabel fondoAcerca1;
     private javax.swing.JLabel fondoAyuda;
     private javax.swing.JLabel fondoBienvenida;
+    private javax.swing.JLabel fondoEstadisticas;
     private javax.swing.JLabel fondoIniciar;
     private javax.swing.JLabel fondoRegistrarse;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1605,6 +1911,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JList<String> jlListaManualesJuego;
     private javax.swing.JLayeredPane jlpPrincipal;
     private javax.swing.JPanel jpCrear;
@@ -1614,11 +1921,21 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JTable jtJugadores;
     private javax.swing.JTabbedPane jtPartidas;
     private javax.swing.JTable jtPartidasActivas;
+    private javax.swing.JLabel lblAnimalesMatados;
+    private javax.swing.JLabel lblColorFavorito;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblEsmeraldasRecogidas;
+    private javax.swing.JLabel lblEstNombreUsuario;
     private javax.swing.JLabel lblFlechaDerecha;
     private javax.swing.JLabel lblFlechaIzquierda;
+    private javax.swing.JLabel lblJefesMatados;
+    private javax.swing.JLabel lblMonstruosMatados;
     private javax.swing.JLabel lblNickname;
     private javax.swing.JLabel lblNombrePartida;
+    private javax.swing.JLabel lblObjetosRecogidos;
+    private javax.swing.JLabel lblPartidasGanadas;
+    private javax.swing.JLabel lblPartidasJugadas;
+    private javax.swing.JLabel lblPartidasPerdidas;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblPass1;
     private javax.swing.JLabel lblPass2;
@@ -1632,6 +1949,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JPanel panelAcercaDe;
     private javax.swing.JPanel panelAyuda;
     private javax.swing.JPanel panelBienvenida;
+    private javax.swing.JPanel panelEstadisticas;
     private javax.swing.JPanel panelIniciar;
     private javax.swing.JPanel panelPartida;
     private javax.swing.JPanel panelRegistrarse;
@@ -1648,6 +1966,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JPasswordField txtPassConfirmar;
     private javax.swing.JPasswordField txtPassIniciar;
     private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtUsuarioEstadisticas;
     private javax.swing.JTextField txtUsuarioIniciar;
     // End of variables declaration//GEN-END:variables
 
