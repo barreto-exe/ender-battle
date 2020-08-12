@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import game.screens.GameScreen;
 import game.tools.Constant;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,6 +47,8 @@ public abstract class Plant extends Sprite implements Actor
     protected Constant.Farming type;
     protected FoodCollectible[] fruits;
     protected TextureAtlas.AtlasRegion fruitTexture;
+    
+    private GameScreen screen;
     //</editor-fold>
 
     public Plant(GameScreen screen, Constant.Farming type, float x, float y)
@@ -53,6 +57,7 @@ public abstract class Plant extends Sprite implements Actor
         atlasPlants = screen.getPlantas();
         atlasFruit = screen.getAtlas();
         actors = screen.getActors();
+        this.screen = screen;
         isEmpty = setToCrop = false;
         life = 75;
         this.type = type;
@@ -139,6 +144,25 @@ public abstract class Plant extends Sprite implements Actor
         {
             life = 0;
             setToCrop = true;
+
+            //Mostrar mensaje conservacionista por 5 segundos
+            screen.setMostrarMensajeConservacion(true);
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        Thread.sleep(5000);
+                        screen.setMostrarMensajeConservacion(false);
+                    }
+                    catch (InterruptedException ex)
+                    {
+                    }
+                }
+                
+            }).start();
         }
     }
 

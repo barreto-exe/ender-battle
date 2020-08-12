@@ -75,7 +75,9 @@ public class GameScreen extends BaseScreen implements UsesSocket
     
     //Atributos de la GUI
     Batch batchUI = new SpriteBatch();
-    BitmapFont cantidadEsmeralda; 
+    BitmapFont cantidadEsmeralda, mensajeConservacion;
+    boolean mostrarMensajeConservacion;
+    int contadorMsjConservacion;
     Sprite esmeralda;               
     Sprite corazon, corazonVacio;              
     Sprite corazonMitad;         
@@ -97,7 +99,8 @@ public class GameScreen extends BaseScreen implements UsesSocket
     {
         super(game);
         this.player = player;
-        isPaused = false;
+        isPaused = mostrarMensajeConservacion = false;
+        contadorMsjConservacion = 0;
         actors = new Group();
         
         ventanaInventario = new FrmInventario(player);
@@ -123,6 +126,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     
         //<editor-fold defaultstate="collapsed" desc="Inicializar GUI">
         cantidadEsmeralda = new BitmapFont();
+        mensajeConservacion = new BitmapFont();
         esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
         corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
         corazonVacio = new Sprite(this.getAtlas().findRegion("corazon_vacio"));
@@ -137,6 +141,18 @@ public class GameScreen extends BaseScreen implements UsesSocket
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public boolean isMostrarMensajeConservacion()
+    {
+        return mostrarMensajeConservacion;
+    }
+
+    public void setMostrarMensajeConservacion(boolean mostrarMensajeConservacion)
+    {
+        contadorMsjConservacion++;
+        
+        this.mostrarMensajeConservacion = mostrarMensajeConservacion && contadorMsjConservacion % 5 == 0;
+    }
     
     public static FrmJugadores getVentanaJugadores()
     {
@@ -263,6 +279,11 @@ public class GameScreen extends BaseScreen implements UsesSocket
         if(medioCorazon)
         {
             batchUI.draw(corazonMitad, 835 + (corazon.getWidth()+5)*i, 580);
+        }
+        
+        if(mostrarMensajeConservacion)
+        {
+            mensajeConservacion.draw(batchUI, "¡No maltrates plantas ni animales en la vida real!", 100, 100);
         }
         
         batchUI.end();
