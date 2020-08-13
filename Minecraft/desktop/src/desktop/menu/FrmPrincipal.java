@@ -1703,8 +1703,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                         formulario.lblEstNombreUsuario.setText(estadisticas.get("nombre"));
                         formulario.lblColorFavorito.setText(estadisticas.get("colorFavorito"));
+                        formulario.lblPartidasGanadas.setText(estadisticas.get("partidasJugadas"));
                         formulario.lblPartidasGanadas.setText(estadisticas.get("partidasGanadas"));
-                        formulario.lblPartidasJugadas.setText(estadisticas.get("colorFavorito"));
                         formulario.lblPartidasPerdidas.setText(estadisticas.get("partidasPerdidas"));
                         formulario.lblMonstruosMatados.setText(estadisticas.get("monstruosMatados"));
                         formulario.lblAnimalesMatados.setText(estadisticas.get("animalesMatados"));

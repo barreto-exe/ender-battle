@@ -312,9 +312,56 @@ public final class DBUsuario implements Serializable
         //Retornar -1 si el usuario está disponible
         return -1;
     }
-    
-    public static HashMap<String,String> estadisticasUsuario(String usuario)
+
+    public static HashMap<String, String> estadisticasUsuario(String usuario)
     {
+        int idUsuario = DBUsuario.idUsuario(usuario);
+        
+        if(idUsuario == -1)
+            return null;
+        
+        String query = 
+                "SELECT\n"
+                + "	( SELECT usuario FROM m_usuarios WHERE id = p.idjugador ) AS nombre,\n"
+                + "	( SELECT personajeSeleccionado AS color FROM m_partidas_progreso WHERE idjugador = p.idjugador GROUP BY personajeSeleccionado ORDER BY color DESC ) AS colorFavorito,\n"
+                + "	COUNT( DISTINCT idpartida ) AS partidasJugadas,\n"
+                + "	SUM( partidaGanada ) AS partidasGanadas,\n"
+                + "	( COUNT( DISTINCT idpartida ) - SUM( partidaGanada ) ) AS partidasPerdidas, \n"
+                + "	SUM( monstruosMatados ) AS monstruosMatados,\n"
+                + "	SUM( animalesMatados ) AS animalesMatados,\n"
+                + "	SUM( jefesMatados ) AS jefesMatados,\n"
+                + "	SUM( objetosRecogidos ) AS objetosRecogidos, \n"
+                + "	SUM( esmeraldasRecogidas ) AS esmeraldasRecogidas,\n"
+                + "FROM\n"
+                + "	m_partidas_progreso p \n"
+                + "WHERE\n"
+                + "	idjugador = ? \n"
+                + "GROUP BY\n"
+                + "	idjugador \n"
+                + "ORDER BY\n"
+                + "	personajeSeleccionado DESC";
+        DBOperacion operacion = new DBOperacion(query);
+        operacion.pasarParametro(idUsuario);
+        
+        DBMatriz resultado = operacion.consultar();
+        
+        if(resultado.leer())
+        {
+            HashMap<String, String> estadisticas = new HashMap<>();
+            
+            estadisticas.put("nombre", (String)resultado.getValor("nombre"));
+            estadisticas.put("colorFavorito", (String)resultado.getValor("colorFavorito"));
+            estadisticas.put("partidasJugadas", (String)resultado.getValor("partidasJugadas"));
+            estadisticas.put("partidasGanadas", (String)resultado.getValor("partidasGanadas"));
+            estadisticas.put("partidasPerdidas", (String)resultado.getValor("partidasPerdidas"));
+            estadisticas.put("monstruosMatados", (String)resultado.getValor("monstruosMatados"));
+            estadisticas.put("animalesMatados", (String)resultado.getValor("animalesMatados"));
+            estadisticas.put("jefesMatados", (String)resultado.getValor("jefesMatados"));
+            estadisticas.put("objetosRecogidos", (String)resultado.getValor("objetosRecogidos"));
+            estadisticas.put("esmeraldasRecogidas", (String)resultado.getValor("esmeraldasRecogidas"));
+            
+            return estadisticas;
+        }
         
         return null;
     }
