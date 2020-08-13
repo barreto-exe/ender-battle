@@ -6,6 +6,7 @@ import game.inventario.Arm;
 import game.inventario.BattleObject;
 import game.inventario.Protection;
 import game.tools.Constant;
+import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
 import java.util.HashMap;
 import javax.swing.JLabel;
@@ -106,7 +107,7 @@ public final class FrmTienda extends javax.swing.JFrame
     
     public void mostrar()
     {
-        soundManager.get("sonidos/mobs/aldeano.ogg", Sound.class).play();
+        soundManager.get("sonidos/mobs/aldeano.ogg", Sound.class).play(Sonido.volumen);
         
         setVisible(true);
         requestFocus();

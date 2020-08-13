@@ -27,6 +27,7 @@ import game.inventario.Protection;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
+import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
 import game.tools.VirtualController;
 
@@ -506,12 +507,10 @@ public class Player extends Sprite implements Actor
         if (portedObjects[index] != null)
         {
             portedObjects[index].setIsPorted(false);
-            System.out.println("Desportado: " + portedObjects[index].toString());
         }
 
         object.setIsPorted(true);
         portedObjects[index] = object;
-        System.out.println("Portado: " + object.toString());
     }
 
     /**
@@ -525,7 +524,6 @@ public class Player extends Sprite implements Actor
         if (portedObjects[index] != null)
         {
             portedObjects[index].setIsPorted(false);
-            System.out.println("Desportado: " + portedObjects[index].toString());
         }
     }
     
@@ -566,7 +564,7 @@ public class Player extends Sprite implements Actor
     {
         if (plant != null)
         {
-            soundManager.get("sonidos/arbolhit.ogg", Sound.class).play();
+            soundManager.get("sonidos/arbolhit.ogg", Sound.class).play(Sonido.volumen);
             plant.toRecibeAttack(this, calculateDamage());
         }
     }
@@ -585,8 +583,8 @@ public class Player extends Sprite implements Actor
         
         life -= hit;
         
-        soundManager.get("sonidos/hurt1.ogg", Sound.class).play();
-        soundManager.get("sonidos/hurt2.ogg", Sound.class).play();
+        soundManager.get("sonidos/hurt1.ogg", Sound.class).play(Sonido.volumen);
+        soundManager.get("sonidos/hurt2.ogg", Sound.class).play(Sonido.volumen);
         
         final Player player = this;
 
@@ -629,13 +627,13 @@ public class Player extends Sprite implements Actor
         
         if (objectCollectible instanceof EsmeraldCollective)
         {
-            soundManager.get("sonidos/esmeralda.ogg", Sound.class).play();
+            soundManager.get("sonidos/esmeralda.ogg", Sound.class).play(Sonido.volumen);
             inventory.setEsmeraldas(inventory.getEsmeraldas() + 1);
             progreso.setEsmeraldasRecogidas(progreso.getEsmeraldasRecogidas()+1);
         }
         else
         {
-            soundManager.get("sonidos/pick.ogg", Sound.class).play();
+            soundManager.get("sonidos/pick.ogg", Sound.class).play(Sonido.volumen);
             progreso.setObjetosRecogidos(progreso.getObjetosRecogidos()+1);
             
             if (objectCollectible instanceof FoodCollectible)
@@ -676,10 +674,10 @@ public class Player extends Sprite implements Actor
         {
             case ENTANGLED:
             case POISONED:
-                soundManager.get("sonidos/hechizo_normal.ogg", Sound.class).play();
+                soundManager.get("sonidos/hechizo_normal.ogg", Sound.class).play(Sonido.volumen);
                 break;
             case BURNED:
-                soundManager.get("sonidos/hechizo_quemar.ogg", Sound.class).play();
+                soundManager.get("sonidos/hechizo_quemar.ogg", Sound.class).play(Sonido.volumen);
                 break;
         }
     }

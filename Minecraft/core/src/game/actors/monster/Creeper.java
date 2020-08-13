@@ -90,33 +90,6 @@ public class Creeper extends MonsterMob
     @Override
     public void specialAttack(Player player)
     {
-        final Creeper creeper = this;
-        final Mob mob = player.getEnemy();
-        final float segundos = 3;
-
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    Thread.sleep(((long) (segundos)) * 1000);
-                }
-                catch (InterruptedException ex)
-                {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        }).start();
-        if (player.getEnemy().equals(this))
-        {
-            System.out.println("Exploto");
-        }
-        else
-        {
-            System.out.println("No exploto");
-        }
     }
 
 }

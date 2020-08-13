@@ -91,7 +91,7 @@ public abstract class Mob extends Sprite implements Actor
         
         if(contadorSonidos == 0)
         {
-            Sonido.soundManager.get("sonidos/mobs/"+sonido+".ogg", Sound.class).play();
+            Sonido.soundManager.get("sonidos/mobs/"+sonido+".ogg", Sound.class).play(Sonido.volumen);
         }
         
         contadorSonidos++;

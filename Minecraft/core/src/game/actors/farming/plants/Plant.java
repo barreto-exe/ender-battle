@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

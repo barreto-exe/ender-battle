@@ -11,9 +11,11 @@ import com.badlogic.gdx.audio.Sound;
 public class Sonido 
 {
     public final static AssetManager soundManager;
+    public final static float volumen;
     
     static
     {
+        volumen = 1;
         soundManager = new AssetManager();
         soundManager.load("sonidos/temaPrincipal.ogg", Sound.class);
         soundManager.load("sonidos/click.ogg", Sound.class);
@@ -52,6 +54,6 @@ public class Sonido
     
     public static void click()
     {
-        soundManager.get("sonidos/click.ogg", Sound.class).play();
+        soundManager.get("sonidos/click.ogg", Sound.class).play(volumen);
     }
 }

@@ -118,5 +118,6 @@ public class EnderDragon extends MonsterMob
     @Override
     public void specialAttack(Player player)
     {
+        body.applyLinearImpulse(0, 10, body.getWorldCenter().x, body.getWorldCenter().y, true);
     }
 }

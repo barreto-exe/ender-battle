@@ -18,7 +18,7 @@ public class DesktopLauncher
         frm.setVisible(true);
         
         music = Sonido.soundManager.get("sonidos/temaPrincipal.ogg", Sound.class);
-        music.setLooping(music.play(), true);
+        music.setLooping(music.play(Sonido.volumen), true);
     }
 
     public static void colocarInterfaz()
