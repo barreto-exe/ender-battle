@@ -10,6 +10,7 @@ import game.inventario.Arm;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import game.tools.Constant.*;
+import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
 
 /**
@@ -102,7 +103,7 @@ public class EnderDragon extends MonsterMob
                 {
                     volando = sonando = true;
                     Thread.sleep(5000);
-                    soundManager.get("sonidos/mobs/enderdragon_alas.ogg", Sound.class).play();
+                    soundManager.get("sonidos/mobs/enderdragon_alas.ogg", Sound.class).play(Sonido.volumen);
                     body.applyLinearImpulse(0, 6, body.getWorldCenter().x, body.getWorldCenter().y, true);
                     volando = sonando = false;
                 }

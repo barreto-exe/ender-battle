@@ -91,11 +91,6 @@ public class Skeleton extends MonsterMob
     @Override
     public void specialAttack(Player player)
     {
-        if (direction * player.getDirection() == -1)
-        {
-            System.out.println("Flecha");
-        }
-
     }
 
     @Override
@@ -103,7 +98,6 @@ public class Skeleton extends MonsterMob
     {
         super.changeDirection();
         direction = direction * -1;
-        System.out.println("Direction: " + direction);
     }
     
 }

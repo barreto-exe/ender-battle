@@ -106,7 +106,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         ventanaInventario = new FrmInventario(player);
         ventanaTienda = new FrmTienda(player);
-        ventanaJugadores = new FrmJugadores();
+        ventanaJugadores = new FrmJugadores(game.getVentanaOrigen());
         
         //<editor-fold defaultstate="collapsed" desc="Posicionar Cámara">
         gameCam = new OrthographicCamera();

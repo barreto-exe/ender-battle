@@ -8,7 +8,6 @@ import game.tools.Sonido;
 
 public class DesktopLauncher
 {
-    public static Sound music;
     
     public static void main(String[] arg)
     {
@@ -17,8 +16,9 @@ public class DesktopLauncher
         FrmPrincipal frm = new FrmPrincipal();
         frm.setVisible(true);
         
-        music = Sonido.soundManager.get("sonidos/temaPrincipal.ogg", Sound.class);
-        music.setLooping(music.play(Sonido.volumen), true);
+        Sonido.music = Sonido.soundManager.get("sonidos/temaPrincipal.ogg", Sound.class);
+        Sonido.musicId = Sonido.music.play(Sonido.volumen);
+        Sonido.music.setLooping(Sonido.musicId, true);
     }
 
     public static void colocarInterfaz()

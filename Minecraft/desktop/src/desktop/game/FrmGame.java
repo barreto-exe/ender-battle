@@ -15,6 +15,7 @@ import game.MainGame;
 import game.screens.GameScreen;
 import game.tools.Constant;
 import java.awt.Canvas;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -94,17 +95,7 @@ public final class FrmGame extends JFrame implements UsesSocket
     //Sale de la partida al cerrar el juego
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
-        if(usuario !=null) 
-        {
-            MetodosSocket.enviarPaquete
-            (
-                new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuario),
-                this
-            );
-            
-            //Enviar abandonar partida 
-            ((GameScreen)game.getScreen()).pararReporteEstadoJugador();
-        }
+        salirPartida();
     }//GEN-LAST:event_formWindowClosing
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -117,6 +108,30 @@ public final class FrmGame extends JFrame implements UsesSocket
         this.usuario = usuario;
     }
     //</editor-fold>
+
+    @Override
+    public void setVisible(boolean b)
+    {
+        super.setVisible(b); 
+        
+        if(!b)
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+    
+    public void salirPartida()
+    {
+        if(usuario !=null) 
+        {
+            MetodosSocket.enviarPaquete
+            (
+                new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuario),
+                this
+            );
+            
+            //Enviar abandonar partida 
+            ((GameScreen)game.getScreen()).pararReporteEstadoJugador();
+        }
+    }
     
     /**
      * Hace visible la ventana de juego.

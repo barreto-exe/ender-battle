@@ -11,7 +11,9 @@ import com.badlogic.gdx.audio.Sound;
 public class Sonido 
 {
     public final static AssetManager soundManager;
-    public final static float volumen;
+    public static float volumen;
+    public static Sound music;
+    public static long musicId;
     
     static
     {

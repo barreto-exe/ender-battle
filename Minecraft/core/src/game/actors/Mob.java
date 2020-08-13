@@ -153,11 +153,11 @@ public abstract class Mob extends Sprite implements Actor
                 }
                 
                 if(this instanceof Creeper)
-                    soundManager.get("sonidos/mobs/explosion.ogg", Sound.class).play();
+                    soundManager.get("sonidos/mobs/explosion.ogg", Sound.class).play(Sonido.volumen);
                 
                 if(this instanceof EnderDragon)
                 {
-                    soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play();
+                    soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
                     screen.cambiarBioma("bioma_01.tmx");
                 }
             }
