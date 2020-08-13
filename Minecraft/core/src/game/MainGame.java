@@ -28,7 +28,10 @@ public class MainGame extends Game
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-
+    public SpriteBatch getBatch()
+    {
+        return batch;
+    }
     public ProgresoJugador getProgreso()
     {
         return progreso;
@@ -74,7 +77,6 @@ public class MainGame extends Game
         
         player = new Player(skin);
         setScreen(new GameScreen(this, "bioma_01.tmx", player)); 
-      
     }
 
     @Override
@@ -97,8 +99,4 @@ public class MainGame extends Game
         );
     }    
     
-    public SpriteBatch getBatch()
-    {
-        return batch;
-    }
 }

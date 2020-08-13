@@ -39,6 +39,8 @@ public class EnderDragon extends MonsterMob
              * no necesariamente significa que la retribución va a ser tan grata o valiosa.
              * La enseñanza que te deja es que debes hacer las cosas por la pasión y 
              * no por lo que puedas obtener a cambio.
+             * 
+             * -Luis Barreto.
              */
             new Arm(BattleObjectEnum.SHOVEL, Material.WOOD), 
             

@@ -27,14 +27,10 @@ import comunicacion.PaqueteOperacion.Operacion;
 import comunicacion.PaqueteOperacion.ResultadoOperacion;
 import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
+import game.LoadScreen;
 import game.actors.Villager;
-import game.actors.collectibles.EsmeraldCollective;
-import game.actors.monster.Creeper;
 import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
-import game.actors.monster.Pigman;
-import game.actors.monster.Skeleton;
-import game.actors.monster.Zombie;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
 import game.ui.*;
@@ -42,7 +38,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-
 /**
  *
  * @author Karen
@@ -81,12 +76,16 @@ public class GameScreen extends BaseScreen implements UsesSocket
     int contadorMsjConservacion;
     Sprite esmeralda;               
     Sprite corazon, corazonVacio;              
-    Sprite corazonMitad;         
-    //</editor-fold>
-
+    Sprite corazonMitad;      
+    
+    Thread hiloProgreso; 
+    private static int cont = 0;
     private static FrmInventario ventanaInventario;    
     private static FrmTienda ventanaTienda;
-    private static FrmJugadores ventanaJugadores;
+    private static FrmJugadores ventanaJugadores; 
+    private boolean cambiarBioma;
+    private String nextBioma;
+    //</editor-fold>
 
     /**
      * Es la pantalla del juego principal.
@@ -100,7 +99,8 @@ public class GameScreen extends BaseScreen implements UsesSocket
     {
         super(game);
         this.player = player;
-        isPaused = mostrarMensajeConservacion = false;
+        isPaused = mostrarMensajeConservacion = cambiarBioma = false;
+        nextBioma = "";
         contadorMsjConservacion = 0;
         actors = new Group();
         
@@ -142,7 +142,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-
     public boolean isMostrarMensajeConservacion()
     {
         return mostrarMensajeConservacion;
@@ -239,12 +238,29 @@ public class GameScreen extends BaseScreen implements UsesSocket
         actors.addActor(player);
         actors.addActor(new EnderDragon(this, 8, 15));
         
-        //Monstruos de prueba   
-
         world.setContactListener(new WorldContactListener(player));
-        
     }
 
+    public void cambiarBioma(final String bioma)
+    {
+        Runnable runnable = new Runnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(7000);
+                    cambiarBioma = true;
+                    nextBioma = bioma;
+                }
+                catch (InterruptedException ex)
+                {
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
+    
     @Override
     public void resize(int width, int height)
     {
@@ -325,6 +341,12 @@ public class GameScreen extends BaseScreen implements UsesSocket
         game.getBatch().end();
 
         dibujarGUI();
+        
+        if(cambiarBioma)
+        {
+            game.setScreen(new LoadScreen(game, nextBioma, player));
+            this.dispose();
+        }
     }
 
     @Override
@@ -344,9 +366,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
     {
         isPaused ^= true;
     }
-    
-    Thread hiloProgreso;
-    
     public void pararReporteEstadoJugador()
     {
         if(hiloProgreso != null)
@@ -391,9 +410,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
         });
         hiloProgreso.start();
     }
-    
-    private static int cont = 0;
-    
     @Override
     public void recibirRespuestaServer(final Socket socket, UsesSocket ventanaDelegada)
     {

@@ -30,6 +30,7 @@ public abstract class Mob extends Sprite implements Actor
     protected Body body;
     protected World world;
     protected Group actors;
+    protected GameScreen screen;
     
     //Atributos de animacion
     protected float duration;
@@ -54,12 +55,11 @@ public abstract class Mob extends Sprite implements Actor
         super(region);
         world = screen.getWorld();
         progreso = screen.getGame().getProgreso();
-        
         textureEsmereald = screen.getAtlas().findRegion("esmeralda");
         actors = screen.getActors();
         
         this.life = life;
-        
+        this.screen = screen;
         this.sonido = sonido;
         this.contadorSonidos = 0;
         duration = 0;
@@ -156,8 +156,10 @@ public abstract class Mob extends Sprite implements Actor
                     soundManager.get("sonidos/mobs/explosion.ogg", Sound.class).play();
                 
                 if(this instanceof EnderDragon)
+                {
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play();
-                
+                    screen.cambiarBioma("bioma_01.tmx");
+                }
             }
         }
     }
