@@ -31,6 +31,7 @@ import game.LoadScreen;
 import game.actors.Villager;
 import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
+import game.screens.worlds.Room;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
 import game.ui.*;
@@ -84,23 +85,23 @@ public class GameScreen extends BaseScreen implements UsesSocket
     private static FrmTienda ventanaTienda;
     private static FrmJugadores ventanaJugadores; 
     private boolean cambiarBioma;
-    private String nextBioma;
+    private Room nextRoom;
     //</editor-fold>
 
     /**
      * Es la pantalla del juego principal.
      *
      * @param game instancia del juego GDX.
-     * @param biome es el identificador del bioma en la que se encuentra el
+     * @param room es el identificador de la habitación en la que se encuentra el
      * jugador.
-     * @param player es el jugador que se encuentra en el bioma
+     * @param player es el jugador que se encuentra en la habitacion
      */
-    public GameScreen(MainGame game, String biome, Player player)
+    public GameScreen(MainGame game, Room room, Player player)
     {
         super(game);
         this.player = player;
         isPaused = mostrarMensajeConservacion = cambiarBioma = false;
-        nextBioma = "";
+        nextRoom = null;
         contadorMsjConservacion = 0;
         actors = new Group();
         
@@ -118,7 +119,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
 
         //<editor-fold defaultstate="collapsed" desc="Construir bioma">
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load(biome);
+        map = mapLoader.load(room.getMap());
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Constant.PPM);
 
         world = new World(new Vector2(0, -10), true);
@@ -244,10 +245,10 @@ public class GameScreen extends BaseScreen implements UsesSocket
     /**
      * Indica al render del screen que debe cambiar de bioma. La acción se
      * efectúa después de 7 segundos.
-     * @param bioma el nombre del archivo tmx a cargar después de la pantalla
+     * @param habitacion el nombre del archivo tmx a cargar después de la pantalla
      * de carga. Ejemplo: "bioma_n.tmx".
      */
-    public void cambiarBioma(final String bioma)
+    public void cambiarHabitacion(final Room habitacion)
     {
         Runnable runnable = new Runnable()
         {
@@ -257,7 +258,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
                 {
                     Thread.sleep(7000);
                     cambiarBioma = true;
-                    nextBioma = bioma;
+                    nextRoom = habitacion;
                 }
                 catch (InterruptedException ex)
                 {
@@ -350,7 +351,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         if(cambiarBioma)
         {
-            game.setScreen(new LoadScreen(game, nextBioma, player));
+            game.setScreen(new LoadScreen(game, nextRoom, player));
             this.dispose();
         }
     }
