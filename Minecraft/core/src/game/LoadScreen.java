@@ -22,7 +22,7 @@ public class LoadScreen extends BaseScreen
      * Es una pantalla de carga con un fondo verde parpadeando y el logo abajo a la izquierda.
      * @param game instancia del juego en donde se cargará la próxima screen.
      * @param biomaDestino bioma que se mostrará después de unos 5 segundos de carga.
-     * @param player instancia del player,
+     * @param player instancia del player.
      */
     public LoadScreen(MainGame game, String biomaDestino, Player player)
     {

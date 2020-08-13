@@ -79,15 +79,21 @@ public abstract class MonsterMob extends Mob
         body = this.world.createBody(bodyD);
         //</editor-fold>
         
-        //<editor-fold defaultstate="collapsed" desc="Definición Fixture">
+        
         fixtureD = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(getWidth() / 2, getHeight() / 2);
+        if(this instanceof EnderDragon)
+        {
+            shape.setAsBox(getWidth() / 2 - 1, getHeight() / 2 - 0.5f);
+        }
+        else
+        {
+            shape.setAsBox(getWidth() / 2, getHeight() / 2);
+        }
         fixtureD.shape = shape;
         fixtureD.filter.categoryBits = Constant.MOB_BIT;
         fixtureD.filter.maskBits = Constant.GROUND_BIT | Constant.MOB_BIT | Constant.PLAYER_BIT;
         body.createFixture(fixtureD).setUserData(this);
-        //</editor-fold>
     }
 
     public boolean isIsBoss()
