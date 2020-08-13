@@ -7,6 +7,8 @@ import game.screens.GameScreen;
 import basedatos.DBUsuario;
 import com.badlogic.gdx.Gdx;
 import comunicacion.ProgresoJugador;
+import game.screens.worlds.Room;
+import game.tools.Constant;
 import javax.swing.JFrame;
 
 public class MainGame extends Game 
@@ -76,7 +78,7 @@ public class MainGame extends Game
         }
         
         player = new Player(skin);
-        setScreen(new GameScreen(this, "bioma_01.tmx", player)); 
+        setScreen(new GameScreen(this, (new Room(1, Constant.MapType.BIOME)), player)); 
     }
 
     @Override

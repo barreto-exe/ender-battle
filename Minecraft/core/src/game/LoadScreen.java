@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import game.actors.Player;
 import game.screens.BaseScreen;
 import game.screens.GameScreen;
+import game.screens.worlds.Room;
 
 /**
  *
@@ -15,23 +16,23 @@ public class LoadScreen extends BaseScreen
 {
     private SpriteBatch batch;
     private float tiempoColor, tiempoCambio;
-    private String biomaDestino;
+    private Room habitaacionDestino;
     private Player player;
     
     /**
      * Es una pantalla de carga con un fondo verde parpadeando y el logo abajo a la izquierda.
      * @param game instancia del juego en donde se cargará la próxima screen.
-     * @param biomaDestino bioma que se mostrará después de unos 5 segundos de carga.
+     * @param habitacionDestino habitacion que se mostrará después de unos 5 segundos de carga.
      * @param player instancia del player.
      */
-    public LoadScreen(MainGame game, String biomaDestino, Player player)
+    public LoadScreen(MainGame game, Room habitacionDestino, Player player)
     {
         super(game);
         batch = new SpriteBatch();
         tiempoColor = 0;
         tiempoCambio = 6;
         
-        this.biomaDestino = biomaDestino;
+        this.habitaacionDestino = habitacionDestino;
         this.player = player;
     }
 
@@ -51,7 +52,7 @@ public class LoadScreen extends BaseScreen
         tiempoCambio -= delta;
         if(tiempoCambio <= 0)
         {
-            game.setScreen(new GameScreen(game, biomaDestino, player));
+            game.setScreen(new GameScreen(game, habitaacionDestino, player));
         }
     }
 }

@@ -22,6 +22,16 @@ public class Constant
     {
         JUMPING, HITTING, WALKING_RIGHT, WALKING_LEFT, FALLING, STANDING, PICKING_UP
     }
+    
+    public enum MapType
+    {
+        BIOME, FIGHT, END
+    }
+    
+    public enum Bosses
+    {
+        CREEPER, SKELETON, ZOMBIE, PIGMAN, ENDERMAN, SPIDER, ENDERDRAGON
+    }
 
     public enum Farming
     {
