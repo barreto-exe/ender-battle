@@ -206,6 +206,42 @@ public final class DBUsuario implements Serializable
             }
         }
     }
+    
+    
+    public static String personajeSeleccionado2String(int personajeSeleccionado)
+    {
+        switch (personajeSeleccionado)
+        {
+            case 0:
+            {
+                return "normal";
+            }
+            case 1:
+            {
+                return "rojo";
+            }
+            case 2:
+            {
+                return "verde";
+            }
+            case 3:
+            {
+                return "amarillo";
+            }
+            case 4:
+            {
+                return "morado";
+            }
+            case 5:
+            {
+                return "gris";
+            }
+            default:
+            {
+                return "";
+            }
+        }
+    }
     //</editor-fold>
 
     /**
@@ -331,7 +367,7 @@ public final class DBUsuario implements Serializable
                 + "	SUM( animalesMatados ) AS animalesMatados,\n"
                 + "	SUM( jefesMatados ) AS jefesMatados,\n"
                 + "	SUM( objetosRecogidos ) AS objetosRecogidos, \n"
-                + "	SUM( esmeraldasRecogidas ) AS esmeraldasRecogidas,\n"
+                + "	SUM( esmeraldasRecogidas ) AS esmeraldasRecogidas\n"
                 + "FROM\n"
                 + "	m_partidas_progreso p \n"
                 + "WHERE\n"
@@ -350,15 +386,15 @@ public final class DBUsuario implements Serializable
             HashMap<String, String> estadisticas = new HashMap<>();
             
             estadisticas.put("nombre", (String)resultado.getValor("nombre"));
-            estadisticas.put("colorFavorito", (String)resultado.getValor("colorFavorito"));
-            estadisticas.put("partidasJugadas", (String)resultado.getValor("partidasJugadas"));
-            estadisticas.put("partidasGanadas", (String)resultado.getValor("partidasGanadas"));
-            estadisticas.put("partidasPerdidas", (String)resultado.getValor("partidasPerdidas"));
-            estadisticas.put("monstruosMatados", (String)resultado.getValor("monstruosMatados"));
-            estadisticas.put("animalesMatados", (String)resultado.getValor("animalesMatados"));
-            estadisticas.put("jefesMatados", (String)resultado.getValor("jefesMatados"));
-            estadisticas.put("objetosRecogidos", (String)resultado.getValor("objetosRecogidos"));
-            estadisticas.put("esmeraldasRecogidas", (String)resultado.getValor("esmeraldasRecogidas"));
+            estadisticas.put("colorFavorito", personajeSeleccionado2String((int)resultado.getValor("colorFavorito")));
+            estadisticas.put("partidasJugadas", resultado.getValor("partidasJugadas").toString());
+            estadisticas.put("partidasGanadas", resultado.getValor("partidasGanadas").toString());
+            estadisticas.put("partidasPerdidas", resultado.getValor("partidasPerdidas").toString());
+            estadisticas.put("monstruosMatados", resultado.getValor("monstruosMatados").toString());
+            estadisticas.put("animalesMatados", resultado.getValor("animalesMatados").toString());
+            estadisticas.put("jefesMatados", resultado.getValor("jefesMatados").toString());
+            estadisticas.put("objetosRecogidos", resultado.getValor("objetosRecogidos").toString());
+            estadisticas.put("esmeraldasRecogidas", resultado.getValor("esmeraldasRecogidas").toString());
             
             return estadisticas;
         }

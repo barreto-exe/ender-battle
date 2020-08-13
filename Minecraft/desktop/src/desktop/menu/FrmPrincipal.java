@@ -64,7 +64,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
      */
     Thread hiloEstadoPartida;
 
-    
     /**
      * Crea la ventana principal del juego.
      */
@@ -77,7 +76,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
         partida = new DBPartida();
         ventanaJuego = new FrmGame(null);
-        
+
         //Cargar manuales
         cargarRTF(txtManualCrearUsuario, "CrearUsuario");
         cargarRTF(txtManualCrearPartida, "CrearPartida");
@@ -1319,12 +1318,11 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private void consultarEstadisticas()
     {
         //Pedir consulta del usuario indicado
-        MetodosSocket.enviarPaquete
-        (
-            new PaqueteOperacion(Operacion.ESTADISTICAS,this.txtUsuarioEstadisticas.getText()),
-            this
+        MetodosSocket.enviarPaquete(
+                new PaqueteOperacion(Operacion.ESTADISTICAS, this.txtUsuarioEstadisticas.getText()),
+                this
         );
-        
+
         //Bloquear botón
         new Thread(new Runnable()
         {
@@ -1335,7 +1333,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         }).start();
     }
-    
+
     /**
      * Solicita al servidor que registre al usuario con los datos proveídos.
      */
@@ -1353,7 +1351,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         else if ("".equals(correo) || "".equals(usuario) || pass.length == 0)
         {
             JOptionPane.showMessageDialog(this, "Hay campos vacíos.");
-        } else
+        }
+        else
         {
             //Crear instancia de usuario para enviarla al servidor
             DBUsuario usuarioObj = new DBUsuario(correo, usuario, txtPass.getText());
@@ -1377,7 +1376,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         if ("".equals(usuario) || "".equals(pass))
         {
             JOptionPane.showMessageDialog(this, "Hay campos vacíos.");
-        } else
+        }
+        else
         {
             //Crear instancia de usuario para enviarla al servidor
             usuarioLogueado = new DBUsuario(null, usuario, pass);
@@ -1511,17 +1511,19 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     {
                         JOptionPane.showMessageDialog(formulario, "Hubo un error en la operación.");
                         formulario.btnVolver.doClick();
-                    } 
+                    }
 
                     //<editor-fold defaultstate="collapsed" desc="Resultados de registro">
                     //Resultados de registro
                     else if (resultado.getResultado() == ResultadoOperacion.CORREO_NO_DISPONIBLE)
                     {
                         JOptionPane.showMessageDialog(formulario, "Correo no disponible.");
-                    } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
+                    }
+                    else if (resultado.getResultado() == ResultadoOperacion.USUARIO_NO_DISPONIBLE)
                     {
                         JOptionPane.showMessageDialog(formulario, "Usuario no disponible.");
-                    } else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
+                    }
+                    else if (resultado.getResultado() == ResultadoOperacion.USUARIO_REGISTRADO)
                     {
                         JOptionPane.showMessageDialog(formulario, "¡Usuario registrado exitosamente!");
                         formulario.btnVolver.doClick();
@@ -1531,7 +1533,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     else if (resultado.getResultado() == ResultadoOperacion.CREDENCIAL_INVALIDA)
                     {
                         JOptionPane.showMessageDialog(formulario, "Usuario o contraseña incorrectos.");
-                    } else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
+                    }
+                    else if (resultado.getResultado() == ResultadoOperacion.SESION_VALIDA)
                     {
                         formulario.mostrarPanel(formulario.panelPartida);
                         formulario.limpiarTextBoxes();
@@ -1553,7 +1556,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         formulario.jtPartidas.setSelectedIndex(2);
                         formulario.jtPartidas.setEnabledAt(0, false);
                         formulario.jtPartidas.setEnabledAt(1, false);
-                    } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
+                    }
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_YA_EXISTE)
                     {
                         JOptionPane.showMessageDialog(formulario, "Ya existe una partida con el mismo nombre.");
 
@@ -1600,14 +1604,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 
                                         recibirRespuestaServer(socket, formulario);
                                     }
-                                } catch (IOException | InterruptedException ex)
+                                }
+                                catch (IOException | InterruptedException ex)
                                 {
                                     System.out.println(ex.getMessage());
                                 }
                             }
                         });
                         hiloEstadoPartida.start();
-                    } else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
+                    }
+                    else if (resultado.getResultado() == ResultadoOperacion.PARTIDA_LLENA)
                     {
                         JOptionPane.showMessageDialog(
                                 formulario,
@@ -1655,7 +1661,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         if (cantJugadores > 1 && usuarios.get(0).equals(usuarioLogueado))
                         {
                             formulario.btnComenzarPartida.setVisible(true);
-                        } else if (cantJugadores <= 1)
+                        }
+                        else if (cantJugadores <= 1)
                         {
                             formulario.btnComenzarPartida.setVisible(false);
                         }
@@ -1666,7 +1673,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         hiloEstadoPartida.interrupt();
 
                         abrirJuego();
-                    } 
+                    }
                     //</editor-fold>
                     //</editor-fold>
                     //<editor-fold defaultstate="collapsed" desc="Resultados de pedir partidas activas">
@@ -1697,13 +1704,13 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                     }
                     //</editor-fold>
 
-                    else if(resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS)
+                    else if (resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS)
                     {
                         HashMap<String, String> estadisticas = (HashMap<String, String>) resultado.getInformacion();
 
                         formulario.lblEstNombreUsuario.setText(estadisticas.get("nombre"));
                         formulario.lblColorFavorito.setText(estadisticas.get("colorFavorito"));
-                        formulario.lblPartidasGanadas.setText(estadisticas.get("partidasJugadas"));
+                        formulario.lblPartidasJugadas.setText(estadisticas.get("partidasJugadas"));
                         formulario.lblPartidasGanadas.setText(estadisticas.get("partidasGanadas"));
                         formulario.lblPartidasPerdidas.setText(estadisticas.get("partidasPerdidas"));
                         formulario.lblMonstruosMatados.setText(estadisticas.get("monstruosMatados"));
@@ -1712,16 +1719,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                         formulario.lblObjetosRecogidos.setText(estadisticas.get("objetosRecogidos"));
                         formulario.lblEsmeraldasRecogidas.setText(estadisticas.get("esmeraldasRecogidas"));
                     }
-                    else if(resultado.getResultado() == ResultadoOperacion.NO_HAY_ESTADISTICAS)
+                    else if (resultado.getResultado() == ResultadoOperacion.NO_HAY_ESTADISTICAS)
                     {
                         JOptionPane.showMessageDialog(formulario, "No existe el usuario deseado.");
                     }
                     //Desbloquear botón
-                    if(resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS
+                    if (resultado.getResultado() == ResultadoOperacion.RESPUESTA_ESTADISTICAS
                         || resultado.getResultado() == ResultadoOperacion.NO_HAY_ESTADISTICAS)
                     {
                         formulario.txtUsuarioEstadisticas.setText("");
-                        
+
                         new Thread(new Runnable()
                         {
                             @Override
@@ -1731,10 +1738,10 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
                             }
                         }).start();
                     }
-                        
-                    
+
                     socket.close();
-                } catch (IOException | ClassNotFoundException ex)
+                }
+                catch (IOException | ClassNotFoundException ex)
                 {
                     System.out.println(ex.getMessage());
                     JOptionPane.showMessageDialog((Component) ventanaOrigen, ex.getMessage());
@@ -1742,7 +1749,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         }).start();
     }
-    
+
     private void abrirJuego()
     {
         ventanaJuego = new FrmGame(usuarioLogueado);
@@ -1787,6 +1794,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         this.txtPassIniciar.setText("");
         this.txtUsuario.setText("");
         this.txtUsuarioIniciar.setText("");
+        this.limpiarPanelEstadisticas();
     }
 
     /**
@@ -1808,14 +1816,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         this.jtPartidas.setSelectedIndex(0);
         this.personajeSeleccionado = 0;
         this.elegirImagenPersonaje();
-        
-        this.limpiarPanelEstadisticas();
 
         this.partida.setId(-1);
         ((DefaultTableModel) this.jtPartidasActivas.getModel()).setRowCount(0);
         ((DefaultTableModel) this.jtJugadores.getModel()).setRowCount(0);
     }
-    
+
     private void limpiarPanelEstadisticas()
     {
         this.txtUsuarioEstadisticas.setText("");
@@ -1847,13 +1853,16 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         {
             FileInputStream fi = new FileInputStream("manuales/" + manual + ".rtf");
             rtf.read(fi, panel.getDocument(), 0);
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             System.out.println("File not found");
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             System.out.println("I/O error");
-        } catch (BadLocationException e)
+        }
+        catch (BadLocationException e)
         {
         }
     }
