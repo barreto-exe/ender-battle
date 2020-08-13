@@ -142,7 +142,6 @@ public class WorldContactListener implements ContactListener
                 player.setPlant(null);
                 break;
             case Constant.PLAYER_BIT | Constant.VILLAGER_BIT:
-                System.out.println("deja de tocar");
                 player.setVillager(null);
                 break;
         }
