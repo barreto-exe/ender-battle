@@ -240,7 +240,13 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         world.setContactListener(new WorldContactListener(player));
     }
-
+    
+    /**
+     * Indica al render del screen que debe cambiar de bioma. La acción se
+     * efectúa después de 7 segundos.
+     * @param bioma el nombre del archivo tmx a cargar después de la pantalla
+     * de carga. Ejemplo: "bioma_n.tmx".
+     */
     public void cambiarBioma(final String bioma)
     {
         Runnable runnable = new Runnable()

@@ -44,7 +44,7 @@ public class LoadScreen extends BaseScreen
 
         batch.begin();
         
-        batch.draw(getAtlas().findRegion("logo"), 20, 20);
+        batch.draw(getAtlas().findRegion("logo"), 50, 45);
         
         batch.end();
         

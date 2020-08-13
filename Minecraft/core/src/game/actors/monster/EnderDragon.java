@@ -29,7 +29,7 @@ public class EnderDragon extends MonsterMob
             160,    //Ancho
             123,    //Alto
             1,      //Velocidad
-            90,     //Vida
+            1,     //Vida
             60,     //Ataque
             true,   //Es jefe
             
