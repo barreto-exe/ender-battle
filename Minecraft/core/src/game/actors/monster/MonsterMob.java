@@ -145,7 +145,7 @@ public abstract class MonsterMob extends Mob
             objects[3] = new EsmeraldCollective(textureEsmereald, world, new Vector2(body.getPosition().x + getWidth() / 4, body.getPosition().y));
             
             //Pieza de la armadura de diamante que custotia el jefe
-            objects[4] = new BattleObjectCollectible(prize.getObject(), Constant.Material.DIAMOND, atlas, world, body.getPosition());
+            objects[4] = new BattleObjectCollectible(prize.getObject(), prize.getMaterial().getMaterial(), atlas, world, body.getPosition());
         }
         else
         {

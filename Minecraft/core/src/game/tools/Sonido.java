@@ -44,6 +44,9 @@ public class Sonido
         soundManager.load("sonidos/mobs/skeleton.ogg", Sound.class);
         soundManager.load("sonidos/mobs/spider.ogg", Sound.class);
         soundManager.load("sonidos/mobs/zombie.ogg", Sound.class);
+        soundManager.load("sonidos/mobs/enderdragon_alas.ogg", Sound.class);
+        soundManager.load("sonidos/mobs/enderdragon_die.ogg", Sound.class);
+        soundManager.load("sonidos/mobs/enderdragon.ogg", Sound.class);
         soundManager.finishLoading();
     }
     

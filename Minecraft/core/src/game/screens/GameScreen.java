@@ -30,6 +30,7 @@ import comunicacion.ProgresoJugador;
 import game.actors.Villager;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.monster.Creeper;
+import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
 import game.actors.monster.Pigman;
 import game.actors.monster.Skeleton;
@@ -236,8 +237,8 @@ public class GameScreen extends BaseScreen implements UsesSocket
         player.create(this, position.x, position.y);
         //Añadir actores al grupo
         actors.addActor(player);
-        actors.addActor(new Creeper(this, 8, 15, true));
-
+        actors.addActor(new EnderDragon(this, 8, 15));
+        
         //Monstruos de prueba   
 
         world.setContactListener(new WorldContactListener(player));

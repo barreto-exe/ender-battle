@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import comunicacion.ProgresoJugador;
 import game.actors.monster.Creeper;
+import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
 import game.actors.pacific.PacificMob;
 import game.screens.GameScreen;
@@ -86,6 +87,8 @@ public abstract class Mob extends Sprite implements Actor
     {
         life -= hit;
         
+        System.out.println("Vida: " + life);
+        
         if(contadorSonidos == 0)
         {
             Sonido.soundManager.get("sonidos/mobs/"+sonido+".ogg", Sound.class).play();
@@ -151,6 +154,10 @@ public abstract class Mob extends Sprite implements Actor
                 
                 if(this instanceof Creeper)
                     soundManager.get("sonidos/mobs/explosion.ogg", Sound.class).play();
+                
+                if(this instanceof EnderDragon)
+                    soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play();
+                
             }
         }
     }

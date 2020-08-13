@@ -67,7 +67,7 @@ public class BattleObjectCollectible extends ObjectCollectible
                 setRegion(atlas.findRegion("pico"));
                 break;
             case SHOVEL:
-                setRegion(atlas.findRegion("shovel"));
+                setRegion(atlas.findRegion("pala"));
                 break;
             case BOOTS:
                 setRegion(atlas.findRegion("botas"));

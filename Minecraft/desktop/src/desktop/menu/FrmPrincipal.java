@@ -84,6 +84,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         cargarRTF(txtAcercaDe, "AcercaDe");
 
         limpiarPanelPartidas();
+        limpiarTextBoxes();
     }
 
     /**

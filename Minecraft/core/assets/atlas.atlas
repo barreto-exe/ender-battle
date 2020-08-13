@@ -1,320 +1,334 @@
 
 atlas.png
-size: 1024,2048
+size: 2048,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 aldeano
   rotate: false
-  xy: 516, 734
+  xy: 1286, 373
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 amarillo_caminar
   rotate: false
-  xy: 2, 280
+  xy: 772, 54
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 amarillo_golpear
   rotate: false
-  xy: 2, 1254
+  xy: 2, 248
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 bayas
   rotate: false
-  xy: 516, 468
+  xy: 1508, 209
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 botas
   rotate: false
-  xy: 838, 1796
+  xy: 1816, 631
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 caminar_creeper
   rotate: false
-  xy: 772, 1904
+  xy: 1286, 113
   size: 220, 128
   orig: 220, 128
   offset: 0, 0
   index: -1
 caminar_enderman
   rotate: false
-  xy: 2, 1060
+  xy: 772, 704
   size: 486, 192
   orig: 486, 192
   offset: 0, 0
   index: -1
 caminar_esqueleto
   rotate: false
-  xy: 516, 994
+  xy: 1286, 503
   size: 280, 128
   orig: 280, 128
   offset: 0, 0
   index: -1
 caminar_pigman
   rotate: false
-  xy: 516, 864
+  xy: 1286, 243
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 casco
   rotate: false
-  xy: 772, 1796
+  xy: 1958, 957
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 cerdo
   rotate: false
-  xy: 2, 2
+  xy: 1618, 697
   size: 384, 64
   orig: 384, 64
   offset: 0, 0
   index: -1
 chicken
   rotate: false
-  xy: 667, 641
+  xy: 532, 49
   size: 96, 25
   orig: 96, 25
   offset: 0, 0
   index: -1
 conejo
   rotate: false
-  xy: 516, 634
+  xy: 2, 2
   size: 149, 32
   orig: 149, 32
   offset: 0, 0
   index: -1
 conejo_carne
   rotate: false
-  xy: 772, 1615
+  xy: 187, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 corazon_lleno
   rotate: false
-  xy: 904, 1815
+  xy: 1958, 910
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_mitad
   rotate: false
-  xy: 582, 587
+  xy: 1774, 780
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_vacio
   rotate: false
-  xy: 772, 1683
+  xy: 1906, 846
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
+enderdragon
+  rotate: false
+  xy: 2, 898
+  size: 1440, 123
+  orig: 1440, 123
+  offset: 0, 0
+  index: -1
 esmeralda
   rotate: false
-  xy: 838, 1749
+  xy: 1568, 586
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 espada
   rotate: false
-  xy: 516, 568
+  xy: 1618, 631
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 explotar_creeper
   rotate: false
-  xy: 490, 1124
+  xy: 1286, 633
   size: 330, 128
   orig: 330, 128
   offset: 0, 0
   index: -1
 ganado_carne
   rotate: false
-  xy: 516, 434
+  xy: 1821, 793
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gris_caminar
   rotate: false
-  xy: 2, 150
+  xy: 1260, 763
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 gris_golpear
   rotate: false
-  xy: 2, 1904
+  xy: 2, 768
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 hacha
   rotate: false
-  xy: 388, 2
+  xy: 1774, 827
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 manzana
   rotate: false
-  xy: 954, 1870
+  xy: 714, 84
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 morado_caminar
   rotate: false
-  xy: 2, 930
+  xy: 1444, 893
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 morado_golpear
   rotate: false
-  xy: 2, 1774
+  xy: 2, 638
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 normal_caminar
   rotate: false
-  xy: 2, 670
+  xy: 772, 444
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 normal_golpear
   rotate: false
-  xy: 2, 1514
+  xy: 2, 378
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 oveja
   rotate: false
-  xy: 516, 668
+  xy: 1286, 47
   size: 267, 64
   orig: 267, 64
   offset: 0, 0
   index: -1
+pala
+  rotate: false
+  xy: 1840, 827
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 pantalones
   rotate: false
-  xy: 454, 2
+  xy: 1684, 631
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 papa
   rotate: false
-  xy: 772, 1649
+  xy: 1948, 663
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pechera
   rotate: false
-  xy: 516, 502
+  xy: 1882, 631
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pera
   rotate: false
-  xy: 582, 519
+  xy: 1568, 552
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pico
   rotate: false
-  xy: 772, 1730
+  xy: 1750, 631
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pollo_carne
   rotate: false
-  xy: 629, 600
+  xy: 1508, 175
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rojo_caminar
   rotate: false
-  xy: 2, 410
+  xy: 772, 184
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 rojo_golpear
   rotate: false
-  xy: 2, 1384
+  xy: 2, 118
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 sandia
   rotate: false
-  xy: 582, 553
+  xy: 153, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spider
   rotate: false
-  xy: 772, 1862
+  xy: 532, 76
   size: 180, 40
   orig: 180, 40
   offset: 0, 0
   index: -1
 vaca
   rotate: false
-  xy: 2, 68
+  xy: 2, 36
   size: 528, 80
   orig: 528, 80
   offset: 0, 0
   index: -1
 verde_caminar
   rotate: false
-  xy: 2, 800
+  xy: 772, 574
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 verde_golpear
   rotate: false
-  xy: 2, 1644
+  xy: 2, 508
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 zanahoria
   rotate: false
-  xy: 516, 400
+  xy: 1855, 793
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 zombie
   rotate: false
-  xy: 2, 540
+  xy: 772, 314
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
