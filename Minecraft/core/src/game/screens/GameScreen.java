@@ -29,7 +29,6 @@ import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
 import game.LoadScreen;
 import game.actors.Villager;
-import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
 import game.screens.worlds.Room;
 import game.screens.worlds.BiomeAssemblerClass;
@@ -359,6 +358,8 @@ public class GameScreen extends BaseScreen implements UsesSocket
         {
             mensajeConservacion.draw(batchUI, "¡No maltrates plantas ni animales en la vida real!", 100, 100);
         }
+        
+        batchUI.draw(getAtlas().findRegion("hasGanado"), Constant.FRAME_WIDTH / 2 + 100, Constant.FRAME_HEIGHT / 2);
         
         batchUI.end();
     }
