@@ -82,6 +82,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         cargarRTF(txtManualCrearPartida, "CrearPartida");
         cargarRTF(txtManualUnirsePartida, "UnirsePartida");
         cargarRTF(txtAcercaDe, "AcercaDe");
+        cargarRTF(txtManualJuego, "Juego");
 
         limpiarPanelPartidas();
         limpiarTextBoxes();
@@ -130,20 +131,20 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         fondoRegistrarse = new javax.swing.JLabel();
         panelAyuda = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jpCrearUsuario = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        txtManualCrearUsuario = new javax.swing.JEditorPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        txtManualCrearPartida = new javax.swing.JEditorPane();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        txtManualUnirsePartida = new javax.swing.JEditorPane();
-        jPanel3 = new javax.swing.JPanel();
+        jpJuego = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jlListaManualesJuego = new javax.swing.JList<>();
         jScrollPane6 = new javax.swing.JScrollPane();
         txtManualJuego = new javax.swing.JEditorPane();
+        jpCrearUsuario = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtManualCrearUsuario = new javax.swing.JEditorPane();
+        jpCrearPartida = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtManualCrearPartida = new javax.swing.JEditorPane();
+        jpUnirsePartida = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        txtManualUnirsePartida = new javax.swing.JEditorPane();
         btnVolver2 = new javax.swing.JButton();
         fondoAyuda = new javax.swing.JLabel();
         panelAcercaDe = new javax.swing.JPanel();
@@ -457,6 +458,50 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelAyuda.setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
         panelAyuda.setLayout(null);
 
+        jlListaManualesJuego.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jlListaManualesJuego.setModel(new javax.swing.AbstractListModel<String>()
+        {
+            String[] strings = { "Juego", "Movimiento", "Inventario", "Tienda" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jlListaManualesJuego.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlListaManualesJuego.setSelectedIndex(0);
+        jlListaManualesJuego.addListSelectionListener(new javax.swing.event.ListSelectionListener()
+        {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
+            {
+                jlListaManualesJuegoValueChanged(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jlListaManualesJuego);
+
+        txtManualJuego.setEditable(false);
+        jScrollPane6.setViewportView(txtManualJuego);
+
+        javax.swing.GroupLayout jpJuegoLayout = new javax.swing.GroupLayout(jpJuego);
+        jpJuego.setLayout(jpJuegoLayout);
+        jpJuegoLayout.setHorizontalGroup(
+            jpJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpJuegoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpJuegoLayout.setVerticalGroup(
+            jpJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpJuegoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane6)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Juego", jpJuego);
+
         txtManualCrearUsuario.setEditable(false);
         txtManualCrearUsuario.setToolTipText("CrearUsuario");
         jScrollPane5.setViewportView(txtManualCrearUsuario);
@@ -484,90 +529,47 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         txtManualCrearPartida.setToolTipText("CrearPartida");
         jScrollPane7.setViewportView(txtManualCrearPartida);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpCrearPartidaLayout = new javax.swing.GroupLayout(jpCrearPartida);
+        jpCrearPartida.setLayout(jpCrearPartidaLayout);
+        jpCrearPartidaLayout.setHorizontalGroup(
+            jpCrearPartidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCrearPartidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpCrearPartidaLayout.setVerticalGroup(
+            jpCrearPartidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCrearPartidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Crear Partida", jPanel1);
+        jTabbedPane1.addTab("Crear Partida", jpCrearPartida);
 
         txtManualUnirsePartida.setEditable(false);
         txtManualUnirsePartida.setToolTipText("UnirsePartida");
         jScrollPane8.setViewportView(txtManualUnirsePartida);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpUnirsePartidaLayout = new javax.swing.GroupLayout(jpUnirsePartida);
+        jpUnirsePartida.setLayout(jpUnirsePartidaLayout);
+        jpUnirsePartidaLayout.setHorizontalGroup(
+            jpUnirsePartidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUnirsePartidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 805, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpUnirsePartidaLayout.setVerticalGroup(
+            jpUnirsePartidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUnirsePartidaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Unirse a Partida", jPanel2);
-
-        jlListaManualesJuego.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jlListaManualesJuego.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "Movimiento", "Inventario" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jlListaManualesJuego.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jlListaManualesJuego.addListSelectionListener(new javax.swing.event.ListSelectionListener()
-        {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt)
-            {
-                jlListaManualesJuegoValueChanged(evt);
-            }
-        });
-        jScrollPane4.setViewportView(jlListaManualesJuego);
-
-        txtManualJuego.setEditable(false);
-        jScrollPane6.setViewportView(txtManualJuego);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane6)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Juego", jPanel3);
+        jTabbedPane1.addTab("Unirse a Partida", jpUnirsePartida);
 
         panelAyuda.add(jTabbedPane1);
         jTabbedPane1.setBounds(10, 30, 830, 380);
@@ -1908,9 +1910,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1925,9 +1924,12 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     private javax.swing.JList<String> jlListaManualesJuego;
     private javax.swing.JLayeredPane jlpPrincipal;
     private javax.swing.JPanel jpCrear;
+    private javax.swing.JPanel jpCrearPartida;
     private javax.swing.JPanel jpCrearUsuario;
+    private javax.swing.JPanel jpJuego;
     private javax.swing.JPanel jpLobby;
     private javax.swing.JPanel jpUnirse;
+    private javax.swing.JPanel jpUnirsePartida;
     private javax.swing.JTable jtJugadores;
     private javax.swing.JTabbedPane jtPartidas;
     private javax.swing.JTable jtPartidasActivas;
