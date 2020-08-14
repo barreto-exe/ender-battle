@@ -34,6 +34,7 @@ import game.actors.monster.MonsterMob;
 import game.screens.worlds.Room;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
+import game.tools.Constant.MapType;
 import game.ui.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -80,14 +81,13 @@ public class GameScreen extends BaseScreen implements UsesSocket
     Sprite corazonMitad;      
     
     Thread hiloProgreso; 
-    private static int cont = 0;
     private static FrmInventario ventanaInventario;    
     private static FrmTienda ventanaTienda;
     private static FrmJugadores ventanaJugadores; 
-    private boolean cambiarBioma;
-    private Room nextRoom;
     //</editor-fold>
 
+    private Room room;
+    
     /**
      * Es la pantalla del juego principal.
      *
@@ -99,11 +99,11 @@ public class GameScreen extends BaseScreen implements UsesSocket
     public GameScreen(MainGame game, Room room, Player player)
     {
         super(game);
+        isPaused = mostrarMensajeConservacion = false;
         this.player = player;
-        isPaused = mostrarMensajeConservacion = cambiarBioma = false;
-        nextRoom = null;
-        contadorMsjConservacion = 0;
-        actors = new Group();
+        this.room = room;
+        this.contadorMsjConservacion = 0;
+        this.actors = new Group();
         
         ventanaInventario = new FrmInventario(player);
         ventanaTienda = new FrmTienda(player);
@@ -235,37 +235,83 @@ public class GameScreen extends BaseScreen implements UsesSocket
 
         position = manager.getPlayerPosition();
         player.create(this, position.x, position.y);
+        
         //Añadir actores al grupo
         actors.addActor(player);
         actors.addActor(new EnderDragon(this, 8, 15));
-        
         world.setContactListener(new WorldContactListener(player));
     }
     
+    private boolean cambiandoBioma = false, cambiarBioma = false;
+    private Room nextRoom;
+    
     /**
-     * Indica al render del screen que debe cambiar de bioma. La acción se
+     * Indica al screen que debe cambiar al siguiente bioma. La acción se
      * efectúa después de 7 segundos.
-     * @param habitacion el nombre del archivo tmx a cargar después de la pantalla
-     * de carga. Ejemplo: "bioma_n.tmx".
      */
-    public void cambiarHabitacion(final Room habitacion)
+    public void cambiarHabitacion()
     {
-        Runnable runnable = new Runnable()
+        if(cambiandoBioma)
+            return;
+        
+        System.out.println("cambiando");
+        
+        cambiandoBioma = true;
+        
+        //Determinar próxima habitación a la que se cambiará
+        //Dependiendo de la habitación actual:
+        switch(this.room.getType())
+        {
+            //Si actual es bioma
+            case BIOME:
+            {
+                //La próxima es combate (con la decoración del mapa actual).
+                nextRoom = new Room(room.getMapNum(),MapType.FIGHT);
+                break;
+            }
+            //Si actual es de combate
+            case FIGHT:
+            {
+                //La próxima es alguna en la que el player aún no haya estado.
+                
+                //Consultar próximo bioma
+                int proximo = player.proximoBioma();
+                
+                //Si no hay próximo, entonces toca ir al ender.
+                if(proximo == -1)
+                {
+                    nextRoom = new Room(0,MapType.END);
+                }
+                //Si hay próximo, ir a ese mapa
+                else
+                {
+                    nextRoom = new Room(proximo,MapType.BIOME);
+                }
+                
+                break;
+            }
+            //Si actual es END, no hacer nada
+            default:
+            {
+                return;
+            }
+        }
+        
+        //Esperar 7 segundos y aprobar cambio de bioma
+        new Thread(new Runnable()
         {
             public void run()
             {
                 try
                 {
-                    Thread.sleep(7000);
+                    Thread.sleep(2000);
                     cambiarBioma = true;
-                    nextRoom = habitacion;
                 }
                 catch (InterruptedException ex)
                 {
                 }
             }
-        };
-        new Thread(runnable).start();
+        }).start();
     }
     
     @Override
@@ -316,21 +362,17 @@ public class GameScreen extends BaseScreen implements UsesSocket
     @Override
     public void render(float delta)
     {
-        //Colorear cielo
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);
-        //Limpiar buffer
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //Actualizar actores y mundo   
         if (!isPaused)
         {
             actors.act(delta);
             world.step(delta, 6, 2);   
         }
-
         //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
         if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)
-            && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4)
+                && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4
+                    && room.getType() == MapType.BIOME)
         {
             gameCam.position.x = player.getBody().getPosition().x + 2;
         }
@@ -341,14 +383,21 @@ public class GameScreen extends BaseScreen implements UsesSocket
         debugger.render(world, gameCam.combined);
         game.getBatch().setProjectionMatrix(gameCam.combined);
         //</editor-fold>
-
-        //Dibujar las actualizaciones 
+        //<editor-fold defaultstate="collapsed" desc="Dibujar habitación">
         game.getBatch().begin();
         actors.draw(game.getBatch());
         game.getBatch().end();
-
+        //</editor-fold>
+        
         dibujarGUI();
         
+        //Si jugador llegó al final, disparar cambio de habitación.
+        if(player.getBody().getPosition().x > 20)
+        {
+            this.cambiarHabitacion();
+        }
+        
+        //Si procesó el cambio de bioma, colocar loadscreen.
         if(cambiarBioma)
         {
             game.setScreen(new LoadScreen(game, nextRoom, player));

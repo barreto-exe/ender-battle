@@ -6,6 +6,8 @@
 package game.screens.worlds;
 
 import game.tools.Constant;
+import game.tools.Constant.Bosses;
+import game.tools.Constant.MapType;
 
 /**
  *
@@ -14,10 +16,12 @@ import game.tools.Constant;
 public class Room {
     private Constant.Bosses boss;
     private String map;
+    private int mapNum;
     private final Constant.MapType type;
 
-    public Room(int map, Constant.MapType type) {
-        this.type = type;        
+    public Room(int map, MapType type) {
+        this.type = type;  
+        this.mapNum = map;
         
         switch (type)
         {
@@ -27,22 +31,22 @@ public class Room {
                 switch (map)
                 {
                     case 1:
-                        boss = Constant.Bosses.CREEPER;
+                        boss = Bosses.CREEPER;
                         break;
                     case 2:
-                        boss = Constant.Bosses.PIGMAN;
+                        boss = Bosses.PIGMAN;
                         break;
                     case 3:
-                        boss = Constant.Bosses.ENDERMAN;
+                        boss = Bosses.ENDERMAN;
                         break;
                     case 4:
-                        boss = Constant.Bosses.SPIDER;
+                        boss = Bosses.SPIDER;
                         break;
                     case 5:
-                        boss = Constant.Bosses.ZOMBIE;
+                        boss = Bosses.ZOMBIE;
                         break;
                     case 6:
-                        boss = Constant.Bosses.SKELETON;
+                        boss = Bosses.SKELETON;
                         break;
                 } 
                 
@@ -60,12 +64,28 @@ public class Room {
         }
     }
 
-    public Constant.Bosses getBoss() {
+    public MapType getType()
+    {
+        return type;
+    }
+
+    public int getMapNum()
+    {
+        return mapNum;
+    }
+    
+
+    public Bosses getBoss() {
         return boss;
     }
 
     public String getMap() {
         return map;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return "Room{" + "boss=" + boss + ", map=" + map + ", mapNum=" + mapNum + ", type=" + type + '}';
+    }
 }

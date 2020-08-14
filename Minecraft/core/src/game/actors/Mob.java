@@ -160,7 +160,6 @@ public abstract class Mob extends Sprite implements Actor
                 if(this instanceof EnderDragon)
                 {
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
-                    screen.cambiarHabitacion(new Room(1, Constant.MapType.BIOME));
                 }
             }
         }

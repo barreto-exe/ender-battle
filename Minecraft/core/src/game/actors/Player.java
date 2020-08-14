@@ -35,7 +35,7 @@ import game.tools.VirtualController;
  *
  * @author Karen
  */
-public class Player extends Sprite implements Actor
+public final class Player extends Sprite implements Actor
 {
     //<editor-fold defaultstate="collapsed" desc="Atributos">
     //Atributos de Box2d
@@ -79,6 +79,8 @@ public class Player extends Sprite implements Actor
     
     //</editor-fold>
 
+    private boolean[] jefesGanados;
+    
     /**
      * Instaciando al player con el color de ropa.
      *
@@ -87,11 +89,11 @@ public class Player extends Sprite implements Actor
      */
     public Player(String color)
     {
-        //informacion del jugador
         this.color = color;
-
         this.life = 100;
-
+        this.jefesGanados = new boolean[6];
+        reiniciarJefesGanados(); 
+        
         //instanciando inventario vacío
         inventory = new Inventory();
         portedObjects = new BattleObject[5];
@@ -101,6 +103,47 @@ public class Player extends Sprite implements Actor
         }
     }
 
+    public void reiniciarJefesGanados()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            this.jefesGanados[i] = false;
+        }
+    }
+    
+    public boolean ganoJefeBioma(int numBioma)
+    {
+        return jefesGanados[numBioma-1];
+    }
+    
+    public void setJefeGanado(int numBioma)
+    {
+        jefesGanados[numBioma-1] = true;
+    }
+    
+    public boolean ganoTodosJefes()
+    {
+        for(boolean gano : jefesGanados)
+        {
+            if(!gano)
+                return false;
+        }
+        return true;
+    }
+    
+    public int proximoBioma()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            if(!jefesGanados[i])
+            {
+                return i+1;
+            }
+        }
+        
+        return -1;
+    }
+    
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Body getBody()
     {

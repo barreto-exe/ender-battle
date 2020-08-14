@@ -16,7 +16,7 @@ public class LoadScreen extends BaseScreen
 {
     private SpriteBatch batch;
     private float tiempoColor, tiempoCambio;
-    private Room habitaacionDestino;
+    private Room habitacionDestino;
     private Player player;
     
     /**
@@ -32,7 +32,7 @@ public class LoadScreen extends BaseScreen
         tiempoColor = 0;
         tiempoCambio = 6;
         
-        this.habitaacionDestino = habitacionDestino;
+        this.habitacionDestino = habitacionDestino;
         this.player = player;
     }
 
@@ -52,7 +52,7 @@ public class LoadScreen extends BaseScreen
         tiempoCambio -= delta;
         if(tiempoCambio <= 0)
         {
-            game.setScreen(new GameScreen(game, habitaacionDestino, player));
+            game.setScreen(new GameScreen(game, habitacionDestino, player));
         }
     }
 }
