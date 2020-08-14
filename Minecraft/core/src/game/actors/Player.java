@@ -214,7 +214,7 @@ public final class Player extends Sprite implements Actor
 
     public State getState()
     {
-        if (controller.isHitting() && !isHitting)
+        if (controller.isHitting() && !isHitting && !(currentState == State.JUMPING || currentState == State.FALLING))
         {
             isHitting = true;
             setToAttack = true;
