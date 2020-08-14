@@ -29,6 +29,7 @@ import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
 import game.LoadScreen;
 import game.actors.Villager;
+import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
 import game.screens.worlds.Room;
 import game.screens.worlds.BiomeAssemblerClass;
@@ -243,7 +244,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         //Añadir actores al grupo
         actors.addActor(player);
-        //actors.addActor(new EnderDragon(this, 8, 15));
+        actors.addActor(new EnderDragon(this, 8, 15));
         world.setContactListener(new WorldContactListener(player));
     }
     

@@ -92,7 +92,7 @@ public class MainGame extends Game
         }
         
         player = new Player(skin);
-        setScreen(new GameScreen(this, (new Room(6, Constant.MapType.BIOME)), player)); 
+        setScreen(new GameScreen(this, (new Room(1, Constant.MapType.BIOME)), player)); 
     }
 
     @Override
