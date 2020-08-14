@@ -160,7 +160,7 @@ public abstract class Mob extends Sprite implements Actor
                     player.getProgreso().setGanoPartida(true);
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
                 }
-                else
+                else if(this instanceof MonsterMob && ((MonsterMob)this).isIsBoss())
                 {
                     player.setJefeGanado(screen.getRoom().getMapNum());
                     screen.cambiarHabitacion();

@@ -480,8 +480,10 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         dibujarGUI();
         
+        System.out.println(player.getBody().getPosition().toString());
+        
         //Si jugador llegó al final, disparar cambio de habitación.
-        if(player.getBody().getPosition().x > 40)
+        if(player.getBody().getPosition().x > 240)
         {
             this.cambiarHabitacion();
         }

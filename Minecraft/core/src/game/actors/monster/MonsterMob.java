@@ -62,8 +62,7 @@ public abstract class MonsterMob extends Mob
         if (isBoss)
         {
             this.attackPoints *= 2;
-            //this.life *= 4;
-            this.life = 1;
+            this.life *= 4;
             this.speed /= 3.5;
             setBounds(0, 0, (width / Constant.PPM) * 2, (height / Constant.PPM) * 2);
         }
