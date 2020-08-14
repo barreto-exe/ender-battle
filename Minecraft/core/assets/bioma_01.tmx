@@ -129,7 +129,6 @@
   <object id="63" x="3710.67" y="414.667" width="33.3333" height="33.3333"/>
   <object id="65" x="5504" y="414.667" width="30.6667" height="32"/>
   <object id="113" x="6239.33" y="415.333" width="32.6667" height="32"/>
-  <object id="114" x="6400" y="415.333" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="8" name="Tree [5]">
   <object id="68" x="2273.33" y="286.667" width="30.6667" height="32"/>
@@ -153,7 +152,7 @@
  <objectgroup id="9" name="Monster [7]">
   <object id="125" x="8256.67" y="416" width="31.3333" height="33.3333"/>
   <object id="126" x="9280" y="385.333" width="33.3333" height="29.3333"/>
-  <object id="127" x="6304" y="417" width="31" height="31"/>
+  <object id="127" x="6400" y="416" width="31" height="31"/>
  </objectgroup>
  <objectgroup id="12" name="Villager [8]">
   <object id="145" x="96" y="448.091" width="31.6667" height="31.6667"/>
