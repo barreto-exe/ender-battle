@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="78">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="136">
  <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
   <image source="bloques.png" width="2048" height="296"/>
  </tileset>
@@ -119,11 +119,51 @@
   <object id="72" x="11584" y="287.995" width="96" height="64.0045"/>
   <object id="74" x="0.0131076" y="0.000434028" height="352.008"/>
  </objectgroup>
- <objectgroup id="4" name="Little Mob [3]"/>
- <objectgroup id="10" name="Big Mob [4]"/>
+ <objectgroup id="4" name="Little Mob [3]">
+  <object id="80" x="992" y="352" width="32" height="32"/>
+  <object id="82" x="1568" y="448" width="32" height="32"/>
+  <object id="83" x="1728" y="448" width="32" height="32"/>
+  <object id="84" x="2368" y="448" width="32" height="32"/>
+  <object id="85" x="2208" y="448" width="32" height="32"/>
+  <object id="93" x="2976" y="352" width="32" height="32"/>
+  <object id="109" x="7072" y="416" width="32" height="32"/>
+  <object id="111" x="7200" y="416" width="32" height="32"/>
+  <object id="113" x="8224" y="416" width="32" height="32"/>
+  <object id="114" x="8352" y="416" width="32" height="32"/>
+  <object id="115" x="8480" y="416" width="32" height="32"/>
+  <object id="116" x="8608" y="416" width="32" height="32"/>
+  <object id="128" x="11008" y="352" width="32" height="32"/>
+  <object id="129" x="11520" y="384" width="32" height="32"/>
+  <object id="130" x="11616" y="384" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="10" name="Big Mob [4]">
+  <object id="78" x="832" y="352" width="32" height="32"/>
+  <object id="79" x="1120" y="352" width="32" height="32"/>
+  <object id="89" x="2688" y="352" width="32" height="32"/>
+  <object id="98" x="4736" y="416" width="32" height="32"/>
+  <object id="99" x="5088" y="416" width="32" height="32"/>
+  <object id="107" x="6400" y="384" width="32" height="32"/>
+  <object id="112" x="7520" y="416" width="32" height="32"/>
+  <object id="121" x="8928" y="416" width="32" height="32"/>
+  <object id="125" x="10912" y="352" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="5" name="Tree [5]"/>
  <objectgroup id="6" name="Bush [6]"/>
- <objectgroup id="7" name="Monster [7]"/>
+ <objectgroup id="7" name="Monster [7]">
+  <object id="91" x="3488" y="416" width="32" height="32"/>
+  <object id="92" x="2816" y="352" width="32" height="32"/>
+  <object id="95" x="1952" y="448" width="32" height="32"/>
+  <object id="96" x="4064" y="416" width="32" height="32"/>
+  <object id="97" x="4352" y="416" width="32" height="32"/>
+  <object id="101" x="5728" y="288" width="32" height="32"/>
+  <object id="105" x="6784" y="416" width="32" height="32"/>
+  <object id="118" x="8032" y="416" width="32" height="32"/>
+  <object id="120" x="9312" y="416" width="32" height="32"/>
+  <object id="122" x="9952" y="320" width="32" height="32"/>
+  <object id="124" x="10208" y="416" width="32" height="32"/>
+  <object id="126" x="11200" y="352" width="32" height="32"/>
+  <object id="135" x="11872" y="320" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="8" name="Villager [8]">
   <object id="75" x="416" y="384" width="32.0026" height="31.9987"/>
  </objectgroup>
