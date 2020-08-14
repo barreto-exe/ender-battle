@@ -27,6 +27,7 @@ import game.actors.monster.Spider;
 import game.actors.monster.Zombie;
 import game.tools.Constant;
 import game.screens.GameScreen;
+import game.tools.Constant.Bosses;
 import game.tools.Constant.MapType;
 
 /**
@@ -134,7 +135,6 @@ public class BiomeAssemblerClass
         MonsterMob mobM;
         
         //<editor-fold defaultstate="collapsed" desc="Ubicar Monstruos">
-        //Ubicando mobs pacíficos pequeños [2]
         for (MapObject object : screen.getMap().getLayers().get(7).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
@@ -150,6 +150,8 @@ public class BiomeAssemblerClass
         
         Rectangle rectangle = new Rectangle();
         
+
+        //<editor-fold defaultstate="collapsed" desc="Ubicar Aldeano">
         if(screen.getRoom().getType() != MapType.FIGHT)
         {
             //Ubicación del Aldeano
@@ -164,13 +166,13 @@ public class BiomeAssemblerClass
         {
             villagerPosition = new Vector2(-20 / Constant.PPM, -20/ Constant.PPM);
         }
+        //</editor-fold>
         
         //Ubicación del Jugador
         for (MapObject object : screen.getMap().getLayers().get(9).getObjects().getByType(RectangleMapObject.class))
         {
             rectangle = ((RectangleMapObject) object).getRectangle();
         }
-        
         playerPosition = new Vector2(rectangle.getX() / Constant.PPM, rectangle.getY() / Constant.PPM);
     }
 
@@ -273,8 +275,13 @@ public class BiomeAssemblerClass
     //<editor-fold defaultstate="collapsed" desc="Randomize Monsters">
     private MonsterMob getMonster(GameScreen screen, float x, float y)
     {
-        int random = (int) (Math.random() * 6) + 1;
+        //Si es el mundo del ender, sólo habra Endermen
+        if(screen.getRoom().getMapNum() == 3)
+        {
+            return new Enderman(screen, x / Constant.PPM, y / Constant.PPM, false);
+        }
         
+        int random = (int) (Math.random() * 6) + 1;
         switch (random)
         {
             case 1:
