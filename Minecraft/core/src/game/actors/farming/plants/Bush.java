@@ -1,5 +1,7 @@
 package game.actors.farming.plants;
 
+import com.badlogic.gdx.math.Vector2;
+import game.actors.collectibles.FoodCollectible;
 import game.screens.GameScreen;
 import game.tools.Constant;
 
@@ -56,5 +58,19 @@ public class Bush extends Plant
         
         plantEmpty = atlasPlants.findRegion(bush);
         return true;
+    }
+
+    @Override
+    public void toDie()
+    {
+        fruits = new FoodCollectible[3];
+        fruits[0] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 2, body.getPosition().y));
+        fruits[1] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 2, body.getPosition().y));
+        fruits[2] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x, body.getPosition().y));
+
+        for (FoodCollectible fruit : fruits)
+        {
+            actors.addActor(fruit);
+        }
     }
 }

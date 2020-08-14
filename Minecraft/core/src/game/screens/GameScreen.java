@@ -570,7 +570,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
             @Override
             public void run()
             {
-                //System.out.println("Esperando respuesta server partidas... " + cont++);
 
                 try
                 {

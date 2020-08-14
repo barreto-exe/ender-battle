@@ -73,19 +73,7 @@ public abstract class Plant extends Sprite implements Actor
         if (setToCrop && !isEmpty)
         {
             setRegion(plantEmpty);
-
-            fruits = new FoodCollectible[5];
-            fruits[0] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 2, body.getPosition().y));
-            fruits[1] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x - getHeight() / 4, body.getPosition().y));
-            fruits[2] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 4, body.getPosition().y));
-            fruits[3] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x + getHeight() / 2, body.getPosition().y));
-            fruits[4] = new FoodCollectible(type, world, fruitTexture, new Vector2(body.getPosition().x, body.getPosition().y));
-
-            for (FoodCollectible fruit : fruits)
-            {
-                actors.addActor(fruit);
-            }
-
+            toDie();
             delete();
             isEmpty = true;
         }
@@ -163,5 +151,7 @@ public abstract class Plant extends Sprite implements Actor
             }).start();
         }
     }
+    
+    public abstract void toDie();
 
 }
