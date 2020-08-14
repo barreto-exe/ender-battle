@@ -20,6 +20,7 @@ public class ProgresoJugador implements Serializable
     private int objetosRecogidos;
     private boolean ganoPartida;
     private boolean enPartida;
+    private String nombreJugador;
 
     public ProgresoJugador(DBUsuario usuario)
     {
@@ -47,9 +48,6 @@ public class ProgresoJugador implements Serializable
         enPartida = true;
     }
     
-    
-
-    private String nombreJugador;
     public ProgresoJugador(int idPartida, int idJugador, int personajeSeleccionado, int animalesMatados, int monstruosMatados, int jefesMatados, int esmeraldasRecogidas, int objetosRecogidos, boolean ganoPartida, boolean enPartida, String nombreJugador)
     {
         this.idPartida = idPartida;

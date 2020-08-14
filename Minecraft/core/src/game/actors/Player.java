@@ -145,6 +145,12 @@ public final class Player extends Sprite implements Actor
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public ProgresoJugador getProgreso()
+    {
+        return progreso;
+    }
+    
     public Body getBody()
     {
         return body;

@@ -72,7 +72,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     
     //Atributos de la GUI
     Batch batchUI = new SpriteBatch();
-    BitmapFont cantidadEsmeralda, mensajeConservacion;
+    BitmapFont cantidadEsmeralda, mensajePantalla;
     boolean mostrarMensajeConservacion;
     int contadorMsjConservacion;
     Sprite esmeralda;               
@@ -127,7 +127,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     
         //<editor-fold defaultstate="collapsed" desc="Inicializar GUI">
         cantidadEsmeralda = new BitmapFont();
-        mensajeConservacion = new BitmapFont();
+        mensajePantalla = new BitmapFont();
         esmeralda = new Sprite(this.getAtlas().findRegion("esmeralda"));
         corazon = new Sprite(this.getAtlas().findRegion("corazon_lleno"));
         corazonVacio = new Sprite(this.getAtlas().findRegion("corazon_vacio"));
@@ -356,10 +356,22 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         if(mostrarMensajeConservacion)
         {
-            mensajeConservacion.draw(batchUI, "¡No maltrates plantas ni animales en la vida real!", 100, 100);
+            mensajePantalla.draw(batchUI, "¡No maltrates plantas ni animales en la vida real!", 100, 100);
         }
         
-        batchUI.draw(getAtlas().findRegion("hasGanado"), Constant.FRAME_WIDTH / 2 + 100, Constant.FRAME_HEIGHT / 2);
+        if(game.isJuegoTerminado())
+        {
+            if(player.getProgreso().isGanoPartida())
+            {
+                batchUI.draw(getAtlas().findRegion("hasGanado"), Constant.FRAME_WIDTH / 2 + 100, Constant.FRAME_HEIGHT / 2);
+            }
+            else
+            {
+                batchUI.draw(getAtlas().findRegion("hasPerdido"), Constant.FRAME_WIDTH / 2 + 100, Constant.FRAME_HEIGHT / 2);
+            }
+        
+            mensajePantalla.draw(batchUI, ganadorPartida + ": ¡Ha ganado la partida!", 100, 100);
+        }
         
         batchUI.end();
     }
@@ -471,6 +483,10 @@ public class GameScreen extends BaseScreen implements UsesSocket
         });
         hiloProgreso.start();
     }
+    
+    
+    private String ganadorPartida;
+    
     @Override
     public void recibirRespuestaServer(final Socket socket, UsesSocket ventanaDelegada)
     {
@@ -495,6 +511,13 @@ public class GameScreen extends BaseScreen implements UsesSocket
                         int index = 0;
                         for(ProgresoJugador progreso : progresos)
                         {
+                            //Alguien más ganó la partida
+                            if(progreso.isGanoPartida())
+                            {
+                                game.setJuegoTerminado(true);
+                                ganadorPartida = progreso.getNombreJugador();
+                            }
+                            
                             rows[index] = new Object[]
                             {
                                 progreso.getNombreJugador(),
@@ -504,6 +527,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
                             };
                             index++;
                         }
+                        
                         
                         ventanaJugadores.actualizarTabla(rows);
                     } 
