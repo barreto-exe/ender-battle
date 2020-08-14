@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="177">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="191">
  <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
   <image source="bloques.png" width="2048" height="296"/>
  </tileset>
@@ -67,9 +67,7 @@
   <object id="30" x="4352" y="448" width="64" height="96"/>
   <object id="31" x="4416" y="480" width="288" height="64"/>
   <object id="37" x="4800" y="480" width="1216" height="64"/>
-  <object id="40" x="5376" y="384" width="64" height="32"/>
-  <object id="43" x="5568" y="320" width="64" height="32"/>
-  <object id="44" x="5184" y="320" width="64" height="32"/>
+  <object id="40" x="5376" y="384" width="64" height="27.6667"/>
   <object id="53" x="6112" y="352" width="96" height="192"/>
   <object id="54" x="6208" y="416" width="128" height="128"/>
   <object id="55" x="6336" y="480" width="288" height="64"/>
@@ -79,7 +77,7 @@
   <object id="62" x="6816" y="480" width="832" height="64"/>
   <object id="63" x="7200" y="416" width="192" height="64"/>
   <object id="64" x="7264" y="352" width="64" height="64"/>
-  <object id="65" x="6944" y="224" width="128" height="64"/>
+  <object id="65" x="6944" y="224" width="128" height="57"/>
   <object id="70" x="7776" y="352" width="64"/>
   <object id="71" x="7776" y="352" width="64" height="32"/>
   <object id="72" x="7712" y="416" width="64" height="128"/>
@@ -88,7 +86,7 @@
   <object id="82" x="8160" y="384" width="320" height="160"/>
   <object id="83" x="8480" y="480" width="448" height="64"/>
   <object id="84" x="8928" y="288" width="128" height="256"/>
-  <object id="85" x="8608" y="224" width="192" height="64"/>
+  <object id="85" x="8608" y="224" width="192" height="58"/>
   <object id="86" x="9056" y="352" width="128" height="192"/>
   <object id="87" x="9184" y="416" width="128" height="128"/>
   <object id="88" x="9312" y="480" width="1600" height="64"/>
@@ -112,11 +110,9 @@
   <object id="114" x="3648" y="512" width="64" height="32"/>
   <object id="115" x="4704" y="288" width="288" height="64"/>
   <object id="116" x="4704" y="352" width="96" height="192"/>
-  <object id="118" x="4800" y="352" width="64" height="64"/>
   <object id="119" x="5184" y="256" width="448" height="64"/>
   <object id="120" x="5312" y="320" width="192" height="64"/>
   <object id="121" x="5824" y="288" width="288" height="64"/>
-  <object id="122" x="5824" y="352" width="64" height="32"/>
   <object id="123" x="5952" y="352" width="160" height="64"/>
   <object id="126" x="7648" y="288" width="192" height="64"/>
   <object id="127" x="7968" y="256" width="192" height="64"/>
@@ -127,6 +123,7 @@
   <object id="134" x="11520" y="288" width="192" height="64"/>
   <object id="135" x="11648" y="352" width="64" height="192"/>
   <object id="139" x="10912" y="288" width="64" height="256"/>
+  <object id="187" x="12800" y="0" height="480"/>
  </objectgroup>
  <objectgroup id="5" name="Little Mob [3]">
   <object id="144" x="1760" y="384" width="32" height="32"/>
@@ -140,6 +137,9 @@
   <object id="167" x="9696" y="448" width="32" height="32"/>
   <object id="170" x="10176" y="416" width="32" height="32"/>
   <object id="171" x="10592" y="448" width="32" height="32"/>
+  <object id="182" x="7906" y="417.5" width="30.5" height="31.5"/>
+  <object id="183" x="8121.33" y="701.333"/>
+  <object id="184" x="10085.3" y="624" width="9.33333" height="8"/>
  </objectgroup>
  <objectgroup id="6" name="Big Mob [4]">
   <object id="155" x="4224" y="384" width="32" height="32"/>
@@ -147,16 +147,16 @@
   <object id="160" x="6432" y="384" width="32" height="32"/>
   <object id="163" x="7488" y="384" width="32" height="32"/>
   <object id="175" x="12288" y="384" width="32" height="32"/>
+  <object id="178" x="5088" y="416" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="7" name="Tree [5]"/>
  <objectgroup id="8" name="Bush [6]"/>
  <objectgroup id="9" name="Monster [7]">
   <object id="141" x="1376" y="384" width="32" height="32"/>
   <object id="143" x="2144" y="384" width="32" height="32"/>
-  <object id="145" x="896" y="288" width="32" height="32"/>
+  <object id="145" x="928" y="288" width="32" height="32"/>
   <object id="156" x="3872" y="384" width="32" height="32"/>
-  <object id="157" x="4544" y="384" width="32" height="32"/>
-  <object id="158" x="5088" y="384" width="32" height="32"/>
+  <object id="157" x="4608" y="384" width="32" height="32"/>
   <object id="161" x="7008" y="384" width="32" height="32"/>
   <object id="165" x="8576" y="384" width="32" height="32"/>
   <object id="173" x="11104" y="192" width="32" height="32"/>

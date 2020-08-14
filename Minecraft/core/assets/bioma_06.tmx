@@ -62,11 +62,11 @@
   <object id="14" x="4352" y="287.988" width="255.999" height="64.0065"/>
   <object id="15" x="5440" y="287.996" width="63.9922" height="192.004"/>
   <object id="16" x="5504" y="288" width="255.988" height="32"/>
-  <object id="17" x="5504" y="319.998" width="128.001" height="32.0002"/>
+  <object id="17" x="5504" y="319.998" width="128.001" height="26.0002"/>
   <object id="18" x="5504" y="352" width="64.0021" height="31.9982"/>
   <object id="19" x="6112.01" y="288.003" width="63.9879" height="255.986"/>
   <object id="20" x="5856" y="288.004" width="256.005" height="32"/>
-  <object id="21" x="5983.99" y="320" width="128.017" height="32.0056"/>
+  <object id="21" x="5983.99" y="320" width="128.017" height="26.5056"/>
   <object id="22" x="6047.99" y="352.008" width="64.0156" height="31.9935"/>
   <object id="23" x="6176" y="383.999" width="256.001" height="159.999"/>
   <object id="24" x="6432.01" y="447.992" width="575.965" height="96.0039"/>
