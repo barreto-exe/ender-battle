@@ -143,6 +143,12 @@ public class GameScreen extends BaseScreen implements UsesSocket
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public Room getRoom()
+    {
+        return room;
+    }
+    
     public boolean isMostrarMensajeConservacion()
     {
         return mostrarMensajeConservacion;
@@ -238,7 +244,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         //Añadir actores al grupo
         actors.addActor(player);
-        actors.addActor(new EnderDragon(this, 8, 15));
+        //actors.addActor(new EnderDragon(this, 8, 15));
         world.setContactListener(new WorldContactListener(player));
     }
     
@@ -253,8 +259,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
     {
         if(cambiandoBioma)
             return;
-        
-        System.out.println("cambiando");
         
         cambiandoBioma = true;
         
@@ -392,7 +396,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         dibujarGUI();
         
         //Si jugador llegó al final, disparar cambio de habitación.
-        if(player.getBody().getPosition().x > 20)
+        if(player.getBody().getPosition().x > 240)
         {
             this.cambiarHabitacion();
         }

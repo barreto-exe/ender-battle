@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="49">
- <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="128" columns="64">
-  <image source="bloques.png" width="2048" height="64"/>
+ <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
+  <image source="bloques.png" width="2048" height="296"/>
  </tileset>
  <layer id="1" name="Graphics" width="400" height="17">
   <data encoding="csv">
@@ -96,7 +96,7 @@
  <objectgroup id="8" name="Bush [6]"/>
  <objectgroup id="9" name="Monster [7]"/>
  <objectgroup id="10" name="Villager [8]">
-  <object id="47" x="608.125" y="320.125" width="32.125" height="31.875"/>
+  <object id="47" x="608" y="384" width="32.125" height="31.875"/>
  </objectgroup>
  <objectgroup id="11" name="Player [9]">
   <object id="48" x="128.125" y="320.292" width="31.9167" height="31.625"/>
