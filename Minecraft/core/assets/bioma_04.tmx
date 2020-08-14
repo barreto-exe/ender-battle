@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="47">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="97">
  <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
   <image source="bloques.png" width="2048" height="296"/>
  </tileset>
@@ -91,11 +91,51 @@
   <object id="43" x="9728.01" y="384.006" width="895.996" height="63.9927"/>
   <object id="44" x="0.0222222" y="0.00486111" width="0.388889" height="415.995"/>
  </objectgroup>
- <objectgroup id="5" name="Little Mob [3]"/>
- <objectgroup id="6" name="Big Mob [4]"/>
+ <objectgroup id="5" name="Little Mob [3]">
+  <object id="71" x="6912" y="320" width="32" height="32"/>
+  <object id="72" x="7040" y="320" width="32" height="32"/>
+  <object id="73" x="7168" y="320" width="32" height="32"/>
+  <object id="75" x="7328" y="448" width="32" height="32"/>
+  <object id="77" x="7488" y="448" width="32" height="32"/>
+  <object id="79" x="7648" y="448" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="6" name="Big Mob [4]">
+  <object id="50" x="1312" y="352" width="32" height="32"/>
+  <object id="51" x="1888" y="352" width="32" height="32"/>
+  <object id="58" x="3168" y="384" width="32" height="32"/>
+  <object id="60" x="3360" y="384" width="32" height="32"/>
+  <object id="68" x="5408" y="320" width="32" height="32"/>
+  <object id="70" x="6176" y="320" width="32" height="32"/>
+  <object id="84" x="8800" y="352" width="32" height="32"/>
+  <object id="91" x="10752" y="320" width="32" height="32"/>
+  <object id="93" x="11360" y="320" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="7" name="Tree [5]"/>
  <objectgroup id="8" name="Bush [6]"/>
- <objectgroup id="9" name="Monster [7]"/>
+ <objectgroup id="9" name="Monster [7]">
+  <object id="47" x="448" y="416" width="32" height="32"/>
+  <object id="48" x="1056" y="352" width="32" height="32"/>
+  <object id="52" x="2144" y="352" width="32" height="32"/>
+  <object id="54" x="2432" y="256" width="32" height="32"/>
+  <object id="55" x="2720" y="256" width="32" height="32"/>
+  <object id="56" x="3072" y="224" width="32" height="32"/>
+  <object id="57" x="3392" y="224" width="32" height="32"/>
+  <object id="63" x="3712" y="384" width="32" height="32"/>
+  <object id="64" x="4256" y="160" width="32" height="32"/>
+  <object id="66" x="4640" y="256" width="32" height="32"/>
+  <object id="67" x="5024" y="320" width="32" height="32"/>
+  <object id="69" x="5760" y="320" width="32" height="32"/>
+  <object id="74" x="6592" y="256" width="32" height="32"/>
+  <object id="81" x="7840" y="384" width="32" height="32"/>
+  <object id="82" x="8128" y="384" width="32" height="32"/>
+  <object id="83" x="8544" y="352" width="32" height="32"/>
+  <object id="86" x="9504" y="320" width="32" height="32"/>
+  <object id="88" x="10016" y="160" width="32" height="32"/>
+  <object id="89" x="10304" y="160" width="32" height="32"/>
+  <object id="92" x="11072" y="320" width="32" height="32"/>
+  <object id="94" x="11648" y="320" width="32" height="32"/>
+  <object id="95" x="12288" y="256" width="32" height="32"/>
+ </objectgroup>
  <objectgroup id="10" name="Villager [8]">
   <object id="45" x="608" y="416" width="31.6364" height="32"/>
  </objectgroup>
