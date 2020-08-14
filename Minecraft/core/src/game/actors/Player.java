@@ -663,6 +663,12 @@ public final class Player extends Sprite implements Actor
      */
     public void toRecibeAttack(float hit)
     {        
+        if(life > 0)
+        {
+            soundManager.get("sonidos/hurt1.ogg", Sound.class).play(Sonido.volumen);
+            soundManager.get("sonidos/hurt2.ogg", Sound.class).play(Sonido.volumen);
+        }
+        
         hit -= getTotalProtection();
         if(hit <= 0)
         {
@@ -670,9 +676,6 @@ public final class Player extends Sprite implements Actor
         }
         
         life -= hit;
-        
-        soundManager.get("sonidos/hurt1.ogg", Sound.class).play(Sonido.volumen);
-        soundManager.get("sonidos/hurt2.ogg", Sound.class).play(Sonido.volumen);
         
         final Player player = this;
 
