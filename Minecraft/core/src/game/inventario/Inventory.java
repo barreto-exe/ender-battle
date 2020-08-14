@@ -260,7 +260,6 @@ public class Inventory
         if (index >= 0)
         {
             food[index].setCant(food[index].getCant() + 1);
-            System.out.println("añadido al inventario objeto indice: " + index);
             return true;
         }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="147">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="148">
  <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
   <image source="bloques.png" width="2048" height="296"/>
  </tileset>
@@ -82,7 +82,7 @@
   <object id="81" x="7167.67" y="416.333" width="64" height="127.667"/>
   <object id="82" x="6720" y="320.667" width="319.333" height="64"/>
   <object id="83" x="7039.67" y="351.667" width="64" height="32.3333"/>
-  <object id="84" x="6240" y="191.333" width="192" height="64"/>
+  <object id="84" x="6240" y="191.997" width="192" height="63.3359"/>
   <object id="85" x="7232" y="448.667" width="1535.33" height="95.3333"/>
   <object id="86" x="7552" y="320" width="255.5" height="128.5"/>
   <object id="87" x="8576" y="223.333" width="383.333" height="161.333"/>
@@ -138,16 +138,15 @@
   <object id="124" x="896" y="319.864" width="32" height="31.3939"/>
   <object id="128" x="10816.5" y="320.89" width="32.5" height="30.9583"/>
   <object id="129" x="11200.5" y="320.11" width="32.3333" height="32"/>
-  <object id="134" x="6336.17" y="160.167" width="31.6667" height="31"/>
  </objectgroup>
  <objectgroup id="5" name="Bush [6]">
   <object id="40" x="5503.33" y="416" width="32" height="30.6667"/>
   <object id="74" x="438.333" y="223.667" width="29.3333" height="32"/>
   <object id="130" x="12320" y="384" width="32" height="32"/>
-  <object id="131" x="11008.2" y="128.083" width="32.6667" height="31.3333"/>
   <object id="139" x="7999.5" y="192.167" width="32.3333" height="32"/>
   <object id="140" x="8192.33" y="159.667" width="31.3333" height="31.6667"/>
-  <object id="141" x="8384.17" y="192.333" width="32" height="32.6667"/>
+  <object id="141" x="8384.17" y="191.242" width="32" height="32.6667"/>
+  <object id="147" x="6335.94" y="160.636" width="32.125" height="31.125"/>
  </objectgroup>
  <objectgroup id="9" name="Monster [7]">
   <object id="125" x="8256.67" y="416" width="31.3333" height="33.3333"/>

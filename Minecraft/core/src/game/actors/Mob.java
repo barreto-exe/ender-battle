@@ -120,8 +120,6 @@ public abstract class Mob extends Sprite implements Actor
     {
         life -= hit;
         
-        System.out.println("Vida: " + life);
-        
         if(contadorSonidos == 0)
         {
             Sonido.soundManager.get("sonidos/mobs/"+sonido+".ogg", Sound.class).play(Sonido.volumen);
