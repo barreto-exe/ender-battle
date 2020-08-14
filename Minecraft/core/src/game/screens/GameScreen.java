@@ -318,7 +318,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         gameCam.update();
         renderer.setView(gameCam);
         renderer.render();
-        debugger.render(world, gameCam.combined);
+        //debugger.render(world, gameCam.combined);
         game.getBatch().setProjectionMatrix(gameCam.combined);
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Dibujar habitación">
@@ -328,8 +328,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
         //</editor-fold>
         
         dibujarGUI();
-        
-        System.out.println(player.getBody().getPosition().toString());
         
         //Si jugador llegó al final, disparar cambio de habitación.
         if(player.getBody().getPosition().x > 240)
@@ -341,7 +339,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
         if(cambiarBioma)
         {
             game.setScreen(new LoadScreen(game, nextRoom, player));
-            //this.dispose();
         }
     }
 

@@ -86,6 +86,10 @@ public abstract class MonsterMob extends Mob
         {
             shape.setAsBox(getWidth() / 2 - 1, getHeight() / 2 - 0.5f);
         }
+        else if(this instanceof Zombie)
+        {
+            shape.setAsBox(getWidth() / 2 - 0.8f, getHeight() / 2);
+        }
         else
         {
             shape.setAsBox(getWidth() / 2, getHeight() / 2);

@@ -227,7 +227,8 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         panelBienvenida.setLayout(null);
 
         jButton1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        jButton1.setText("DEBUG");
+        jButton1.setText("UN JUGADOR");
+        jButton1.setPreferredSize(new java.awt.Dimension(115, 25));
         jButton1.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -236,7 +237,7 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
             }
         });
         panelBienvenida.add(jButton1);
-        jButton1.setBounds(590, 10, 100, 40);
+        jButton1.setBounds(560, 10, 130, 40);
 
         btnIniciarSesion.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         btnIniciarSesion.setText("INICIAR SESIÓN");
