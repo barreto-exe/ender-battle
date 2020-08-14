@@ -13,16 +13,26 @@ import game.tools.Constant.MapType;
  *
  * @author Karen
  */
-public class Room {
+public class Room
+{
     private Constant.Bosses boss;
     private String map;
     private int mapNum;
     private final Constant.MapType type;
 
-    public Room(int map, MapType type) {
-        this.type = type;  
+    /**
+     * Representa una habitación en el juego. Puede ser un bioma o una sala de
+     * combate.
+     *
+     * @param map es el identificador del bioma.
+     * @param type es el tipo de habitación. Las opciones son: Bioma, Sala de
+     * Combate o Ender.
+     */
+    public Room(int map, MapType type)
+    {
+        this.type = type;
         this.mapNum = map;
-        
+
         switch (map)
         {
             case 1:
@@ -36,26 +46,26 @@ public class Room {
                 break;
             case 4:
                 boss = Bosses.PIGMAN;
-                        break;
+                break;
             case 5:
                 boss = Bosses.SPIDER;
-                        break;
+                break;
             case 6:
                 boss = Bosses.SKELETON;
                 break;
-        } 
-        
+        }
+
         switch (type)
         {
             case FIGHT:
                 this.map = "sala_0" + map + ".tmx";
                 break;
-                
+
             case BIOME:
                 this.map = "bioma_0" + map + ".tmx";
                 boss = null;
                 break;
-             
+
             case END:
                 this.map = "sala_03.tmx";
                 boss = Constant.Bosses.ENDERDRAGON;
@@ -72,13 +82,14 @@ public class Room {
     {
         return mapNum;
     }
-    
 
-    public Bosses getBoss() {
+    public Bosses getBoss()
+    {
         return boss;
     }
 
-    public String getMap() {
+    public String getMap()
+    {
         return map;
     }
 

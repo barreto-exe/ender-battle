@@ -12,7 +12,7 @@ import game.tools.Constant.PlayerCondition;
 
 /**
  *
- * @author Diego
+ * @author Karen
  */
 public class Pigman extends MonsterMob
 {
@@ -78,5 +78,4 @@ public class Pigman extends MonsterMob
             player.setCondition(PlayerCondition.BURNED, 5);
         }
     }
-
 }

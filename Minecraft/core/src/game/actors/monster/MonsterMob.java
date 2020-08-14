@@ -17,7 +17,7 @@ import game.tools.Constant;
 
 /**
  *
- * @author Diego
+ * @author luisb
  */
 public abstract class MonsterMob extends Mob
 {
@@ -96,11 +96,10 @@ public abstract class MonsterMob extends Mob
         body.createFixture(fixtureD).setUserData(this);
     }
 
-    public boolean isIsBoss()
+    public boolean isBoss()
     {
         return isBoss;
     }
-    
     
     /**
      * Atacar a un jugador.
@@ -130,12 +129,6 @@ public abstract class MonsterMob extends Mob
         int chance = (int) (Math.random() * oportunity);
         return chance == aux;
     }
-
-    /**
-     * Ejecuta ataque especial al jugador.
-     * @param player es el jugador que recibe el ataque.
-     */
-    public abstract void specialAttack(Player player);
 
     @Override
     protected void toDie()
@@ -171,4 +164,10 @@ public abstract class MonsterMob extends Mob
         }
     }
     
+    /**
+     * Ejecuta ataque especial al jugador.
+     * @param player es el jugador que recibe el ataque.
+     */
+    public abstract void specialAttack(Player player);
+
 }

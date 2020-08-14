@@ -22,6 +22,14 @@ public class BattleObjectCollectible extends ObjectCollectible
     private BattleObject object;
     //</editor-fold>
 
+    /**
+     * Representa un objeto de batalla en el juego.
+     * @param object indica el tipo de objeto.
+     * @param material del que está hecho el objeto.
+     * @param atlas que contiene la textura del objeto.
+     * @param world donde se ubicará el objeto.
+     * @param posicion donde se ubicará el objeto.
+     */
     public BattleObjectCollectible(Constant.BattleObjectEnum object, Constant.Material material, TextureAtlas atlas, World world, Vector2 posicion)
     {
         super(world, posicion);

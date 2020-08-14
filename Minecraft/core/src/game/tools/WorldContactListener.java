@@ -19,7 +19,6 @@ import game.actors.farming.plants.Plant;
  */
 public class WorldContactListener implements ContactListener
 {
-
     private final Player player;
 
     /**

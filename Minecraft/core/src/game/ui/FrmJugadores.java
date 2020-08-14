@@ -23,6 +23,22 @@ public class FrmJugadores extends javax.swing.JFrame
         this.ventanaJuego = ventanaJuego;
     }
 
+    /**
+     * Actualiza la tabla de jugadores dada una determinada información
+     * @param rows la información que se mostrará en la tabla. Usualmente debe
+     * ser la información del progreso de los jugadores.
+     */
+    public void actualizarTabla(Object[][] rows)
+    {
+        ((DefaultTableModel) jtJugadores.getModel()).setRowCount(0);
+        DefaultTableModel tabla = (DefaultTableModel) jtJugadores.getModel();
+        
+        for(Object[] row : rows)
+        {
+            tabla.addRow(row);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
@@ -102,11 +118,10 @@ public class FrmJugadores extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnAbandonar, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                        .addComponent(jsVolumen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(jsVolumen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,16 +169,6 @@ public class FrmJugadores extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAbandonarActionPerformed
 
-    public void actualizarTabla(Object[][] rows)
-    {
-        ((DefaultTableModel) jtJugadores.getModel()).setRowCount(0);
-        DefaultTableModel tabla = (DefaultTableModel) jtJugadores.getModel();
-        
-        for(Object[] row : rows)
-        {
-            tabla.addRow(row);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbandonar;

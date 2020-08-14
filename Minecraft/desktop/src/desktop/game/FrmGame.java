@@ -60,55 +60,6 @@ public final class FrmGame extends JFrame implements UsesSocket
         //</editor-fold>
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAutoRequestFocus(false);
-        setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
-        setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
-        setType(java.awt.Window.Type.POPUP);
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
-                formWindowClosing(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    //Sale de la partida al cerrar el juego
-    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
-    {//GEN-HEADEREND:event_formWindowClosing
-        salirPartida();
-    }//GEN-LAST:event_formWindowClosing
-
-    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public DBUsuario getUsuario()
-    {
-        return usuario;
-    }
-    public void setUsuario(DBUsuario usuario)
-    {
-        this.usuario = usuario;
-    }
-    //</editor-fold>
-
     @Override
     public void setVisible(boolean b)
     {
@@ -177,7 +128,55 @@ public final class FrmGame extends JFrame implements UsesSocket
         }
         ).start();
     }
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setMinimumSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        setPreferredSize(new java.awt.Dimension(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT));
+        setType(java.awt.Window.Type.POPUP);
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    //Sale de la partida al cerrar el juego
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {//GEN-HEADEREND:event_formWindowClosing
+        salirPartida();
+    }//GEN-LAST:event_formWindowClosing
+
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public DBUsuario getUsuario()
+    {
+        return usuario;
+    }
+    public void setUsuario(DBUsuario usuario)
+    {
+        this.usuario = usuario;
+    }
+    //</editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -12,7 +12,7 @@ import game.tools.Constant.PlayerCondition;
 
 /**
  *
- * @author Diego
+ * @author luisb
  */
 public class Spider extends MonsterMob
 {

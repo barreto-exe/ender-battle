@@ -11,11 +11,10 @@ import game.tools.Constant;
 
 /**
  *
- * @author Diego
+ * @author Karen
  */
 public class Enderman extends MonsterMob
 {
-
     public Enderman(GameScreen screen, float x, float y, boolean isBoss)
     {
         super

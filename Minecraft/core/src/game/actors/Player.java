@@ -26,7 +26,6 @@ import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
 import game.inventario.Protection;
-import game.screens.worlds.Room;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
@@ -72,22 +71,24 @@ public final class Player extends Sprite implements Actor
     private final String color;
     private float life;
     private PlayerCondition condition;
-    float timeCondition = 0;
+    private float timeCondition;
     private int direction;
     private ProgresoJugador progreso;
+    private boolean[] jefesGanados;
+    private MainGame game; 
+    private boolean avisarReinicioJuego;
+    
 
     //Atributos de Inventario
     private Inventory inventory;
     private BattleObject[] portedObjects;
-    
     //</editor-fold>
 
-    private boolean[] jefesGanados;
-    private MainGame game; 
     
     /**
      * Instaciando al player con el color de ropa.
      *
+     * @param game es la instancia del juego a la que pertence el player.
      * @param color representa el ropa elegido por el jugador antes de iniciar
      * partida.
      */
@@ -97,6 +98,8 @@ public final class Player extends Sprite implements Actor
         this.life = 100;
         this.game = game;
         this.jefesGanados = new boolean[6];
+        avisarReinicioJuego = false;
+        this.timeCondition = 0;
         reiniciarJefesGanados(); 
         
         //instanciando inventario vacío
@@ -108,46 +111,6 @@ public final class Player extends Sprite implements Actor
         }
     }
 
-    public void reiniciarJefesGanados()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            this.jefesGanados[i] = false;
-        }
-    }
-    
-    public boolean ganoJefeBioma(int numBioma)
-    {
-        return jefesGanados[numBioma-1];
-    }
-    
-    public void setJefeGanado(int numBioma)
-    {
-        jefesGanados[numBioma-1] = true;
-    }
-    
-    public boolean ganoTodosJefes()
-    {
-        for(boolean gano : jefesGanados)
-        {
-            if(!gano)
-                return false;
-        }
-        return true;
-    }
-    
-    public int proximoBioma()
-    {
-        for(int i = 0; i < 6; i++)
-        {
-            if(!jefesGanados[i])
-            {
-                return i+1;
-            }
-        }
-        
-        return -1;
-    }
     
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
 
@@ -184,20 +147,6 @@ public final class Player extends Sprite implements Actor
     public int getDirection()
     {
         return direction;
-    }
-
-    public void addLife(float lifeAdded)
-    {
-        System.out.println("tenía de vida: " + life);
-
-        life += lifeAdded;
-
-        if (life > 100)
-        {
-            life = 100;
-        }
-
-        System.out.println("ahora tiene de vida: " + life);
     }
 
     public TextureRegion getHitFrame(float delta)
@@ -295,6 +244,27 @@ public final class Player extends Sprite implements Actor
         return frame;
     }
 
+    private int getTotalProtection()
+    {
+        int total = 0;
+        for(int i=1; i<5; i++)
+        {
+            if(portedObjects[i] != null)
+                total += ((Protection)portedObjects[i]).getFactorObject();
+        }
+        return total;
+    }
+    
+    /**
+     * Indica si el jugador está curado o envenenado.
+     *
+     * @return la condición del jugador.
+     */
+    public PlayerCondition getCondition()
+    {
+        return condition;
+    }
+    
     public void setIsJumping(boolean isJumping)
     {
         this.isJumping = isJumping;
@@ -329,18 +299,21 @@ public final class Player extends Sprite implements Actor
         this.life = life;
     }
     
-    private int getTotalProtection()
+    public void setAvisarReinicioJuego(boolean avisarReinicioJuego)
     {
-        int total = 0;
-        for(int i=1; i<5; i++)
-        {
-            if(portedObjects[i] != null)
-                total += ((Protection)portedObjects[i]).getFactorObject();
-        }
-        return total;
+        this.avisarReinicioJuego = avisarReinicioJuego;
     }
+    
+    
+    public void setJefeGanado(int numBioma)
+    {
+        jefesGanados[numBioma-1] = true;
+    }
+    
+
     //</editor-fold>
 
+    
     /**
      * Método que crea y dibuja al protagonista del juego en pantalla.
      *
@@ -437,8 +410,6 @@ public final class Player extends Sprite implements Actor
         villager = null;
     }
 
-    private boolean avisarReinicioJuego = false;
-    
     @Override
     public void act(float delta)
     {
@@ -516,9 +487,54 @@ public final class Player extends Sprite implements Actor
             super.draw(batch);
     }
     
-    public void setAvisarReinicioJuego(boolean avisarReinicioJuego)
+    public void addLife(float lifeAdded)
     {
-        this.avisarReinicioJuego = avisarReinicioJuego;
+        System.out.println("tenía de vida: " + life);
+
+        life += lifeAdded;
+
+        if (life > 100)
+        {
+            life = 100;
+        }
+
+        System.out.println("ahora tiene de vida: " + life);
+    }
+
+    public void reiniciarJefesGanados()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            this.jefesGanados[i] = false;
+        }
+    }
+    
+    public boolean ganoJefeBioma(int numBioma)
+    {
+        return jefesGanados[numBioma-1];
+    }
+    
+    public boolean ganoTodosJefes()
+    {
+        for(boolean gano : jefesGanados)
+        {
+            if(!gano)
+                return false;
+        }
+        return true;
+    }
+    
+    public int proximoBioma()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            if(!jefesGanados[i])
+            {
+                return i+1;
+            }
+        }
+        
+        return -1;
     }
     
     public boolean hasVillager()
@@ -526,6 +542,7 @@ public final class Player extends Sprite implements Actor
         return villager != null;
     }
 
+    
     /**
      * Aplica impulso al jugador para que salte.
      */
@@ -617,7 +634,6 @@ public final class Player extends Sprite implements Actor
             return 10;
         }
     }
-    
 
     /**
      * Hiere a un mob.
@@ -765,16 +781,6 @@ public final class Player extends Sprite implements Actor
         setColor(Color.WHITE);
         this.condition = PlayerCondition.NORMAL;
         body.setGravityScale(1);
-    }
-
-    /**
-     * Indica si el jugador está curado o envenenado.
-     *
-     * @return la condición del jugador.
-     */
-    public PlayerCondition getCondition()
-    {
-        return condition;
     }
 
     /**

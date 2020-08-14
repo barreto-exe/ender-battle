@@ -27,7 +27,6 @@ import game.actors.monster.Spider;
 import game.actors.monster.Zombie;
 import game.tools.Constant;
 import game.screens.GameScreen;
-import game.tools.Constant.MapType;
 
 /**
  * @author Karen

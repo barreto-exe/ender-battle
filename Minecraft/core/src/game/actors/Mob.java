@@ -77,6 +77,39 @@ public abstract class Mob extends Sprite implements Actor
         return body;
     }
 
+    @Override
+    public void act(float delta)
+    {
+        if (setToDie && !isDead)
+        {
+            toDie();
+            delete();
+            isDead = true;
+            actors.removeActor(this);
+        }
+        else if (!isDead)
+        {
+            body.setLinearVelocity(speed, body.getLinearVelocity().y);
+
+            if (body.getLinearVelocity().y < 0)
+            {
+                body.applyForceToCenter(0, -10, true);
+            }
+
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            duration += delta;
+            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
+        }
+    }
+    
+    @Override
+    public void draw (Batch batch)
+    {
+        if (life > 0)
+        {
+            super.draw(batch);
+        }
+    }
     
     /**
      * Recibe un ataque del jugador.
@@ -143,7 +176,7 @@ public abstract class Mob extends Sprite implements Actor
             else if(this instanceof MonsterMob)
             {
                 MonsterMob monster = (MonsterMob) this;
-                if(monster.isIsBoss())
+                if(monster.isBoss())
                 {
                     progreso.setJefesMatados(progreso.getJefesMatados()+1);
                 }
@@ -160,7 +193,7 @@ public abstract class Mob extends Sprite implements Actor
                     player.getProgreso().setGanoPartida(true);
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
                 }
-                else if(this instanceof MonsterMob && ((MonsterMob)this).isIsBoss())
+                else if(this instanceof MonsterMob && ((MonsterMob)this).isBoss())
                 {
                     player.setJefeGanado(screen.getRoom().getMapNum());
                     screen.cambiarHabitacion();
@@ -175,40 +208,6 @@ public abstract class Mob extends Sprite implements Actor
      */
     protected abstract void toDie();
     
-    @Override
-    public void act(float delta)
-    {
-        if (setToDie && !isDead)
-        {
-            toDie();
-            delete();
-            isDead = true;
-            actors.removeActor(this);
-        }
-        else if (!isDead)
-        {
-            body.setLinearVelocity(speed, body.getLinearVelocity().y);
-
-            if (body.getLinearVelocity().y < 0)
-            {
-                body.applyForceToCenter(0, -10, true);
-            }
-
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            duration += delta;
-            setRegion((TextureRegion) animation.getKeyFrame(duration, true));
-        }
-    }
-    
-    @Override
-    public void draw (Batch batch)
-    {
-        if (life > 0)
-        {
-            super.draw(batch);
-        }
-    }
-
     /**
      * Cambiar dirección del mob.
      */

@@ -6,6 +6,7 @@ import comunicacion.PaqueteOperacion.ResultadoOperacion;
 /**
  *
  * @author luisb
+ * @param <E>
  */
 public class PaqueteResultado <E> implements Serializable
 {

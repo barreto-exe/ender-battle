@@ -88,15 +88,18 @@ public class GameScreen extends BaseScreen implements UsesSocket
     Sprite corazon, corazonVacio;              
     Sprite corazonMitad;      
     
+    //Atributos de información de procesos
     Thread hiloProgreso; 
     private static FrmInventario ventanaInventario;    
     private static FrmTienda ventanaTienda;
     private static FrmJugadores ventanaJugadores; 
+    private boolean cambiandoBioma = false, cambiarBioma = false;
+    private Room nextRoom;
+    private String ganadorPartida;
     //</editor-fold>
-
     
     /**
-     * Es la pantalla del juego principal.
+     * Es la pantalla principal del juego.
      *
      * @param game instancia del juego GDX.
      * @param room es el identificador de la habitación en la que se encuentra el
@@ -288,8 +291,69 @@ public class GameScreen extends BaseScreen implements UsesSocket
         world.setContactListener(new WorldContactListener(player));
     }
     
-    private boolean cambiandoBioma = false, cambiarBioma = false;
-    private Room nextRoom;
+    @Override
+    public void resize(int width, int height)
+    {
+        viewport.update(width, height);
+    }
+
+    @Override
+    public void render(float delta)
+    {
+        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (!isPaused)
+        {
+            actors.act(delta);
+            world.step(delta, 6, 2);   
+        }
+        //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
+        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)
+                && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4
+                    && room.getType() == MapType.BIOME)
+        {
+            gameCam.position.x = player.getBody().getPosition().x + 2;
+        }
+        
+        gameCam.update();
+        renderer.setView(gameCam);
+        renderer.render();
+        debugger.render(world, gameCam.combined);
+        game.getBatch().setProjectionMatrix(gameCam.combined);
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Dibujar habitación">
+        game.getBatch().begin();
+        actors.draw(game.getBatch());
+        game.getBatch().end();
+        //</editor-fold>
+        
+        dibujarGUI();
+        
+        System.out.println(player.getBody().getPosition().toString());
+        
+        //Si jugador llegó al final, disparar cambio de habitación.
+        if(player.getBody().getPosition().x > 240)
+        {
+            this.cambiarHabitacion();
+        }
+        
+        //Si procesó el cambio de bioma, colocar loadscreen.
+        if(cambiarBioma)
+        {
+            game.setScreen(new LoadScreen(game, nextRoom, player));
+            //this.dispose();
+        }
+    }
+
+    @Override
+    public void dispose()
+    {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        debugger.dispose();
+    }
+
     
     /**
      * Indica al screen que debe cambiar al siguiente bioma. La acción se
@@ -357,7 +421,11 @@ public class GameScreen extends BaseScreen implements UsesSocket
             }
         }).start();
     }
-    
+
+    /**
+     * Indica al screen que debe cambiar a otra habitación.
+     * @param room habitación a la que se va a cambiar.
+     */
     public void cambiarHabitacion(Room room)
     {
         if(cambiandoBioma)
@@ -384,12 +452,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         }).start();
     }
     
-    @Override
-    public void resize(int width, int height)
-    {
-        viewport.update(width, height);
-    }
-
+    
     /**
      * Muestra la vida y las esmeraldas del usuario.
      */
@@ -448,63 +511,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
         batchUI.end();
     }
     
-    @Override
-    public void render(float delta)
-    {
-        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 0.8f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (!isPaused)
-        {
-            actors.act(delta);
-            world.step(delta, 6, 2);   
-        }
-        //<editor-fold defaultstate="collapsed" desc="Mover Cámara">
-        if ((player.getBody().getPosition().x > Constant.FRAME_WIDTH / 2 / Constant.PPM)
-                && player.getBody().getPosition().x < (Constant.MAX_MAP - (Constant.FRAME_WIDTH / 2)) / Constant.PPM - 4
-                    && room.getType() == MapType.BIOME)
-        {
-            gameCam.position.x = player.getBody().getPosition().x + 2;
-        }
-        
-        gameCam.update();
-        renderer.setView(gameCam);
-        renderer.render();
-        debugger.render(world, gameCam.combined);
-        game.getBatch().setProjectionMatrix(gameCam.combined);
-        //</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="Dibujar habitación">
-        game.getBatch().begin();
-        actors.draw(game.getBatch());
-        game.getBatch().end();
-        //</editor-fold>
-        
-        dibujarGUI();
-        
-        System.out.println(player.getBody().getPosition().toString());
-        
-        //Si jugador llegó al final, disparar cambio de habitación.
-        if(player.getBody().getPosition().x > 240)
-        {
-            this.cambiarHabitacion();
-        }
-        
-        //Si procesó el cambio de bioma, colocar loadscreen.
-        if(cambiarBioma)
-        {
-            game.setScreen(new LoadScreen(game, nextRoom, player));
-            //this.dispose();
-        }
-    }
-
-    @Override
-    public void dispose()
-    {
-        map.dispose();
-        renderer.dispose();
-        world.dispose();
-        debugger.dispose();
-    }
-
     /**
      * Intercambia el estado del juego entre pausado
      * y despausado.
@@ -558,8 +564,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
         hiloProgreso.start();
     }
     
-    
-    private String ganadorPartida;
     
     @Override
     public void recibirRespuestaServer(final Socket socket, UsesSocket ventanaDelegada)

@@ -12,7 +12,7 @@ import game.tools.Constant.PlayerCondition;
 
 /**
  *
- * @author Diego
+ * @author Karen
  */
 public class Zombie extends MonsterMob
 {

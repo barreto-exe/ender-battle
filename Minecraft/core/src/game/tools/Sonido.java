@@ -1,11 +1,10 @@
 package game.tools;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
- *
+ * Gestor de sonidos de la aplicación.
  * @author luisb
  */
 public class Sonido 

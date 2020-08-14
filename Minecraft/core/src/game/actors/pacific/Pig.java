@@ -7,7 +7,6 @@ import game.actors.collectibles.FoodCollectible;
 import game.actors.collectibles.ObjectCollectible;
 import game.screens.GameScreen;
 import game.tools.Constant;
-import game.tools.Sonido;
 
 /**
  *

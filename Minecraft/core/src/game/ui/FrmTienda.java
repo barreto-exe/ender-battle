@@ -11,7 +11,6 @@ import static game.tools.Sonido.soundManager;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSlider;
 
 /**
  *
@@ -22,7 +21,6 @@ public final class FrmTienda extends javax.swing.JFrame
     Player player;
     private HashMap<String, JLabel>  vistasPrecios;
     private HashMap<String, Integer> listaPreciosBase;
-    
     
     /**
      *  Ventana que ofrece la vista de la tienda al jugador.
@@ -69,6 +67,9 @@ public final class FrmTienda extends javax.swing.JFrame
         actualizarVista();
     }
     
+    /**
+     * Actualiza los componentes de acuerdo al inventario del jugador.
+     */
     private void actualizarVista()
     {
         JLabel labelPrecio, imgObjeto;
@@ -105,6 +106,9 @@ public final class FrmTienda extends javax.swing.JFrame
         }
     }
     
+    /**
+     * Hace visible la ventana al usuario.
+     */
     public void mostrar()
     {
         soundManager.get("sonidos/mobs/aldeano.ogg", Sound.class).play(Sonido.volumen);

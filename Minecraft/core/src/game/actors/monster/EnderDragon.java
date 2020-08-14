@@ -19,8 +19,7 @@ import static game.tools.Sonido.soundManager;
  */
 public class EnderDragon extends MonsterMob
 {
-    private boolean sonando, volando;
-    
+    private boolean volando;
     
     public EnderDragon(GameScreen screen, float x, float y)
     {
@@ -50,7 +49,7 @@ public class EnderDragon extends MonsterMob
             
             "enderdragon"   //Sonido
         );
-        sonando = volando = false;
+        volando = false;
         
         //<editor-fold defaultstate="collapsed" desc="Definición de Sensores">
         EdgeShape sensor = new EdgeShape();
@@ -93,7 +92,7 @@ public class EnderDragon extends MonsterMob
     {
         super.act(delta);
         
-        if(sonando)
+        if(volando)
             return;
         
         new Thread(new Runnable()
@@ -103,11 +102,11 @@ public class EnderDragon extends MonsterMob
             {
                 try
                 {
-                    volando = sonando = true;
+                    volando = true;
                     Thread.sleep(5000);
                     soundManager.get("sonidos/mobs/enderdragon_alas.ogg", Sound.class).play(Sonido.volumen);
                     body.applyLinearImpulse(0, 6, body.getWorldCenter().x, body.getWorldCenter().y, true);
-                    volando = sonando = false;
+                    volando = false;
                 }
                 catch (InterruptedException ex)
                 {
@@ -116,8 +115,6 @@ public class EnderDragon extends MonsterMob
         }).start();
     }
     
-    
-
     @Override
     public void specialAttack(Player player)
     {

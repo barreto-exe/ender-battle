@@ -9,7 +9,13 @@ import game.tools.Constant;
  */
 public class Bush extends Plant
 {
-    
+    /**
+     * Representa un arbusto en el juego.
+     * @param screen es la pantalla donde se despliega.
+     * @param type es el tipo de cosecha que suelta.
+     * @param x posición horizontal.
+     * @param y posición vertical.
+     */
     public Bush(GameScreen screen, Constant.Farming type, float x, float y)
     {
         super(screen, type, x, y);

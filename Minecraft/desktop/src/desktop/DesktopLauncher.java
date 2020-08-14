@@ -8,7 +8,6 @@ import game.tools.Sonido;
 
 public class DesktopLauncher
 {
-    
     public static void main(String[] arg)
     {
         colocarInterfaz();

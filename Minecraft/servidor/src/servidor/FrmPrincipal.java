@@ -29,164 +29,6 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
     }
 
     
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
-
-        jPanel = new javax.swing.JPanel();
-        jtpPrincipal = new javax.swing.JTabbedPane();
-        jpPrincipal = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtPrincipal = new javax.swing.JTextArea();
-        jpRegistro = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtRegistro = new javax.swing.JTextArea();
-        jpInicioSesion = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtInicioSesion = new javax.swing.JTextArea();
-        jpPartidas = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtPartidas = new javax.swing.JTextArea();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
-                formWindowClosing(evt);
-            }
-        });
-
-        jScrollPane1.setAutoscrolls(true);
-
-        txtPrincipal.setColumns(20);
-        txtPrincipal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        txtPrincipal.setRows(5);
-        jScrollPane1.setViewportView(txtPrincipal);
-
-        javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
-        jpPrincipal.setLayout(jpPrincipalLayout);
-        jpPrincipalLayout.setHorizontalGroup(
-            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpPrincipalLayout.setVerticalGroup(
-            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jtpPrincipal.addTab("Principal", jpPrincipal);
-
-        jScrollPane2.setAutoscrolls(true);
-
-        txtRegistro.setColumns(20);
-        txtRegistro.setRows(5);
-        jScrollPane2.setViewportView(txtRegistro);
-
-        javax.swing.GroupLayout jpRegistroLayout = new javax.swing.GroupLayout(jpRegistro);
-        jpRegistro.setLayout(jpRegistroLayout);
-        jpRegistroLayout.setHorizontalGroup(
-            jpRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpRegistroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpRegistroLayout.setVerticalGroup(
-            jpRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpRegistroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jtpPrincipal.addTab("Registro de Usuarios", jpRegistro);
-
-        jScrollPane3.setAutoscrolls(true);
-
-        txtInicioSesion.setColumns(20);
-        txtInicioSesion.setRows(5);
-        jScrollPane3.setViewportView(txtInicioSesion);
-
-        javax.swing.GroupLayout jpInicioSesionLayout = new javax.swing.GroupLayout(jpInicioSesion);
-        jpInicioSesion.setLayout(jpInicioSesionLayout);
-        jpInicioSesionLayout.setHorizontalGroup(
-            jpInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpInicioSesionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpInicioSesionLayout.setVerticalGroup(
-            jpInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpInicioSesionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jtpPrincipal.addTab("Inicio de Sesión", jpInicioSesion);
-
-        jScrollPane4.setAutoscrolls(true);
-
-        txtPartidas.setColumns(20);
-        txtPartidas.setRows(5);
-        jScrollPane4.setViewportView(txtPartidas);
-
-        javax.swing.GroupLayout jpPartidasLayout = new javax.swing.GroupLayout(jpPartidas);
-        jpPartidas.setLayout(jpPartidasLayout);
-        jpPartidasLayout.setHorizontalGroup(
-            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPartidasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpPartidasLayout.setVerticalGroup(
-            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPartidasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jtpPrincipal.addTab("Partidas", jpPartidas);
-
-        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
-        jPanel.setLayout(jPanelLayout);
-        jPanelLayout.setHorizontalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jtpPrincipal)
-                .addContainerGap())
-        );
-        jPanelLayout.setVerticalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jtpPrincipal)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel, java.awt.BorderLayout.CENTER);
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
-    {//GEN-HEADEREND:event_formWindowClosing
-        System.exit(1);
-    }//GEN-LAST:event_formWindowClosing
-
-    
     @Override
     public void run()
     {
@@ -443,10 +285,164 @@ public class FrmPrincipal extends javax.swing.JFrame implements Runnable
         this.txtPartidas.append(texto);
     }
 
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
 
+        jPanel = new javax.swing.JPanel();
+        jtpPrincipal = new javax.swing.JTabbedPane();
+        jpPrincipal = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtPrincipal = new javax.swing.JTextArea();
+        jpRegistro = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtRegistro = new javax.swing.JTextArea();
+        jpInicioSesion = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtInicioSesion = new javax.swing.JTextArea();
+        jpPartidas = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtPartidas = new javax.swing.JTextArea();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+        });
 
+        jScrollPane1.setAutoscrolls(true);
 
+        txtPrincipal.setColumns(20);
+        txtPrincipal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        txtPrincipal.setRows(5);
+        jScrollPane1.setViewportView(txtPrincipal);
+
+        javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
+        jpPrincipal.setLayout(jpPrincipalLayout);
+        jpPrincipalLayout.setHorizontalGroup(
+            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpPrincipalLayout.setVerticalGroup(
+            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtpPrincipal.addTab("Principal", jpPrincipal);
+
+        jScrollPane2.setAutoscrolls(true);
+
+        txtRegistro.setColumns(20);
+        txtRegistro.setRows(5);
+        jScrollPane2.setViewportView(txtRegistro);
+
+        javax.swing.GroupLayout jpRegistroLayout = new javax.swing.GroupLayout(jpRegistro);
+        jpRegistro.setLayout(jpRegistroLayout);
+        jpRegistroLayout.setHorizontalGroup(
+            jpRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpRegistroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpRegistroLayout.setVerticalGroup(
+            jpRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpRegistroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtpPrincipal.addTab("Registro de Usuarios", jpRegistro);
+
+        jScrollPane3.setAutoscrolls(true);
+
+        txtInicioSesion.setColumns(20);
+        txtInicioSesion.setRows(5);
+        jScrollPane3.setViewportView(txtInicioSesion);
+
+        javax.swing.GroupLayout jpInicioSesionLayout = new javax.swing.GroupLayout(jpInicioSesion);
+        jpInicioSesion.setLayout(jpInicioSesionLayout);
+        jpInicioSesionLayout.setHorizontalGroup(
+            jpInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpInicioSesionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpInicioSesionLayout.setVerticalGroup(
+            jpInicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpInicioSesionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtpPrincipal.addTab("Inicio de Sesión", jpInicioSesion);
+
+        jScrollPane4.setAutoscrolls(true);
+
+        txtPartidas.setColumns(20);
+        txtPartidas.setRows(5);
+        jScrollPane4.setViewportView(txtPartidas);
+
+        javax.swing.GroupLayout jpPartidasLayout = new javax.swing.GroupLayout(jpPartidas);
+        jpPartidas.setLayout(jpPartidasLayout);
+        jpPartidasLayout.setHorizontalGroup(
+            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPartidasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jpPartidasLayout.setVerticalGroup(
+            jpPartidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPartidasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jtpPrincipal.addTab("Partidas", jpPartidas);
+
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtpPrincipal)
+                .addContainerGap())
+        );
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jtpPrincipal)
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel, java.awt.BorderLayout.CENTER);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {//GEN-HEADEREND:event_formWindowClosing
+        System.exit(1);
+    }//GEN-LAST:event_formWindowClosing
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel;
     private javax.swing.JScrollPane jScrollPane1;

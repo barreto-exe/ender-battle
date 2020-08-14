@@ -19,11 +19,12 @@ public class MainGame extends Game
     private SpriteBatch batch;
     private ProgresoJugador progreso;
     private boolean juegoTerminado;
+    private boolean reiniciandoJuego;
     
     public MainGame(DBUsuario usuario)
     {
         this.usuario = usuario;
-        this.juegoTerminado = false;
+        this.juegoTerminado = this.reiniciandoJuego = false;
         
         if(usuario != null)
             progreso = new ProgresoJugador(usuario);
@@ -95,7 +96,29 @@ public class MainGame extends Game
         setScreen(new GameScreen(this, (new Room(1, Constant.MapType.BIOME)), player)); 
     }
 
-    private boolean reiniciandoJuego = false;
+    @Override
+    public void render()
+    {
+        String nombreUser = "";
+        
+        if(usuario != null)
+        {
+            
+            nombreUser = " || " + usuario.getUsuario();
+        }
+        
+        super.render();
+        ventanaOrigen.setTitle
+        (
+            "Minecraft: La Batalla del Ender"
+            + " || FPS: " + Gdx.graphics.getFramesPerSecond()
+            + nombreUser
+        );
+    }    
+    
+    /**
+     * Resetea la vida del jugador a 100, así como su inventario y sus esmeraldas.
+     */
     public void reiniciarJuego()
     {
         if(reiniciandoJuego)
@@ -131,25 +154,4 @@ public class MainGame extends Game
         }).start();
 
     }
-    
-    @Override
-    public void render()
-    {
-        String nombreUser = "";
-        
-        if(usuario != null)
-        {
-            
-            nombreUser = " || " + usuario.getUsuario();
-        }
-        
-        super.render();
-        ventanaOrigen.setTitle
-        (
-            "Minecraft: La Batalla del Ender"
-            + " || FPS: " + Gdx.graphics.getFramesPerSecond()
-            + nombreUser
-        );
-    }    
-    
 }

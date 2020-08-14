@@ -13,6 +13,10 @@ public abstract class BaseScreen implements Screen
     private TextureAtlas atlas;
     private TextureAtlas plantas;
 
+    /**
+     * Es una pantalla del juego.
+     * @param game es la instancia del juego.
+     */
     public BaseScreen(MainGame game)
     {
         atlas = new TextureAtlas("atlas.atlas");

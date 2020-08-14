@@ -87,8 +87,6 @@ public class Villager extends Sprite implements Actor
     @Override
     public void draw(Batch batch)
     {
-        super.draw(batch); //To change body of generated methods, choose Tools | Templates.
+        super.draw(batch);
     }
-    
-    
 }

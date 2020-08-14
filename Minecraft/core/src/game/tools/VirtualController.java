@@ -1,6 +1,7 @@
 package game.tools;
 
 /**
+ * Constrolador virtual de la aplicación
  * @author Karen
  */
 public class VirtualController
@@ -60,6 +61,4 @@ public class VirtualController
     {
         this.pickingUp = pickingUp;
     }
-
-    
 }

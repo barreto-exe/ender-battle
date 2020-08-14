@@ -27,7 +27,6 @@ public class HiloPartidas implements Runnable
         this.ventanaServer = ventanaServer;
     }
     
-    
     @Override
     public void run()
     {
@@ -103,8 +102,4 @@ public class HiloPartidas implements Runnable
         }
     }
     
-    private void escribirDatosAsincrono(ProgresoJugador progreso)
-    {
-        
-    }
 }

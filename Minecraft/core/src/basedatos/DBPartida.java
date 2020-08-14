@@ -310,10 +310,14 @@ public class DBPartida implements Serializable
         return EstadoPartida.TERMINADA;
     }
     
-    
+    /**
+     * Consultar los usuarios que pertenecen a una determinada partida.
+     * @param idPartida es el id de la partida que se quiere consultar.
+     * @return arraylist con las instancias de los usuarios que pertenecen a la partida.
+     */
     public static ArrayList<DBUsuario> usuariosPartida(int idPartida)
     {
-        ArrayList<DBUsuario> usuarios = new ArrayList<DBUsuario>();
+        ArrayList<DBUsuario> usuarios = new ArrayList<>();
         String query = 
                 "SELECT id_jugador as id, ( SELECT u.usuario FROM m_usuarios u WHERE u.id = id_jugador ) AS usuario, personajeSeleccionado, ip \n" +
                 "FROM m_partidas_jugadores WHERE id_partida = ?";
@@ -335,7 +339,11 @@ public class DBPartida implements Serializable
         return usuarios;
     }
     
-    
+    /**
+     * Consultar el progresos de los jugadores de una partida indicada.
+     * @param idPartida es el id de la partida que se desea consultar.
+     * @return arraylist con el progreso de cada jugador perteneciente a la partida.
+     */
     public static ArrayList<ProgresoJugador> progresoJugadores(int idPartida)
     {
         ArrayList<ProgresoJugador> progresos = new ArrayList<>();
@@ -349,6 +357,11 @@ public class DBPartida implements Serializable
         return progresos;
     }
     
+    /**
+     * Consulta el progreso de un usuario en la partida a la que pertenece.
+     * @param usuario es la instancia del usuario por cuyo progreso que se va a consultar.
+     * @return el progreso del jugador en la partida a la que pertenece.
+     */
     public static ProgresoJugador obtenerProgreso(DBUsuario usuario)
     {
         String query =
@@ -386,6 +399,10 @@ public class DBPartida implements Serializable
         return null;
     }
     
+    /**
+     * Registra una instancia del progreso de un jugador en la base de datos.
+     * @param progreso es el progreso a registrar.
+     */
     public static void registarProgreso(ProgresoJugador progreso)
     {
         String query = 
@@ -414,6 +431,11 @@ public class DBPartida implements Serializable
         operacion.ejecutar();
     }
     
+    /**
+     * Consulta la cantidad de usuarios en la partida.
+     * @param idPartida es el id de la partida a consultar.
+     * @return el número de jugadores en la partida. -1 si no existe la partida.
+     */
     public static int cantidadUsuariosPartida(int idPartida)
     {
         String query = 
@@ -434,9 +456,13 @@ public class DBPartida implements Serializable
         }
     }
     
+    /**
+     * Consulta las partidas activas a las que un jugador se puede unir.
+     * @return un arraylist con los datos de las partiads disponibles.
+     */
     public static ArrayList<DBPartida> partidasActivas()
     {
-        ArrayList<DBPartida> partidas = new ArrayList<DBPartida>();
+        ArrayList<DBPartida> partidas = new ArrayList<>();
         
         String query = "SELECT * FROM m_partidas WHERE estado < 3";
         DBOperacion operacion = new DBOperacion(query);

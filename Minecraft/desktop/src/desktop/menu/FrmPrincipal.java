@@ -35,7 +35,6 @@ import javax.swing.text.rtf.RTFEditorKit;
  */
 public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
 {
-
     /**
      * Objeto que contiene los datos del usuario que ha iniciado sesión.
      */
@@ -1315,8 +1314,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
     }//GEN-LAST:event_btnConsultarEstadisticasActionPerformed
     //</editor-fold>
 
+    
     /**
-     * **********************************************************************************************
+     * Consulta las estadísticas del usuario indicado en el textbox correspondiente.
      */
     private void consultarEstadisticas()
     {
@@ -1452,6 +1452,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         MetodosSocket.enviarPaquete(new PaqueteOperacion(Operacion.SALIR_PARTIDA, usuarioLogueado), this);
     }
 
+    /**
+     * Envía al servidor la solicitud de comenzar la partida.
+     */
     private void comenzarPartida()
     {
         //Deshabilitar botón
@@ -1753,6 +1756,9 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         }).start();
     }
 
+    /**
+     * Abre el juego haciendo uso de los datos del usuario logueado.
+     */
     private void abrirJuego()
     {
         ventanaJuego = new FrmGame(usuarioLogueado);
@@ -1824,7 +1830,6 @@ public final class FrmPrincipal extends javax.swing.JFrame implements UsesSocket
         ((DefaultTableModel) this.jtPartidasActivas.getModel()).setRowCount(0);
         ((DefaultTableModel) this.jtJugadores.getModel()).setRowCount(0);
     }
-
     private void limpiarPanelEstadisticas()
     {
         this.txtUsuarioEstadisticas.setText("");

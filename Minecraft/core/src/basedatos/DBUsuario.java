@@ -349,6 +349,11 @@ public final class DBUsuario implements Serializable
         return -1;
     }
 
+    /**
+     * Consulta las estadísticas totales dado el nombre de un usuario.
+     * @param usuario del que se quieren las estadísticas.
+     * @return HashMap, donde las claves son strings identificadorres de los valores también en string.
+     */
     public static HashMap<String, String> estadisticasUsuario(String usuario)
     {
         int idUsuario = DBUsuario.idUsuario(usuario);

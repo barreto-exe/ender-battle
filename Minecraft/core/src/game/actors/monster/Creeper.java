@@ -11,14 +11,10 @@ import game.tools.Constant;
 
 /**
  *
- * @author Diego
+ * @author Karen
  */
 public class Creeper extends MonsterMob
 {
-
-    private Array<TextureRegion> explosionFrames;
-    private Animation explosionAnimation;
-
     public Creeper(GameScreen screen, float x, float y, boolean isBoss)
     {
         super
@@ -67,22 +63,6 @@ public class Creeper extends MonsterMob
         }
 
         animation = new Animation(0.18f, frames);    
-
-        
-        texture = screen.getAtlas().findRegion("explotar_creeper");
-        region = texture.split(55, 128);
-        explosionFrames = new Array<>();
-
-        //APLANANDO ARREGLO DE TEXTURES
-        for (TextureRegion[] regionF : region)
-        {
-            for (TextureRegion regionC : regionF)
-            {
-                explosionFrames.add(regionC);
-            }
-        }
-
-        explosionAnimation = new Animation(0.18f, explosionFrames);
         //</editor-fold>    
         
         changeDirection();
@@ -92,5 +72,4 @@ public class Creeper extends MonsterMob
     public void specialAttack(Player player)
     {
     }
-
 }

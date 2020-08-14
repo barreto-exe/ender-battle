@@ -11,7 +11,7 @@ import game.tools.Constant;
 
 /**
  *
- * @author Diego
+ * @author Karen
  */
 public class Skeleton extends MonsterMob
 {
@@ -101,5 +101,4 @@ public class Skeleton extends MonsterMob
         super.changeDirection();
         direction = direction * -1;
     }
-    
 }

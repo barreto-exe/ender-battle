@@ -6,10 +6,8 @@ import game.inventario.BattleObject;
 import game.inventario.Inventory;
 import game.inventario.food.Food;
 import game.tools.Constant;
-import game.tools.Constant.BattleObjectEnum;
 import game.tools.Constant.Farming;
 import game.tools.Sonido;
-import static game.tools.Sonido.soundManager;
 import java.awt.Component;
 import java.util.HashMap;
 import javax.swing.JLabel;
@@ -58,6 +56,87 @@ public final class FrmInventario extends javax.swing.JFrame
         vistasObjetosBatalla.put("pala", new Component[]{imgPala,rbPala});
     }
     
+    
+    /**
+     * Muestra la ventana del inventario.
+     */
+    public void mostrar()
+    {
+        actualizarVista();
+        setVisible(true);
+        requestFocus();
+    }
+    
+    /**
+     * Actualiza los componentes de acuerdo al inventario del jugador.
+     */
+    private void actualizarVista()
+    {
+        JLabel label;
+        
+        //Por cada comida del inventario
+        for(Food food : player.getInventory().getFood())
+        {
+            //Tomar el label correspondiente
+            label = vistasAlimentos.get(Farming.getDescByEnum(food.getType()));
+
+            //Actualizar cantidad de comida
+            label.setText(food.getCant() + "");
+            
+            //Si no tiene esa comida, deshabilitar botón
+            label.getLabelFor().setEnabled(food.getCant() != 0);
+        }
+        
+        Constant.BattleObjectEnum typeObject;
+        BattleObject bestBattleObject;
+        int material;
+        JLabel image;
+        
+        //Por cada tipo de objeto
+        for(String objeto : vistasObjetosBatalla.keySet())
+        {
+            typeObject = Constant.BattleObjectEnum.getEnumByDesc(objeto);
+            
+            //Obtener el mejor objeto de ese tipo en el inventario
+            bestBattleObject = player.getInventory().findBestBattleObject(typeObject);
+            if(bestBattleObject != null)
+            {
+                //Obtener número que representa al material
+                material = Constant.Material.getIntByEnum(bestBattleObject.getMaterial().getMaterial());
+                
+                //Colocar imagen al jlabel del objeto (con color que corresponde)
+                image = (JLabel)vistasObjetosBatalla.get(objeto)[0];
+                image.setIcon
+                (
+                    new javax.swing.ImageIcon
+                    (
+                        getClass().getResource("/sprites/objetos/"+objeto+material+".png")
+                    )
+                );
+                
+                //Habilitar componentes para ese objeto
+                for(Component component : vistasObjetosBatalla.get(objeto))
+                {
+                    component.setEnabled(true);
+                }
+                
+                //Colocar el boton como seleccionado si el jugador 
+                //está portando el objeto
+                ((JToggleButton)vistasObjetosBatalla.get(objeto)[1])
+                .setSelected(bestBattleObject.isPorted());
+            }
+            else
+            {
+                //Deshabilitar componentes para ese objeto
+                for(Component component : vistasObjetosBatalla.get(objeto))
+                {
+                    component.setEnabled(false);
+                }
+            }
+        }
+    }
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
@@ -632,85 +711,6 @@ public final class FrmInventario extends javax.swing.JFrame
         
     }//GEN-LAST:event_portarArmaClicked
 
-    /**
-     * Muestra la ventana del inventario.
-     */
-    public void mostrar()
-    {
-        actualizarVista();
-        setVisible(true);
-        requestFocus();
-    }
-    
-    /**
-     * Actualiza los componentes de acuerdo al inventario del jugador.
-     */
-    private void actualizarVista()
-    {
-        JLabel label;
-        
-        //Por cada comida del inventario
-        for(Food food : player.getInventory().getFood())
-        {
-            //Tomar el label correspondiente
-            label = vistasAlimentos.get(Farming.getDescByEnum(food.getType()));
-
-            //Actualizar cantidad de comida
-            label.setText(food.getCant() + "");
-            
-            //Si no tiene esa comida, deshabilitar botón
-            label.getLabelFor().setEnabled(food.getCant() != 0);
-        }
-        
-        Constant.BattleObjectEnum typeObject;
-        BattleObject bestBattleObject;
-        int material;
-        JLabel image;
-        
-        //Por cada tipo de objeto
-        for(String objeto : vistasObjetosBatalla.keySet())
-        {
-            typeObject = Constant.BattleObjectEnum.getEnumByDesc(objeto);
-            
-            //Obtener el mejor objeto de ese tipo en el inventario
-            bestBattleObject = player.getInventory().findBestBattleObject(typeObject);
-            if(bestBattleObject != null)
-            {
-                //Obtener número que representa al material
-                material = Constant.Material.getIntByEnum(bestBattleObject.getMaterial().getMaterial());
-                
-                //Colocar imagen al jlabel del objeto (con color que corresponde)
-                image = (JLabel)vistasObjetosBatalla.get(objeto)[0];
-                image.setIcon
-                (
-                    new javax.swing.ImageIcon
-                    (
-                        getClass().getResource("/sprites/objetos/"+objeto+material+".png")
-                    )
-                );
-                
-                //Habilitar componentes para ese objeto
-                for(Component component : vistasObjetosBatalla.get(objeto))
-                {
-                    component.setEnabled(true);
-                }
-                
-                //Colocar el boton como seleccionado si el jugador 
-                //está portando el objeto
-                ((JToggleButton)vistasObjetosBatalla.get(objeto)[1])
-                .setSelected(bestBattleObject.isPorted());
-            }
-            else
-            {
-                //Deshabilitar componentes para ese objeto
-                for(Component component : vistasObjetosBatalla.get(objeto))
-                {
-                    component.setEnabled(false);
-                }
-            }
-        }
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnUsarBotas;
     private javax.swing.JToggleButton btnUsarCasco;

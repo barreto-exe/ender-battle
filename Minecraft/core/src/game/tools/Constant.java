@@ -7,7 +7,7 @@ package game.tools;
  */
 public class Constant
 {
-    
+    //Constantes
     public static final float PPM = 50;
     public static final int MAX_MAP = 12800;
     public static final int PLAYER_WIDTH = 512;  
@@ -18,6 +18,7 @@ public class Constant
     public static final int FRAME_HEIGHT = 500;  
     public static final int IMPULSE_ATTACK = 8;   
 
+    //Enums
     public enum State
     {
         JUMPING, HITTING, WALKING_RIGHT, WALKING_LEFT, FALLING, STANDING, PICKING_UP
@@ -167,7 +168,7 @@ public class Constant
         }
     }
     
-    
+    //Bits para gestor de contactos
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;
     public static final short VILLAGER_BIT = 4;

@@ -13,6 +13,11 @@ public class HandleInput extends InputAdapter
     private VirtualController controller;
     private GameScreen screen;
 
+    /**
+     * Gestor de entrada de teclado y mouse.
+     * @param controller controlador virtual.
+     * @param screen pantalla actual del juego.
+     */
     public HandleInput(VirtualController controller, GameScreen screen)
     {
         this.controller = controller;
