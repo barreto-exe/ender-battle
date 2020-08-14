@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="136">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="400" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="152">
  <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
   <image source="bloques.png" width="2048" height="296"/>
  </tileset>
@@ -140,15 +140,32 @@
   <object id="78" x="832" y="352" width="32" height="32"/>
   <object id="79" x="1120" y="352" width="32" height="32"/>
   <object id="89" x="2688" y="352" width="32" height="32"/>
-  <object id="98" x="4736" y="416" width="32" height="32"/>
+  <object id="98" x="4800" y="416" width="32" height="32"/>
   <object id="99" x="5088" y="416" width="32" height="32"/>
   <object id="107" x="6400" y="384" width="32" height="32"/>
   <object id="112" x="7520" y="416" width="32" height="32"/>
   <object id="121" x="8928" y="416" width="32" height="32"/>
   <object id="125" x="10912" y="352" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="5" name="Tree [5]"/>
- <objectgroup id="6" name="Bush [6]"/>
+ <objectgroup id="5" name="Tree [5]">
+  <object id="137" x="1600" y="320" width="32" height="31.3333"/>
+  <object id="139" x="2432.01" y="320.036" width="31.9948" height="31.3272"/>
+  <object id="141" x="4224.5" y="256.5" width="31.5" height="31"/>
+  <object id="142" x="4928.02" y="448.01" width="32.0208" height="31.9688"/>
+  <object id="145" x="9120.33" y="352.333" width="31.3333" height="31.3333"/>
+  <object id="147" x="10880" y="224.5" width="31.5" height="31"/>
+ </objectgroup>
+ <objectgroup id="6" name="Bush [6]">
+  <object id="136" x="864.155" y="191.67" width="31.75" height="31.75"/>
+  <object id="138" x="1152.16" y="191.92" width="31.75" height="31.75"/>
+  <object id="140" x="3488.33" y="224" width="32" height="31.6667"/>
+  <object id="144" x="7808.33" y="352" width="31.6667" height="31.6667"/>
+  <object id="146" x="10208.5" y="128.5" width="31" height="31.5"/>
+  <object id="148" x="11629.3" y="256" width="32" height="31.3333"/>
+  <object id="149" x="6816" y="160" width="31.3333" height="31.3333"/>
+  <object id="150" x="7136" y="160" width="32" height="31.75"/>
+  <object id="151" x="6976" y="384.333" width="31.6667" height="31"/>
+ </objectgroup>
  <objectgroup id="7" name="Monster [7]">
   <object id="91" x="3488" y="416" width="32" height="32"/>
   <object id="92" x="2816" y="352" width="32" height="32"/>
