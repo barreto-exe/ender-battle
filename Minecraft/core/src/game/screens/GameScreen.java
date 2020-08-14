@@ -401,7 +401,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         if(cambiarBioma)
         {
             game.setScreen(new LoadScreen(game, nextRoom, player));
-            this.dispose();
+            //this.dispose();
         }
     }
 
