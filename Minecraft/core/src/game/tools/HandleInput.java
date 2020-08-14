@@ -81,7 +81,7 @@ public class HandleInput extends InputAdapter
                 screen.switchPaused();
                 return true;
             }
-            case(Input.Keys.TAB):
+            case(Input.Keys.ESCAPE):
             {
                 GameScreen.getVentanaJugadores().setLocationRelativeTo(screen.getGame().getVentanaOrigen());
                 GameScreen.getVentanaJugadores().setVisible(true);

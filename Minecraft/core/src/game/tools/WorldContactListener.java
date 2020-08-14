@@ -108,7 +108,6 @@ public class WorldContactListener implements ContactListener
                 }
                 break;
             case Constant.PLAYER_BIT | Constant.VILLAGER_BIT:
-                System.out.println("toca aldeano");
                 if (a.getFilterData().categoryBits == Constant.VILLAGER_BIT)
                 {
                     player.setVillager((Villager)a.getUserData());
