@@ -66,6 +66,8 @@ public class Pigman extends MonsterMob
 
         animation = new Animation(0.18f, frames);    //CREANDO ANIMACION DE CAMINAR
         //</editor-fold>
+        
+        changeDirection();
     }
 
     @Override

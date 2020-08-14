@@ -1,6 +1,5 @@
 package game.actors.monster;
 
-import game.actors.Mob;
 import game.actors.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -85,6 +84,8 @@ public class Creeper extends MonsterMob
 
         explosionAnimation = new Animation(0.18f, explosionFrames);
         //</editor-fold>    
+        
+        changeDirection();
     }
 
     @Override

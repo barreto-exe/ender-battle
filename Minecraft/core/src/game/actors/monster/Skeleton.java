@@ -86,6 +86,8 @@ public class Skeleton extends MonsterMob
 
         animation = new Animation(0.14f, frames);    
         //</editor-fold>
+        
+        changeDirection();
     }
 
     @Override

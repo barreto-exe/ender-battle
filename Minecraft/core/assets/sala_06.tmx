@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="33" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="5">
- <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="128" columns="64">
-  <image source="bloques.png" width="2048" height="64"/>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="33" height="17" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="6">
+ <tileset firstgid="1" name="bloques" tilewidth="32" tileheight="32" tilecount="576" columns="64">
+  <image source="bloques.png" width="2048" height="296"/>
  </tileset>
- <tileset firstgid="129" name="plantas" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+ <tileset firstgid="577" name="plantas" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="plantas.png" width="1024" height="1024"/>
  </tileset>
  <layer id="1" name="Graphics" width="33" height="17">
@@ -58,7 +58,9 @@
  <objectgroup id="6" name="Tree [5]"/>
  <objectgroup id="7" name="Bush [6]"/>
  <objectgroup id="8" name="Monster [7]"/>
- <objectgroup id="9" name="Villager [8]"/>
+ <objectgroup id="9" name="Villager [8]">
+  <object id="5" x="800" y="416.006" width="31.9889" height="31.9944"/>
+ </objectgroup>
  <objectgroup id="10" name="Player [9]">
   <object id="4" x="192" y="416" width="32.0217" height="31.9565"/>
  </objectgroup>

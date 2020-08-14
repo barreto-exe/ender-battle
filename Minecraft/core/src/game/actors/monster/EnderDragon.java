@@ -83,6 +83,8 @@ public class EnderDragon extends MonsterMob
 
         animation = new Animation(0.13f, frames);
         //</editor-fold>
+        
+        changeDirection();
     }
 
     

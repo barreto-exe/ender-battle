@@ -69,6 +69,8 @@ public class Spider extends MonsterMob
         animation = new Animation(0.15f, frames);    //CREANDO ANIMACION DE CAMINAR
 
         //</editor-fold>
+        
+        changeDirection();
     }
 
     @Override

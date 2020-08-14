@@ -65,6 +65,8 @@ public class Enderman extends MonsterMob
 
         animation = new Animation(0.15f, frames);
         //</editor-fold>
+        
+        changeDirection();
     }
 
     @Override
