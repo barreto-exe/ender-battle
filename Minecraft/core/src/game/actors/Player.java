@@ -19,11 +19,14 @@ import game.inventario.Inventory;
 import game.actors.collectibles.FoodCollectible;
 import game.actors.farming.plants.Plant;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import comunicacion.ProgresoJugador;
+import game.MainGame;
 import game.actors.collectibles.BattleObjectCollectible;
 import game.actors.collectibles.EsmeraldCollective;
 import game.actors.collectibles.ObjectCollectible;
 import game.inventario.Protection;
+import game.screens.worlds.Room;
 import game.tools.Constant;
 import game.tools.Constant.*;
 import game.tools.HandleInput;
@@ -80,6 +83,7 @@ public final class Player extends Sprite implements Actor
     //</editor-fold>
 
     private boolean[] jefesGanados;
+    private MainGame game; 
     
     /**
      * Instaciando al player con el color de ropa.
@@ -87,10 +91,11 @@ public final class Player extends Sprite implements Actor
      * @param color representa el ropa elegido por el jugador antes de iniciar
      * partida.
      */
-    public Player(String color)
+    public Player(MainGame game, String color)
     {
         this.color = color;
         this.life = 100;
+        this.game = game;
         this.jefesGanados = new boolean[6];
         reiniciarJefesGanados(); 
         
@@ -432,14 +437,23 @@ public final class Player extends Sprite implements Actor
         villager = null;
     }
 
+    private boolean avisarReinicioJuego = false;
+    
     @Override
     public void act(float delta)
     {
         affectCondition(delta);
 
         if (life <= 0)
-        {
+        {        
             life = 0;
+            
+            if(!avisarReinicioJuego)
+            {
+                game.reiniciarJuego();
+                avisarReinicioJuego = true;
+            }
+            return;
         }
 
         currentState = getState();
@@ -493,6 +507,18 @@ public final class Player extends Sprite implements Actor
 
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
+    }
+
+    @Override
+    public void draw(Batch batch)
+    {
+        if(life > 0)
+            super.draw(batch);
+    }
+    
+    public void setAvisarReinicioJuego(boolean avisarReinicioJuego)
+    {
+        this.avisarReinicioJuego = avisarReinicioJuego;
     }
     
     public boolean hasVillager()

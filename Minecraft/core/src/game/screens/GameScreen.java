@@ -348,7 +348,33 @@ public class GameScreen extends BaseScreen implements UsesSocket
             {
                 try
                 {
-                    Thread.sleep(2000);
+                    Thread.sleep(7000);
+                    cambiarBioma = true;
+                }
+                catch (InterruptedException ex)
+                {
+                }
+            }
+        }).start();
+    }
+    
+    public void cambiarHabitacion(Room room)
+    {
+        if(cambiandoBioma)
+            return;
+        
+        cambiandoBioma = true;
+        
+        nextRoom = room;
+        
+        //Esperar 7 segundos y aprobar cambio de bioma
+        new Thread(new Runnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(7000);
                     cambiarBioma = true;
                 }
                 catch (InterruptedException ex)
@@ -412,6 +438,11 @@ public class GameScreen extends BaseScreen implements UsesSocket
             }
         
             mensajePantalla.draw(batchUI, ganadorPartida + ": ¡Ha ganado la partida!", 100, 100);
+        }
+        
+        if(player.getLife() <= 0)
+        {
+            batchUI.draw(getAtlas().findRegion("hasMuerto"), Constant.FRAME_WIDTH / 2 + 100, Constant.FRAME_HEIGHT / 2);
         }
         
         batchUI.end();

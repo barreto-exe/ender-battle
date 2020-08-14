@@ -63,6 +63,23 @@ public class Inventory
         food[6] = new Food(Farming.CHICKEN, 10);
         food[7] = new Food(Farming.BEEF, 10);
     }
+    
+    public void vaciar()
+    {
+        espadas.clear();
+        hachas.clear();
+        picos.clear();
+        palas.clear();
+        botas.clear();
+        pechos.clear();
+        pantalones.clear();
+        cascos.clear();
+        
+        for(int i = 0; i < 9; i++)
+        {
+            food[i].setCant(0);
+        }
+    }
 
     public Food[] getFood()
     {

@@ -91,10 +91,47 @@ public class MainGame extends Game
             skin = usuario.getPersonajeSeleccionadoString();
         }
         
-        player = new Player(skin);
+        player = new Player(this, skin);
         setScreen(new GameScreen(this, (new Room(1, Constant.MapType.BIOME)), player)); 
     }
 
+    private boolean reiniciandoJuego = false;
+    public void reiniciarJuego()
+    {
+        if(reiniciandoJuego)
+            return;
+        
+        reiniciandoJuego = true;
+        
+        player.setAlpha(0);
+        player.getInventory().addEsmeraldas(-player.getInventory().getEsmeraldas());
+        player.getInventory().vaciar();
+        progreso.setJefesMatados(0);
+        
+        final MainGame game = this;
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(5000);
+                    reiniciandoJuego = false;
+                    ((GameScreen)game.getScreen()).cambiarHabitacion(new Room(1,Constant.MapType.BIOME));
+                    Thread.sleep(7000);
+                    player.setLife(100);
+                    player.setAvisarReinicioJuego(false);
+                }
+                catch (InterruptedException ex)
+                {
+                }
+            }
+            
+        }).start();
+
+    }
+    
     @Override
     public void render()
     {
