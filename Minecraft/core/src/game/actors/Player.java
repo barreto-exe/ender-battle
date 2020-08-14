@@ -489,7 +489,6 @@ public final class Player extends Sprite implements Actor
     
     public void addLife(float lifeAdded)
     {
-        System.out.println("tenía de vida: " + life);
 
         life += lifeAdded;
 
@@ -497,8 +496,6 @@ public final class Player extends Sprite implements Actor
         {
             life = 100;
         }
-
-        System.out.println("ahora tiene de vida: " + life);
     }
 
     public void reiniciarJefesGanados()
