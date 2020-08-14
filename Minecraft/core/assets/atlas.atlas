@@ -6,21 +6,21 @@ filter: Nearest,Nearest
 repeat: none
 aldeano
   rotate: false
-  xy: 1286, 91
+  xy: 1591, 501
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
   index: -1
 amarillo_caminar
   rotate: false
-  xy: 772, 184
+  xy: 772, 54
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 amarillo_golpear
   rotate: false
-  xy: 2, 118
+  xy: 2, 378
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
@@ -34,7 +34,7 @@ bayas
   index: -1
 botas
   rotate: false
-  xy: 1591, 565
+  xy: 1958, 957
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -55,14 +55,14 @@ caminar_enderman
   index: -1
 caminar_esqueleto
   rotate: false
-  xy: 1286, 351
+  xy: 1286, 47
   size: 280, 128
   orig: 280, 128
   offset: 0, 0
   index: -1
 caminar_pigman
   rotate: false
-  xy: 1286, 221
+  xy: 1591, 371
   size: 256, 128
   orig: 256, 128
   offset: 0, 0
@@ -83,7 +83,7 @@ cerdo
   index: -1
 chicken
   rotate: false
-  xy: 1286, 64
+  xy: 532, 49
   size: 96, 25
   orig: 96, 25
   offset: 0, 0
@@ -97,28 +97,28 @@ conejo
   index: -1
 conejo_carne
   rotate: false
-  xy: 221, 2
+  xy: 1754, 337
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 corazon_lleno
   rotate: false
-  xy: 1704, 584
+  xy: 1958, 910
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_mitad
   rotate: false
-  xy: 1958, 910
+  xy: 1953, 650
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 corazon_vacio
   rotate: false
-  xy: 1657, 584
+  xy: 1849, 386
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
@@ -132,14 +132,14 @@ enderdragon
   index: -1
 esmeralda
   rotate: false
-  xy: 1657, 537
+  xy: 1588, 192
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 espada
   rotate: false
-  xy: 532, 10
+  xy: 1849, 433
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -153,14 +153,14 @@ explotar_creeper
   index: -1
 ganado_carne
   rotate: false
-  xy: 1751, 597
+  xy: 1720, 337
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gris_caminar
   rotate: false
-  xy: 772, 54
+  xy: 1260, 763
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
@@ -174,9 +174,23 @@ gris_golpear
   index: -1
 hacha
   rotate: false
-  xy: 1958, 957
+  xy: 1849, 565
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+hasGanado
+  rotate: false
+  xy: 1286, 329
+  size: 300, 150
+  orig: 300, 150
+  offset: 0, 0
+  index: -1
+hasPerdido
+  rotate: false
+  xy: 1286, 177
+  size: 300, 150
+  orig: 300, 150
   offset: 0, 0
   index: -1
 logo
@@ -216,7 +230,7 @@ normal_caminar
   index: -1
 normal_golpear
   rotate: false
-  xy: 2, 378
+  xy: 2, 508
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
@@ -230,70 +244,70 @@ oveja
   index: -1
 pala
   rotate: false
-  xy: 1953, 631
+  xy: 1849, 499
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pantalones
   rotate: false
-  xy: 598, 10
+  xy: 1588, 305
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 papa
   rotate: false
-  xy: 1704, 550
+  xy: 1654, 271
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pechera
   rotate: false
-  xy: 1591, 499
+  xy: 1654, 305
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pera
   rotate: false
-  xy: 1785, 597
+  xy: 187, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pico
   rotate: false
-  xy: 664, 10
+  xy: 1588, 239
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pollo_carne
   rotate: false
-  xy: 187, 2
+  xy: 1915, 563
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 rojo_caminar
   rotate: false
-  xy: 1260, 763
+  xy: 772, 184
   size: 512, 128
   orig: 512, 128
   offset: 0, 0
   index: -1
 rojo_golpear
   rotate: false
-  xy: 2, 248
+  xy: 2, 118
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 sandia
   rotate: false
-  xy: 1657, 503
+  xy: 1915, 597
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -321,14 +335,14 @@ verde_caminar
   index: -1
 verde_golpear
   rotate: false
-  xy: 2, 508
+  xy: 2, 248
   size: 768, 128
   orig: 768, 128
   offset: 0, 0
   index: -1
 zanahoria
   rotate: false
-  xy: 1819, 597
+  xy: 221, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

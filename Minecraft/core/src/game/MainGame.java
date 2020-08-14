@@ -18,10 +18,12 @@ public class MainGame extends Game
     private JFrame ventanaOrigen;
     private SpriteBatch batch;
     private ProgresoJugador progreso;
-
+    private boolean juegoTerminado;
+    
     public MainGame(DBUsuario usuario)
     {
         this.usuario = usuario;
+        this.juegoTerminado = false;
         
         if(usuario != null)
             progreso = new ProgresoJugador(usuario);
@@ -30,6 +32,18 @@ public class MainGame extends Game
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+
+    public boolean isJuegoTerminado()
+    {
+        return juegoTerminado;
+    }
+
+    public void setJuegoTerminado(boolean juegoTerminado)
+    {
+        this.juegoTerminado = juegoTerminado;
+    }
+    
+    
     public SpriteBatch getBatch()
     {
         return batch;
@@ -78,7 +92,7 @@ public class MainGame extends Game
         }
         
         player = new Player(skin);
-        setScreen(new GameScreen(this, (new Room(6, Constant.MapType.BIOME)), player)); 
+        setScreen(new GameScreen(this, (new Room(1, Constant.MapType.BIOME)), player)); 
     }
 
     @Override

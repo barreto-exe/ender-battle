@@ -19,8 +19,6 @@ import game.actors.monster.EnderDragon;
 import game.actors.monster.MonsterMob;
 import game.actors.pacific.PacificMob;
 import game.screens.GameScreen;
-import game.screens.worlds.Room;
-import game.tools.Constant;
 import game.tools.Sonido;
 import static game.tools.Sonido.soundManager;
 
@@ -159,6 +157,7 @@ public abstract class Mob extends Sprite implements Actor
                 
                 if(this instanceof EnderDragon)
                 {
+                    player.getProgreso().setGanoPartida(true);
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
                 }
             }
