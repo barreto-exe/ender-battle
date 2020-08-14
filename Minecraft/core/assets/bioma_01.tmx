@@ -155,7 +155,7 @@
   <object id="127" x="6400" y="416" width="31" height="31"/>
  </objectgroup>
  <objectgroup id="12" name="Villager [8]">
-  <object id="145" x="128" y="448" width="31.6667" height="31.6667"/>
+  <object id="145" x="192" y="448" width="31.6667" height="31.6667"/>
  </objectgroup>
  <objectgroup id="13" name="Player [9]">
   <object id="146" x="288.432" y="448.174" width="31.6667" height="31.3333"/>

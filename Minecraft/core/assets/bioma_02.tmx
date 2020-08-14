@@ -125,7 +125,7 @@
  <objectgroup id="6" name="Bush [6]"/>
  <objectgroup id="7" name="Monster [7]"/>
  <objectgroup id="8" name="Villager [8]">
-  <object id="75" x="352" y="384" width="32.0026" height="31.9987"/>
+  <object id="75" x="416" y="384" width="32.0026" height="31.9987"/>
  </objectgroup>
  <objectgroup id="9" name="Player [9]">
   <object id="76" x="128" y="320" width="32" height="32"/>
