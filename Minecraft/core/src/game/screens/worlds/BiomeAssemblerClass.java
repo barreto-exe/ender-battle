@@ -27,7 +27,6 @@ import game.actors.monster.Spider;
 import game.actors.monster.Zombie;
 import game.tools.Constant;
 import game.screens.GameScreen;
-import game.tools.Constant.Bosses;
 import game.tools.Constant.MapType;
 
 /**
@@ -148,24 +147,18 @@ public class BiomeAssemblerClass
         }
         //</editor-fold>
         
-        Rectangle rectangle = new Rectangle();
         
+        
+        Rectangle rectangle = new Rectangle();        
 
         //<editor-fold defaultstate="collapsed" desc="Ubicar Aldeano">
-        if(screen.getRoom().getType() != MapType.FIGHT)
+        //Ubicación del Aldeano
+        for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class))
         {
-            //Ubicación del Aldeano
-            for (MapObject object : screen.getMap().getLayers().get(8).getObjects().getByType(RectangleMapObject.class))
-            {
-                rectangle = ((RectangleMapObject) object).getRectangle();
-            }
+            rectangle = ((RectangleMapObject) object).getRectangle();
+        }
 
-            villagerPosition = new Vector2(rectangle.getX() / Constant.PPM, rectangle.getY() * 2 / Constant.PPM);
-        }
-        else
-        {
-            villagerPosition = new Vector2(-20 / Constant.PPM, -20/ Constant.PPM);
-        }
+        villagerPosition = new Vector2(rectangle.getX() / Constant.PPM, rectangle.getY() * 2 / Constant.PPM);
         //</editor-fold>
         
         //Ubicación del Jugador

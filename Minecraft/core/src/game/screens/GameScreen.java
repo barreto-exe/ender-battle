@@ -29,8 +29,14 @@ import comunicacion.PaqueteResultado;
 import comunicacion.ProgresoJugador;
 import game.LoadScreen;
 import game.actors.Villager;
+import game.actors.monster.Creeper;
 import game.actors.monster.EnderDragon;
+import game.actors.monster.Enderman;
 import game.actors.monster.MonsterMob;
+import game.actors.monster.Pigman;
+import game.actors.monster.Skeleton;
+import game.actors.monster.Spider;
+import game.actors.monster.Zombie;
 import game.screens.worlds.Room;
 import game.screens.worlds.BiomeAssemblerClass;
 import game.tools.*;
@@ -57,6 +63,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     private OrthogonalTiledMapRenderer renderer;
     private BiomeAssemblerClass manager;
     private boolean isPaused;
+    private Room room;
 
     //Atributos de Box2d
     private Box2DDebugRenderer debugger;
@@ -67,6 +74,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
     private Group actors;
     private Player player;
     private Villager villager;
+    private MonsterMob boss;
     private Array<PacificMob> pacificMobs;
     private Array<MonsterMob> monsterMobs;
     private Array<Plant> trees;
@@ -86,7 +94,6 @@ public class GameScreen extends BaseScreen implements UsesSocket
     private static FrmJugadores ventanaJugadores; 
     //</editor-fold>
 
-    private Room room;
     
     /**
      * Es la pantalla del juego principal.
@@ -218,27 +225,60 @@ public class GameScreen extends BaseScreen implements UsesSocket
         manager = new BiomeAssemblerClass(this);
         Vector2 position;
         position = manager.getVillagerPosition();
-        villager = new Villager(world, getAtlas().findRegion("aldeano"), position.x, position.y);
-        actors.addActor(villager);
-        pacificMobs = manager.getPacificMobs();
-        trees = manager.getPlants();
-        monsterMobs = manager.getMonsters();
-
-        for (Plant plant : trees)
+        
+        if (room.getType() == MapType.BIOME)
         {
-            actors.addActor(plant);
+            villager = new Villager(world, getAtlas().findRegion("aldeano"), position.x, position.y);
+            actors.addActor(villager);
+            pacificMobs = manager.getPacificMobs();
+            trees = manager.getPlants();
+            monsterMobs = manager.getMonsters();
+            
+            
+            for (Plant plant : trees)
+            {
+                actors.addActor(plant);
+            }
+
+            for (PacificMob mob : pacificMobs)
+            {
+                actors.addActor(mob);
+            }
+
+            for (MonsterMob mob : monsterMobs)
+            {
+                actors.addActor(mob);
+            }    
         }
-
-        for (PacificMob mob : pacificMobs)
+        else 
         {
-            actors.addActor(mob);
+            switch (room.getBoss())
+            {
+                case CREEPER:
+                    boss = new Creeper(this, position.x, position.y, true);
+                    break;
+                case PIGMAN:
+                    boss = new Pigman(this, position.x, position.y, true);
+                    break;
+                case ENDERMAN:
+                    boss = new Enderman(this, position.x, position.y, true);
+                    break;
+                case SPIDER:
+                    boss = new Spider(this, position.x, position.y, true);
+                    break;
+                case ZOMBIE:
+                    boss = new Zombie(this, position.x, position.y, true);
+                    break;
+                case SKELETON:
+                    boss = new Skeleton(this, position.x, position.y, true);
+                    break;
+                case ENDERDRAGON:
+                    boss = new EnderDragon(this, position.x, position.y);
+            }
+            
+            actors.addActor(boss);
         }
         
-        for (MonsterMob mob : monsterMobs)
-        {
-            actors.addActor(mob);
-        }
-
         position = manager.getPlayerPosition();
         player.create(this, position.x, position.y);
         

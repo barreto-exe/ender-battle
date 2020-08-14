@@ -23,33 +23,32 @@ public class Room {
         this.type = type;  
         this.mapNum = map;
         
+        switch (map)
+        {
+            case 1:
+                boss = Bosses.CREEPER;
+                break;
+            case 2:
+                boss = Bosses.PIGMAN;
+                break;
+            case 3:
+                boss = Bosses.ENDERMAN;
+                break;
+            case 4:
+                boss = Bosses.SPIDER;
+                        break;
+            case 5:
+                boss = Bosses.ZOMBIE;
+                        break;
+            case 6:
+                boss = Bosses.SKELETON;
+                break;
+        } 
+        
         switch (type)
         {
             case FIGHT:
                 this.map = "sala_0" + map + ".tmx";
-
-                switch (map)
-                {
-                    case 1:
-                        boss = Bosses.CREEPER;
-                        break;
-                    case 2:
-                        boss = Bosses.PIGMAN;
-                        break;
-                    case 3:
-                        boss = Bosses.ENDERMAN;
-                        break;
-                    case 4:
-                        boss = Bosses.SPIDER;
-                        break;
-                    case 5:
-                        boss = Bosses.ZOMBIE;
-                        break;
-                    case 6:
-                        boss = Bosses.SKELETON;
-                        break;
-                } 
-                
                 break;
                 
             case BIOME:
@@ -58,7 +57,7 @@ public class Room {
                 break;
              
             case END:
-                this.map = "sala_01.tmx";
+                this.map = "sala_03.tmx";
                 boss = Constant.Bosses.ENDERDRAGON;
                 break;
         }
