@@ -29,16 +29,16 @@ public class Room {
                 boss = Bosses.CREEPER;
                 break;
             case 2:
-                boss = Bosses.PIGMAN;
+                boss = Bosses.ZOMBIE;
                 break;
             case 3:
                 boss = Bosses.ENDERMAN;
                 break;
             case 4:
-                boss = Bosses.SPIDER;
+                boss = Bosses.PIGMAN;
                         break;
             case 5:
-                boss = Bosses.ZOMBIE;
+                boss = Bosses.SPIDER;
                         break;
             case 6:
                 boss = Bosses.SKELETON;

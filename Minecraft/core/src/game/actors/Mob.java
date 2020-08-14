@@ -160,6 +160,11 @@ public abstract class Mob extends Sprite implements Actor
                     player.getProgreso().setGanoPartida(true);
                     soundManager.get("sonidos/mobs/enderdragon_die.ogg", Sound.class).play(Sonido.volumen);
                 }
+                else
+                {
+                    player.setJefeGanado(screen.getRoom().getMapNum());
+                    screen.cambiarHabitacion();
+                }
             }
         }
     }

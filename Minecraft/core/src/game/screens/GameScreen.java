@@ -284,7 +284,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         
         //Añadir actores al grupo
         actors.addActor(player);
-        actors.addActor(new EnderDragon(this, 8, 15));
+        //actors.addActor(new EnderDragon(this, 8, 15));
         world.setContactListener(new WorldContactListener(player));
     }
     
@@ -450,7 +450,7 @@ public class GameScreen extends BaseScreen implements UsesSocket
         dibujarGUI();
         
         //Si jugador llegó al final, disparar cambio de habitación.
-        if(player.getBody().getPosition().x > 240)
+        if(player.getBody().getPosition().x > 40)
         {
             this.cambiarHabitacion();
         }

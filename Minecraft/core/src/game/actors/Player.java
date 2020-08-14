@@ -133,7 +133,7 @@ public final class Player extends Sprite implements Actor
     
     public int proximoBioma()
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 6; i++)
         {
             if(!jefesGanados[i])
             {
