@@ -1,0 +1,125 @@
+
+plantas.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+arbol1
+  rotate: false
+  xy: 2, 196
+  size: 210, 256
+  orig: 210, 256
+  offset: 0, 0
+  index: -1
+arbol2
+  rotate: false
+  xy: 2, 712
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+arbol3
+  rotate: false
+  xy: 214, 196
+  size: 191, 256
+  orig: 191, 256
+  offset: 0, 0
+  index: -1
+arbol_ender
+  rotate: false
+  xy: 407, 196
+  size: 112, 256
+  orig: 112, 256
+  offset: 0, 0
+  index: -1
+arbol_ender2
+  rotate: false
+  xy: 2, 2
+  size: 160, 192
+  orig: 160, 192
+  offset: 0, 0
+  index: -1
+arbol_manzana1
+  rotate: false
+  xy: 260, 454
+  size: 210, 256
+  orig: 210, 256
+  offset: 0, 0
+  index: -1
+arbol_manzana2
+  rotate: false
+  xy: 2, 454
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+arbol_manzana3
+  rotate: false
+  xy: 472, 454
+  size: 191, 256
+  orig: 191, 256
+  offset: 0, 0
+  index: -1
+arbol_pera1
+  rotate: false
+  xy: 518, 712
+  size: 210, 256
+  orig: 210, 256
+  offset: 0, 0
+  index: -1
+arbol_pera2
+  rotate: false
+  xy: 260, 712
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+arbol_pera3
+  rotate: false
+  xy: 730, 712
+  size: 191, 256
+  orig: 191, 256
+  offset: 0, 0
+  index: -1
+mata
+  rotate: false
+  xy: 923, 843
+  size: 80, 125
+  orig: 80, 125
+  offset: 0, 0
+  index: -1
+mata2
+  rotate: false
+  xy: 665, 582
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+mata_bayas
+  rotate: false
+  xy: 164, 69
+  size: 80, 125
+  orig: 80, 125
+  offset: 0, 0
+  index: -1
+mata_papa
+  rotate: false
+  xy: 795, 585
+  size: 80, 125
+  orig: 80, 125
+  offset: 0, 0
+  index: -1
+mata_sandia
+  rotate: false
+  xy: 665, 455
+  size: 80, 125
+  orig: 80, 125
+  offset: 0, 0
+  index: -1
+mata_zanahoria
+  rotate: false
+  xy: 521, 327
+  size: 80, 125
+  orig: 80, 125
+  offset: 0, 0
+  index: -1
