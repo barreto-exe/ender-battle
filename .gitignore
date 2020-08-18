@@ -12,7 +12,7 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
-/Minecraft/.nb-gradle/
+/.nb-gradle/
 
 ## Java
 
@@ -141,15 +141,19 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
-/Minecraft/core/build/
-/Minecraft/desktop/build/
-/Minecraft/servidor/build/
+/core/build/
+/desktop/build/
+/servidor/build/
 biomas/core/build/
 
 biomas/.nb-gradle/
 
 game/.nb-gradle/
 
-Minecraft/core/assets/db.db
+/core/assets/db.db
 
-Minecraft/core/assets/manuales/
+/core/assets/manuales/
+
+compilar.bat
+
+compilarServer.bat
