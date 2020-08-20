@@ -18,7 +18,7 @@ Explora los biomas, derrota a los monstruos y sobrevive a los jefes de cada mund
 - Puedes variar la dificultad del juego en el modo de un jugador.
 
 ## 🔽 Descargar
-[v1.0.0-beta](https://github.com/labm-exe/ender-battle/releases/tag/v1.0.0-beta) - Primera versión del juego.
+[v1.0.0-beta](https://github.com/barreto-exe/ender-battle/releases/download/v1.0.0-beta/batalla-del-ender.zip) - Primera versión del juego.
 
 ## ⚙ Requisitos
 - Java SE 8+
